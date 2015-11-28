@@ -36,7 +36,6 @@ my $inx = Bio::Index::Fasta->new(
 -write_flag => 1);
 
 $inx->make_index(@sequence_files);
-
 ```
 
 This script then retrieves sequences:
