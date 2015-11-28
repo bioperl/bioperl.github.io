@@ -89,9 +89,9 @@ See for more information on this fully-featured module.
 Both modules also offer the user the ability to designate a specific string within the fasta header as the desired id, such as the gi number within the string "gi|4556644|gb|X45555". Consider the following fasta-formatted sequence, in "test.fa":
 
 ```
-
->gi|523232|emb|AAC12345|sp|D12567 titin fragment MHRHHRTGYSAAYGPLKJHGYVHFIMCVVVSWWASDVVTYIPLLLNNSSAGWKRWWWIIFGGE GHGHHRTYSALWWPPLKJHGSKHFILCVKVSWLAKKERTYIPKKILLMMGGWWAAWWWI
-
+>gi|523232|emb|AAC12345|sp|D12567 titin fragment
+MHRHHRTGYSAAYGPLKJHGYVHFIMCVVVSWWASDVVTYIPLLLNNSSAGWKRWWWIIFGGE
+GHGHHRTYSALWWPPLKJHGSKHFILCVKVSWLAKKERTYIPKKILLMMGGWWAAWWWI
 ```
 
 By default and will use the first "word" they encounter in the fasta header as the retrieval key, in this case "gi|523232|emb|AAC12345|sp|D12567". What would be more useful as a key would be a single id. The code below will index the "test.fa" file and create an index file called "test.fa.idx" where the keys are the Swissprot, or "sp", identifiers.
