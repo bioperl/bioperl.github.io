@@ -29,10 +29,10 @@ For example, if one wants to set up an indexed flat-file database of fasta files
 use strict;
 use Bio::Index::Fasta; 
 
-my $Index_File_Name = shift;
+my $index_file_name = shift;
 
 my $inx = Bio::Index::Fasta->new(
--filename => $Index_File_Name,
+-filename => $index_file_name,
 -write_flag => 1);
 
 $inx->make_index(@sequence_files);
@@ -49,11 +49,11 @@ This script then retrieves sequences:
 use strict;
 use Bio::Index::Fasta; use strict;
 
-my $Index_File_Name = shift;
+my $index_file_name = shift;
 
-my $inx = Bio::Index::Fasta->new($Index_File_Name);
+my $inx = Bio::Index::Fasta->new($index_file_name);
 
-foreach my $id (@ARGV) {
+for my $id (@ARGV) {
     # Returns Bio::Seq object
     my $seq = $inx->fetch($id);
     # do something with the sequence
@@ -116,10 +116,9 @@ $inx->make_index($file_name);
 
 \# here is where the retrieval key is specified
 sub get_id {
-my $header = shift;
-$header =~ /^>.*sp|([A-Z]d{5}b)/;
-$1;
-
+    my $header = shift;
+    $header =~ /^>.*sp|([A-Z]d{5}b)/;
+    $1;
 }
 
 ```
@@ -135,10 +134,8 @@ print $seq->seq;
 
 What if you wanted to retrieve a sequence using either a Swissprot id or a gi number and the fasta header was actually a concatenation of headers with multiple gi's and Swissprots?
 
-```perl
-
+```
 >gi|523232|emb|AAC12345|sp|D12567|gi|7744242|sp|V11223 titin fragment
-
 ```
 
 Modify the function that's passed to the id_parser() method:
