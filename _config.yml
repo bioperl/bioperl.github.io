@@ -2,10 +2,10 @@
 title: BioPerl
 email: bioperl-l@mailman.open-bio.org
 description: The Bioperl Project is an international association of developers of open source Perl tools for bioinformatics, genomics and life science
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "/bioperl.github.io"
 url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+#twitter_username: jekyllrb
+#github_username:  jekyll
 encoding: UTF-8
 # Build settings
 markdown: kramdown
