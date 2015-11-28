@@ -1,5 +1,5 @@
 ---
-title: HOWTO:Local Databases
+title: "HOWTO:Local Databases"
 layout: default
 ---
 
@@ -31,8 +31,8 @@ my $Index_File_Name = shift;
 
 my $inx = Bio::Index::Fasta-&gt;new(
 
-`   -filename => $Index_File_Name,`
-`   -write_flag => 1);`
+`Â Â Â -filenameÂ =>Â $Index_File_Name,`
+`Â Â Â -write_flagÂ =>Â 1);`
 
 $inx-&gt;make_index(@sequence_files);
 
@@ -52,8 +52,8 @@ my $inx = Bio::Index::Fasta-&gt;new($Index_File_Name);
 
 foreach my $id (@ARGV) {
 
-`   my $seq = $inx->fetch($id);  # Returns Bio::Seq object`
-`   # do something with the sequence`
+`Â Â Â myÂ $seqÂ =Â $inx->fetch($id);Â Â #Â ReturnsÂ Bio::SeqÂ object`
+`Â Â Â #Â doÂ somethingÂ withÂ theÂ sequence`
 
 }
 
@@ -97,7 +97,7 @@ $ENV{BIOPERL_INDEX} = ".";
 
 my $file_name = "test.fa"; my $inx = Bio::Index::Fasta-&gt;new( -filename =&gt; $file_name . ".idx",
 
-`                                 -write_flag => 1 );`
+`Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â -write_flagÂ =>Â 1Â );`
 
 1.  pass a reference to the critical function to the Bio::Index object
 
@@ -111,9 +111,9 @@ $inx-&gt;make_index($file_name);
 
 sub get_id {
 
-`  my $header = shift;`
-`  $header =~ /^>.*bsp|([A-Z]d{5}b)/;`
-`  $1;`
+`Â Â myÂ $headerÂ =Â shift;`
+`Â Â $headerÂ =~Â /^>.*bsp|([A-Z]d{5}b)/;`
+`Â Â $1;`
 
 }
 
@@ -141,10 +141,10 @@ Modify the function that's passed to the id_parser() method:
 
 sub get_id {
 
-`  my $header = shift;`
-`  my (@sps) = $header =~ /^>.*bsp|([A-Z]d{5})b/g;`
-`  my (@gis) = $header =~ /gi|(d+)b/g;`
-`  return (@sps,@gis);`
+`Â Â myÂ $headerÂ =Â shift;`
+`Â Â myÂ (@sps)Â =Â $headerÂ =~Â /^>.*bsp|([A-Z]d{5})b/g;`
+`Â Â myÂ (@gis)Â =Â $headerÂ =~Â /gi|(d+)b/g;`
+`Â Â returnÂ (@sps,@gis);`
 
 }
 
@@ -158,9 +158,9 @@ my $db = Bio::DB::Fasta-&gt;new('test.fa', -makeid=&gt;&make_my_id); my $seqobj 
 
 sub make_my_id {
 
-`  my $description_line = shift;`
-`  $description_line =~ /gi|(d+)|emb|(w+)/;`
-`  ($1,$2);`
+`Â Â myÂ $description_lineÂ =Â shift;`
+`Â Â $description_lineÂ =~Â /gi|(d+)|emb|(w+)/;`
+`Â Â ($1,$2);`
 
 }
 
