@@ -1,19 +1,19 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Flat Databases"
 layout: default
 ---
 
 Abstract
 --------
 
-The Open Biological Database Access ([OBDA](http://obda.open-bio.org)) standard specifies a way of generating indexes for local sequence files (e.g. [FASTA](FASTA_sequence_format "wikilink"), [EMBL](EMBL_sequence_format "wikilink")) so that the entries can be looked up and retrieved quickly. These indexes are created and accessed using the module.
+The Open Biological Database Access ([OBDA](http://obda.open-bio.org)) standard specifies a way of generating indexes for local sequence files (e.g. [FASTA], [EMBL]) so that the entries can be looked up and retrieved quickly. These indexes are created and accessed using the module.
 
 Authors
 -------
 
--   [Lincoln Stein](Lincoln_Stein "wikilink") <[mailto:lstein-at-cshl.org stein at cshl.org]>
--   [Brian Osborne](Brian_Osborne "wikilink") <[mailto:briano@bioteam.net briano at bioteam.net]>
--   [Heikki Lehvxc3xa4slaiho](Heikki_Lehv\xc3\xa4slaiho "wikilink") <[mailto:heikki-at-ebi.co.uk heikki at ebi.co.uk]>
+-   [Lincoln Stein] <[mailto:lstein-at-cshl.org stein at cshl.org]>
+-   [Brian Osborne] <[mailto:briano@bioteam.net briano at bioteam.net]>
+-   [Heikki Lehvxc3xa4slaiho] <[mailto:heikki-at-ebi.co.uk heikki at ebi.co.uk]>
 
 Copyright
 ---------
@@ -35,7 +35,7 @@ Revision History
 Creating OBDA-Compliant Indexed Sequence Files
 ----------------------------------------------
 
-has the same functionality as the various Bio::Index modules. The main reason to use it is if you want to use the BioSequence Registry system (see the [OBDA Access HOWTO](HOWTO:OBDA "wikilink")), or if you want to share the same indexed files among scripts written in other languages, such as those written with [BioJava](http://biojava.org) or [BioPython](http://biopython.org).
+has the same functionality as the various Bio::Index modules. The main reason to use it is if you want to use the BioSequence Registry system (see the [OBDA Access HOWTO]), or if you want to share the same indexed files among scripts written in other languages, such as those written with [BioJava](http://biojava.org) or [BioPython](http://biopython.org).
 
 There are four steps to creating a database:
 
@@ -45,7 +45,7 @@ Select a directory in which the flat file indexes will be stored. This directory
 <!-- -->
 
 2. Move the Flat Files Into a Good Location  
-The indexer records the path to the source files (e.g. [FASTA](FASTA "wikilink"), or local copies of [GenBank](GenBank "wikilink"), [EMBL](EMBL "wikilink") or [SwissProt](SwissProt "wikilink")). This means that you must not change the location or name of the source files after running the indexer. Pick a good stable location for the source files and move them there.
+The indexer records the path to the source files (e.g. [FASTA], or local copies of [GenBank], [EMBL] or [SwissProt]). This means that you must not change the location or name of the source files after running the indexer. Pick a good stable location for the source files and move them there.
 
 <!-- -->
 
@@ -55,7 +55,7 @@ Choose a good symbolic name for the database. For example, if you are mirroring 
 <!-- -->
 
 4. Run the `bioflat_index.pl` Script  
-The final step is to run the `bioflat_index.PLS` script. This script is located in the [BioPerl](BioPerl "wikilink") distribution, under `scripts/DB`. For convenience, you are offered the option to copy it to `/usr/bin` or another system-wide directory on "`make install`" (and its name will be changed to `bioflat_index.pl`).
+The final step is to run the `bioflat_index.PLS` script. This script is located in the [BioPerl] distribution, under `scripts/DB`. For convenience, you are offered the option to copy it to `/usr/bin` or another system-wide directory on "`make install`" (and its name will be changed to `bioflat_index.pl`).
 
 Choosing Your Options
 ---------------------
@@ -91,7 +91,7 @@ The following command line options are required:
 
 -   The '''-i''' option selects the indexing scheme. Currently there are two indexing schemes supported: "bdb" and "flat".
     -   "'''bdb'''" selects an index based on the Berkeley DB library. It is generally the faster of the two, but it requires that the Berkeley DB library (from Linux RPM or from [Oracle](http://www.oracle.com), version 2 or higher) and the Perl module be installed on your system. '''The Perl module will not work'''!
-    -   "'''flat'''" is a sorted text-based index that uses a binary search algorithm to rapidly search for entries. Although not as fast as bdb, the flat indexing system has good performance for even large databases, and it has no requirements beyond [Perl](Perl "wikilink") itself. The disadvantage of "flat" is that the indexing of large databases will be slower and more memory-intensive than the indexing using "bdb". Once an indexing scheme has been selected there is no way to change it other than recreating the index from scratch using the -c option.
+    -   "'''flat'''" is a sorted text-based index that uses a binary search algorithm to rapidly search for entries. Although not as fast as bdb, the flat indexing system has good performance for even large databases, and it has no requirements beyond [Perl] itself. The disadvantage of "flat" is that the indexing of large databases will be slower and more memory-intensive than the indexing using "bdb". Once an indexing scheme has been selected there is no way to change it other than recreating the index from scratch using the -c option.
 
 <!-- -->
 
@@ -140,7 +140,7 @@ The modules will use the first "word" in the fasta header as the primary key (`P
 
 `   >(S+)`
 
-This value turns out to be same value returned by Sequence object's display_id() method for sequences in [FASTA sequence format](FASTA_sequence_format "wikilink"). The table below shows the default primary keys of the four formats.
+This value turns out to be same value returned by Sequence object's display_id() method for sequences in [FASTA sequence format]. The table below shows the default primary keys of the four formats.
 
 | Format  | Seq method     | Regular expression |
 |---------|----------------|--------------------|
@@ -179,6 +179,6 @@ This code will index the file `ppp.fa` and place the indexes in the directory `/
 More Information
 ----------------
 
-For more information on using your indexed flat files please see the [OBDA Access HOWTO](HOWTO:OBDA "wikilink").'
+For more information on using your indexed flat files please see the [OBDA Access HOWTO].'
 
-<Category:HOWTOs>
+

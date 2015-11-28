@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Population Genetics"
 layout: default
 ---
 
@@ -13,7 +13,7 @@ Dept Molecular Genetics and Microbiology, Duke University.
 Copyright
 ---------
 
-This document is copyright [Jason Stajich](Jason_Stajich "wikilink"). It can be copied and distributed under the terms of the [Perl Artistic License](Perl_Artistic_License "wikilink").
+This document is copyright [Jason Stajich]. It can be copied and distributed under the terms of the [Perl Artistic License].
 
 Revision History
 ----------------
@@ -23,7 +23,7 @@ Revision History
 | Revision 0.1 2004-06-28 JES                                                  | First draft                             |
 | Revision 0.2 2004-02-22 JES                                                  | Updated method docs                     |
 | Revision 0.3 2005-03-05 JES                                                  | Expanded to cover coalescent and others |
-| Revision 0.4 [Torst](User:Tseemann "wikilink") 06:07, 22 December 2005 (EST) | Wiki version                            |
+| Revision 0.4 [Torst] 06:07, 22 December 2005 (EST) | Wiki version                            |
 
 Introduction
 ------------
@@ -32,12 +32,12 @@ We have aimed to build a set of modules that can be used as part of an automated
 
 To see results of using these tools see Stajich and Hahn <cite>perlymorphism</cite> using `tajima_D`, Hahn et al <cite>hahn2004</cite> using `composite_LD`, and Rockman et al <cite>rockman2003</cite> using `F[st]`.
 
-This document will be split up into sections which describe the data objects for representing populations, tests you can perform using these objects, a coalescent implementation, and objects for performing sequence distance based calculations. A full treatment of the Bioperl interface to the PAML suite <cite>paml</cite> is covered in the [PAML HOWTO](HOWTO:PAML "wikilink") and objects and data pertinent to phylogenetic data manipulation are covered in the [Trees HOWTO](HOWTO:Trees "wikilink").
+This document will be split up into sections which describe the data objects for representing populations, tests you can perform using these objects, a coalescent implementation, and objects for performing sequence distance based calculations. A full treatment of the Bioperl interface to the PAML suite <cite>paml</cite> is covered in the [PAML HOWTO] and objects and data pertinent to phylogenetic data manipulation are covered in the [Trees HOWTO].
 
 The Bio::PopGen Objects
 -----------------------
 
-In [BioPerl](BioPerl "wikilink") we have created a few objects to describe population genetic data. These are all located in the namespace, so they can be browsed by looking at the `Bio/PopGen` directory.
+In [BioPerl] we have created a few objects to describe population genetic data. These are all located in the namespace, so they can be browsed by looking at the `Bio/PopGen` directory.
 
 is a container for a set of in order to represent individuals from a population. Each Individual has a set of genotype objects which are an allele set associated with a unique marker name. Methods associated with the Population object can calculate the summary statistics such as pi, theta, heterozygocity by processing each Individual in the set.
 
@@ -97,7 +97,7 @@ Typically one wants to get population data from a datafile.
 
 ### CSV format
 
-The [CSV](wp:Comma-separated_values "wikilink") format is a comma delimited format where each row is for an individual. The first column gives the individual or sample id and the rest of the columns are the alleles for the individual for each marker. The names of the markers in these rows are listed in the header or which is the very first line of the file.
+The [CSV] format is a comma delimited format where each row is for an individual. The first column gives the individual or sample id and the rest of the columns are the alleles for the individual for each marker. The names of the markers in these rows are listed in the header or which is the very first line of the file.
 
 `    SAMPLE,D17S1111,D7S123`
 `    1001,102 123,104 107`
@@ -116,9 +116,9 @@ TODO.
 Allele data from Alignments using Bio::AlignIO and Bio::PopGen::Utilities
 -------------------------------------------------------------------------
 
-Often one doesn't already have data in [SNP](wp:Single_nucleotide_polymorphism "wikilink") format but want to determine the polymorphisms from an alignment of sequences from many individuals. To do this we can read in an alignment and process each column of the alignment determine if it is polymorphic in the individuals assayed. Of course this will not work properly if the alignment is bad or with very distantly related species. It also may not properly work for gapped or indel columns so we might need to recode these as Insertion or Deletion depending on the questions one is asking.
+Often one doesn't already have data in [SNP] format but want to determine the polymorphisms from an alignment of sequences from many individuals. To do this we can read in an alignment and process each column of the alignment determine if it is polymorphic in the individuals assayed. Of course this will not work properly if the alignment is bad or with very distantly related species. It also may not properly work for gapped or indel columns so we might need to recode these as Insertion or Deletion depending on the questions one is asking.
 
-The modules to parse alignments are part of the system. To parse a [Clustalw](Clustalw "wikilink") or clustalw-like output one uses the following code to get an alignment which is a object.
+The modules to parse alignments are part of the system. To parse a [Clustalw] or clustalw-like output one uses the following code to get an alignment which is a object.
 
 ` use Bio::AlignIO;`
 ` my $in = Bio::AlignIO->new(-format => \'clustalw\', -file => \'file.aln\');`
@@ -138,7 +138,7 @@ The object has methods for turning a Bio::SimpleAlign object into a object. Each
 `                                                     -include_monomorphic =>1);`
 ` `
 
-In the future it will be possible to just ask for the sites which are [synonymous and non-synonymous](wp:Synonymous_substitution "wikilink") if one can assume the first sequence is the reference sequence and that the sequence only contains coding sequences.
+In the future it will be possible to just ask for the sites which are [synonymous and non-synonymous] if one can assume the first sequence is the reference sequence and that the sequence only contains coding sequences.
 
 Summary Statistics with Bio::PopGen::Statistics
 -----------------------------------------------
@@ -314,4 +314,4 @@ Bibliography
 
 </biblio>'
 
-<Category:HOWTOs> <Category:TODO>
+ <Category:TODO>

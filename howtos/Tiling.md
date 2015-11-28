@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Tiling"
 layout: default
 ---
 
@@ -8,14 +8,14 @@ Abstract
 
 A detailed description of the namespace, including how-tos for the application of to obtain global alignment statistics from BLAST-type search reports parsed by .
 
-[Quick Link](#Tiling_Your_Searches_with_Bio::Search::Tiling::MapTiling "wikilink") to user tips.
+[Quick Link] to user tips.
 
 __TOC__
 
 Why Tile?
 ---------
 
-Frequently, users want to use a set of high-scoring pairs (HSPs) obtained from a BLAST or other search to assess the overall level of identity, conservation, or coverage represented by matches between a subject and a query sequence. Because a set of HSPs frequently describes multiple overlapping sequence fragments, a simple summation of a statistics over the HSPs will generally be an overestimate of the true value. To obtain an accurate estimate of global hit statistics, a ''[tiling](wp:Tessellation "wikilink")'' of HSPs onto either the subject or the query sequence must be performed, in order to properly correct for this. ''(Aside for pedants: The use of the term tiling is very imprecise in this article, but the underlying algorithm is based on the construction of an actual tiling of certain subsets of the natural numbers.)''
+Frequently, users want to use a set of high-scoring pairs (HSPs) obtained from a BLAST or other search to assess the overall level of identity, conservation, or coverage represented by matches between a subject and a query sequence. Because a set of HSPs frequently describes multiple overlapping sequence fragments, a simple summation of a statistics over the HSPs will generally be an overestimate of the true value. To obtain an accurate estimate of global hit statistics, a ''[tiling]'' of HSPs onto either the subject or the query sequence must be performed, in order to properly correct for this. ''(Aside for pedants: The use of the term tiling is very imprecise in this article, but the underlying algorithm is based on the construction of an actual tiling of certain subsets of the natural numbers.)''
 
 BioPerl has long provided the means to estimate global statistics for a search report based on tiling ideas. The module, along with concurrent modifications to and , allows approximate tiling estimates of statistics such as number of identities, number of conserved sites, and fraction of site aligned. While these have been useful for many, the algorithm is not perfect, as the authors acknowledge (see [this post](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028584.html)), and there is a lack of trust in these estimates by core developers, to the extent that a ''de facto'' deprecation appears to be underway (see bioperl-l threads [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028502.html) and [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-May/029959.html), for examples).
 
@@ -63,7 +63,7 @@ Tiling Your Searches with
 
 ### Overview
 
-Searches parsed with are organized as follows ''(see and [Parsing BLAST HSPs](Parsing_BLAST_HSPs "wikilink") for much more detail)'':
+Searches parsed with are organized as follows ''(see and [Parsing BLAST HSPs] for much more detail)'':
 
 -   the object contains
     -   , which contain
@@ -249,7 +249,7 @@ $concat_seq_obj = $alns\[0\]->get_seq_by_id('query');
 
 ```
 
-The experimental method `get_tiled_alns()` uses a tiling to concatenate tiled HSPs into a series of objects. Each alignment contains two sequences with ids 'query' and 'subject', and consists of a concatenation of tiling HSPs which overlap or are directly adjacent. The alignment are returned in `$type` sequence order. When HSPs overlap, the alignment sequence is taken from the HSP which comes first in the [coverage map](#The_.22Coverage_Map.22 "wikilink") array.
+The experimental method `get_tiled_alns()` uses a tiling to concatenate tiled HSPs into a series of objects. Each alignment contains two sequences with ids 'query' and 'subject', and consists of a concatenation of tiling HSPs which overlap or are directly adjacent. The alignment are returned in `$type` sequence order. When HSPs overlap, the alignment sequence is taken from the HSP which comes first in the [coverage map] array.
 
 The sequences in each alignment contain features (even though they are objects) which map the original query/subject coordinates to the new alignment sequence coordinates. You can determine the original BLAST fragments this way:
 
@@ -273,7 +273,7 @@ $aln = ($tiling->get_tiled_alns)\[0\]; $qseq = $aln->get_seq_by_id('query'); $hs
 
 ```
 
-Read more about features at [the HOWTO](HOWTO:Feature-Annotation "wikilink").
+Read more about features at [the HOWTO].
 
 ### Statistics Method "Actions"
 
@@ -295,7 +295,7 @@ The global statistics are calculated by summing quantities over the disjoint com
 
 ### Specifying Strand/Frame Context
 
-In the `MapTiling` implementation, strand/frame ''contexts'' (see [key concepts](#Key_Organizing_Concepts "wikilink") above) are properties of sequence ''types'' within HSPs, and not of HSPs themselves.
+In the `MapTiling` implementation, strand/frame ''contexts'' (see [key concepts] above) are properties of sequence ''types'' within HSPs, and not of HSPs themselves.
 
 To avoid the proliferation of ` -strand => $strand, -frame => $frame ` arguments in already long argument lists, and to reduce the ''context'' to a single simple entity, `MapTiling` uses yet another ad-hoc representation of strand/frame specification. In the code and pod, this is called the ''context string''. Its syntax is as follows (with apologies to the W3C, as well as the reader):
 
@@ -330,11 +330,11 @@ $tiling->conserved('query', 'fast', 'm2')
 
 ```
 
-The ''type'' must be specified to `_context` due to a semi-predicate issue in the `frame()` method of `B:S:HSP::HSPI`; ''viz.'', the frame is set to 0 and not `undef` when the frame context is not meaningful for a sequence type in the algorithm. So, we need to check the algorithm and sequence type to see whether the frame character should be '_' or '(0)' (see [Encapsulating the Kludge](#Encapsulating_the_Kludge "wikilink")).
+The ''type'' must be specified to `_context` due to a semi-predicate issue in the `frame()` method of `B:S:HSP::HSPI`; ''viz.'', the frame is set to 0 and not `undef` when the frame context is not meaningful for a sequence type in the algorithm. So, we need to check the algorithm and sequence type to see whether the frame character should be '_' or '(0)' (see [Encapsulating the Kludge]).
 
 ### A Note on Argument Defaults
 
-The `MapTiling` API generally requests ''type'', ''action'', and ''context'' as arguments (see the section on [key concepts](#Key_Organizing_Concepts "wikilink") above). Some internal methods require only ''type'' and ''context'', while the `frac` method also expects a ''denominator'' (''denom''). This is a pain, so some defaults are set up. Most of the stat methods default to
+The `MapTiling` API generally requests ''type'', ''action'', and ''context'' as arguments (see the section on [key concepts] above). Some internal methods require only ''type'' and ''context'', while the `frac` method also expects a ''denominator'' (''denom''). This is a pain, so some defaults are set up. Most of the stat methods default to
 
 :\* ''type'' : 'query';
 
@@ -382,7 +382,7 @@ The hows of the implementation are left up to the developer. No specification is
 
 ### Coordinate Handling
 
-As explained [above](#Key_Organizing_Concepts "wikilink"), the search algorithms that use translated nucleotides contain sequence types whose reported and enumerated coordinates differ. Thus the coordinate systems being used, and the lengths calculated from them, need to be tracked explicitly. In particular, for the fractional statistics (`frac_identical`, e.g), coordinate conversions must be performed so that numerators and denominators are in the same coordinate system.
+As explained [above], the search algorithms that use translated nucleotides contain sequence types whose reported and enumerated coordinates differ. Thus the coordinate systems being used, and the lengths calculated from them, need to be tracked explicitly. In particular, for the fractional statistics (`frac_identical`, e.g), coordinate conversions must be performed so that numerators and denominators are in the same coordinate system.
 
 #### Encapsulating the Kludge
 
@@ -406,7 +406,7 @@ In the table, a ''mapping coefficient'' (either 1 or 3) is associated with each 
 
 #### Doing the Conversions
 
-Again, the (or my) goal is to make conversions between enumerated and reported coordinates happen in as few places in the code as possible. In the current incarnation of `MapTiling`, conversions happen at two points: once in the calculation of the "coverage map" (described in [The Algorithm](#The_Algorithm "wikilink")), and once in the single "foreign" namespace method, `Bio::Search::HSP::HSPI::matches_MT()`, defined in (see [Splitting Decisions](#Splitting_Decisions "wikilink") for a few more details). These correspond roughly to denominators (the coverage map is used to determine lengths across the tiling), and numerators ( `matches_MT()` does many of the identities/conserved sites calculations), respectively. The reader can look at the code directly for the details. In both places, as discussed above, the mapping coefficients are requested on every call and the conversion calculation (which doesn't cost much) proceeds regardless of the algorithm name.
+Again, the (or my) goal is to make conversions between enumerated and reported coordinates happen in as few places in the code as possible. In the current incarnation of `MapTiling`, conversions happen at two points: once in the calculation of the "coverage map" (described in [The Algorithm]), and once in the single "foreign" namespace method, `Bio::Search::HSP::HSPI::matches_MT()`, defined in (see [Splitting Decisions] for a few more details). These correspond roughly to denominators (the coverage map is used to determine lengths across the tiling), and numerators ( `matches_MT()` does many of the identities/conserved sites calculations), respectively. The reader can look at the code directly for the details. In both places, as discussed above, the mapping coefficients are requested on every call and the conversion calculation (which doesn't cost much) proceeds regardless of the algorithm name.
 
 The MapTiling Algorithm
 -----------------------
@@ -461,7 +461,7 @@ The ''coverage map'' is the useful association of the disjoint decomposition wit
 
 `[ [$a0, $a1], [ $hsp_object_0, $hsp_object_1, ...] ]`
 
-The first element is one of the ''component intervals'', and the second is an array containing all the ''HSP objects'' whose coordinate range '''for the given sequence type''' contain the component interval. So we note that coverage maps are specific for hit objects '''and''' sequence type. For reports with translated nucleotides, the coverage map is also dependent on the sequence ''context'' (see [key concepts](#Key_Organizing_Concepts "wikilink")). The coverage map for a tiling can be accessed with the `coverage_map($type, $context)` method:
+The first element is one of the ''component intervals'', and the second is an array containing all the ''HSP objects'' whose coordinate range '''for the given sequence type''' contain the component interval. So we note that coverage maps are specific for hit objects '''and''' sequence type. For reports with translated nucleotides, the coverage map is also dependent on the sequence ''context'' (see [key concepts]). The coverage map for a tiling can be accessed with the `coverage_map($type, $context)` method:
 
 ```perl
 
@@ -530,7 +530,7 @@ Implementation Doodads
 
 `MapTiling` is divided into and . `MapTiling.pm` defines the tiling object and contains the method overrides for compliance, as well the "high-level internals" that do the coverage map and statistics calculations. These depend on the "low-level internals" defined in `MapTileUtils.pm`. These are the functions (not object methods) that implement the bona fide tiling on closed real intervals. The split allows the hard work to be performed without object-related overhead, and on simple data types with simple comparison operations. The conversions back into object-related structures happen in `MapTiling`.
 
-`MapTileUtils` also assists the ["kludge encapsulation"](#Encapsulating_the_Kludge "wikilink"): it holds the algorithm lookup table and the functions that read it, as well as the foreign definition of `matches_MT`.
+`MapTileUtils` also assists the ["kludge encapsulation"]: it holds the algorithm lookup table and the functions that read it, as well as the foreign definition of `matches_MT`.
 
 I chose to define a new `matches_MT()` function in the namespace, partly because it was natural to use a method off the HSP objects directly at the point in the code where its functionality was required (in `MapTiling::_calc_stats`), and partly because it mimics the `matches()` function set up in that namespace to work with and so provides some familiarity for other developers. In particular, like `matches()`, it allows the specification of a subsequence of the HSP in the arguments. However, it works under the design conventions described above for handling coordinate conversions, so it seemed more reasonable to roll my own rather than patch the existing version. The location and existence of `matches_MT` is definitely subject to change, and is provided without any warranty expressed or implied.
 
@@ -552,4 +552,4 @@ Read it. Write it. Live it.
 
 '
 
-<Category:HOWTOs>
+

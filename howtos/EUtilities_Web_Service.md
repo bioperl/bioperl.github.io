@@ -1,19 +1,19 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:EUtilities Web Service"
 layout: default
 ---
 
 Abstract
 --------
 
-Using BioPerl to make and manage [NCBI](http://www.ncbi.nlm.nih.gov/) Entrez web service queries via the [EUtilities](http://www.ncbi.nlm.nih.gov/entrez/query/static/eutils_help.html) [SOAP](wp:SOAP "wikilink") service.
+Using BioPerl to make and manage [NCBI](http://www.ncbi.nlm.nih.gov/) Entrez web service queries via the [EUtilities](http://www.ncbi.nlm.nih.gov/entrez/query/static/eutils_help.html) [SOAP] service.
 
 __TOC__
 
 Author
 ------
 
-[Mark A. Jensen](User:Majensen "wikilink")
+[Mark A. Jensen]
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -22,14 +22,14 @@ Author
 Introduction
 ------------
 
-The Entrez SOAP web service provided by NCBI promises to be more stable and efficient than CGI for programmatic access to NCBI databases. The publically accessible descriptions of request and response formats in the form of computable [WSDL](wp:WSDL "wikilink") documents solidify and systematize the interface to the databases, making programs that depend on database access more reliable and maintainable. More complex data can be managed and computed because of the "contract" the WSDL provides with the user with respect to data organization and access protocols.
+The Entrez SOAP web service provided by NCBI promises to be more stable and efficient than CGI for programmatic access to NCBI databases. The publically accessible descriptions of request and response formats in the form of computable [WSDL] documents solidify and systematize the interface to the databases, making programs that depend on database access more reliable and maintainable. More complex data can be managed and computed because of the "contract" the WSDL provides with the user with respect to data organization and access protocols.
 
 Because data access and management can be better systematized using a web service protocol like SOAP, the service can support more complex features and data organization, making it difficult for the developer initially to take advantage of the benefits of web services. (SoapEU) is a system of modules designed to make Entrez SOAP access easy to incorporate into scripts and Perl one-liners, yet also provide enough hooks into the low-level interfaces to make more sophisticated code possible with a minimum of extra logic.
 
 Dependencies and Installation
 -----------------------------
 
-SoapEU is currently available in the [trunk](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-run/trunk/lib/Bio/Tools/Run/) of [bioperl-run](bioperl-run "wikilink") at revision <b>16687</b>, in the `Bio::DB` namespace. is the main module. Other SoapEU requirements are:
+SoapEU is currently available in the [trunk](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-run/trunk/lib/Bio/Tools/Run/) of [bioperl-run] at revision <b>16687</b>, in the `Bio::DB` namespace. is the main module. Other SoapEU requirements are:
 
 -   -   , ,
 
@@ -41,12 +41,12 @@ and the lower-level SOAP access modules
 
 SoapEU requires CPAN modules and , both of which are standard BioPerl core externals.
 
-To download and install BioPerl core and packages from Git, see [Using Git](Using_Git "wikilink").
+To download and install BioPerl core and packages from Git, see [Using Git].
 
 Overview
 --------
 
-SoapEU is intended to provide all the functionality currently available in (see [the EUtilities Cookbook](HOWTO:EUtilities_Cookbook "wikilink") for many examples and use cases). It provides an extensive and extensible backend for adapting the SOAP responses into appropriate and familiar BioPerl objects and iterators.
+SoapEU is intended to provide all the functionality currently available in (see [the EUtilities Cookbook] for many examples and use cases). It provides an extensive and extensible backend for adapting the SOAP responses into appropriate and familiar BioPerl objects and iterators.
 
 The mantra is (1) create a `Bio::DB::SoapEUtilities` factory object; (2) use the factory to select a utility (`esearch, efetch, einfo, elink, esummary, egquery, epost, espell`) and set its parameters; (3) run the utility; (4) iterate the result object, or access it for data. A typical use case might be the following:
 
@@ -99,7 +99,7 @@ otherwise, the correct one will be obtained over the network (by and friends).
 
 ### Utilities and parameters
 
-To run any of the standard NCBI EUtilities (`einfo, esearch, esummary, elink, egquery, epost, espell`), call the desired utility from the factory. To use a utility, you must set its parameters and run it to get a result. [TMTOWTDI](wp:TMTOWTDI "wikilink"):
+To run any of the standard NCBI EUtilities (`einfo, esearch, esummary, elink, egquery, epost, espell`), call the desired utility from the factory. To use a utility, you must set its parameters and run it to get a result. [TMTOWTDI]:
 
 ```perl
 
@@ -137,7 +137,7 @@ For more information on parameters, see [1](http://www.ncbi.nlm.nih.gov/entrez/q
 
 ### Results
 
-The "intermediate" object for `SoapEU` query results is the . This is a BioPerly parsing of the SOAP message sent by NCBI when a query is `run()`. This can be very useful on its own, but most users will likely want to proceed directly to [Adaptors](#Adaptors "wikilink"), which take a `Result` and turn it into more intuitive/familiar BioPerl objects. Go there if the following details are too gory.
+The "intermediate" object for `SoapEU` query results is the . This is a BioPerly parsing of the SOAP message sent by NCBI when a query is `run()`. This can be very useful on its own, but most users will likely want to proceed directly to [Adaptors], which take a `Result` and turn it into more intuitive/familiar BioPerl objects. Go there if the following details are too gory.
 
 Results can be highly- or lowly-parsed, depending on the parameters passed to the factory `run()` method. To get the raw XML message with no parsing, do
 
@@ -235,7 +235,7 @@ t-db => 'taxonomy', t-id => $seq->species->ncbi_taxid )->run(-auto_adapt => 1);
 
 See the pod for the FetchAdaptor subclasses (e.g., ) for more detail.
 
-'''''[Tip:''''](Tip:\'\'\'\'\)' : Use the `fasta` (a.k.a. `TSeq` in the WSDL) return type to avoid long wait times. This returns seq ids, sequence, and a few metadata items. The `gb` (a.k.a. `GBSeq`) return type will fetch all [feature and annotation](HOWTO:Feature-Annotation "wikilink") data by default.
+'''''[Tip:''''](Tip:\'\'\'\'\)' : Use the `fasta` (a.k.a. `TSeq` in the WSDL) return type to avoid long wait times. This returns seq ids, sequence, and a few metadata items. The `gb` (a.k.a. `GBSeq`) return type will fetch all [feature and annotation] data by default.
 
 To cut down (a little) on GenBank format parsing time, you may use the system, as in . This is somewhat advanced, but would look like this:
 
@@ -533,4 +533,4 @@ $species = $species_io->next_species; $linnaeus = $species->binomial;
 
 '
 
-<Category:HOWTOs> [Category:Developer resources](Category:Developer_resources "wikilink")
+ [Category:Developer resources]

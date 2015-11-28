@@ -1,17 +1,17 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Trees"
 layout: default
 ---
 
 Author
 ------
 
-[Jason Stajich](Jason_Stajich "wikilink"), Dept. [Molecular Genetics and Microbiology](http://mgm.duke.edu), [Institute for Genome Sciences and Policy](http://www.genome.duke.edu), [Duke University](http://www.duke.edu). <jason-at-bioperl.org>
+[Jason Stajich], Dept. [Molecular Genetics and Microbiology](http://mgm.duke.edu), [Institute for Genome Sciences and Policy](http://www.genome.duke.edu), [Duke University](http://www.duke.edu). <jason-at-bioperl.org>
 
 Copyright
 ---------
 
-This document is copyright [Jason Stajich](Jason_Stajich "wikilink"). It can be copied and distributed under the terms of the [Perl Artistic License](Perl_Artistic_License "wikilink").
+This document is copyright [Jason Stajich]. It can be copied and distributed under the terms of the [Perl Artistic License].
 
 Revision History
 ----------------
@@ -21,19 +21,19 @@ Revision History
 | Revision 0.1 2003-12-01 JES                                                  | First version             |
 | Revision 0.2 2004-11-05 BIO                                                  | Add SVG section and links |
 | Revision 0.3 2005-07-11 JES                                                  | Explore Node objects more |
-| Revision 0.4 [Torst](User:Tseemann "wikilink") 05:49, 22 December 2005 (EST) | Wiki version              |
+| Revision 0.4 [Torst] 05:49, 22 December 2005 (EST) | Wiki version              |
 
 Abstract
 --------
 
-This [HOWTO](HOWTO "wikilink") intends to show how to use the [BioPerl](BioPerl "wikilink") Tree objects to manipulate phylogenetic trees. It shows how to read and write trees, query them for information about specific nodes or overall statistics, and create pictures of trees. Advanced topics include discussion of generating random trees and extensions of the basic structure for integration with other modules in [BioPerl](BioPerl "wikilink").
+This [HOWTO] intends to show how to use the [BioPerl] Tree objects to manipulate phylogenetic trees. It shows how to read and write trees, query them for information about specific nodes or overall statistics, and create pictures of trees. Advanced topics include discussion of generating random trees and extensions of the basic structure for integration with other modules in [BioPerl].
 
 Introduction
 ------------
 
-Generating and manipulating phylogenetic trees is an important part of modern systematics and molecular evolution research. The construction of trees is the subject of a rich literature and active research. This [HOWTO](HOWTO "wikilink") and the modules described within are focused on querying and manipulating trees once they have been created.
+Generating and manipulating phylogenetic trees is an important part of modern systematics and molecular evolution research. The construction of trees is the subject of a rich literature and active research. This [HOWTO] and the modules described within are focused on querying and manipulating trees once they have been created.
 
-The data we intend to capture with these objects concerns the notion of Trees and their Nodes. A Tree is made up of Nodes and the relationships which connect these nodes. The basic representation of parent and child nodes is intended to represent the directionality of evolution. This is to capture the idea that some ancestral species gave rise, through speciation events, to a number of child species. So, it means that object is rooted tree. If you work with unrooted trees, do not forget to root them before loading to object. The data in the trees need not be a strictly bifurcating tree (or binary trees to the [computer science](wp:computer_science "wikilink") types), and a parent node can give rise to 1 or many child nodes.
+The data we intend to capture with these objects concerns the notion of Trees and their Nodes. A Tree is made up of Nodes and the relationships which connect these nodes. The basic representation of parent and child nodes is intended to represent the directionality of evolution. This is to capture the idea that some ancestral species gave rise, through speciation events, to a number of child species. So, it means that object is rooted tree. If you work with unrooted trees, do not forget to root them before loading to object. The data in the trees need not be a strictly bifurcating tree (or binary trees to the [computer science] types), and a parent node can give rise to 1 or many child nodes.
 
 In practice there are just a few main objects, or modules, you need to know about. There is the main Tree object which is the main entry point to the data represented by a tree. A Node is represented generically by , however there are subclasses of this object to handle particular cases where we need a richer object (see for more information). The connections between Nodes are described using a few simple concepts. There is the concept of pointers or references where a particular Node keeps track of who its parent is and who its children are. A Node can only have 1 parent and it can have 1 or many children. In fact all of the information in a tree pertaining to the relationships between Nodes and specific data, like bootstrap values and labels, are all stored in the Node objects while the object is just a container for some summary information about the tree and a description of the tree's root node.
 
@@ -42,13 +42,13 @@ Reading and Writing Trees
 
 Trees are used to represent the ancestry of a collection of taxa, sequences, or populations.
 
-Using one can read trees from files or datastreams and create objects. This is analogous to how we read sequences from sequence files with to create [BioPerl](BioPerl "wikilink") sequence objects which can be queried and manipulated. Similarly we can write objects out to string representations like the [Newick](Newick_tree_format "wikilink") or [New Hampshire tree formats](New_Hampshire_tree_format "wikilink") which can be printed to a file, a datastream, stored in database, etc.
+Using one can read trees from files or datastreams and create objects. This is analogous to how we read sequences from sequence files with to create [BioPerl] sequence objects which can be queried and manipulated. Similarly we can write objects out to string representations like the [Newick] or [New Hampshire tree formats] which can be printed to a file, a datastream, stored in database, etc.
 
-The main module for reading and writing trees is the factory module which has several driver modules which plug into it. These drivers include for [New Hampshire](New_Hampshire_tree_format "wikilink") or [Newick tree format](Newick_tree_format "wikilink"), for the [New Hampshire extended tree format](New_Hampshire_extended_tree_format "wikilink") from [Sean Eddy](http://selab.janelia.org) and [Christian Zmasek](http://www.phylogenomics.us/people/zmasek/) as part of their [RIO, Forrester and ATV](http://www.phylosoft.org/forester/) system <cite>RIO,ATV,SDI</cite>, and for the [phyloxml tree format](phyloxml_tree_format "wikilink"). The driver supports parsing tree data from PAUP's Nexus format. However this driver currently only supports parsing, not writing, of [Nexus tree format](Nexus_tree_format "wikilink") tree files. There are also modules for [lintree tree format](lintree_tree_format "wikilink") and [Pagel tree format](Pagel_tree_format "wikilink") for writing these formats out.
+The main module for reading and writing trees is the factory module which has several driver modules which plug into it. These drivers include for [New Hampshire] or [Newick tree format], for the [New Hampshire extended tree format] from [Sean Eddy](http://selab.janelia.org) and [Christian Zmasek](http://www.phylogenomics.us/people/zmasek/) as part of their [RIO, Forrester and ATV](http://www.phylosoft.org/forester/) system <cite>RIO,ATV,SDI</cite>, and for the [phyloxml tree format]. The driver supports parsing tree data from PAUP's Nexus format. However this driver currently only supports parsing, not writing, of [Nexus tree format] tree files. There are also modules for [lintree tree format] and [Pagel tree format] for writing these formats out.
 
-A newly added capability (after [1.5.2](Release_1.5.2 "wikilink")) allows you to specify that the internal nodes id encode bootstrap values instead of IDs. Provide the ```perl -internal_node_id => 'bootstrap' ```
+A newly added capability (after [1.5.2]) allows you to specify that the internal nodes id encode bootstrap values instead of IDs. Provide the ```perl -internal_node_id => 'bootstrap' ```
 
-`to `` and it will automatically move the ids over to the bootstrap slot.  This is only valid for the `[`Nexus`](Nexus_tree_format "wikilink")` and `[`Newick` `tree` `formats`](Newick_tree_format "wikilink")`.  `
+`to `` and it will automatically move the ids over to the bootstrap slot.  This is only valid for the `[`Nexus`]` and `[`Newick` `tree` `formats`]`.  `
 
 An additional function was written to do this work in called `move_id_to_bootstrap` which will do this work for you as well. Call it on a object.
 
@@ -258,7 +258,7 @@ Get the distance between two nodes by adding up the branch lengths of all the co
 
 ```perl my $distances = $tree->distance(-nodes => \[$node1,$node2\]); ```
 
-Perform a test of [monophyly](wp:monophyly "wikilink") for a set of nodes and a given outgroup node. This means the common ancestor for the members of the internal_nodes group is more recent than the common ancestor that any of them share with the outgroup node. Please notice that a test of [monophyly](wp:monophyly "wikilink") is applicable for rooted trees only.
+Perform a test of [monophyly] for a set of nodes and a given outgroup node. This means the common ancestor for the members of the internal_nodes group is more recent than the common ancestor that any of them share with the outgroup node. Please notice that a test of [monophyly] is applicable for rooted trees only.
 
 ```perl
 
@@ -274,7 +274,7 @@ print "these nodes are monophyletic: ",
 
 ```
 
-Perform a test of [paraphyly](wp:paraphyly "wikilink") for a set of nodes and a given outgroup node. This means that a common ancestor 'A' for the members of the ingroup is more recent than a common ancestor 'B' that they share with the outgroup node and that there are no other nodes in the tree which have 'A' as a common ancestor before 'B'. Please notice that a test of [paraphyly](wp:paraphyly "wikilink") is applicable for rooted trees only.
+Perform a test of [paraphyly] for a set of nodes and a given outgroup node. This means that a common ancestor 'A' for the members of the ingroup is more recent than a common ancestor 'B' that they share with the outgroup node and that there are no other nodes in the tree which have 'A' as a common ancestor before 'B'. Please notice that a test of [paraphyly] is applicable for rooted trees only.
 
 ```perl
 
@@ -312,7 +312,7 @@ Operations on Nodes
 
 ### Node connectivity methods
 
--   `add_Descendent` - add a Descendent ([polytomies](wp:Polytomy "wikilink") are allowed)
+-   `add_Descendent` - add a Descendent  are allowed)
 -   `each_Descendent` - retrieve all immediete children from a node.
 -   `get_all_Descendents` - retrieve all sub Nodes from this node
 
@@ -358,7 +358,7 @@ my $treeio = Bio::TreeIO->new(-format => 'newick', ttt -fh => \*DATA); if( my $t
 Making Images of Trees
 ----------------------
 
-You can also make images of trees. If you have the module installed you can create an [SVG](wp:SVG "wikilink") image of your tree. The example below uses TreeIO to get a Tree object and then its tree is written to an image file.
+You can also make images of trees. If you have the module installed you can create an [SVG] image of your tree. The example below uses TreeIO to get a Tree object and then its tree is written to an image file.
 
 ```perl
 
@@ -380,9 +380,9 @@ while( my $tree = $in->next_tree ) {
 
 ```
 
-An even better way to draw trees is implemented in which will draw a [cladogram](wp:Cladogram "wikilink") in [postscript](wp:postscript "wikilink") format. The postscript file can be converted to [SVG](wp:SVG "wikilink"), [PDF](wp:PDF "wikilink") which can also be rendered in [PNG](wp:PNG "wikilink"), [JPEG](wp:JPEG "wikilink"), and other image file formats. This module does depend on the external module .
+An even better way to draw trees is implemented in which will draw a [cladogram] in [postscript] format. The postscript file can be converted to [SVG], [PDF] which can also be rendered in [PNG], [JPEG], and other image file formats. This module does depend on the external module .
 
-Here is a simple script that writes out a postscript file for every file ending in `.tre` in a directory. It assumes the files are in [Newick tree format](Newick_tree_format "wikilink") but can be switched [Nexus tree format](Nexus_tree_format "wikilink") (like what you get out of a [MrBayes](MrBayes "wikilink") run if 'nexus' is instead the code below replacing 'newick'. The `-bootstrap => 1` option specifies that internal id values should be written out - currently it assumes id is stored in the `id()` field so you will have to copy the values from the `bootstrap()` field if they are stored there. The `-compact => 0` option specifies that branch lengths should be written (so this is actually a [phylogram](wp:Phylogenetic_tree#Types_of_phylogenetic_trees "wikilink") ), `-compact => 1` would instead draw a cladogram with equal branch lengths for all branches.
+Here is a simple script that writes out a postscript file for every file ending in `.tre` in a directory. It assumes the files are in [Newick tree format] but can be switched [Nexus tree format] (like what you get out of a [MrBayes] run if 'nexus' is instead the code below replacing 'newick'. The `-bootstrap => 1` option specifies that internal id values should be written out - currently it assumes id is stored in the `id()` field so you will have to copy the values from the `bootstrap()` field if they are stored there. The `-compact => 0` option specifies that branch lengths should be written (so this is actually a [phylogram] ), `-compact => 1` would instead draw a cladogram with equal branch lengths for all branches.
 
 ```perl
 
@@ -413,15 +413,15 @@ opendir(DIR, $dir) || die $!; for my $file ( readdir(DIR) ) {
 Constructing Trees
 ------------------
 
-There are many applications available to build phylogenetic trees. You can also build a tree using [Bioperl](Bioperl "wikilink") alone.
+There are many applications available to build phylogenetic trees. You can also build a tree using [Bioperl] alone.
 
-Pairwise distances for all sequences in an alignment can be computed with and . There are several different methods implemented. For [DNA](wp:DNA "wikilink") alignments, Jukes-Cantor <cite>JukesCantor69</cite>, Juke-Cantor uncorrected, Kimura 2-parameter <cite>Kimura80</cite>, Felsenstein <cite>felsenstein81</cite>, Tajima-Nei <cite>TajimaNei84</cite>, JinNei <cite>JinNei90</cite>, and Tamura <cite>Tamura92</cite> are currently implemented. In addition, for coding sequences, synonymous and non-synonymous counts can be computed with the [pairwise_kaks.pl](http://cvs.bioperl.org/cgi-bin/viewcvs/viewcvs.cgi/bioperl-live/scripts/utilities/pairwise_kaks.PLS?rev=HEAD&cvsroot=bioperl&content-type=text/vnd.viewcvs-markup). For Protein sequences alignments only Kimura <cite>Kimura93</cite> is currently supported although other methods will be added.
+Pairwise distances for all sequences in an alignment can be computed with and . There are several different methods implemented. For [DNA] alignments, Jukes-Cantor <cite>JukesCantor69</cite>, Juke-Cantor uncorrected, Kimura 2-parameter <cite>Kimura80</cite>, Felsenstein <cite>felsenstein81</cite>, Tajima-Nei <cite>TajimaNei84</cite>, JinNei <cite>JinNei90</cite>, and Tamura <cite>Tamura92</cite> are currently implemented. In addition, for coding sequences, synonymous and non-synonymous counts can be computed with the [pairwise_kaks.pl](http://cvs.bioperl.org/cgi-bin/viewcvs/viewcvs.cgi/bioperl-live/scripts/utilities/pairwise_kaks.PLS?rev=HEAD&cvsroot=bioperl&content-type=text/vnd.viewcvs-markup). For Protein sequences alignments only Kimura <cite>Kimura93</cite> is currently supported although other methods will be added.
 
 To use these methods simply initialize a statistics module, and pass in an alignment object () and the type of distance method to use and the module will return a matrix object of pairwise distances. The code example below shows how this could be done.
 
-Given the matrix of pairwise distances one can build a phylogenetic tree using 2 methods provided in the . Simply request either Neighbor-Joining (NJ) trees or Unweighted Pair Group Method with Arithmetic Mean ([UPGMA](wp:UPGMA "wikilink")) clusters. There are caveats with these methods and whether or not the distances are additive. The method `check_additivity` in is provided to calculate whether or not additivity holds for the data.
+Given the matrix of pairwise distances one can build a phylogenetic tree using 2 methods provided in the . Simply request either Neighbor-Joining (NJ) trees or Unweighted Pair Group Method with Arithmetic Mean ) clusters. There are caveats with these methods and whether or not the distances are additive. The method `check_additivity` in is provided to calculate whether or not additivity holds for the data.
 
-The following is a basic code snippet which describes how to use the pairwise distance and tree building modules in [BioPerl](BioPerl "wikilink") starting with a DNA alignment file from clustalw. Note that there is also a module.
+The following is a basic code snippet which describes how to use the pairwise distance and tree building modules in [BioPerl] starting with a DNA alignment file from clustalw. Note that there is also a module.
 
 ```perl
 
@@ -483,7 +483,7 @@ Once trees have been generated for each replicate, the bootstrap support for the
 Advanced Topics
 ---------------
 
-It is possible to generate random tree topologies with a [BioPerl](BioPerl "wikilink") object called . The factory only requires the specification of the total number of taxa in order to simulate a history. One can request different methods for generating the random phylogeny. At present, however, only the simple Yule backward is implemented and is the default.
+It is possible to generate random tree topologies with a [BioPerl] object called . The factory only requires the specification of the total number of taxa in order to simulate a history. One can request different methods for generating the random phylogeny. At present, however, only the simple Yule backward is implemented and is the default.
 
 The trees can be generated with the following code. You can either specify the names of taxa or just a count of total number of taxa in the simulation.
 
@@ -522,7 +522,7 @@ while( my $tree = $factory->next_tree) {
 
 ```
 
-There are more sophisticated operations that you may wish to pursue with these objects. We have tried to create a framework for this type of data, but by no means should this be looked at as the final product. If you have a particular statistic or function that applies to trees that you would like to see included in the toolkit we encourage you to send details to the [BioPerl](BioPerl "wikilink") [Mailing list](Mailing_list "wikilink"), <bioperl-l@bioperl.org>
+There are more sophisticated operations that you may wish to pursue with these objects. We have tried to create a framework for this type of data, but by no means should this be looked at as the final product. If you have a particular statistic or function that applies to trees that you would like to see included in the toolkit we encourage you to send details to the [BioPerl] [Mailing list], <bioperl-l@bioperl.org>
 
 References and More Reading
 ---------------------------
@@ -550,4 +550,4 @@ Here's a list of the relevant modules. If you have questions or comments that ar
 
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   '
 
-<Category:HOWTOs>
+

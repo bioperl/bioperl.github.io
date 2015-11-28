@@ -1,4 +1,4 @@
 b'
 
-# REDIRECT [HOWTO:BioPerl Objects](HOWTO:BioPerl_Objects "wikilink")'
+# REDIRECT [HOWTO:BioPerl Objects]'
 

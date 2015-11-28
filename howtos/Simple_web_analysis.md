@@ -1,30 +1,30 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Simple Web Analysis"
 layout: default
 ---
 
 Author
 ------
 
-[Richard Adams](Richard_Adams "wikilink") <[mailto:radams-at-staffmail.ed.ac.uk radams-at-staffmail.ed.ac.uk]>
+[Richard Adams] <[mailto:radams-at-staffmail.ed.ac.uk radams-at-staffmail.ed.ac.uk]>
 
 Dept. Medical Genetics, University of Edinburgh.
 
 Copyright
 ---------
 
-This document is copyright Richard Adams, 2003. It can be copied and distributed under the terms of the [Perl Artistic License](Perl_Artistic_License "wikilink").
+This document is copyright Richard Adams, 2003. It can be copied and distributed under the terms of the [Perl Artistic License].
 
 Version
 -------
 
 -   2003-11-14 First version (Richard Adams)
--   2005-12-21 Wiki version (Torsten Seemann ; [Tseemann](User:Tseemann "wikilink") 17:54, 28 December 2005 (EST))
+-   2005-12-21 Wiki version (Torsten Seemann ; [Tseemann] 17:54, 28 December 2005 (EST))
 
 Abstract
 --------
 
-This [HOWTO](HOWTO "wikilink") tries to teach you to run a web based sequence analysis program using basic SimpleAnalysis rules.
+This [HOWTO] tries to teach you to run a web based sequence analysis program using basic SimpleAnalysis rules.
 
 Introduction
 ------------
@@ -33,7 +33,7 @@ There are several situations where it would be useful to run a web based sequenc
 
 The aim of the Bio::Tools::Analysis::\* modules is to allow automatic submission of sequences to prediction servers to facilitate sequence annotation for low to medium numbers of sequences (perhaps tens to hundreds). The modules both submit the sequences and parse the results into a number of useful formats, usually including Bio::SeqFeature objects, sequence objects and a basic Perl data structure, as well as the raw output text.
 
-At present the following prediction servers are supported, mainly reflecting my own research interests. Under current development are modules wrapping remote analyses using [HMMER](HMMER "wikilink"), [Pfam](http://www.sanger.ac.uk/Software/Pfam/), the ELM peptide motif database and SIFT for prediction of untolerated non-synonymous [SNPs](wp:SNP "wikilink").
+At present the following prediction servers are supported, mainly reflecting my own research interests. Under current development are modules wrapping remote analyses using [HMMER], [Pfam](http://www.sanger.ac.uk/Software/Pfam/), the ELM peptide motif database and SIFT for prediction of untolerated non-synonymous [SNPs].
 
 | Analysis  | Purpose                                | Reference                             |
 |-----------|----------------------------------------|---------------------------------------|
@@ -48,7 +48,7 @@ At present the following prediction servers are supported, mainly reflecting my 
 Simple Examples
 ---------------
 
-The script below runs multiple analyses on a single sequence and parses the results into standard [BioPerl](BioPerl "wikilink") sequence feature objects, ( objects to be precise).
+The script below runs multiple analyses on a single sequence and parses the results into standard [BioPerl] sequence feature objects, ( objects to be precise).
 
          # load up the modules
          use Bio::Tools::Analysis::Protein::HNN;
@@ -74,12 +74,12 @@ The above script runs several analyses using default parameters. All analyses ha
 `    my $tool =  new Bio::Tools::Analysis::Protein::NetPhos();`
 `    $tool->seq($primary_seq);`
 
-Note that the only valid sequence format is a object. This is in order to support multiple methods of retrieving the results. If you initially have a object or object (e.g., from a [GenBank sequence format](GenBank_sequence_format "wikilink")) you can call its `primary_seq()` method to obtain a object.
+Note that the only valid sequence format is a object. This is in order to support multiple methods of retrieving the results. If you initially have a object or object (e.g., from a [GenBank sequence format]) you can call its `primary_seq()` method to obtain a object.
 
 Retrieving results
 ------------------
 
-If the `run()` method executes successfully, the raw output (stripped of [HTML](wp:HTML "wikilink")) is now stored in the Analysis object. All modules should return the raw report by a call to `result()` with no parameters. e.g.,
+If the `run()` method executes successfully, the raw output (stripped of [HTML]) is now stored in the Analysis object. All modules should return the raw report by a call to `result()` with no parameters. e.g.,
 
 `    my $raw_report = $tool->result();`
 
@@ -94,12 +94,12 @@ A third way is to retrieve an array of sequence features:
 `    my @fts = $tool->result(\'Bio::SeqFeatureI\');`
 `    $seq->add_SeqFeature(@fts); # add features to sequence.`
 
-These are features. Sometimes a module might use some code to judge the significance of a result prior to listing it as a feature, for example in the secondary structure prediction modules. The rules governing this are described in individual modules. For example, I have put in a rule that only runs of a minimum of 4 consecutive residues predicted to be [beta sheet](wp:Beta_sheet "wikilink") or [alpha helix](wp:Alpha_helix "wikilink") can be annotated as features - it makes no sense for a single isolated residue to be annotated as being in a helix. However you might want to filter the raw results yourself, in which case retrieving the results as type objects might be better.
+These are features. Sometimes a module might use some code to judge the significance of a result prior to listing it as a feature, for example in the secondary structure prediction modules. The rules governing this are described in individual modules. For example, I have put in a rule that only runs of a minimum of 4 consecutive residues predicted to be [beta sheet] or [alpha helix] can be annotated as features - it makes no sense for a single isolated residue to be annotated as being in a helix. However you might want to filter the raw results yourself, in which case retrieving the results as type objects might be better.
 
 Metasequences
 -------------
 
-Many analyses produce a list of scores, one for each residue in a sequence. For example, the protein [secondary structure](wp:secondary_structure "wikilink") prediction program Sopma returns a list of probabilities for each residue being in helix, sheet, turn or coil. These modules make this data available in the form of meta sequences. These are sequence objects derived from that have arrays of sequence associated data contained in the object. The meta sequence names should be listed in the individual module documentation. To retrieve results like this supply the string `\'meta\'` as a parameter to the `result()` method. Meta sequence objects can access all the object methods for accessing and manipulating the protein/DNA sequence and also have specific methods for accessing the result data.
+Many analyses produce a list of scores, one for each residue in a sequence. For example, the protein [secondary structure] prediction program Sopma returns a list of probabilities for each residue being in helix, sheet, turn or coil. These modules make this data available in the form of meta sequences. These are sequence objects derived from that have arrays of sequence associated data contained in the object. The meta sequence names should be listed in the individual module documentation. To retrieve results like this supply the string `\'meta\'` as a parameter to the `result()` method. Meta sequence objects can access all the object methods for accessing and manipulating the protein/DNA sequence and also have specific methods for accessing the result data.
 
 `    $meta_seq = $analysis->result(\'meta\');`
 
@@ -107,13 +107,13 @@ This returns a sequence object with the raw analysis data accessible through met
 
 `    my @scores1_20 = $meta_seq->named_sub_meta(\'Sopma_turn\', 1,20);`
 
-returns an array of scores for the first 20 [amino acids](wp:Amino_acid "wikilink").
+returns an array of scores for the first 20 [amino acids].
 
 `    my @allscores = $meta_seq->named_meta(\'Sopma_turn\');`
 
 returns an array of scores for the whole sequence. The names of individual meta sequence names are listed in the module documentation.
 
-Although a full description of how metasequence objects work isn't really the purpose of this [HOWTOs](HOWTOs "wikilink") there is excellent documentation in and modules.
+Although a full description of how metasequence objects work isn't really the purpose of this [HOWTOs] there is excellent documentation in and modules.
 
 How to run the same analysis with varying parameters
 ----------------------------------------------------
@@ -186,6 +186,6 @@ Alternatively, mail me with your suggestion and I'll try to put one together. It
 Acknowledgments
 ---------------
 
-These modules depend on several recently developed modules and wouldn't work at all without them: modules by [Chad Matsalla](Chad_Matsalla "wikilink"), [Aaron Mackey](Aaron_Mackey "wikilink") and [Heikki Lehvxc3xa4slaiho](Heikki_Lehv\xc3\xa4slaiho "wikilink"), by [Heikki Lehvxc3xa4slaiho](Heikki_Lehv\xc3\xa4slaiho "wikilink"), and Bio::SimpleAnalysisI by [Martin Senger](Martin_Senger "wikilink").'
+These modules depend on several recently developed modules and wouldn't work at all without them: modules by [Chad Matsalla], [Aaron Mackey] and [Heikki Lehvxc3xa4slaiho], by [Heikki Lehvxc3xa4slaiho], and Bio::SimpleAnalysisI by [Martin Senger].'
 
-<Category:HOWTOs>
+

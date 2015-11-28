@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Writing BioPerl Tests"
 layout: default
 ---
 
@@ -11,11 +11,11 @@ This is a quick HOWTO on writing tests for old and new BioPerl code.
 Authors
 =======
 
-[Christopher Fields](Christopher_Fields "wikilink")
+[Christopher Fields]
 
-[Spiros Denaxas](Spiros_Denaxas "wikilink")
+[Spiros Denaxas]
 
-[Sendu Bala](Sendu_Bala "wikilink")
+[Sendu Bala]
 
 Introduction
 ============
@@ -27,7 +27,7 @@ Some guidelines
 
 # Use Bio::Root::Test and its methods wherever possible.
 2.  Tests that require internet access should be skipped unless network tests have been enabled by the user. Use Bio::Root::Test's test_skip() method to handle this.
-3.  BioPerl has a long list of [dependencies](BioPerl_Dependencies "wikilink") which are optionally installed. If a set of tests require some of those dependencies, use Bio::Root::Test's test_skip() method to skip them if the dependencies aren't present.
+3.  BioPerl has a long list of [dependencies] which are optionally installed. If a set of tests require some of those dependencies, use Bio::Root::Test's test_skip() method to skip them if the dependencies aren't present.
 
 Using Bio::Root::Test
 =====================
@@ -417,4 +417,4 @@ Some resources you might find useful:
 
 '
 
-[Category:Developer resources](Category:Developer_resources "wikilink")
+[Category:Developer resources]

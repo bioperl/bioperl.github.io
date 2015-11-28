@@ -1,21 +1,21 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:BlastPlus"
 layout: default
 ---
 
 Abstract
 --------
 
-Using BioPerl to create, manage, and query [BLAST](wp:BLAST "wikilink") databases using the [NCBI's](http://www.ncbi.nlm.nih.gov/) `blast+` suite.
+Using BioPerl to create, manage, and query [BLAST] databases using the [NCBI's](http://www.ncbi.nlm.nih.gov/) `blast+` suite.
 
-Quicklink to [Synopsis](#Synopsis "wikilink").
+Quicklink to [Synopsis].
 
 __TOC__
 
 Author
 ------
 
-[Mark A. Jensen](User:Majensen "wikilink")
+[Mark A. Jensen]
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -24,25 +24,25 @@ Author
 Introduction
 ------------
 
-[`blast+`](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from the &lt;span style='plainlinks'>[NCBI](http://www.ncbi.nlm.nih.gov/)</span> that create, manipulate, manage and query [BLAST](wp:BLAST "wikilink") sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
+[`blast+`](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from the &lt;span style='plainlinks'>[NCBI](http://www.ncbi.nlm.nih.gov/)</span> that create, manipulate, manage and query [BLAST] sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
 
 Dependencies and Installation
 -----------------------------
 
-(r16783) and (r16834) can be found in the [master](http://github.com/bioperl/bioperl-run/tree/master/lib/Bio/Tools/Run) of [bioperl-run](bioperl-run "wikilink"). These depend on a lower-level wrapper, and (@ r16472 in [bioperl-run](bioperl-run "wikilink")), and extensions to , (@ r16780), in the [master](http://github.com/bioperl/bioperl-live/tree/master/Bio/Tools/Run) of [bioperl-live](bioperl-live "wikilink").
+(r16783) and (r16834) can be found in the [master](http://github.com/bioperl/bioperl-run/tree/master/lib/Bio/Tools/Run) of [bioperl-run]. These depend on a lower-level wrapper, and (@ r16472 in [bioperl-run]), and extensions to , (@ r16780), in the [master](http://github.com/bioperl/bioperl-live/tree/master/Bio/Tools/Run) of [bioperl-live].
 
-To download and install BioPerl core and packages from github see [Using Git](Using_Git "wikilink").
+To download and install BioPerl core and packages from github see [Using Git].
 
 Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the NCBI FTP site: [1](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The &lt;span style='plainlinks'>[user manual](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/user_manual.pdf)</span> is very helpful.
 
 Overview
 --------
 
-The object is a "factory" or harness that directs the execution of the various `blast+` programs. The basic mantra is to (1) create a `StandAloneBlastPlus` factory using the `new()` constructor, and (2) perform BLAST analyses by calling the desired BLAST program by name off the factory object. The database can be pre-existing, or can be created directly using a [FASTA](wp:FASTA "wikilink") file or a BioPerl sequence collection object. Low-complexity or other masking can also be applied as the database is constructed.
+The object is a "factory" or harness that directs the execution of the various `blast+` programs. The basic mantra is to (1) create a `StandAloneBlastPlus` factory using the `new()` constructor, and (2) perform BLAST analyses by calling the desired BLAST program by name off the factory object. The database can be pre-existing, or can be created directly using a [FASTA] file or a BioPerl sequence collection object. Low-complexity or other masking can also be applied as the database is constructed.
 
-The BLAST database itself and any masking data are attached to the factory object ([step 1](#Database_construction "wikilink")). Query sequences and any parameters associated with particular programs are provided to the blast method call ([step 2](#Blast_method_execution "wikilink")), and are run against the attached database. (We present step 2 first, since it's what people will do many times after creating their database once.)
+The BLAST database itself and any masking data are attached to the factory object ([step 1]). Query sequences and any parameters associated with particular programs are provided to the blast method call ([step 2]), and are run against the attached database. (We present step 2 first, since it's what people will do many times after creating their database once.)
 
-`blast+` also provides facilities for blasting sequences against NCBI databases over the network. See [Remote BLAST](#Remote_BLAST "wikilink") for details.
+`blast+` also provides facilities for blasting sequences against NCBI databases over the network. See [Remote BLAST] for details.
 
 BLAST method execution
 ----------------------
@@ -59,7 +59,7 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 
 ```
 
-(see [factory construction](#Factory_construction_and_initialization "wikilink") below) you can run the desired BLAST method directly from the factory object, against the database currently attached to the factory (in the above example, `testdb`). `-query` is a required argument:
+(see [factory construction] below) you can run the desired BLAST method directly from the factory object, against the database currently attached to the factory (in the above example, `testdb`). `-query` is a required argument:
 
 ```perl
 
@@ -91,7 +91,7 @@ $fac->rewind_results; while ($result = $fac->next_result) {
 
 ```
 
-BLAST methods include `blastn, blastp, blastx, tblastn, tblastx, rpsblast, psiblast, rpstblastn`, as well as others I probably forget. For more details on parsing and processing the results, see the [SearchIO HOWTO](HOWTO:SearchIO "wikilink").
+BLAST methods include `blastn, blastp, blastx, tblastn, tblastx, rpsblast, psiblast, rpstblastn`, as well as others I probably forget. For more details on parsing and processing the results, see the [SearchIO HOWTO].
 
 Note the following details:
 
@@ -204,7 +204,7 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 
 ```
 
-To create a BLAST database de novo, see [Creating a BLAST database](#Creating_a_BLAST_database "wikilink").
+To create a BLAST database de novo, see [Creating a BLAST database].
 
 If you wish to apply pre-existing mask data (i.e., the final ASN1 output from one of the `blast+` masker programs), to the database before querying, specify it with `-mask_file`:
 
@@ -311,7 +311,7 @@ and so on.
 
 ### Creating and using mask data
 
-The blast+ mask utilities `windowmasker`, `segmasker`, and `dustmasker` are available. Masking can be rolled into database creation, or can be executed later. If your mask data is already created and in ASN1 format, set the `-mask_file` attribute on construction (see [Factory construction/initialization](#Factory_construction/initialization "wikilink")).
+The blast+ mask utilities `windowmasker`, `segmasker`, and `dustmasker` are available. Masking can be rolled into database creation, or can be executed later. If your mask data is already created and in ASN1 format, set the `-mask_file` attribute on construction (see [Factory construction/initialization]).
 
 To create a mask from raw data or an existing database and apply the mask upon database creation, construct the factory like so:
 
@@ -593,4 +593,4 @@ $fac->bl2seq( -method => 'blastp',
 
 '
 
-<Category:HOWTOs>
+

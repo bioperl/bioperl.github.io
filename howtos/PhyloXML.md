@@ -1,17 +1,17 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:PhyloXML"
 layout: default
 ---
 
 Author
 ------
 
-[Mira Han](Mira_Han "wikilink"), [Indiana University](http://informatics.indiana.edu). <mirhan-at-indiana.edu>
+[Mira Han], [Indiana University](http://informatics.indiana.edu). <mirhan-at-indiana.edu>
 
 Abstract
 --------
 
-This [HOWTO](HOWTO "wikilink") intends to show how to use the [BioPerl](BioPerl "wikilink") driver to parse and write the [phyloxml tree format](phyloxml_tree_format "wikilink").
+This [HOWTO] intends to show how to use the [BioPerl] driver to parse and write the [phyloxml tree format].
 
 Introduction
 ------------
@@ -346,4 +346,4 @@ Here's a list of the relevant modules. If you have questions or comments that ar
 
 -   -   -   -   -   -   -   -   -   '
 
-<Category:HOWTOs>
+

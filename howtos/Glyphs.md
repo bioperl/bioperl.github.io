@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Glyphs"
 layout: default
 ---
 
@@ -15,7 +15,7 @@ Cold Spring Harbor Laboratory
 Copyright
 ---------
 
-This document is copyright [Lincoln Stein](Lincoln_Stein "wikilink"), 2007. It can be copied and distributed under the terms of the [Perl Artistic License](Perl_Artistic_License "wikilink").
+This document is copyright [Lincoln Stein], 2007. It can be copied and distributed under the terms of the [Perl Artistic License].
 
 Revision History
 ----------------
@@ -23,12 +23,12 @@ Revision History
 |                                                                   |                  |
 |-------------------------------------------------------------------|------------------|
 | 2007-01-15                                                        | Revision History |
-| Revision 0.1 [Lincoln Stein](Lincoln_Stein "wikilink") 2007-05-15 | Created document |
+| Revision 0.1 [Lincoln Stein] 2007-05-15 | Created document |
 
 Abstract
 --------
 
-This [HOWTO](HOWTO "wikilink") describes how to extend the module with custom glyphs. Custom glyphs can be used to display sequence features that have special display needs, including quantitative data, images, and spectrographs. For background information, please see <HOWTO:Graphics>.
+This [HOWTO] describes how to extend the module with custom glyphs. Custom glyphs can be used to display sequence features that have special display needs, including quantitative data, images, and spectrographs. For background information, please see <HOWTO:Graphics>.
 
 Introduction
 ------------
@@ -782,7 +782,7 @@ my $subfeat = $bsg->new(-start=>100,-end=>400); $subfeat->add_SeqFeature($bsg->n
 
 ```
 
-(The full modified script is [here](glyph-howto-supplementary-script-1#supplement-1 "wikilink").)
+(The full modified script is [here].)
 
 The feature now contains three subfeatures. The second and third subfeatures still only contain one part, but the first subfeature contains two subfeatures of its own, one which spans the location 1..200 and the other which spans the location 300..400. However, when we run the script with this modification, we get the same image as Figure 8; the first subfeature is shown as a single part.
 
@@ -1032,4 +1032,4 @@ print $gd->png;
 
 Output: ![](figXX.jpg "fig:figXX.jpg")'
 
-<Category:HOWTOs>
+

@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:BioGraphics"
 layout: default
 ---
 
@@ -13,7 +13,7 @@ Cold Spring Harbor Laboratory
 Copyright
 ---------
 
-This document is copyright [Lincoln Stein](Lincoln_Stein "wikilink"), 2002. It can be copied and distributed under the terms of the [Perl Artistic License](Perl_Artistic_License "wikilink").
+This document is copyright [Lincoln Stein], 2002. It can be copied and distributed under the terms of the [Perl Artistic License].
 
 Revision History
 ----------------
@@ -22,35 +22,35 @@ Revision History
 |----------------------------------------------------------------------------------------|------------------------------------------------|
 | 2002-09-01                                                                             | Revision History                               |
 | Revision 0.2 2003-05-15 lds                                                            | Current as of BioPerl 1.2.2                    |
-| Revision 0.3 [Torsten Seemann](User:Tseemann "wikilink") 06:17, 22 December 2005 (EST) | BioPerl Wiki & fixed figure references.        |
-| Revision 0.4 [Jason Stajich](User:Jason "wikilink") 13:11, 28 December 2005 (EST)      | Added many links to modules.                   |
-| Revision 0.5 [Mauricio Herrera](User:Mauricio "wikilink") 14:56, 29 October 2006 (EST) | Added syntax highlighting and code formatting. |
+| Revision 0.3 [Torsten Seemann] 06:17, 22 December 2005 (EST) | BioPerl Wiki & fixed figure references.        |
+| Revision 0.4 [Jason Stajich] 13:11, 28 December 2005 (EST)      | Added many links to modules.                   |
+| Revision 0.5 [Mauricio Herrera] 14:56, 29 October 2006 (EST) | Added syntax highlighting and code formatting. |
 
 Abstract
 --------
 
-This [HOWTO](HOWTO "wikilink") describes how to render sequence data graphically in a horizontal map. It applies to a variety of situations ranging from rendering the feature table of a [GenBank](GenBank "wikilink") entry, to graphing the positions and scores of a [BLAST](BLAST "wikilink") search, to rendering a clone map. It describes the programmatic interface to the module, and discusses how to create dynamic web pages using and the [Gbrowse](Gbrowse "wikilink") package.
+This [HOWTO] describes how to render sequence data graphically in a horizontal map. It applies to a variety of situations ranging from rendering the feature table of a [GenBank] entry, to graphing the positions and scores of a [BLAST] search, to rendering a clone map. It describes the programmatic interface to the module, and discusses how to create dynamic web pages using and the [Gbrowse] package.
 
 Introduction
 ------------
 
-This [HOWTO](HOWTO "wikilink") describes the module, and some of the applications that were built on top of it. was designed to solve the following common problems:
+This [HOWTO] describes the module, and some of the applications that were built on top of it. was designed to solve the following common problems:
 
--   You have a list of [BLAST](BLAST "wikilink") hits on a sequence and you want to generate a picture that shows where the hits go and what their score is.
--   You have a big [GenBank](GenBank "wikilink") file with a complex feature table, and you want to render the positions of the genes, repeats, promoters and other features.
--   You have a list of [ESTs](wp:Expressed_sequence_tag "wikilink") that you've mapped to a genome, and you want to show how they align.
+-   You have a list of [BLAST] hits on a sequence and you want to generate a picture that shows where the hits go and what their score is.
+-   You have a big [GenBank] file with a complex feature table, and you want to render the positions of the genes, repeats, promoters and other features.
+-   You have a list of [ESTs] that you've mapped to a genome, and you want to show how they align.
 -   You have created a clone fingerprint map, and you want to display it.
 
-The module was designed to solve these problems. In addition, using the module (part of [BioPerl](BioPerl "wikilink")) and the [Gbrowse](Gbrowse "wikilink") program (available from [<http://www.gmod.org>](http://www.gmod.org)) you can create interactive web pages to explore your data.
+The module was designed to solve these problems. In addition, using the module (part of [BioPerl]) and the [Gbrowse] program (available from [<http://www.gmod.org>](http://www.gmod.org)) you can create interactive web pages to explore your data.
 
-This document takes you through a few common applications of Bio::Graphics in a cookbook fashion. Advanced users might be interested in the [Custom Glyph HOWTO](HOWTO:Glyphs "wikilink"), which explains how to extend Bio::Graphics using custom glyphs.
+This document takes you through a few common applications of Bio::Graphics in a cookbook fashion. Advanced users might be interested in the [Custom Glyph HOWTO], which explains how to extend Bio::Graphics using custom glyphs.
 
 Preliminaries
 -------------
 
 Bio::Graphics is dependent on , a Perl module for generating bitmapped graphics written by the author. in turn is dependent on [libgd](http://www.boutell.com/gd), a C library written by Thomas Boutell, formerly also of [Cold Spring Harbor Laboratory](http://www.cshl.org). To use , you must have both these software libraries installed.
 
-If you are on a [Linux](wp:Linux "wikilink") system, you might already have GD installed. To verify, run the following command:
+If you are on a [Linux] system, you might already have GD installed. To verify, run the following command:
 
 `% perl -MGD -e \'print $GD::VERSION, "\`
 
@@ -65,18 +65,18 @@ You will also need to install the module.
 Getting Started
 ---------------
 
-All the code examples, [BLAST](BLAST "wikilink") input files, and sequence files we'll use are available here:
+All the code examples, [BLAST] input files, and sequence files we'll use are available here:
 
--   [BLASTN output](BLASTN_output "wikilink")
--   [render_blast1.pl](render_blast1 "wikilink")
--   [render_blast2.pl](Render_blast2 "wikilink")
--   [render_blast3.pl](Render_blast3 "wikilink")
--   [render_blast4.pl](Render_blast4 "wikilink")
--   [embl2picture.pl](Embl2picture "wikilink")
--   [render_features.pl](Render_features "wikilink")
--   [factor7.embl](Factor7 "wikilink")
+-   [BLASTN output]
+-   [render_blast1.pl]
+-   [render_blast2.pl]
+-   [render_blast3.pl]
+-   [render_blast4.pl]
+-   [embl2picture.pl]
+-   [render_features.pl]
+-   [factor7.embl]
 
-Our first example will be rendering a table of [BLAST](BLAST "wikilink") hits on a sequence that is exactly 1000 residues long. For now, we're ignoring finicky little details like [HSPs](HSP "wikilink"), and assume that each hit is a single span from start to end. Also, we'll be using the [BLAST](BLAST "wikilink") score rather than P or E value. Later on, we'll switch to using real [BLAST](BLAST "wikilink") output parsed by the module, but for now, our table looks like this:
+Our first example will be rendering a table of [BLAST] hits on a sequence that is exactly 1000 residues long. For now, we're ignoring finicky little details like [HSPs], and assume that each hit is a single span from start to end. Also, we'll be using the [BLAST] score rather than P or E value. Later on, we'll switch to using real [BLAST] output parsed by the module, but for now, our table looks like this:
 
 '''Table 1. Simple blast hit file (data1.txt)'''
 
@@ -143,7 +143,7 @@ We're now ready to render the blast hit file. We loop through it (line 7-14), st
 
 After creating the feature object, we add it to the track by calling the track's `add_feature()` method (line 13).
 
-After processing all the hits, we call the panel's `png()` method to render them and convert it into a [Portable Network Graphics (PNG)](wp:Portable_Network_Graphics "wikilink") file, the contents of which are printed to standard output. We can now view the result by piping it to our favorite image display program. Users of operating systems that don't support pipes can simply redirect the output to a file and view it in their favorite image program.
+After processing all the hits, we call the panel's `png()` method to render them and convert it into a [Portable Network Graphics  file, the contents of which are printed to standard output. We can now view the result by piping it to our favorite image display program. Users of operating systems that don't support pipes can simply redirect the output to a file and view it in their favorite image program.
 
 `% perl render_blast1.pl data1.txt | display -`
 
@@ -152,7 +152,7 @@ After processing all the hits, we call the panel's `png()` method to render them
 > `  \'\'\'Important!\'\'\'`
 >
 > `  If you are on a Windows platform, you need to put STDOUT into binary`
-> `  mode so that the PNG file does not go through `[`Window\'s`](wp:Microsoft_windows "wikilink")` carriage`
+> `  mode so that the PNG file does not go through `[`Window\'s`]` carriage`
 > `  return/linefeed transformations. Before the final ``print`` statement, put`
 > `  the statement ``binmode(STDOUT)``.`
 >
@@ -243,7 +243,7 @@ When we run the modified script, we get this image:
 
 > `  \'\'\'Important!\'\'\'`
 > `  Remember that if you are on a Windows platform, you need to put STDOUT`
-> `  into binary mode so that the `[`PNG`](wp:PNG "wikilink")` file does not go through Window\'s`
+> `  into binary mode so that the `[`PNG`]` file does not go through Window\'s`
 > `  carriage return/linefeed transformations. Before the final print`
 > `  statement, write ``binmode(STDOUT)``.`
 
@@ -323,7 +323,7 @@ print $panel->png;
 
 There are two changes to look at. The first appears in line 24, where we pass the `-sort_order` option to the call that creates the blast hit track. `-sort_order` changes the way that features sort from top to bottom, and will accept a number of prepackaged sort orders or a coderef for custom sorting. In this case, we pass a prepackaged sort order of high_score, which sorts the hits from top to bottom in reverse order of their score.
 
-The second change is more complicated, and involves the -description option that appears in the `add_track()` call on lines 25-28. The value of `-description` will be printed beneath each feature. We could pass `-description` a constant string, but that would simply print the same string under each feature. Instead we pass `-description` a code reference to a subroutine that will be invoked while the picture is being rendered. This subroutine will be passed the current feature, and must return the string to use as the value of the description. In our code, we simply fetch out the [BLAST](BLAST "wikilink") hit's score using its `score()` method, and incorporate that into the description string.
+The second change is more complicated, and involves the -description option that appears in the `add_track()` call on lines 25-28. The value of `-description` will be printed beneath each feature. We could pass `-description` a constant string, but that would simply print the same string under each feature. Instead we pass `-description` a code reference to a subroutine that will be invoked while the picture is being rendered. This subroutine will be passed the current feature, and must return the string to use as the value of the description. In our code, we simply fetch out the [BLAST] hit's score using its `score()` method, and incorporate that into the description string.
 
 > `  \'\'\'`[`Tip:\'\'\`](Tip:\'\'\)`'`
 > `  The ability to use a code reference as a configuration option isn\'t`
@@ -334,10 +334,10 @@ Another minor change is the use of `-font2color` in line 23. This simply sets th
 
 '''Figure 3. The image with descriptions and sorted hits''' ![](Howto-graphics-fig3.png "fig:Howto-graphics-fig3.png")
 
-Parsing Real [BLAST](BLAST "wikilink") Output
+Parsing Real [BLAST] Output
 ---------------------------------------------
 
-From here it's just a small step to writing a general purpose utility that will read a [BLAST](BLAST "wikilink") file, parse its output, and output a picture. The key is to use the infrastructure because it produces similarity hits that can be rendered directly by . Code example 4 shows the new utility.
+From here it's just a small step to writing a general purpose utility that will read a [BLAST] file, parse its output, and output a picture. The key is to use the infrastructure because it produces similarity hits that can be rendered directly by . Code example 4 shows the new utility.
 
 '''Example 4. Parsing and Rendering a Real BLAST File with Bio::SearchIO'''
 
@@ -420,21 +420,21 @@ print $panel->png;
 
 ```
 
-In lines 6-8 we read the name of the file that contains the [BLAST](BLAST "wikilink") results from the command line, and pass it to `{{PM|Bio::SearchIO}}->new()`, returning a parser object. We read a single result from the searchIO object (line 9). This assumes that the [BLAST](BLAST "wikilink") output file contains a single run of BLAST only.
+In lines 6-8 we read the name of the file that contains the [BLAST] results from the command line, and pass it to `{{PM|Bio::SearchIO}}->new()`, returning a parser object. We read a single result from the searchIO object (line 9). This assumes that the [BLAST] output file contains a single run of BLAST only.
 
-We then initialize the panel and tracks as before. The only change here is in lines 24-36, where we create the track for the [BLAST](BLAST "wikilink") hits. The `-description` option has now been enhanced to create a line of text that incorporates the "description" tag from the feature object as well as its similarity score. There's also a slight change in line 26, where we introduce the -connector option. This allows us to configure a line that connects the segments of a discontinuous feature, such as the [HSPs](HSP "wikilink") in a [BLAST](BLAST "wikilink") hit. In this case, we asked the rendering engine to produce a dashed connector line.
+We then initialize the panel and tracks as before. The only change here is in lines 24-36, where we create the track for the [BLAST] hits. The `-description` option has now been enhanced to create a line of text that incorporates the "description" tag from the feature object as well as its similarity score. There's also a slight change in line 26, where we introduce the -connector option. This allows us to configure a line that connects the segments of a discontinuous feature, such as the [HSPs] in a [BLAST] hit. In this case, we asked the rendering engine to produce a dashed connector line.
 
-The remainder of the script retrieves each of the hits from the [BLAST](BLAST "wikilink") file, creates a Feature object representing the hit, and then retrieves each [HSP](HSP "wikilink") and incorporates it into the feature. Line 37 begins a `while()` loop that retrieves each of the similarity hits in turn. We filter the hit by its significance, throwing out any that have an expectation value greater than 1E-20 (you will have to adjust this in your own utilities). We then use the information in the hit to construct a object (lines 39-44). Notice how the name of the hit and the score are used to initialize the feature, and how the description is turned into a tag named "description."
+The remainder of the script retrieves each of the hits from the [BLAST] file, creates a Feature object representing the hit, and then retrieves each [HSP] and incorporates it into the feature. Line 37 begins a `while()` loop that retrieves each of the similarity hits in turn. We filter the hit by its significance, throwing out any that have an expectation value greater than 1E-20 (you will have to adjust this in your own utilities). We then use the information in the hit to construct a object (lines 39-44). Notice how the name of the hit and the score are used to initialize the feature, and how the description is turned into a tag named "description."
 
-The start and end bounds of the hit are determined by the union of its [HSPs](HSP "wikilink"). We loop through each of the hit's HSPs by calling its `next_hsp()` method, and add each [HSP](HSP "wikilink") to the newly-created hit feature by calling the feature's `add_sub_SeqFeature()` method (line 46). The EXPAND parameter instructs the feature to expand its start and end coordinates to enclose the added subfeature.
+The start and end bounds of the hit are determined by the union of its [HSPs]. We loop through each of the hit's HSPs by calling its `next_hsp()` method, and add each [HSP] to the newly-created hit feature by calling the feature's `add_sub_SeqFeature()` method (line 46). The EXPAND parameter instructs the feature to expand its start and end coordinates to enclose the added subfeature.
 
-Once all the [HSPs](HSP "wikilink") are added to the feature, we insert the feature into the track as before using the track's add_feature() function.
+Once all the [HSPs] are added to the feature, we insert the feature into the track as before using the track's add_feature() function.
 
-Figure 4 shows the output from a sample [BLAST](BLAST "wikilink") hit file.
+Figure 4 shows the output from a sample [BLAST] hit file.
 
 '''Figure 4. Output from the BLAST parsing and rendering script''' ![](Howto-graphics-fig4.png "fig:Howto-graphics-fig4.png")
 
-The next section will demonstrate how to parse and display [feature tables](feature_table "wikilink") from [GenBank](GenBank "wikilink") and [EMBL](EMBL "wikilink").
+The next section will demonstrate how to parse and display [feature tables] from [GenBank] and [EMBL].
 
 > `  \'\'\'Important!\'\'\'`
 >
@@ -446,9 +446,9 @@ The next section will demonstrate how to parse and display [feature tables](feat
 Rendering Features from a GenBank or EMBL File
 ----------------------------------------------
 
-With you can render the feature table of a [GenBank](GenBank "wikilink") or [EMBL](EMBL "wikilink") file quite easily. The trick is to use to generate a set of objects, and to use those features to populate tracks (see the [Feature-Annotation HOWTO](HOWTO:Feature-Annotation "wikilink") for more information on features). The documentation for each of the individual. For simplicity's sake, we will sort each feature by its primary tag (such as "[exon](wp:Exon "wikilink")") and create a new track for each tag type. Code example 5 shows the code for rendering an [EMBL](EMBL "wikilink") or [GenBank](GenBank "wikilink") entry.
+With you can render the feature table of a [GenBank] or [EMBL] file quite easily. The trick is to use to generate a set of objects, and to use those features to populate tracks (see the [Feature-Annotation HOWTO] for more information on features). The documentation for each of the individual. For simplicity's sake, we will sort each feature by its primary tag (such as "[exon]") and create a new track for each tag type. Code example 5 shows the code for rendering an [EMBL] or [GenBank] entry.
 
-'''Example 5. The embl2picture.pl script turns any [EMBL](EMBL "wikilink") or [GenBank](GenBank "wikilink") entry into a graphical rendering.'''
+'''Example 5. The embl2picture.pl script turns any [EMBL] or [GenBank] entry into a graphical rendering.'''
 
 ```perl
 
@@ -526,7 +526,7 @@ print $panel->png; exit 0;
 
 ```
 
-The way this script works is simple. After the library load preamble, the script reads the name of the [GenBank](GenBank "wikilink") or [EMBL](EMBL "wikilink") file from the command line (line 8). It passes the filename to 's `new()` method, and reads the first sequence object from it (lines 9-11). If anything goes wrong, the script dies with an error message.
+The way this script works is simple. After the library load preamble, the script reads the name of the [GenBank] or [EMBL] file from the command line (line 8). It passes the filename to 's `new()` method, and reads the first sequence object from it (lines 9-11). If anything goes wrong, the script dies with an error message.
 
 The returned object is a object, which has a length but no defined start or end coordinates. We would like to create a drawable object to use for the scale, so we generate a new object that goes from a start of 1 to the length of the sequence. (lines 12-13).
 
@@ -538,14 +538,14 @@ We now add two tracks, one for the scale (lines 28-32) and the other for the seq
 
 We are now ready to create a track for each feature type. In order to distinguish the tracks by color, we initialize an array of 9 color names and simply cycle through them (lines 39-54). For each feature tag, we retrieve the corresponding list of features from %sorted_features (line 42) and create a track for it using the "generic" glyph and the next color in the list (lines 43-53). We set the -label and -description options to the value "1". This signals that it should do the best it can to choose useful label and description values on its own.
 
-After adding all the feature types, we call the panel's png() method to generate a graphic file, which we print to STDOUT. If we are on a Windows platform, we would have to include binmode(STDOUT) prior to this statement in order to avoid Windows textmode carriage return/linefeed transformations. Figure 5 shows an example of the output of this script using an [EMBL sequence file](Factor7 "wikilink") as input.
+After adding all the feature types, we call the panel's png() method to generate a graphic file, which we print to STDOUT. If we are on a Windows platform, we would have to include binmode(STDOUT) prior to this statement in order to avoid Windows textmode carriage return/linefeed transformations. Figure 5 shows an example of the output of this script using an [EMBL sequence file] as input.
 
 '''Figure 5. Example output image.''' ![](Howto-graphics-fig5.png "fig:Howto-graphics-fig5.png")
 
 A Better Version of the Feature Renderer
 ----------------------------------------
 
-The previous example's rendering has numerous deficiencies. For one thing, there are no lines connecting the various [CDS](CDS "wikilink") rectangles in the [CDS](CDS "wikilink") track to show how they are organized into a spliced transcript. For another, the repetition of the source tag "EMBL/GenBank/SwissProt" is not particularly illuminating.
+The previous example's rendering has numerous deficiencies. For one thing, there are no lines connecting the various [CDS] rectangles in the [CDS] track to show how they are organized into a spliced transcript. For another, the repetition of the source tag "EMBL/GenBank/SwissProt" is not particularly illuminating.
 
 However, it's quite easy to customize the display, making the script into a generally useful utility. The revised code is shown in example 6.
 
@@ -716,11 +716,11 @@ sub generic_description {
 
 ```
 
-At 124 lines, this is the longest example in this HOWTO, but the changes are straightforward. The major difference occurs in lines 47-61 and 62-74, where we handle two special cases: "CDS" records and "tRNAs". For these two feature types we would like to draw the features like genes using the "transcript2" glyph. This glyph draws inverted V's for [introns](wp:intron "wikilink"), if there are any, and will turn the last (or only) exon into an arrow to indicate the direction of transcription.
+At 124 lines, this is the longest example in this HOWTO, but the changes are straightforward. The major difference occurs in lines 47-61 and 62-74, where we handle two special cases: "CDS" records and "tRNAs". For these two feature types we would like to draw the features like genes using the "transcript2" glyph. This glyph draws inverted V's for [introns], if there are any, and will turn the last (or only) exon into an arrow to indicate the direction of transcription.
 
-First we look to see whether there are any features with the primary tag of "CDS" (lines 47-61). If so, we create a track for them using the desired glyph. Line 49 shows how to add several features to a track at creation time. If the first argument to `add_track()` is an array reference, all the features contained in the array will be incorporated into the track. We provide custom code references for the `-label` and `-description` options. As we shall see later, the subroutines these code references point to are responsible for extracting names and descriptions for the coding regions. After we handle this special case, we remove the [CDS](CDS "wikilink") feature type from the `%sorted_features` associative array.
+First we look to see whether there are any features with the primary tag of "CDS" (lines 47-61). If so, we create a track for them using the desired glyph. Line 49 shows how to add several features to a track at creation time. If the first argument to `add_track()` is an array reference, all the features contained in the array will be incorporated into the track. We provide custom code references for the `-label` and `-description` options. As we shall see later, the subroutines these code references point to are responsible for extracting names and descriptions for the coding regions. After we handle this special case, we remove the [CDS] feature type from the `%sorted_features` associative array.
 
-We do the same thing for [tRNA](wp:tRNA "wikilink") features, but with a different color scheme (lines 62-74).
+We do the same thing for [tRNA] features, but with a different color scheme (lines 62-74).
 
 Having dealt with the special cases, we render the remaining feature types using the same code we used earlier. The only change is that instead of allowing to guess at the description from the feature's source tag, we use the `-description` option to point to a subroutine that will generate more informative description strings.
 
@@ -742,15 +742,15 @@ After adding all the feature types, we call the panel's png() method to generate
 Summary
 -------
 
-In summary, we have seen how to use the module to generate representations of sequence features as horizontal maps. We applied these techniques to two common problems: rendering the output of a [BLAST](BLAST "wikilink") run, and rendering the feature table of a [GenBank](GenBank "wikilink")/[EMBL](EMBL "wikilink") entry.
+In summary, we have seen how to use the module to generate representations of sequence features as horizontal maps. We applied these techniques to two common problems: rendering the output of a [BLAST] run, and rendering the feature table of a [GenBank]/[EMBL] entry.
 
-The graphics module is quite flexible. In addition to the options that we have seen, there are glyphs for generating point-like features such as [SNPs](wp:SNP "wikilink"), specialized glyphs that draw [GC content](GC_content "wikilink") and [open reading frames](ORF "wikilink"), and glyphs that generate histograms, bar charts and other types of graphs. has been used to represent physical (clone) maps, radiation hybrid maps, [EST](wp:Expressed_Sequence_Tag "wikilink") clusters, cytogenetic maps, restriction maps, and much more.
+The graphics module is quite flexible. In addition to the options that we have seen, there are glyphs for generating point-like features such as [SNPs], specialized glyphs that draw [GC content] and [open reading frames], and glyphs that generate histograms, bar charts and other types of graphs. has been used to represent physical (clone) maps, radiation hybrid maps, [EST] clusters, cytogenetic maps, restriction maps, and much more.
 
-Although we haven't shown it, provides support for generating HTML image maps. The [Generic Genome Browser](Generic_Genome_Browser "wikilink") uses this facility to generate clickable, browsable images of the genome from a variety of genome databases.
+Although we haven't shown it, provides support for generating HTML image maps. The [Generic Genome Browser] uses this facility to generate clickable, browsable images of the genome from a variety of genome databases.
 
-Another application you should investigate is the script. This script uses the BioFetch interface to fetch [GenBank](GenBank "wikilink")/[EMBL](EMBL "wikilink")/[SwissProt](SwissProt "wikilink") entries dynamically from the web before rendering them into [PNG](wp:PNG "wikilink") images.
+Another application you should investigate is the script. This script uses the BioFetch interface to fetch [GenBank]/[EMBL]/[SwissProt] entries dynamically from the web before rendering them into [PNG] images.
 
-Finally, if you find yourself constantly tweaking the graphic options, you might be interested in , a utility module for interpreting and rendering a simple tab-delimited format for sequence features. is a Perl script built on top of this module, which you can find in the scripts/graphics directory in the [BioPerl](BioPerl "wikilink") distribution.
+Finally, if you find yourself constantly tweaking the graphic options, you might be interested in , a utility module for interpreting and rendering a simple tab-delimited format for sequence features. is a Perl script built on top of this module, which you can find in the scripts/graphics directory in the [BioPerl] distribution.
 
 '''[Tip:''](Tip:\'\'\)'
 
@@ -758,4 +758,4 @@ Obtain the list of glyphs by running perldoc on . You can also obtain a descript
 
 `% perldoc Bio::Graphics::Glyph::arrow'`
 
-<Category:HOWTOs>
+

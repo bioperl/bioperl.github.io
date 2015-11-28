@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:SearchIO"
 layout: default
 ---
 
@@ -12,15 +12,15 @@ This is a HOWTO about the system, how to use it, and how one goes about writing 
 
 `\t`
 
--   [Jason Stajich](Jason_Stajich "wikilink") [jason at bioperl.org](mailto:jason-at-bioperl.org)
--   [Brian Osborne](Brian_Osborne "wikilink") [briano at bioteam.net](mailto:briano@bioteam.net)
+-   [Jason Stajich] [jason at bioperl.org](mailto:jason-at-bioperl.org)
+-   [Brian Osborne] [briano at bioteam.net](mailto:briano@bioteam.net)
 
 Background and Design
 ---------------------
 
-One of the most common and necessary tasks in [bioinformatics](bioinformatics "wikilink") is parsing analysis reports so that one can write programs which can help interpret the sheer volume of data that can be produced by processing many sequences. A popular tool for comparing sequences is the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) package from NCBI. The parsers for BLAST output are part of BioPerl's SearchIO.
+One of the most common and necessary tasks in [bioinformatics] is parsing analysis reports so that one can write programs which can help interpret the sheer volume of data that can be produced by processing many sequences. A popular tool for comparing sequences is the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) package from NCBI. The parsers for BLAST output are part of BioPerl's SearchIO.
 
-The system was designed with the following assumptions: That all reports parsed with it could be separated into a hierarchy of components. The Result is the entire analysis for a single query sequence, and multiple Results can be concatenated together into a single file (i.e. running blastall with a fasta database as the input file rather than a single sequence). Each Result is a set of Hits for the query sequence. Hits are sequences in the searched database which could be aligned to the query sequence and met the minimal search parameters, such as e-value threshold. Each Hit has one or more High-scoring segment Pairs ([HSPs](HSP "wikilink")) which are the alignments of the query and hit sequence. Each Result has a set of one or more Hits and each Hit has a set of one or more HSPs, and this relationship can be used to describe results from all pairwise alignment programs including [BLAST](BLAST "wikilink"), [FastA](FASTA_alignment_program "wikilink"), and implementations of the [Smith-Waterman](wp:Smith_waterman "wikilink") and [Needleman-Wunsch](wp:Needleman-Wunsch "wikilink") algorithms.
+The system was designed with the following assumptions: That all reports parsed with it could be separated into a hierarchy of components. The Result is the entire analysis for a single query sequence, and multiple Results can be concatenated together into a single file (i.e. running blastall with a fasta database as the input file rather than a single sequence). Each Result is a set of Hits for the query sequence. Hits are sequences in the searched database which could be aligned to the query sequence and met the minimal search parameters, such as e-value threshold. Each Hit has one or more High-scoring segment Pairs ) which are the alignments of the query and hit sequence. Each Result has a set of one or more Hits and each Hit has a set of one or more HSPs, and this relationship can be used to describe results from all pairwise alignment programs including [BLAST], [FastA], and implementations of the [Smith-Waterman] and [Needleman-Wunsch] algorithms.
 
 A design pattern, called Factory, is utilized in object oriented programming to separate the entity which processes data from objects which will hold the information produced. In the same manner that the module is used to parse different file formats and produces objects which are compliant, we have written to produce the `Bio::Search` objects. Sequences are a little less complicated so there is only one primary object () while Search results need three main components to represent the data processed in a file:
 
@@ -28,7 +28,7 @@ A design pattern, called Factory, is utilized in object oriented programming to 
 
 -   (hits)
 
--   ([HSPs](HSP "wikilink"))
+-   )
 
 The object is then a factory which produces objects that contain information about the query, the database searched, and the full collection of Hits found for the query.
 
@@ -43,22 +43,22 @@ The generality of the approach is demonstrated by the large number of report for
 |      | ERPIN versions 4.2.5 and above                                                                       |
 |      | Infernal versions 0.7 and above                                                                      |
 |      | MEGABLAST                                                                                            |
-|      | [UCSC formats](UCSC_formats "wikilink") PSL                                                          |
-|      | [WABA](WABA "wikilink")                                                                              |
-|      | [AXT](AXT "wikilink") [1](http://genome.ucsc.edu/goldenPath/help/axt.html)                           |
-|      | [Sim4](Sim4 "wikilink")                                                                              |
-|      | [HMMER](HMMER "wikilink") hmmpfam, hmmsearch, and nhmmer                                             |
-|      | [Exonerate](Exonerate "wikilink") CIGAR                                                              |
-|      | [Genewise](Genewise "wikilink") -genesf                                                              |
+|      | [UCSC formats] PSL                                                          |
+|      | [WABA]                                                                              |
+|      | [AXT] [1](http://genome.ucsc.edu/goldenPath/help/axt.html)                           |
+|      | [Sim4]                                                                              |
+|      | [HMMER] hmmpfam, hmmsearch, and nhmmer                                             |
+|      | [Exonerate] CIGAR                                                              |
+|      | [Genewise] -genesf                                                              |
 |      | raw rnamotif output for RNAMotif versions 3.0 and above                                              |
 ||
 
 Parsing with Bio::SearchIO
 --------------------------
 
-This section is going to describe how to use the system to process reports. We'll describe [BLAST](BLAST "wikilink") reports but the idea is that once you understand the methods associated with the objects you won't need to know anything special about other parsers.
+This section is going to describe how to use the system to process reports. We'll describe [BLAST] reports but the idea is that once you understand the methods associated with the objects you won't need to know anything special about other parsers.
 
-See <HOWTO:BlastPlus> for more on running [BLAST](BLAST "wikilink").
+See <HOWTO:BlastPlus> for more on running [BLAST].
 
 ### Using SearchIO
 
@@ -121,7 +121,7 @@ In order to display all these methods and what they return let's use a report as
 
 ### NCBI-BLAST parsing problems
 
-A plaintext [NCBI-BLAST](NCBI_BLAST "wikilink") report like that used in the example above probably remains the most common BLAST output format in use. However, since the NCBI has [stated](NCBI_Blast_email "wikilink") that this format can change without warning, the SearchIO BLAST parser will break from time to time. To avoid this instability, you can have NCBI-BLAST produce its report in XML format with the `-m7` command-line option. To parse blastxml reports with SearchIO, use `-format=>\'blastxml\'` instead of `-format=>\'blast\'`. Parsing BLAST XML output [may also be faster](http://article.gmane.org/gmane.comp.lang.perl.bio.general/14366). [WU-BLAST](WU_BLAST "wikilink") offers XML output as well through the command-line option `mformat=7`, although its standard reports may work when NCBI-BLAST's do not.
+A plaintext [NCBI-BLAST] report like that used in the example above probably remains the most common BLAST output format in use. However, since the NCBI has [stated] that this format can change without warning, the SearchIO BLAST parser will break from time to time. To avoid this instability, you can have NCBI-BLAST produce its report in XML format with the `-m7` command-line option. To parse blastxml reports with SearchIO, use `-format=>\'blastxml\'` instead of `-format=>\'blast\'`. Parsing BLAST XML output [may also be faster](http://article.gmane.org/gmane.comp.lang.perl.bio.general/14366). [WU-BLAST] offers XML output as well through the command-line option `mformat=7`, although its standard reports may work when NCBI-BLAST's do not.
 
 ### Table of Methods
 
@@ -139,7 +139,7 @@ A plaintext [NCBI-BLAST](NCBI_BLAST "wikilink") report like that used in the exa
 | Result | available_statistics | effectivespaceused ... dbletters    | statistics used                                                                                                            |
 | Result | available_parameters | gapext matrix allowgaps gapopen     | parameters used                                                                                                            |
 | Result | num_hits             | 1                                   | number of hits                                                                                                             |
-| Result | hitst               |                                     | List of all [Bio::Search::Hit::GenericHit](Module:Bio::Search::Hit::GenericHit "wikilink") object(s) for this Result       |
+| Result | hitst               |                                     | List of all [Bio::Search::Hit::GenericHit] object(s) for this Result       |
 | Result | rewindt             |                                     | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits. |
 |        |
 
@@ -155,7 +155,7 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | Hit    | raw_score        | 92               | hit raw score                                                                                                                                   |
 | Hit    | significance      | 2e-022           | hit significance                                                                                                                                |
 | Hit    | bits              | 92.0             | hit bits                                                                                                                                        |
-| Hit    | hsps              |                  | List of all [Bio::Search::HSP::GenericHSP](Module:Bio::Search::HSP::GenericHSP "wikilink") object(s) for this Hit                               |
+| Hit    | hsps              |                  | List of all [Bio::Search::HSP::GenericHSP] object(s) for this Hit                               |
 | Hit    | num_hsps         | 1                | number of HSPs in hit                                                                                                                           |
 | Hit    | locus             | 124775           | locus name                                                                                                                                      |
 | Hit    | accession_number | 443893           | accession number                                                                                                                                |
@@ -216,7 +216,7 @@ Table 2 shows that a method can return a string, an array, or an object. When an
 
 #### get_aln()
 
-For example, if you wanted a printable alignment after you'd parsed [BLAST](BLAST "wikilink") output you could use the `get_aln()` method, retrieve a object and use it like this:
+For example, if you wanted a printable alignment after you'd parsed [BLAST] output you could use the `get_aln()` method, retrieve a object and use it like this:
 
 ```perl
 
@@ -228,11 +228,11 @@ my $aln = $hsp->get_aln; my $alnIO = Bio::AlignIO->new(-format =>"msf", -file =>
 
 ```
 
-On one hand it appears to be a complication, but by entering the worlds of the and objects you now have access to their functionality and flexibility. This is the beauty of [BioPerl](BioPerl "wikilink").
+On one hand it appears to be a complication, but by entering the worlds of the and objects you now have access to their functionality and flexibility. This is the beauty of [BioPerl].
 
 #### ambiguous_aln()
 
-Some of these methods deserve a bit more explanation since they do more than simply extract data directly from the output. For example, the `ambiguous_aln()` method is designed to tell us whether two or more [HSPs](HSP "wikilink") from a given hit overlap, and whether the overlap refers to the queries or the hits, or both. One situation is where overlaps would be found in one but not the other arises where there are repeats in the query or hit. The `ambiguous_aln()` method will return one of these 4 values:
+Some of these methods deserve a bit more explanation since they do more than simply extract data directly from the output. For example, the `ambiguous_aln()` method is designed to tell us whether two or more [HSPs] from a given hit overlap, and whether the overlap refers to the queries or the hits, or both. One situation is where overlaps would be found in one but not the other arises where there are repeats in the query or hit. The `ambiguous_aln()` method will return one of these 4 values:
 
 | q   | query sequence contains overlapping sub-sequences while hit sequence does not                                                          |
 |-----|----------------------------------------------------------------------------------------------------------------------------------------|
@@ -243,7 +243,7 @@ Some of these methods deserve a bit more explanation since they do more than sim
 
 #### seq_inds()
 
-Another method that's useful in dissecting an [HSP](HSP "wikilink") is the `seq_inds()` method of the [HSP object](Module:Bio::Search::HSP::HSPI "wikilink"). What this method does is tell us what the positions are of all the identical, conserved, mismatched, or gap ("identical", "conserved", "nomatch", "gap") residues in the query or hit sequence as deduced from the HSP alignment. The returned positions refer to the query or hit sequence ("sbjct" is synonymous with "hit"). It could be used like this:
+Another method that's useful in dissecting an [HSP] is the `seq_inds()` method of the [HSP object]. What this method does is tell us what the positions are of all the identical, conserved, mismatched, or gap ("identical", "conserved", "nomatch", "gap") residues in the query or hit sequence as deduced from the HSP alignment. The returned positions refer to the query or hit sequence ("sbjct" is synonymous with "hit"). It could be used like this:
 
 ```perl
 
@@ -277,9 +277,9 @@ One final note when using `seq_inds()`: if you want a list of ranges or only car
 
 #### frame()
 
-In most cases the SearchIO methods extract data directly from output but there's one important exception, the `frame()` method of the HSP object. Instead of using the values in the [BLAST](BLAST "wikilink") report it converts them to values according to the [GFF specification](GFF "wikilink"), which is a format used by many BioPerl modules involved in gene annotation.
+In most cases the SearchIO methods extract data directly from output but there's one important exception, the `frame()` method of the HSP object. Instead of using the values in the [BLAST] report it converts them to values according to the [GFF specification], which is a format used by many BioPerl modules involved in gene annotation.
 
-Specifically, the `frame()` method returns 0, 1, or 2 instead of the expected -3, -2, -1, +1, +2, or +3 in BLAST. [GFF](GFF "wikilink") frame values are meaningful relative to the strand of the hit or query sequence so in order to reconstruct the [BLAST](BLAST "wikilink") frame you need both the strand, 1 or -1, and the [GFF](GFF "wikilink") frame value:
+Specifically, the `frame()` method returns 0, 1, or 2 instead of the expected -3, -2, -1, +1, +2, or +3 in BLAST. [GFF] frame values are meaningful relative to the strand of the hit or query sequence so in order to reconstruct the [BLAST] frame you need both the strand, 1 or -1, and the [GFF] frame value:
 
 ```perl
 
@@ -289,9 +289,9 @@ Specifically, the `frame()` method returns 0, 1, or 2 instead of the expected -3
 
 ### Analyzing a single report in different ways
 
-Another common example is analyzing data from a single [BLAST](BLAST "wikilink") report several different ways, such as sorting hits based on particular criteria then printing all hits and [HSPs](HSP "wikilink"). One could iterate through the list twice, once for sorting the objects and then a second time for printing. Note that in this script:
+Another common example is analyzing data from a single [BLAST] report several different ways, such as sorting hits based on particular criteria then printing all hits and [HSPs]. One could iterate through the list twice, once for sorting the objects and then a second time for printing. Note that in this script:
 
--   A object is passed to the subroutines, not the [SearchIO object](Module:Bio::SearchIO "wikilink") in `$blast_report`
+-   A object is passed to the subroutines, not the [SearchIO object] in `$blast_report`
 -   You must use `rewind` to reset the iterator for the object since there are two iterations through this object (one in each subroutine)
 
 ```perl
@@ -327,9 +327,9 @@ sub print_blast_results{
 
 ```
 
-If you parsed a report already and want to reset the parser (i.e. if you sent the [SearchIO](Module:Bio::SearchIO "wikilink") object to the subs above instead of the object, then iterated through everything twice), you would need to reset the [SearchIO](Module:Bio::SearchIO "wikilink") object itself by using `seek($blast_report->_fh, 0);`. We don't recommend doing this for two reasons. First, each round of parsing takes the same length of time since you start parsing the report from scratch, so you'll take a time hit. Second, if you saved objects from the first round of parsing you will take a memory hit, because a new set of objects is generated for each subsequent round of parsing the report. Hence, we use the already-generated object in the subroutines instead.
+If you parsed a report already and want to reset the parser (i.e. if you sent the [SearchIO] object to the subs above instead of the object, then iterated through everything twice), you would need to reset the [SearchIO] object itself by using `seek($blast_report->_fh, 0);`. We don't recommend doing this for two reasons. First, each round of parsing takes the same length of time since you start parsing the report from scratch, so you'll take a time hit. Second, if you saved objects from the first round of parsing you will take a memory hit, because a new set of objects is generated for each subsequent round of parsing the report. Hence, we use the already-generated object in the subroutines instead.
 
-To simplify things here a bit more, you could simply grab all the hits at once using `$result->hits` before you sort them, as demonstrated in a previous example. The `hits` method does not use the iterator; it simply returns a list of [BlastHit](Module:Bio::Search::Hit::BlastHit "wikilink") objects. Hence, there is no need to `rewind` the object:
+To simplify things here a bit more, you could simply grab all the hits at once using `$result->hits` before you sort them, as demonstrated in a previous example. The `hits` method does not use the iterator; it simply returns a list of [BlastHit] objects. Hence, there is no need to `rewind` the object:
 
 ```perl
 
@@ -347,12 +347,12 @@ sub sort_results{
 
 Similar methods exist for objects to rewind the iterator for HSP's (`$hit->rewind`) and to grab all HSP's(`$hit->hsps`).
 
-Our simple table of methods does not show all available arguments or returned values for all the SearchIO methods. The best place to explore any method in detail is <http://doc.bioperl.org> which provides the HTML versions of the Perl [POD](POD "wikilink") (Plain Old Documentation) that is embedded in every well-written Perl module - there's also a list of modules at the bottom of this HOWTO. Another source of examples is the [Bioperl scripts](Bioperl_scripts "wikilink") which come with the [BioPerl](BioPerl "wikilink") packages.
+Our simple table of methods does not show all available arguments or returned values for all the SearchIO methods. The best place to explore any method in detail is <http://doc.bioperl.org> which provides the HTML versions of the Perl [POD] (Plain Old Documentation) that is embedded in every well-written Perl module - there's also a list of modules at the bottom of this HOWTO. Another source of examples is the [Bioperl scripts] which come with the [BioPerl] packages.
 
 Sorting
 -------
 
-One frequently-asked question has to do with getting sorted output from a report, or sorting hits or [HSPs](HSP "wikilink") just as they're sorted in the input file. There's little in the way of sorting in 's methods, generally speaking you'll just use a standard Perl approach. Here is an example that sorts hits according to their bit scores:
+One frequently-asked question has to do with getting sorted output from a report, or sorting hits or [HSPs] just as they're sorted in the input file. There's little in the way of sorting in 's methods, generally speaking you'll just use a standard Perl approach. Here is an example that sorts hits according to their bit scores:
 
 ```perl
 
@@ -368,7 +368,7 @@ Creating Reports for SearchIO
 
 One note on creating reports that can be parsed by : the developers haven't attempted to parse all the possible reports that could be created by programs with many command-line options, like blastall. Certainly you should be able to parse reports created using the default settings, but if you're running blastall, say, using some special set of options and you've encountered a parsing problem this may be the explanation.
 
-For example, one can currently parse [BLAST](BLAST "wikilink") output created with the default settings as well as the reports created when using the "-m 8" or "-m 9" options (use `-format=>\'blasttable\'`) or the "-m 7" XML-formatted reports (use `-format=>\'blastxml\'`) but it's still possible to find sets of options that can't parse.
+For example, one can currently parse [BLAST] output created with the default settings as well as the reports created when using the "-m 8" or "-m 9" options (use `-format=>\'blasttable\'`) or the "-m 7" XML-formatted reports (use `-format=>\'blastxml\'`) but it's still possible to find sets of options that can't parse.
 
 You might also find it useful not to have to create reports as files. , like , is aware of `STDIN` so you can pipe output from the search application directly to it (on operating systems that allow such things). It could look something like this:
 
@@ -387,13 +387,13 @@ my $searchio = Bio::SearchIO->new(-format => 'fasta', -fh => $fh);
 Implementation
 --------------
 
-This section is going to describe how the SearchIO system was implemented, it is probably not necessary to understand all of this unless you are curious or want to implement your own parser. We have utilized an event-based system to process these reports. This is analogous to the [SAX](wp:SAX "wikilink") (Simple API for XML) system used to process [XML](wp:XML "wikilink") documents. Event based parsing can be simply thought of as simple start and end events. When you hit the beginning of a report a start event is thrown, when you hit the end of the report an end event is thrown. So the report events are paired, and everything else that is thrown in between the paired start and end events is related to that report.
+This section is going to describe how the SearchIO system was implemented, it is probably not necessary to understand all of this unless you are curious or want to implement your own parser. We have utilized an event-based system to process these reports. This is analogous to the [SAX] (Simple API for XML) system used to process [XML] documents. Event based parsing can be simply thought of as simple start and end events. When you hit the beginning of a report a start event is thrown, when you hit the end of the report an end event is thrown. So the report events are paired, and everything else that is thrown in between the paired start and end events is related to that report.
 
-Another way to think of it is as if you pick a number and color for a card in a standard deck. Let's say you pick red and 2. Then you start dealing cards from our deck and pile them one on top of each other. When you see your first red 2 you start a new pile, and start dealing cards onto that pile until you see the next red 2. Everything in your pile that happened between when you saw the beginning red 2 and ending red 2 is data you'll want to keep and process. In the same way all the events you see between a pair of start and end events (like 'report' or 'hsp') are data associated with object or child object in its hierarchy. A listener object processes all of these events, in our example the listener is the table where the stack of cards is sitting, and later it is the hand which moves the pile of cards when a new stack is started. The listener will take the events and process them. We've neglected to tell you of a third event that is thrown and caught. This is the characters event in [SAX](wp:SAX "wikilink") terminology, which is simply data. So one sends a start event, then some data, then an end event. This process is analogous to a finite state machine in computer science where what we do with data received is dependent on the state we're in. The state that the listener is in is affected by the events that are processed.
+Another way to think of it is as if you pick a number and color for a card in a standard deck. Let's say you pick red and 2. Then you start dealing cards from our deck and pile them one on top of each other. When you see your first red 2 you start a new pile, and start dealing cards onto that pile until you see the next red 2. Everything in your pile that happened between when you saw the beginning red 2 and ending red 2 is data you'll want to keep and process. In the same way all the events you see between a pair of start and end events (like 'report' or 'hsp') are data associated with object or child object in its hierarchy. A listener object processes all of these events, in our example the listener is the table where the stack of cards is sitting, and later it is the hand which moves the pile of cards when a new stack is started. The listener will take the events and process them. We've neglected to tell you of a third event that is thrown and caught. This is the characters event in [SAX] terminology, which is simply data. So one sends a start event, then some data, then an end event. This process is analogous to a finite state machine in computer science where what we do with data received is dependent on the state we're in. The state that the listener is in is affected by the events that are processed.
 
-A small caveat: in an ideal situation a processor would throw events and not need to maintain any state information, it would just be processing data and the listener would manage the information and state. However, a lot of the parsing of these human-readable reports requires contextual information to apply the correct regular expressions. So in fact the event thrower has to know what state it is in and apply different methods based on this. In contrast the [XML parsers](XML_parsers "wikilink") simply keep track of what state they are in, but can process all the data with the same system of reading the tag and sending the data that is in between the [XML](wp:XML "wikilink") start and end tags.
+A small caveat: in an ideal situation a processor would throw events and not need to maintain any state information, it would just be processing data and the listener would manage the information and state. However, a lot of the parsing of these human-readable reports requires contextual information to apply the correct regular expressions. So in fact the event thrower has to know what state it is in and apply different methods based on this. In contrast the [XML parsers] simply keep track of what state they are in, but can process all the data with the same system of reading the tag and sending the data that is in between the [XML] start and end tags.
 
-All of this framework has been built up, so to implement a new parser one only needs to write a module that produces the appropriate start and end events and the existing framework will do the work of creating the objects for you. Here's how we've implemented event-based parsing for . The is just the front-end to this process, in fact the processing of these reports is done by different modules in the `Bio/SearchIO/` directory. So if you look at your [BioPerl distribution](Getting_BioPerl "wikilink") and the modules in `Bio/SearchIO` you'll see modules in there like `blast.pm`, `fasta.pm`, `blastxml.pm`, `SearchResultEventBuilder.pm`, `EventHandlerI.pm` (depending on what version of the toolkit there may be more modules in there). There is also a `SearchWriterI.pm` and `Writer` directory in there but we'll save that for later.
+All of this framework has been built up, so to implement a new parser one only needs to write a module that produces the appropriate start and end events and the existing framework will do the work of creating the objects for you. Here's how we've implemented event-based parsing for . The is just the front-end to this process, in fact the processing of these reports is done by different modules in the `Bio/SearchIO/` directory. So if you look at your [BioPerl distribution] and the modules in `Bio/SearchIO` you'll see modules in there like `blast.pm`, `fasta.pm`, `blastxml.pm`, `SearchResultEventBuilder.pm`, `EventHandlerI.pm` (depending on what version of the toolkit there may be more modules in there). There is also a `SearchWriterI.pm` and `Writer` directory in there but we'll save that for later.
 
 Let's use the `blast.pm` module as an example to describe the relationship of the modules in this directory (could have substituted any of the other format parsers like `fasta.pm` or `blastxml.pm` - these are always lowercase for historical reasons). The module has some features you should look for - the first is the hash in the `BEGIN` block called `%MAPPING`. These key/value pairs here are the shorthand for how we map events from this module to general event names. This is only necessary because if we have an XML processor (see the `blastxml.pm module`) the event names will be the same as the XML tag names (like `Hsp_bit-score` in the NCBI BLAST XML DTD). So to make this general we'll make sure all of the events inside our parser map to the values in the `%MAPPING` hash - we can call them whatever we want inside this module. Some of the events map to hash references (like `Statistics_db-len`) and this is so we can map multiple values to the same top-level attribute field but we know they will be stored as a hash value in the subsequent object (in this example, keyed by the name `dbentries`). The capital "RESULT", "HSP", or "HIT" in the value name allow us to encode the event state in the event so we don't have to pass in two values. It is also easy for someone to quickly read the list of events and know which ones are related to Hits and which ones are related to HSPs. The listener in our architecture is the . This object is attached as a listener through the method `add_EventListener`. In fact you could have multiple event listeners and they could do different things. In our case we want to create `Bio::Search` objects, but an event listener could just as easily be writing data directly into a database or writing to a file, based on the events. The `SearchResultEventBuilder` takes the events thrown by the SearchIO classes and builds the appropriate object from it.
 
@@ -402,9 +402,9 @@ Sometimes special objects are needed that are extensions beyond what the or obje
 Writing and formatting output
 -----------------------------
 
-Often people want to write back out a [BLAST](BLAST "wikilink") report for users who are most comfortable with that output or if you want to visualize the context of a weakly aligned region and use human intuition to score the confidence of a putative homologue. The modules are for creating output using the information.
+Often people want to write back out a [BLAST] report for users who are most comfortable with that output or if you want to visualize the context of a weakly aligned region and use human intuition to score the confidence of a putative homologue. The modules are for creating output using the information.
 
-currently creates output in a few different formats: text (recreating something like the BLAST report itself, in part or entirely), [HTML](wp:HTML "wikilink"), [BSML](BSML "wikilink"), "ResultTable" (tab-delimited format), "HSPTable" (tab-delimited, for HSPs), and [Gbrowse](Gbrowse "wikilink") [GFF](GFF "wikilink").
+currently creates output in a few different formats: text (recreating something like the BLAST report itself, in part or entirely), [HTML], [BSML], "ResultTable" (tab-delimited format), "HSPTable" (tab-delimited, for HSPs), and [Gbrowse] [GFF].
 
 The simplest way to output data in HTML format is as follows.
 
@@ -446,7 +446,7 @@ If you wanted to get the output as a string rather than write it out to a file, 
 
 ```
 
-The supports setting your own remote database url for the sequence links in the event you'd like to point to your own [SRS](SRS "wikilink") or local HTTP-based connection to the sequence data. Simply use the `remote_database_url` method which accepts a sequence type as input (protein or nucleotide).
+The supports setting your own remote database url for the sequence links in the event you'd like to point to your own [SRS] or local HTTP-based connection to the sequence data. Simply use the `remote_database_url` method which accepts a sequence type as input (protein or nucleotide).
 
 You can also override the `id_parser()` method to define what the unique IDs are from these sequence ids in the event you would like to use something other than the accession number that is gleaned from the sequence string.
 
@@ -455,9 +455,9 @@ If your data is instead stored in a database you could build the Bio::Search obj
 Extending 
 ----------
 
-The framework for is just a starting point for parsing these reports and creating objects which represent the information. If you would like to create your own set of objects which extend the current functionality we have built the system so that it will support this. For example, you may have built your own HSP object which supports a special operation like `realign_with_sw()`, which might realign the HSP via a [Smith-Waterman](wp:Smith_waterman "wikilink") algorithm, pulling extra bases from the flanking sequence. You might call your module `Bio::Search::HSP::RealignHSP` and put it in a file called `Bio/Search/HSP/RealignHSP.pm`. Note that you don't have to put this file directly in the BioPerl source directory - you can create your own local directory structure that is in parallel to the BioPerl release source code as long as you have updated your `PERL5LIB` to contain your local directory or you are using the "`use lib`" directive in your script. Also, you don't have to use the namespace as namespaces don't mean anything to Perl with respect to object inheritance, but do we recommend you name things in a logical manner so that others might read and understand your code (and if you feel encouraged to donate your code to the project it might easily integrated with existing modules).
+The framework for is just a starting point for parsing these reports and creating objects which represent the information. If you would like to create your own set of objects which extend the current functionality we have built the system so that it will support this. For example, you may have built your own HSP object which supports a special operation like `realign_with_sw()`, which might realign the HSP via a [Smith-Waterman] algorithm, pulling extra bases from the flanking sequence. You might call your module `Bio::Search::HSP::RealignHSP` and put it in a file called `Bio/Search/HSP/RealignHSP.pm`. Note that you don't have to put this file directly in the BioPerl source directory - you can create your own local directory structure that is in parallel to the BioPerl release source code as long as you have updated your `PERL5LIB` to contain your local directory or you are using the "`use lib`" directive in your script. Also, you don't have to use the namespace as namespaces don't mean anything to Perl with respect to object inheritance, but do we recommend you name things in a logical manner so that others might read and understand your code (and if you feel encouraged to donate your code to the project it might easily integrated with existing modules).
 
-So, you're going to write your new special module, you do need to make sure it inherits from the base object. Additionally unless you want to reimplement all the initialization state in the current you should just plan to extend that object. You need to follow the chained constructor system that we have set up so that the arguments are properly processed. Here is a sample of what your code might look like (don't forget to write your own [POD](POD "wikilink") so that it will be documented, we've left it off here to keep things simple).
+So, you're going to write your new special module, you do need to make sure it inherits from the base object. Additionally unless you want to reimplement all the initialization state in the current you should just plan to extend that object. You need to follow the chained constructor system that we have set up so that the arguments are properly processed. Here is a sample of what your code might look like (don't forget to write your own [POD] so that it will be documented, we've left it off here to keep things simple).
 
 ```perl
 
@@ -482,7 +482,7 @@ sub realign_hsp {
 
 ```
 
-The above code gives you a skeleton of how to start to implement your object. To register it so that it is used when the system makes [HSPs](HSP "wikilink") you just need to call a couple of functions. The code below outlines them.
+The above code gives you a skeleton of how to start to implement your object. To register it so that it is used when the system makes [HSPs] you just need to call a couple of functions. The code below outlines them.
 
 ```perl
 
@@ -518,9 +518,9 @@ We have to register the HSPFactory, which is the object which will create HSPI o
 Speed improvements with lightweight objects
 -------------------------------------------
 
-The approaches described above will create a lot of objects, one for each of the components of a report. When you have 2000 hits in a BLASTX result there will be quite a few objects built, and a lot of memory consumed. It's possible that you'll want to use an approach that's less memory-intensive if your result sets are large. One option is to use the tabular output from [BLAST](BLAST "wikilink") when dealing with large datasets (''-m 8'' or ''-m 9'').
+The approaches described above will create a lot of objects, one for each of the components of a report. When you have 2000 hits in a BLASTX result there will be quite a few objects built, and a lot of memory consumed. It's possible that you'll want to use an approach that's less memory-intensive if your result sets are large. One option is to use the tabular output from [BLAST] when dealing with large datasets (''-m 8'' or ''-m 9'').
 
-There are other workarounds depending on what kind of data you want. We designed to be a modular system which separates parsing the data from instantiating objects by throwing events (like [SAX](wp:SAX "wikilink")) and having a listener build objects from these events. So one can instantiate a different listener which builds simpler objects and throws away the data you don't want.
+There are other workarounds depending on what kind of data you want. We designed to be a modular system which separates parsing the data from instantiating objects by throwing events (like [SAX]) and having a listener build objects from these events. So one can instantiate a different listener which builds simpler objects and throws away the data you don't want.
 
 Here is an example of such a lightweight listener - `Bio::SearchIO::FastHitEventBuilder` - it just throws away the HSPs and only builds Result and Hit objects.
 
@@ -549,18 +549,18 @@ The whole parser/listener design assumes that you want to process all the data f
 SearchIO History
 ----------------
 
-The [BioPerl](BioPerl "wikilink") project has produced a number of parsers for the ubiquitous [BLAST](BLAST "wikilink") report. [Steve Chervitz](Steve_Chervitz "wikilink") wrote one of the first BioPerl modules for [BLAST](BLAST "wikilink") called . [Ian Korf](Ian_Korf "wikilink") allowed us to import and modify his BPlite (Blast Parser) module into [BioPerl](BioPerl "wikilink"). This is of course in a sea of [BLAST](BLAST "wikilink") parsers that have been written by numerous people, but we will only cover the ones associated directly with the [BioPerl](BioPerl "wikilink") project in this document.
+The [BioPerl] project has produced a number of parsers for the ubiquitous [BLAST] report. [Steve Chervitz] wrote one of the first BioPerl modules for [BLAST] called . [Ian Korf] allowed us to import and modify his BPlite (Blast Parser) module into [BioPerl]. This is of course in a sea of [BLAST] parsers that have been written by numerous people, but we will only cover the ones associated directly with the [BioPerl] project in this document.
 
-One of the reasons for writing yet another [BLAST](BLAST "wikilink") parser in the form of is that even though both and did their job correctly, and could parse [WU-BLAST](WU-BLAST "wikilink") and [NCBI-BLAST](NCBI-BLAST "wikilink") output, they did not adequately genericize what they were doing. By this we mean everything was written around the [BLAST format](BLAST_format "wikilink") and was not easily applicable to parsing, say, [FASTA](FASTA "wikilink") alignments or a new alignment format. One of the powerful features of the [object-oriented](wp:Object_oriented "wikilink") framework in [BioPerl](BioPerl "wikilink") is the ability to read in, say, a sequence file in different formats or from different data sources like a database or [XML-flatfile](wp:XML "wikilink"), and have the program code process the sequences objects in the same manner. We wanted to have this capability in place for analysis reports as well and thus the generic design of the module.
+One of the reasons for writing yet another [BLAST] parser in the form of is that even though both and did their job correctly, and could parse [WU-BLAST] and [NCBI-BLAST] output, they did not adequately genericize what they were doing. By this we mean everything was written around the [BLAST format] and was not easily applicable to parsing, say, [FASTA] alignments or a new alignment format. One of the powerful features of the [object-oriented] framework in [BioPerl] is the ability to read in, say, a sequence file in different formats or from different data sources like a database or [XML-flatfile], and have the program code process the sequences objects in the same manner. We wanted to have this capability in place for analysis reports as well and thus the generic design of the module.
 
 ### Avoiding possible confusion
 
 There had been some confusion about the names and functions of the objects for historical reasons.
 
-Both [Steve Chervitz](Steve_Chervitz "wikilink") and [Jason Stajich](Jason_Stajich "wikilink") had implemented parsers in this system. The basic objects Jason has created are called `Bio::Search::XXX::GenericXXX` where, again, `XXX` is HSP, Hit, and Result. Most of the implementations use these simple objects for sorting the data. Steve created the psiblast parser (which was later merged into the module) and a host of objects named `Bio::Search::XXX::BlastXXX` where `XXX` is HSP, Hit, and Result. These objects have additional functions related to output from [BLAST](BLAST "wikilink").
+Both [Steve Chervitz] and [Jason Stajich] had implemented parsers in this system. The basic objects Jason has created are called `Bio::Search::XXX::GenericXXX` where, again, `XXX` is HSP, Hit, and Result. Most of the implementations use these simple objects for sorting the data. Steve created the psiblast parser (which was later merged into the module) and a host of objects named `Bio::Search::XXX::BlastXXX` where `XXX` is HSP, Hit, and Result. These objects have additional functions related to output from [BLAST].
 
 The important take home message is that you cannot assume that methods in the `BlastXXX` objects are in fact implemented by the `GenericHSP` objects. More likely than not the `BlastXXX` objects will be deprecated and dismantled as their functionality is ported to the `GenericHSP` objects. For this reason we only discuss the Generic\* objects, though we used the terms 'hit', 'HSP', and 'result'.
 
 '
 
-<Category:HOWTOs>
+

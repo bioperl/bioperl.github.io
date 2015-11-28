@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:NeXML"
 layout: default
 ---
 
@@ -11,12 +11,12 @@ This is a HOWTO about the module, and how to use it to read and write complete N
 Author
 ------
 
-[Chase Miller](User:Chmille4 "wikilink")
+[Chase Miller]
 
 Introduction
 ------------
 
-The nexml modules integrate the [NeXML](http://www.nexml.org/) exchange standard into [BioPerl](BioPerl "wikilink"), facilitating the adoption of this standard and easing the transition from the overworked NEXUS standard. A wrapper was used to allow [BioPerl](BioPerl "wikilink") native access to the preferred NeXML parser ([Bio::Phylo](http://search.cpan.org/~rvosa/Bio-Phylo/)).
+The nexml modules integrate the [NeXML](http://www.nexml.org/) exchange standard into [BioPerl], facilitating the adoption of this standard and easing the transition from the overworked NEXUS standard. A wrapper was used to allow [BioPerl] native access to the preferred NeXML parser ([Bio::Phylo](http://search.cpan.org/~rvosa/Bio-Phylo/)).
 
 NeXML functionality in bioperl consists of four modules that allow the user to interact with NeXML data in two different ways. allows users to read/write an entire NeXML document, whereas , , and allow the user to only read/write one data type (seqs, alns, or trees, respectively).
 
@@ -43,7 +43,7 @@ Design
 
 Nexml support in BioPerl is accomplished by creating four nexml modules (described above) that make use of [Bio::Phylo](http://search.cpan.org/dist/Bio-Phylo/) the prefered Nexml parser/unparser. The basic flow goes: BioPerl object to [Bio::Phylo](http://search.cpan.org/dist/Bio-Phylo/) object to Nexml format and vice versa. The module handles the creation/conversion of BioPerl and [Bio::Phylo](http://search.cpan.org/dist/Bio-Phylo/) objects providing a single `Bio::Phylo` access point for all four nexml modules.
 
-The , , and modules are normal extensions of BioPerl and are used in the same ways as other formats. (For more on the \*IO modules read [SeqIO HOWTO](HOWTO:SeqIO "wikilink").)
+The , , and modules are normal extensions of BioPerl and are used in the same ways as other formats. (For more on the \*IO modules read [SeqIO HOWTO].)
 
 The module allows the writing/reading of multiple data object types (i.e. trees/alns/seqs), as opposed to the other \*IO modules which only allow a single data object type.
 
@@ -55,7 +55,7 @@ Nexml documents to use with the example code can be found at <http://www.nexml.o
 Reading/Writing Entire NeXML Documents
 --------------------------------------
 
-Reading and writing a whole NeXML document is accomplished with the module. The module can read a NeXML document and maintain many of the data associations allowable by Bio::Phylo (however at this point not all [data associations](#Associations_Maintained "wikilink") are maintained). Once read the data is automatically converted into BioPerl objects (i.e , , and ) and can be manipulated before writing back to a NeXML document.
+Reading and writing a whole NeXML document is accomplished with the module. The module can read a NeXML document and maintain many of the data associations allowable by Bio::Phylo (however at this point not all [data associations] are maintained). Once read the data is automatically converted into BioPerl objects (i.e , , and ) and can be manipulated before writing back to a NeXML document.
 
 ### Example Code
 
@@ -158,7 +158,7 @@ This example converts a Nexus file ([trees.nex](http://www.bioperl.org/wiki/HOWT
 
 ### Convert specific data types from NeXML to other formats
 
-For convenience NexmlIO provides methods for the quick extraction and conversion of specific data types (i.e. seqs, alns, or trees). For this example you can use the NeXML document that was created in the [Merge Two NeXML Documents](#Merge_two_NeXML_documents "wikilink") use case above.
+For convenience NexmlIO provides methods for the quick extraction and conversion of specific data types (i.e. seqs, alns, or trees). For this example you can use the NeXML document that was created in the [Merge Two NeXML Documents] use case above.
 
 `use strict;`
 `use Bio::NexmlIO;`
@@ -187,7 +187,7 @@ Some associations available in [Bio::Phylo](http://search.cpan.org/~rvosa/Bio-Ph
 
 ### Alignments and Sequences of arbitrary genotype
 
-NeXML is a robust standard and can represent wide-ranging types of data. NeXML allows `Bio::Phylo::Matrices::Matrix` objects (i.e. alignments) and `Bio::Phylo::Matrices::Datum` objects (i.e. sequences) to represent data that is not DNA, RNA, or Protein. We are working on an implementation that interconverts `Bio::Phylo` objects and BioPerl objects using [Jason's](User:jason "wikilink") model.
+NeXML is a robust standard and can represent wide-ranging types of data. NeXML allows `Bio::Phylo::Matrices::Matrix` objects (i.e. alignments) and `Bio::Phylo::Matrices::Datum` objects (i.e. sequences) to represent data that is not DNA, RNA, or Protein. We are working on an implementation that interconverts `Bio::Phylo` objects and BioPerl objects using [Jason's] model.
 
 Related Modules
 ---------------
@@ -196,4 +196,4 @@ Related Modules
 
 '
 
-<Category:HOWTOs>
+

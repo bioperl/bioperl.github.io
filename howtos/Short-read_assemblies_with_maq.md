@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Short Read assemblies using maq"
 layout: default
 ---
 
@@ -13,7 +13,7 @@ __TOC__
 Author
 ------
 
-[Mark A. Jensen](User:Majensen "wikilink")
+[Mark A. Jensen]
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -48,7 +48,7 @@ Dependencies and installation
 
 (r16353) can be found in . It depends on (@ r16353) and (@ r16354), as well as minor changes to in the core trunk. is in , and depends on recent small changes in (@ r16353).
 
-To download and install BioPerl core and packages from Git, see [Using Git](Using_Git "wikilink").
+To download and install BioPerl core and packages from Git, see [Using Git].
 
 Module description
 ------------------
@@ -69,11 +69,11 @@ The first is a simple pipeline through the `maq` commands, taking your read data
 | convert map & cns files to plaintext  | `mapview, cns2fq`      |
 ||
 
-Command-line options can be directed to the `map`, `assemble`, and `cns2fq` steps. See [Specifying Options](#Specifying_options "wikilink").
+Command-line options can be directed to the `map`, `assemble`, and `cns2fq` steps. See [Specifying Options].
 
 ### Running `maq` components
 
-The second mode is direct access to `maq` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#Specifying_options "wikilink")):
+The second mode is direct access to `maq` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options]):
 
 ```perl
 
@@ -81,7 +81,7 @@ The second mode is direct access to `maq` commands. To run a command, construct 
 
 ```
 
-To execute, use the `run_maq` methods. Input and output files are specified in the arguments of `run_maq` (see [Specifying Files](#Specifying_files "wikilink")):
+To execute, use the `run_maq` methods. Input and output files are specified in the arguments of `run_maq` (see [Specifying Files]):
 
 ```perl
 
@@ -257,7 +257,7 @@ which are mnemonics for the contents of each `maq mapview` line; see [the `maq` 
 SEE ALSO
 --------
 
-[Short-read assemblies with `bwa`](HOWTO:Short-read_assemblies_with_BWA "wikilink")
+[Short-read assemblies with `bwa`]
 
 TODO
 ----
@@ -269,4 +269,4 @@ done: r16408
 
 '
 
-<Category:HOWTOs>
+

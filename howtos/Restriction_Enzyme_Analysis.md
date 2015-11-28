@@ -1,11 +1,11 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Restriction Enzyme Analysis"
 layout: default
 ---
 
 ### Authors
 
-[Peter Schattner](Peter_Schattner "wikilink"), [Jason Stajich](Jason_Stajich "wikilink"), [Heikki Lehvaslaiho](Heikki_Lehvaslaiho "wikilink"), [Brian Osborne](Brian_Osborne "wikilink"), [Hilmar Lapp](Hilmar_Lapp "wikilink"), [Chris Dagdigian](Chris_Dagdigian "wikilink"), [Elia Stupka](Elia_Stupka "wikilink"), [Ewan Birney](Ewan_Birney "wikilink").
+[Peter Schattner], [Jason Stajich], [Heikki Lehvaslaiho], [Brian Osborne], [Hilmar Lapp], [Chris Dagdigian], [Elia Stupka], [Ewan Birney].
 
 ### Abstract
 
@@ -115,4 +115,4 @@ my $re = new Bio::Restriction::Enzyme(-enzyme => 'BioRI',
 
 For more informatation see , , , and .'
 
-<Category:HOWTOs>
+

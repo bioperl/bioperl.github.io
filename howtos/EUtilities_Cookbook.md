@@ -1,18 +1,18 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:EUtilities Cookbook"
 layout: default
 ---
 
 The API described here for refers to the version currently found in as a separate release on CPAN. It is not compatible with the experimental API used in older BioPerl releases.
 
-Also see the [EUtilities Web Service HOWTO](HOWTO:EUtilities_Web_Service "wikilink").
+Also see the [EUtilities Web Service HOWTO].
 
 Authors
 =======
 
-[Chris Fields](User:cjfields "wikilink")
+[Chris Fields]
 
-[Brian Osborne](Brian_Osborne "wikilink")
+[Brian Osborne]
 
 Simple examples
 ===============
@@ -59,7 +59,7 @@ while (my $seq = $seqin->next_seq) {
 
 ### Get accessions (actually accession.versions) for a list of GenBank IDs (GIs)
 
-This is the quick and easy way to grab the related accessions for a list of GIs. Note that there is no one-to-one correspondence here; for that you will need to use esummary (as indicated [here](#Get_accessions_.28as_well_as_other_information.29_for_a_list_of_GIs "wikilink")).
+This is the quick and easy way to grab the related accessions for a list of GIs. Note that there is no one-to-one correspondence here; for that you will need to use esummary (as indicated [here]).
 
 ```perl
 
@@ -797,7 +797,7 @@ while (my $docsum = $eutil->next_DocSum) {
 
 ```
 
-If you are using bioperl-live (the latest core code from our [Git](Using_Git "wikilink") repository), the above has been simplified somewhat. Since both DocSums and Items can contain Items, they both now can use the same methods to retrieve Items they contain. In the above example, we know the `GenomicInfoType` Item contains other Items of interest. Using the ItemContainerI interface, we can look up a (contained) Item's contents and name, instead of delving into the innards of the tree:
+If you are using bioperl-live (the latest core code from our [Git] repository), the above has been simplified somewhat. Since both DocSums and Items can contain Items, they both now can use the same methods to retrieve Items they contain. In the above example, we know the `GenomicInfoType` Item contains other Items of interest. Using the ItemContainerI interface, we can look up a (contained) Item's contents and name, instead of delving into the innards of the tree:
 
 ```perl
 
@@ -969,7 +969,7 @@ for my $ds ( $factory->get_DocSums) {
 
 '''NOTE:''' This code requires a bug fix in bioperl-live that will appear in 1.6.1.
 
-This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2009-July/030558.html) from the bioperl [mail list](Mailing_lists#Main_BioPerl_list "wikilink").
+This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2009-July/030558.html) from the bioperl [mail list].
 
 There are several approaches to answering the above question, all based on whether or not you know the UID for the specific bioassay. The below script is a basic skeleton of what one can do if the UID is unknown but you know the name, thus using it as a search term. This approach uses esearch to find the BioAssay UIDs, elink to find all active compounds using the specific linkname `pcassay_pccompound_ active`, then dumps out esummary information via `print_all` (to get active substances, use the linkname `pcassay_pcsubstance_ active` instead). The various summary information can be munged using the key names via the DocSum interface methods (see the code examples above for ways to do this).
 
@@ -1014,7 +1014,7 @@ elink->efetch and elink->esummary
 
 ### How do I find all the SNPs in a particular gene?
 
-This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2010-June/033434.html) from the bioperl [mail list](Mailing_lists#Main_BioPerl_list "wikilink").
+This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2010-June/033434.html) from the bioperl [mail list].
 
 ```perl
 
@@ -1055,7 +1055,7 @@ $eutil->print_all;
 References / See Also
 =====================
 
--   [HOWTO:EUtilities Web Service](HOWTO:EUtilities_Web_Service "wikilink") - more info about the SOAP interface
+-   [HOWTO:EUtilities Web Service] - more info about the SOAP interface
 -   The official [NCBI EUtilities Help manual](http://www.ncbi.nlm.nih.gov/books/NBK25501/)'
 
-<Category:HOWTOs> <Category:Fetching/Scrapbook>
+ <Category:Fetching/Scrapbook>

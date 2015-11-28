@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Phylogenetic Analysis Pipeline"
 layout: default
 ---
 
@@ -31,7 +31,7 @@ Computing Sequence Similarities
 
 ### A word about datafiles
 
-Parsing these large sets of data can be time consuming. If we are only interested in single score values for each pair of significantly similar sequences then it makes sense to just keep a simple set of output that is the minimum information needed. Using "-outfmt 6" or "-outfmt 7" with BLAST+ is one option (-m8 or -m 9 format of [BLAST](BLAST "wikilink")). The -m 9 output from [FASTA](FASTA "wikilink") can be similarly processed to produce a compact tabular output using the fastam9_to_tabule script in the scripts/searchio/fastam9_to_table.
+Parsing these large sets of data can be time consuming. If we are only interested in single score values for each pair of significantly similar sequences then it makes sense to just keep a simple set of output that is the minimum information needed. Using "-outfmt 6" or "-outfmt 7" with BLAST+ is one option (-m8 or -m 9 format of [BLAST]). The -m 9 output from [FASTA] can be similarly processed to produce a compact tabular output using the fastam9_to_tabule script in the scripts/searchio/fastam9_to_table.
 
 ### BLAST vs FASTA vs Smith-Waterman
 
@@ -87,15 +87,15 @@ Sometimes called ''Best Reciprocal'', ''Best Bidirectional'' hits. This is typic
 
 ### OrthoMCL
 
-[OrthoMCL](OrthoMCL "wikilink")
+[OrthoMCL]
 
 ### InParanoid
 
-[InParanoid](InParanoid "wikilink")
+[InParanoid]
 
 ### Jaccard Clustering
 
-[Jaccard Clustering](Jaccard_Clustering "wikilink") is available through TIGR code.
+[Jaccard Clustering] is available through TIGR code.
 
 Multiple sequence alignments
 ----------------------------
@@ -104,19 +104,19 @@ Multiple sequence alignments
 
 ### ClustalW
 
--   [Clustalw](Clustalw "wikilink")
+-   [Clustalw]
 
 ### T-Coffee
 
--   [Tcoffee](Tcoffee "wikilink")
+-   [Tcoffee]
 
 ### MUSCLE
 
--   [MUSCLE](MUSCLE "wikilink")
+-   [MUSCLE]
 
 ### Probcons
 
--   [PROBCONS](PROBCONS "wikilink")
+-   [PROBCONS]
 
 ### Others
 
@@ -141,30 +141,30 @@ Phylogenetic analyses
 
 ### Parsimony
 
--   [PAUP](PAUP "wikilink")
--   [ProtPars](PHYLIP#ProtPars "wikilink")
+-   [PAUP]
+-   [ProtPars]
 
 ### Distance based
 
--   [PAUP](PAUP "wikilink")
--   [Quicktree](Quicktree "wikilink")
--   [ProtML](ProtML "wikilink")
--   [NJTree](NJTree "wikilink")
+-   [PAUP]
+-   [Quicktree]
+-   [ProtML]
+-   [NJTree]
 
 ### Maximum Likelihood
 
--   [PAUP](PAUP "wikilink")
--   [RAxML](RAxML "wikilink")
--   [GARLI](GARLI "wikilink")
+-   [PAUP]
+-   [RAxML]
+-   [GARLI]
 
 ### Bayesian
 
--   [MrBayes](MrBayes "wikilink")
--   [PHYML](PHYML "wikilink")
+-   [MrBayes]
+-   [PHYML]
 
-### [Parsimony in PHYLIP](PHYLIP#ProtPars "wikilink")
+### [Parsimony in PHYLIP]
 
-### Distance [Distance in PHYLIP](PHYLIP#ProtDist "wikilink") + [NJ Tree in PHYLIP](PHYLIP#Neighbor "wikilink")
+### Distance [Distance in PHYLIP] + [NJ Tree in PHYLIP]
 
 Rates of sequence evolution
 ---------------------------
@@ -172,8 +172,8 @@ Rates of sequence evolution
 -   Coding sequence evolution
 -   Noncoding sequence evolution
 -   Tools
-    -   [HY-PHY](HY-PHY "wikilink")
-    -   [PAML](PAML "wikilink")
-    -   [Xrates](DART#Xrates "wikilink")'
+    -   [HY-PHY]
+    -   [PAML]
+    -   [Xrates]'
 
-<Category:HOWTOs>
+

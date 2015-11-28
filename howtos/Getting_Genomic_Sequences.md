@@ -1,13 +1,13 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Getting Genomic Sequences"
 layout: default
 ---
 
 ### Authors
 
-[Brian Osborne](Brian_Osborne "wikilink")
+[Brian Osborne]
 
-[Chris Fields](User:Cjfields "wikilink")
+[Chris Fields]
 
 ### Copyright
 
@@ -15,17 +15,17 @@ This document is copyright Brian Osborne. It can be copied and distributed under
 
 ### Abstract
 
-This is a HOWTO that talks about using Bioperl and tools related to Bioperl to get genomic sequence. There are a few different approaches, one uses files that you'll download to your own computer to query locally, others use remote, programmable interfaces or [APIs](wp:Application_programming_interface "wikilink"). You should also see the [EUtils Cookbook](HOWTO:EUtilities_Cookbook "wikilink").
+This is a HOWTO that talks about using Bioperl and tools related to Bioperl to get genomic sequence. There are a few different approaches, one uses files that you'll download to your own computer to query locally, others use remote, programmable interfaces or [APIs]. You should also see the [EUtils Cookbook].
 
 ### Using local Genbank and Entrez Gene files
 
-You can download chromosomal, nucleotide files in [FASTA format](FASTA_sequence_format "wikilink") from NCBI (ftp://ftp.ncbi.nih.gov/genomes/) and get gene position data from [Entrez Gene](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene) (see [Using Bio::DB::EntrezGene to get genomic coordinates](#Using_Bio::DB::EntrezGene_to_get_genomic_coordinates "wikilink")), then create indices of the fasta files using . There is an example script, [extract_genes.pl](Bioperl_scripts#Tools "wikilink"), that shows how this could be done. The query terms are limited to Gene id's in this example since the positional data is taken from Entrez Gene's gene2accession file.
+You can download chromosomal, nucleotide files in [FASTA format] from NCBI (ftp://ftp.ncbi.nih.gov/genomes/) and get gene position data from [Entrez Gene](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene) (see [Using Bio::DB::EntrezGene to get genomic coordinates]), then create indices of the fasta files using . There is an example script, [extract_genes.pl], that shows how this could be done. The query terms are limited to Gene id's in this example since the positional data is taken from Entrez Gene's gene2accession file.
 
 Requirement: BioPerl.
 
 ### Using the Perl API at ENSEMBL
 
-You can connect remotely to the [ENSEMBL](ENSEMBL "wikilink") database and query it using any name or identifier that's understood by [ENSEMBL](ENSEMBL "wikilink").
+You can connect remotely to the [ENSEMBL] database and query it using any name or identifier that's understood by [ENSEMBL].
 
 Requirements: BioPerl, the Ensembl Perl API, , and . See [Ensembl API installation](http://www.ensembl.org/info/docs/api/api_installation.html), [Ensembl API docs](http://www.ensembl.org/info/docs/api/index.html) and the [Ensembl Perl API tutorials](http://www.ensembl.org/info/docs/api/core/core_tutorial.html) for information on installation and use.
 
@@ -93,7 +93,7 @@ foreach my $gene (@{$gene_adaptor->fetch_all_by_external_name($identifier)}) {
 
 ```
 
-You also have the option of using raw [SQL](wp:Sql "wikilink") when using the ENSEMBL API, the result is that this is a very powerful API for analyzing genomic data.
+You also have the option of using raw [SQL] when using the ENSEMBL API, the result is that this is a very powerful API for analyzing genomic data.
 
 #### Notes on this example
 
@@ -189,7 +189,7 @@ while (my $docsum = $summaries->next_DocSum) {
 
 ### Using Bio::DB::EntrezGene to get genomic coordinates
 
-You can get the coordinates of a given gene from Entrez Gene using the module. This involves examining the Annotations associated with the gene (see the [Feature-Annotation HOWTO](HOWTO:Feature-Annotation "wikilink") for more information on Annotations) and finding the one labelled "Evidence Viewer", the data is found in a [URL](wp:Url "wikilink"). The only identifier that the NCBI Entrez Gene API can use is a Gene id, formerly known as a LocusLink id.
+You can get the coordinates of a given gene from Entrez Gene using the module. This involves examining the Annotations associated with the gene (see the [Feature-Annotation HOWTO] for more information on Annotations) and finding the one labelled "Evidence Viewer", the data is found in a [URL]. The only identifier that the NCBI Entrez Gene API can use is a Gene id, formerly known as a LocusLink id.
 
 Requirement: BioPerl.
 
@@ -221,7 +221,7 @@ Once you have the coordinates you can use them to retrieve a sub-sequence either
 
 ### Using Bio::DB::GenBank when you have genomic coordinates to get a Seq object
 
-Once you have the coordinates, sequences can be easily pulled from [Genbank](Genbank "wikilink"), complete with Genbank's annotation.
+Once you have the coordinates, sequences can be easily pulled from [Genbank], complete with Genbank's annotation.
 
 This is a simple example that creates a Seq object in the end.
 
@@ -238,7 +238,7 @@ my $obj = $gb->get_Seq_by_acc($chr_acc_ver);
 
 ```
 
-The following is an example of how you can pull sequence chunks from [GenBank](GenBank "wikilink"), complete with GenBank's annotation, using objects generated by a factory.
+The following is an example of how you can pull sequence chunks from [GenBank], complete with GenBank's annotation, using objects generated by a factory.
 
 Note that you could easily replace with anything that gives start, end, and strand information. While the last `foreach` loop just dumps sequence annotation information, it could be modified to add the sequence feature, determine the seqfeatures's genomic context to surrounding features, etc. For more information, see .
 
@@ -325,8 +325,8 @@ foreach my $seq (@seqs) {
 
 ### Using Bio::DB::EUtilities to get raw GenBank-formatted sequence
 
-The [EUtilities Cookbook](HOWTO:EUtilities_Cookbook#esummary_-.3E_efetch "wikilink") has two examples on how to retrieve the sequence for a gene region using esummary information.
+The [EUtilities Cookbook] has two examples on how to retrieve the sequence for a gene region using esummary information.
 
 '
 
-<Category:HOWTOs> <Category:Fetching/Scrapbook>
+ <Category:Fetching/Scrapbook>

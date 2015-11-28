@@ -1,11 +1,11 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:AlignIO and SimpleAlign"
 layout: default
 ---
 
 ### Authors
 
-[Brian Osborne](Brian_Osborne "wikilink"), [Peter Schattner](Peter_Schattner "wikilink").
+[Brian Osborne], [Peter Schattner].
 
 ### Abstract
 
@@ -93,7 +93,7 @@ also supports the tied filehandle syntax described above for .
 
 Once one has identified a set of similar sequences, one often needs to create an alignment of those sequences.
 
-objects are produced by [bioperl-run](bioperl-run "wikilink") alignment creation objects (e.g. Clustalw.pm, BLAST's bl2seq, TCoffee.pm, and Lagan.pm or they can be read in from files of multiple-sequence alignments in various formats using AlignIO.
+objects are produced by [bioperl-run] alignment creation objects (e.g. Clustalw.pm, BLAST's bl2seq, TCoffee.pm, and Lagan.pm or they can be read in from files of multiple-sequence alignments in various formats using AlignIO.
 
 Some of the manipulations possible with include:
 
@@ -196,4 +196,4 @@ while ( my $in = $stream->next_cluster ) {
 
 See for more details.'
 
-<Category:HOWTOs>
+

@@ -1,36 +1,36 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Submit Patch"
 layout: default
 ---
 
 Author
 ------
 
-[Torsten Seemann](Torsten_Seemann "wikilink") <[mailto:torsten.seemann-at-infotech-monash-edu-au torsten.seemann-at-infotech-monash-edu-au]>
+[Torsten Seemann] <[mailto:torsten.seemann-at-infotech-monash-edu-au torsten.seemann-at-infotech-monash-edu-au]>
 
 [Victorian Bioinformatics Consortium](http://www.vicbioinformatics.com), [Monash University](http://www.monash.edu.au/), Australia.
 
 Copyright
 ---------
 
-This document is copyright Torsten Seemann, 2005. It can be copied and distributed under the terms of the [Perl Artistic License](Perl_Artistic_License "wikilink").
+This document is copyright Torsten Seemann, 2005. It can be copied and distributed under the terms of the [Perl Artistic License].
 
 Revisions
 ---------
 
--   First draft - [Tseemann](User:Tseemann "wikilink") 02:50, 29 December 2005 (EST)
+-   First draft - [Tseemann] 02:50, 29 December 2005 (EST)
 
 Introduction
 ------------
 
-This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into [BioPerl](BioPerl "wikilink"), from checking out the latest CVS to creating a diff file and submitting it to Bugzilla.
+This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into [BioPerl], from checking out the latest CVS to creating a diff file and submitting it to Bugzilla.
 
 Step by Step
 ------------
 
 ### Get the latest version from Subversion
 
-You should ensure you are using the latest developer version of BioPerl - this means checking out [bioperl-live](bioperl-live "wikilink") (or the appropriate repository) from Subversion. Here are [instructions on how to do this](Using_Subversion#Checking_out_code_from_the_repository_with_a_developer_account "wikilink"). This is important because the change you want to make may have already been made!
+You should ensure you are using the latest developer version of BioPerl - this means checking out [bioperl-live] (or the appropriate repository) from Subversion. Here are [instructions on how to do this]. This is important because the change you want to make may have already been made!
 
 ` mkdir -p ~/src/bioperl`
 ` cd ~/src/bioperl `
@@ -57,7 +57,7 @@ You need to now check that you fixed the problem. At this point you will probabl
 
 ### Write a test
 
-Although trivial bug fixes will be accepted as-is, anything which modifies functionality or any major change will require a [test case](wp:Test_case "wikilink") for it to be accepted with any confidence. This will mean either adding extra tests to an existing test file (`t/fasta.t` in this example - make sure you back it up to `t/fasta.t.orig`), or you will need to create a new test file. I would recommend naming it `SeqIO-fasta.t` in this case to avoid future clashes. If your test needs data files, place them in `t/data/`.
+Although trivial bug fixes will be accepted as-is, anything which modifies functionality or any major change will require a [test case] for it to be accepted with any confidence. This will mean either adding extra tests to an existing test file (`t/fasta.t` in this example - make sure you back it up to `t/fasta.t.orig`), or you will need to create a new test file. I would recommend naming it `SeqIO-fasta.t` in this case to avoid future clashes. If your test needs data files, place them in `t/data/`.
 
 ` cp t/fasta.t t/fasta.t.orig`
 
@@ -84,40 +84,40 @@ For everything:
 
 ` svn diff `
 
--   Use the [diff](wp:diff "wikilink") tool in Unix.
+-   Use the [diff] tool in Unix.
 
 ` diff -Bub Bio/SeqIO/fasta.pm.orig Bio/SeqIO/fasta.pm > /tmp/fasta.pm.diff`
 ` diff -Bub t/fasta.t.orig          t/fasta.t          > /tmp/fasta.t.diff`
 
 ### Submit the patch
 
-First read about [Bugs](Bugs "wikilink") then log into [Redmine](http://redmine.bioperl.org/). Submit a new feature request, and attach `/tmp/fasta.pm.diff` and `/tmp/fasta.t.diff` to your bug submission. Make sure you write a clear and concise description for the feature request.
+First read about [Bugs] then log into [Redmine](http://redmine.bioperl.org/). Submit a new feature request, and attach `/tmp/fasta.pm.diff` and `/tmp/fasta.t.diff` to your bug submission. Make sure you write a clear and concise description for the feature request.
 
 ### The waiting game
 
-Eventually your bug submission will be processed and assimilated into [bioperl-live](bioperl-live "wikilink") (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list](Mailing_lists "wikilink") which most [BioPerl](BioPerl "wikilink") developers read.
+Eventually your bug submission will be processed and assimilated into [bioperl-live] (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list] which most [BioPerl] developers read.
 
 ` while true; do echo "Waiting..."; sleep 3600; done`
 
 ### Update your local Git repository
 
-Don't forget to regularly update your Git version of [BioPerl](BioPerl "wikilink")!
+Don't forget to regularly update your Git version of [BioPerl]!
 
 ` git pull origin master`
 
 Conclusion
 ----------
 
-It takes a little bit of effort to submit a patch to [BioPerl](BioPerl "wikilink") but you are rewarded with that warm fuzzy feeling that giving back to your community provides. If the patch showed BioPerl aptitude, there's a good chance that you will be invited to [become a BioPerl developer](Becoming_a_developer "wikilink") via your own [developer account](Using_CVS#Checking_out_code_from_the_repository_with_a_developer_account "wikilink").
+It takes a little bit of effort to submit a patch to [BioPerl] but you are rewarded with that warm fuzzy feeling that giving back to your community provides. If the patch showed BioPerl aptitude, there's a good chance that you will be invited to [become a BioPerl developer] via your own [developer account].
 
 Further reading
 ---------------
 
--   [Advanced BioPerl](Advanced_BioPerl "wikilink")
--   [Project priority list](Project_priority_list "wikilink")
--   [Orphan modules](Orphan_modules "wikilink")
--   [Becoming a developer](Becoming_a_developer "wikilink")
--   [Using Subversion](Using_Subversion "wikilink")
--   [Mailing lists](Mailing_lists "wikilink")'
+-   [Advanced BioPerl]
+-   [Project priority list]
+-   [Orphan modules]
+-   [Becoming a developer]
+-   [Using Subversion]
+-   [Mailing lists]'
 
-<Category:HOWTOs> <Category:TODO>
+ <Category:TODO>

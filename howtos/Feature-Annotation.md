@@ -1,12 +1,12 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Features and Annotations"
 layout: default
 ---
 
 Authors
 -------
 
-[Brian Osborne](Brian_Osborne "wikilink")
+[Brian Osborne]
 
   
 [briano at bioteam.net](mailto:briano-at-bioteam.net)
@@ -28,20 +28,20 @@ This is a HOWTO that explains how to use the SeqFeature and Annotation objects o
 Introduction
 ------------
 
-There's no more central notion in bioinformatics than the idea that portions of protein or nucleotide sequence have specific characteristics (or [features](feature "wikilink")). A given stretch of DNA may have been found to be essential for the proper transcriptional regulation of a gene, or a particular amino acid sequence may bind a particular ion, for example. This simple idea turns out to be a bit more complicated in the bioinformatics world where there's a need to represent the actual data in all its varied forms. The promoter region may not be precisely defined down to the base pair, a transcribed region may be divided into discontinuous exons, a gene may have different numbered positions on different maps, a sequence may have a sub-sequence which itself possesses some characteristic, an experimental observation may be associated with a literature reference, and so on.
+There's no more central notion in bioinformatics than the idea that portions of protein or nucleotide sequence have specific characteristics (or [features]). A given stretch of DNA may have been found to be essential for the proper transcriptional regulation of a gene, or a particular amino acid sequence may bind a particular ion, for example. This simple idea turns out to be a bit more complicated in the bioinformatics world where there's a need to represent the actual data in all its varied forms. The promoter region may not be precisely defined down to the base pair, a transcribed region may be divided into discontinuous exons, a gene may have different numbered positions on different maps, a sequence may have a sub-sequence which itself possesses some characteristic, an experimental observation may be associated with a literature reference, and so on.
 
 This HOWTO describes aspects of Bioperl's approach. The problem is how to create software that accepts, analyzes, and displays any and all of this sequence annotation with the required attention to detail yet remains flexible and easy to use. The general names for the modules or objects that serve these purposes in Bioperl are and .
 
-The HOWTO will discuss these objects and the differences between them. There's also discussion of how to get useful data from these objects and the basics of how to create your own sequence [annotations](annotation "wikilink") using the objects.
+The HOWTO will discuss these objects and the differences between them. There's also discussion of how to get useful data from these objects and the basics of how to create your own sequence [annotations] using the objects.
 
 The Basics
 ----------
 
-Some BioPerl [neophytes](wikt:neophyte "wikilink") may also be new to [object-oriented programming (OOP)](wp:Object_oriented_programming "wikilink") and this notion of an object. OOP is not the subject of this HOWTO but there should be some discussion of how objects are used in BioPerl. In the BioPerl world parsing a [GenBank file](GenBank_sequence_format "wikilink") doesn't give you data, it gives you an object and you can ask the object, a kind of variable, for data. While annotating you don't create a file or database entry directly. You might create a "sequence object" and an "annotation object", then put these two together to create an "annotated sequence object". You could then tell this object to make a version of itself as a file, or pass this object to a "database object" in order to enter some data into the database. This is a very flexible and logical way to design a complex piece of software like BioPerl, since each part of the system can be created and evaluated separately.
+Some BioPerl [neophytes] may also be new to [object-oriented programming  and this notion of an object. OOP is not the subject of this HOWTO but there should be some discussion of how objects are used in BioPerl. In the BioPerl world parsing a [GenBank file] doesn't give you data, it gives you an object and you can ask the object, a kind of variable, for data. While annotating you don't create a file or database entry directly. You might create a "sequence object" and an "annotation object", then put these two together to create an "annotated sequence object". You could then tell this object to make a version of itself as a file, or pass this object to a "database object" in order to enter some data into the database. This is a very flexible and logical way to design a complex piece of software like BioPerl, since each part of the system can be created and evaluated separately.
 
-A central idea in OOP is [inheritance](wp:Inheritance_(computer_science) "wikilink"), which means that a child object can derive some of its capabilities or functionality from a parent object. The OOP approach also allows new modules to modify or add functionality, distinct from the parent. Practically speaking this means that there's not one definitive SeqFeature or Annotation object but many, each a variation on a theme. The details of the these varieties will be discussed in other sections, but for now we could use some broad definitions that apply to all the variations.
+A central idea in OOP is [inheritance], which means that a child object can derive some of its capabilities or functionality from a parent object. The OOP approach also allows new modules to modify or add functionality, distinct from the parent. Practically speaking this means that there's not one definitive SeqFeature or Annotation object but many, each a variation on a theme. The details of the these varieties will be discussed in other sections, but for now we could use some broad definitions that apply to all the variations.
 
-A [SeqFeature object](SeqFeature_object "wikilink") : is designed to be associated with a sequence, and can have a location on that sequence - it's a way of describing the characteristics of a specific part of a sequence. SeqFeature objects can also have features themselves, which you could call sub-features but which, in fact, are complete SeqFeature objects. SeqFeature objects can also have one or more Annotations associated with them (see [Features_vs._Annotations](Features_vs._Annotations "wikilink") for an in-depth discussion of that).  
+A [SeqFeature object] : is designed to be associated with a sequence, and can have a location on that sequence - it's a way of describing the characteristics of a specific part of a sequence. SeqFeature objects can also have features themselves, which you could call sub-features but which, in fact, are complete SeqFeature objects. SeqFeature objects can also have one or more Annotations associated with them (see [Features_vs._Annotations] for an in-depth discussion of that).  
 
 <!-- -->
 
@@ -49,7 +49,7 @@ An Annotation object : is also associated with a sequence as you'd expect but it
 
 Locations were discussed, above. Describing locations can be complicated in certain situations, say when some feature is located on different sequences with varying degrees of precision. One location could also be shared between disparate objects, such as two different kinds of SeqFeatures. You may also want to describe a feature with many locations, like a repeated sequence motif in a protein. Because of these sorts of complexities and because one may want to create different types of locations the BioPerl authors elected to keep location functionality inside dedicated '''Location objects'''.
 
-SeqFeatures and Annotations will make the most sense if you're already somewhat familiar with [BioPerl](BioPerl "wikilink") and its central and objects. The reader is referred to the ,, and the for more information on these topics. Here's a bit of code, to summarize:
+SeqFeatures and Annotations will make the most sense if you're already somewhat familiar with [BioPerl] and its central and objects. The reader is referred to the ,, and the for more information on these topics. Here's a bit of code, to summarize:
 
 ```perl
 
@@ -60,7 +60,7 @@ use Bio::SeqIO; my $seqio_object = Bio::SeqIO->new(-file => "BAB55667.gb" ); my 
 
 ```
 
-''Note'': `$seq_object` is a object. A object, such as would be returned from a fasta file, does not have associated feature or annotation objects (see [Table 6 below](#Other_Sequence_File_Formats "wikilink")).
+''Note'': `$seq_object` is a object. A object, such as would be returned from a fasta file, does not have associated feature or annotation objects (see [Table 6 below]).
 
 Now that we have a sequence object in hand we can examine its features and annotations.
 
@@ -648,7 +648,7 @@ To completely parse these sequence formats you may also need to use methods that
 Building Your Own Sequences
 ---------------------------
 
-We've taken a look at getting data from SeqFeature and Annotation objects, but what about creating these objects when you already have the data? The object is probably the best SeqFeature object for this purpose, in part because of its flexibility. Let's assume we have a sequence that has an interesting sub-sequence, going from position 10 to 22 on the + or 1 or [sense](wp:DNA#Direction_of_DNA_strands "wikilink") strand.
+We've taken a look at getting data from SeqFeature and Annotation objects, but what about creating these objects when you already have the data? The object is probably the best SeqFeature object for this purpose, in part because of its flexibility. Let's assume we have a sequence that has an interesting sub-sequence, going from position 10 to 22 on the + or 1 or [sense] strand.
 
 ```perl
 
@@ -781,12 +781,12 @@ This also skips annotations, which includes things like comments, references, an
 
 As of version 1.5.1 this ability to customize your Sequence objects is only available for .
 
-See [Bio::Seq::SeqBuilder](Module:Bio::Seq::SeqBuilder "wikilink") and [HOWTO:SeqIO](HOWTO:SeqIO#Speed.2C_Bio::Seq::SeqBuilder "wikilink") for more documentation on this.
+See [Bio::Seq::SeqBuilder] and [HOWTO:SeqIO] for more documentation on this.
 
 Additional Information
 ----------------------
 
-If you would like to learn about representing sequences and features in graphical form take a look at the [Graphics HOWTO](HOWTO:Graphics "wikilink"). The documentation for each of the individual SeqFeature, Range, Location and Annotation modules is also very useful, here's a list of them. If you have questions or comments that aren't addressed herein then write the Bioperl community at [bioperl-l@bioperl.org](http://bioperl.open-bio.org/wiki/Mailing_lists).
+If you would like to learn about representing sequences and features in graphical form take a look at the [Graphics HOWTO]. The documentation for each of the individual SeqFeature, Range, Location and Annotation modules is also very useful, here's a list of them. If you have questions or comments that aren't addressed herein then write the Bioperl community at [bioperl-l@bioperl.org](http://bioperl.open-bio.org/wiki/Mailing_lists).
 
 '''SeqFeature Modules'''
 
@@ -809,4 +809,4 @@ Acknowledgements
 
 Thanks to Steven Lembark for comments and neat code discussions.'
 
-<Category:HOWTOs>
+

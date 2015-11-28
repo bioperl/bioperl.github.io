@@ -5,7 +5,7 @@ layout: default
 
 ### Authors
 
-[Brian Osborne](Brian_Osborne "wikilink"), [Peter Schattner](Peter_Schattner "wikilink").
+[Brian Osborne], [Peter Schattner].
 
 ### Abstract
 
@@ -13,7 +13,7 @@ This is a HOWTO that talks about using Bioperl to create local sequence database
 
 ### Introduction
 
-Bioperl offers many ways to retrieve sequences from online databases like NCBI and Swissprot but there may be times when you want build local databases for fast, secure retrieval. This HOWTO discusses the different Bioperl modules you might use. Also see [HOWTO:OBDA Flat databases](HOWTO:OBDA_Flat_databases "wikilink").
+Bioperl offers many ways to retrieve sequences from online databases like NCBI and Swissprot but there may be times when you want build local databases for fast, secure retrieval. This HOWTO discusses the different Bioperl modules you might use. Also see [HOWTO:OBDA Flat databases].
 
 ### Bio::Index
 
@@ -167,4 +167,4 @@ sub make_my_id {
 
 ### Storing sequences in a relational database
 
-The core Bioperl package does not support accessing sequences and data stored in relational databases but this capability is available in the [Bioperl-db](Bioperl-db "wikilink") package.'
+The core Bioperl package does not support accessing sequences and data stored in relational databases but this capability is available in the [Bioperl-db] package.'

@@ -1,19 +1,19 @@
 ---
-title: "HOWTO:Local Databases"
+title: "HOWTO:Short Read assemblies using bwa"
 layout: default
 ---
 
 Abstract
 --------
 
-Using BioPerl to create and manipulate short-read assemblies with the [`bwa`](http://bio-bwa.sourceforge.net/) and [`samtools`](http://samtools.sourceforge.net/) suites. [Quicklink](#Synopsis "wikilink") to synopsis.
+Using BioPerl to create and manipulate short-read assemblies with the [`bwa`](http://bio-bwa.sourceforge.net/) and [`samtools`](http://samtools.sourceforge.net/) suites. [Quicklink] to synopsis.
 
 __TOC__
 
 Author
 ------
 
-[Mark A. Jensen](User:Majensen "wikilink")
+[Mark A. Jensen]
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -22,22 +22,22 @@ Author
 Introduction
 ------------
 
-[`bwa`](http://bio-bwa.sourceforge.net/) is a suite of C programs that perform efficient alignments (based in part on the [Burrows-Wheeler transform](wp:Burrows-Wheeler_transform "wikilink")) of short (20-100bp) sequence reads, guided by a set of reference sequences provided in FASTA format. `bwa` input and output complies with the Sequence/Alignment Map ([SAM](http://samtools.sourceforge.net/SAM1.pdf)) binary (`.bam`) and test (`.sam`) formats. Alignment files in SAM formats can be converted, indexed, sliced and diced by the [`samtools`](http://samtools.sourceforge.net/) suite.
+[`bwa`](http://bio-bwa.sourceforge.net/) is a suite of C programs that perform efficient alignments (based in part on the [Burrows-Wheeler transform]) of short (20-100bp) sequence reads, guided by a set of reference sequences provided in FASTA format. `bwa` input and output complies with the Sequence/Alignment Map ([SAM](http://samtools.sourceforge.net/SAM1.pdf)) binary (`.bam`) and test (`.sam`) formats. Alignment files in SAM formats can be converted, indexed, sliced and diced by the [`samtools`](http://samtools.sourceforge.net/) suite.
 
 These tools are comprehensive and allow the user to tweak many different parameters, and outputs can be directed to inputs to create highly application-specific workflows. The BioPerl run wrappers and are designed to help automate and manage such workflows, and help reduce the number of cryptic command-line options and file order inconsistencies the user must remember. can also act as a canned assembler, accepting input data and returning a object in a single command. A new assembly IO object has been created for this purpose, .
 
 Dependencies and Installation
 -----------------------------
 
-(r16425) can be found in the [trunk](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-run/trunk/lib/Bio/Tools/Run/BWA.pm) of [bioperl-run](bioperl-run "wikilink"). It depends on (@ r16416) and (@ r16418). The canned assembler method `run()` also requires in at r16427.
+(r16425) can be found in the [trunk](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-run/trunk/lib/Bio/Tools/Run/BWA.pm) of [bioperl-run]. It depends on (@ r16416) and (@ r16418). The canned assembler method `run()` also requires in at r16427.
 
 is in , and depends on recent small changes in (@ r16414).
 
-To download and install BioPerl core and packages from Git, see [Using Git](Using_Git "wikilink").
+To download and install BioPerl core and packages from Git, see [Using Git].
 
 Like all run wrappers, these modules need the underlying programs to work. Get `bwa` and `samtools` at their Sourceforge sites: [1](http://bio-bwa.sourceforge.net/) [2](http://samtools.sourceforge.net/).
 
-Also, the modules must be installed on your system. These are <b>not</b> BioPerl modules. (They were written by a [core developer](Core_developer "wikilink"), though, so they're all right.) You can get them on [CPAN](http://search.cpan.org).
+Also, the modules must be installed on your system. These are <b>not</b> BioPerl modules. (They were written by a [core developer], though, so they're all right.) You can get them on [CPAN](http://search.cpan.org).
 
 Creating an Assembly
 --------------------
@@ -92,12 +92,12 @@ The `Bio::Tools::Run::BWA::run()` method performs the following steps:
 | sort on coordinates                 | samtools | `sort`        |
 | create bam index                    | samtools | `index`       |
 
-Command-line options can be directed to the `aln` and `samse/sampe` steps using factory arguments. See [Specifying Options](#Specifying_options "wikilink").
+Command-line options can be directed to the `aln` and `samse/sampe` steps using factory arguments. See [Specifying Options].
 
 Running separate bwa components
 -------------------------------
 
-A second mode for allows direct access to `bwa` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#Specifying_options "wikilink")):
+A second mode for allows direct access to `bwa` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options]):
 
 ```perl
 
@@ -105,7 +105,7 @@ $bwa = Bio::Tools::Run::BWA->new( -command => 'view' );
 
 ```
 
-To execute, use the `run_bwa()` method off the factory. Input and output files are specified in the arguments of `run_maq` (see [Specifying Files](#Specifying_files "wikilink")):
+To execute, use the `run_bwa()` method off the factory. Input and output files are specified in the arguments of `run_maq` (see [Specifying Files]):
 
 ```perl
 
@@ -213,7 +213,7 @@ $converter->run( -bam => 'mysam.sam', -out => 'mysam.bam' );
 
 ```
 
-Parameters and filespecs can be browsed as described in [Specifying options](#Specifying_options "wikilink") and [Specifying files](#Specifying_files "wikilink").
+Parameters and filespecs can be browsed as described in [Specifying options] and [Specifying files].
 
 Synopsis
 --------
@@ -274,11 +274,11 @@ $samt->run( -bam => 'mysam.bam', -pfx => 'mysam.srt' );
 SEE ALSO
 --------
 
-[Short-read assemblies with `maq`](HOWTO:Short-read_assemblies_with_maq "wikilink")
+[Short-read assemblies with `maq`]
 
 TODO
 ----
 
 '
 
-<Category:HOWTOs>
+
