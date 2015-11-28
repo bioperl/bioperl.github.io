@@ -25,9 +25,9 @@ For example, if one wants to set up an indexed flat-file database of fasta files
 
 \# script 1: create the index
 
+\# some users have reported that this is necessary
+use strict;
 use Bio::Index::Fasta; 
-\# using fasta file format use strict; \# some users have reported 
-\# that this is necessary
 
 my $Index_File_Name = shift;
 
@@ -35,7 +35,7 @@ my $inx = Bio::Index::Fasta->new(
 -filename => $Index_File_Name,
 -write_flag => 1);
 
-$inx-&gt;make_index(@sequence_files);
+$inx->make_index(@sequence_files);
 
 ```
 
@@ -43,19 +43,20 @@ This script then retrieves sequences:
 
 ```perl
 
-1.  script 2: retrieve some files
+\# script 2: retrieve some files
 
-use Bio::Index::Fasta; use strict; \# some users have reported that this is necessary
+\# some users have reported that this is necessary
+use strict;
+use Bio::Index::Fasta; use strict;
 
 my $Index_File_Name = shift;
 
-my $inx = Bio::Index::Fasta-&gt;new($Index_File_Name);
+my $inx = Bio::Index::Fasta->new($Index_File_Name);
 
 foreach my $id (@ARGV) {
-
-`   my $seq = $inx->fetch($id);  # Returns Bio::Seq object`
-`   # do something with the sequence`
-
+    # Returns Bio::Seq object
+    my $seq = $inx->fetch($id);
+    # do something with the sequence
 }
 
 ```
