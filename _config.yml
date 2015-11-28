@@ -8,4 +8,8 @@ url: "http://yourdomain.com" # the base hostname & protocol for your site
 #github_username:  jekyll
 encoding: UTF-8
 # Build settings
-markdown: kramdown
+# Build settings
+markdown: redcarpet
+markdown_ext:  markdown,mkdown,mkdn,mkd,md
+redcarpet:
+  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]
