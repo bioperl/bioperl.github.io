@@ -47,7 +47,7 @@ This script then retrieves sequences:
 
 # some users have reported that this is necessary
 use strict;
-use Bio::Index::Fasta; use strict;
+use Bio::Index::Fasta;
 
 my $index_file_name = shift;
 
