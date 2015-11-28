@@ -23,16 +23,17 @@ For example, if one wants to set up an indexed flat-file database of fasta files
 
 ```perl
 
-1.  script 1: create the index
+\# script 1: create the index
 
-use Bio::Index::Fasta; \# using fasta file format use strict; \# some users have reported that this is necessary
+use Bio::Index::Fasta; 
+\# using fasta file format use strict; \# some users have reported 
+\# that this is necessary
 
 my $Index_File_Name = shift;
 
-my $inx = Bio::Index::Fasta-&gt;new(
-
-`   -filename => $Index_File_Name,`
-`   -write_flag => 1);`
+my $inx = Bio::Index::Fasta->new(
+-filename => $Index_File_Name,
+-write_flag => 1);
 
 $inx-&gt;make_index(@sequence_files);
 
