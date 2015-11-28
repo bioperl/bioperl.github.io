@@ -23,9 +23,9 @@ For example, if one wants to set up an indexed flat-file database of fasta files
 
 ```perl
 
-\# script 1: create the index
+# script 1: create the index
 
-\# some users have reported that this is necessary
+# some users have reported that this is necessary
 use strict;
 use Bio::Index::Fasta; 
 
@@ -43,9 +43,9 @@ This script then retrieves sequences:
 
 ```perl
 
-\# script 2: retrieve some files
+# script 2: retrieve some files
 
-\# some users have reported that this is necessary
+# some users have reported that this is necessary
 use strict;
 use Bio::Index::Fasta; use strict;
 
@@ -73,11 +73,11 @@ use strict;
 use Bio::DB::Fasta;
 
 my $db = Bio::DB::Fasta->new($file);
-\# get a sequence as string 
+# get a sequence as string 
 my $seqstring = $db->seq($id);
-\# get a PrimarySeq obj 
+# get a PrimarySeq obj 
 my $seqobj = $db->get_Seq_by_id($id); 
-\# get the header, or description line
+# get the header, or description line
 my $desc = $db->header($id);
 
 ```
@@ -100,7 +100,7 @@ By default and will use the first "word" they encounter in the fasta header as t
 
 $ENV{BIOPERL_INDEX_TYPE} = "SDBM_File";
 
-\#look for the index in the current directory
+#look for the index in the current directory
 
 $ENV{BIOPERL_INDEX} = ".";
 
@@ -108,13 +108,13 @@ my $file_name = "test.fa";
 my $inx = Bio::Index::Fasta->new( -filename => $file_name . ".idx",
 write_flag => 1 );
 
-\# pass a reference to the critical function to the Bio::Index object
+# pass a reference to the critical function to the Bio::Index object
 $inx->id_parser(&get_id);
 
-\# make the index
+# make the index
 $inx->make_index($file_name);
 
-\# here is where the retrieval key is specified
+# here is where the retrieval key is specified
 sub get_id {
     my $header = shift;
     $header =~ /^>.*sp|([A-Z]d{5}b)/;
@@ -143,12 +143,10 @@ Modify the function that's passed to the id_parser() method:
 ```perl
 
 sub get_id {
-
-my $header = shift;
-my (@sps) = $header =~ /^>.*sp|([A-Z]d{5})/g;
-my (@gis) = $header =~ /gi|(d+)/g;
-return (@sps,@gis);
-
+    my $header = shift;
+    my (@sps) = $header =~ /^>.*sp|([A-Z]d{5})/g;
+    my (@gis) = $header =~ /gi|(d+)/g;
+    return (@sps,@gis);
 }
 
 ```
@@ -161,9 +159,9 @@ my $db = Bio::DB::Fasta->new('test.fa', -makeid=>&make_my_id);
 my $seqobj = $db->get_Seq_by_id($id);
 
 sub make_my_id {
-$description_line = shift;
-$description_line =~ /gi|(d+)|emb|(w+)/;
-($1,$2);
+    $description_line = shift;
+    $description_line =~ /gi|(d+)|emb|(w+)/;
+    ($1,$2);
 }
 
 ```
