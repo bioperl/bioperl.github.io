@@ -32,8 +32,8 @@ use Bio::Index::Fasta;
 my $Index_File_Name = shift;
 
 my $inx = Bio::Index::Fasta->new(
--filename => $Index_File_Name,
--write_flag => 1);
+-filename => $Index_File_Name,
+-write_flag => 1);
 
 $inx->make_index(@sequence_files);
 
@@ -54,9 +54,9 @@ my $Index_File_Name = shift;
 my $inx = Bio::Index::Fasta->new($Index_File_Name);
 
 foreach my $id (@ARGV) {
-    # Returns Bio::Seq object
-    my $seq = $inx->fetch($id);
-    # do something with the sequence
+    # Returns Bio::Seq object
+    my $seq = $inx->fetch($id);
+    # do something with the sequence
 }
 
 ```
@@ -71,7 +71,7 @@ Bioperl also supplies as a means to index and query Fasta format files. It's sim
 
 use Bio::DB::Fasta; use strict;
 
-my $db = Bio::DB::Fasta-&gt;new($file); \# one file or many files my $seqstring = $db-&gt;seq($id); \# get a sequence as string my $seqobj = $db-&gt;get_Seq_by_id($id); \# get a PrimarySeq obj my $desc = $db-&gt;header($id); \# get the header, or description line
+my $db = Bio::DB::Fasta->new($file); \# one file or many files my $seqstring = $db->seq($id); \# get a sequence as string my $seqobj = $db->get_Seq_by_id($id); \# get a PrimarySeq obj my $desc = $db->header($id); \# get the header, or description line
 
 ```
 
@@ -81,9 +81,9 @@ See for more information on this fully-featured module.
 
 Both modules also offer the user the ability to designate a specific string within the fasta header as the desired id, such as the gi number within the string "gi|4556644|gb|X45555". Consider the following fasta-formatted sequence, in "test.fa":
 
-```perl
+```
 
-&gt;gi|523232|emb|AAC12345|sp|D12567 titin fragment MHRHHRTGYSAAYGPLKJHGYVHFIMCVVVSWWASDVVTYIPLLLNNSSAGWKRWWWIIFGGE GHGHHRTYSALWWPPLKJHGSKHFILCVKVSWLAKKERTYIPKKILLMMGGWWAAWWWI
+>gi|523232|emb|AAC12345|sp|D12567 titin fragment MHRHHRTGYSAAYGPLKJHGYVHFIMCVVVSWWASDVVTYIPLLLNNSSAGWKRWWWIIFGGE GHGHHRTYSALWWPPLKJHGSKHFILCVKVSWLAKKERTYIPKKILLMMGGWWAAWWWI
 
 ```
 
@@ -93,29 +93,29 @@ By default and will use the first "word" they encounter in the fasta header as t
 
 $ENV{BIOPERL_INDEX_TYPE} = "SDBM_File";
 
-1.  look for the index in the current directory
+\#look for the index in the current directory
 
 $ENV{BIOPERL_INDEX} = ".";
 
-my $file_name = "test.fa"; my $inx = Bio::Index::Fasta-&gt;new( -filename =&gt; $file_name . ".idx",
+my $file_name = "test.fa";
+my $inx = Bio::Index::Fasta->new( -filename => $file_name . ".idx",
 
-`                                 -write_flag => 1 );`
+write_flag => 1 );
 
-1.  pass a reference to the critical function to the Bio::Index object
+\# pass a reference to the critical function to the Bio::Index object
 
-$inx-&gt;id_parser(&get_id);
+$inx->id_parser(&get_id);
 
-1.  make the index
+\# make the index
 
-$inx-&gt;make_index($file_name);
+$inx->make_index($file_name);
 
-1.  here is where the retrieval key is specified
+\# here is where the retrieval key is specified
 
 sub get_id {
-
-`  my $header = shift;`
-`  $header =~ /^>.*bsp|([A-Z]d{5}b)/;`
-`  $1;`
+my $header = shift;
+$header =~ /^>.*sp|([A-Z]d{5}b)/;
+$1;
 
 }
 
@@ -125,7 +125,8 @@ Here is how you would retrieve the sequence, as a object:
 
 ```perl
 
-my $seq = $inx-&gt;fetch("D12567"); print $seq-&gt;seq;
+my $seq = $inx->fetch("D12567");
+print $seq->seq;
 
 ```
 
@@ -133,7 +134,7 @@ What if you wanted to retrieve a sequence using either a Swissprot id or a gi nu
 
 ```perl
 
-&gt;gi|523232|emb|AAC12345|sp|D12567|gi|7744242|sp|V11223 titin fragment
+>gi|523232|emb|AAC12345|sp|D12567|gi|7744242|sp|V11223 titin fragment
 
 ```
 
@@ -143,10 +144,10 @@ Modify the function that's passed to the id_parser() method:
 
 sub get_id {
 
-`  my $header = shift;`
-`  my (@sps) = $header =~ /^>.*bsp|([A-Z]d{5})b/g;`
-`  my (@gis) = $header =~ /gi|(d+)b/g;`
-`  return (@sps,@gis);`
+my $header = shift;
+my (@sps) = $header =~ /^>.*bsp|([A-Z]d{5})b/g;
+my (@gis) = $header =~ /gi|(d+)b/g;
+return (@sps,@gis);
 
 }
 
@@ -156,14 +157,13 @@ The module uses the same principle, but the syntax is slightly different, for ex
 
 ```perl
 
-my $db = Bio::DB::Fasta-&gt;new('test.fa', -makeid=&gt;&make_my_id); my $seqobj = $db-&gt;get_Seq_by_id($id);
+my $db = Bio::DB::Fasta->new('test.fa', -makeid=>&make_my_id);
+my $seqobj = $db->get_Seq_by_id($id);
 
 sub make_my_id {
-
-`  my $description_line = shift;`
-`  $description_line =~ /gi|(d+)|emb|(w+)/;`
-`  ($1,$2);`
-
+$description_line = shift;
+$description_line =~ /gi|(d+)|emb|(w+)/;
+($1,$2);
 }
 
 ```
@@ -171,5 +171,3 @@ sub make_my_id {
 ### Storing sequences in a relational database
 
 The core Bioperl package does not support accessing sequences and data stored in relational databases but this capability is available in the [Bioperl-db](Bioperl-db "wikilink") package.'
-
-<Category:HOWTOs>
