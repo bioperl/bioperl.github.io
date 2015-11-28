@@ -69,9 +69,16 @@ Bioperl also supplies as a means to index and query Fasta format files. It's sim
 
 ```perl
 
-use Bio::DB::Fasta; use strict;
+use strict;
+use Bio::DB::Fasta;
 
-my $db = Bio::DB::Fasta->new($file); \# one file or many files my $seqstring = $db->seq($id); \# get a sequence as string my $seqobj = $db->get_Seq_by_id($id); \# get a PrimarySeq obj my $desc = $db->header($id); \# get the header, or description line
+my $db = Bio::DB::Fasta->new($file);
+\# get a sequence as string 
+my $seqstring = $db->seq($id);
+\# get a PrimarySeq obj 
+my $seqobj = $db->get_Seq_by_id($id); 
+\# get the header, or description line
+my $desc = $db->header($id);
 
 ```
 
@@ -99,19 +106,15 @@ $ENV{BIOPERL_INDEX} = ".";
 
 my $file_name = "test.fa";
 my $inx = Bio::Index::Fasta->new( -filename => $file_name . ".idx",
-
 write_flag => 1 );
 
 \# pass a reference to the critical function to the Bio::Index object
-
 $inx->id_parser(&get_id);
 
 \# make the index
-
 $inx->make_index($file_name);
 
 \# here is where the retrieval key is specified
-
 sub get_id {
 my $header = shift;
 $header =~ /^>.*sp|([A-Z]d{5}b)/;
@@ -145,8 +148,8 @@ Modify the function that's passed to the id_parser() method:
 sub get_id {
 
 my $header = shift;
-my (@sps) = $header =~ /^>.*bsp|([A-Z]d{5})b/g;
-my (@gis) = $header =~ /gi|(d+)b/g;
+my (@sps) = $header =~ /^>.*sp|([A-Z]d{5})/g;
+my (@gis) = $header =~ /gi|(d+)/g;
 return (@sps,@gis);
 
 }
