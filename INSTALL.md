@@ -1,0 +1,247 @@
+---
+title: "INSTALL"
+layout: default
+---
+BIOPERL INSTALLATION
+
+The following are instructions for installing BioPerl on
+Unix, Linux, and Mac OS X. Windows installation instructions can be 
+found in INSTALL.WIN.
+
+
+SYSTEM REQUIREMENTS
+
+    * Perl 5.6.1 or later; version 5.8 and greater are highly
+      recommended. Modules are generally tested against perl 5.8 and
+      above.
+    * make. For Mac OS X, this requires installing the Xcode Developer 
+      Tools.
+
+
+PRELIMINARY PREPARATION
+
+These are optional, but regardless of your subsequent choice of
+installation method, it will help to carry out the following steps.
+They will increase the likelihood of installation success
+(particularly the optional dependencies).
+
+     * Upgrade CPAN:
+
+ >perl -MCPAN -e shell
+ cpan>install Bundle::CPAN
+
+     * Install/upgrade Module::Build, and make it your preferred
+       installer:
+
+ >cpan
+ cpan>install Module::Build
+ cpan>o conf prefer_installer MB
+ cpan>o conf commit
+
+     * Install the expat library by whatever method is
+       appropriate for your system (e.g. yum, homebrew).
+
+
+INSTALLING BIOPERL THE EASY WAY USING CPAN
+
+You can use the CPAN shell to install BioPerl. For example:
+
+ >perl -MCPAN -e shell
+
+Or you might have the cpan alias installed:
+
+ >cpan
+
+Then find the name of the latest BioPerl package:
+
+ cpan>d /bioperl/
+
+ ....
+
+Distribution    CJFIELDS/BioPerl-1.6.901.tar.gz
+Distribution    CJFIELDS/BioPerl-1.6.922.tar.gz
+Distribution    CJFIELDS/BioPerl-1.6.924.tar.gz
+
+And install:
+
+ cpan>install CJFIELDS/BioPerl-1.6.924.tar.gz
+
+If you've installed everything perfectly and all the network
+connections are working then you will pass all the tests run in the
+'./Build test' phase. Sometimes you may see a failed test. Remember that 
+there are over 900 modules in BioPerl and the test suite is running more 
+than 12000 individual tests, a failed test may not affect your usage 
+of BioPerl.
+
+If there's a failed test and you think that the failed test will not 
+affect how you intend to use BioPerl then do:
+
+ cpan>force install C/CJ/CJFIELDS/BioPerl-1.6.923.tar.gz
+
+If you're concerned about a failed test and need assistance or advice
+then contact bioperl-l@bioperl.org, and provide us the detailed
+results of the failed install.
+
+
+INSTALLING BIOPERL FROM GITHUB
+
+The very latest version of Bioperl is at github.com. If you want this 
+version then download it from https://github.com/bioperl/bioperl-live
+as a *zip file, or retrieve it using the command line:
+
+ >git clone https://github.com/bioperl/bioperl-live.git
+ >cd bioperl-live
+
+If you've downloaded the *zip file then unzip that and cd to the
+BioPerl directory.
+
+Issue the build commands:
+
+ >perl Build.PL
+
+You will be asked a few questions about installing BioPerl scripts
+and running various test suites, hit <return> to accept the defaults.
+
+Test and install:
+
+ >./Build test
+ >./Build install
+
+You may need root permissions in order to run './Build install', so you 
+will want to talk to your systems manager if you don't have the necessary
+privileges.
+
+It is also straightforward to install the package in your own home
+directory, see INSTALLING BIOPERL USING local::lib, below.
+
+
+INSTALLING BIOPERL USING local::lib
+
+If you lack permission to install Perl modules into the standard
+system directories you can install them in your home directory
+using local::lib. The instructions for first installing
+local::lib are found here:
+
+http://search.cpan.org/search?query=local%3A%3Alib
+
+Once local::lib is installed you can install BioPerl using a 
+command like this:
+
+ >perl -MCPAN -Mlocal::lib -e 'CPAN::install(C/CJ/CJFIELDS/BioPerl-1.6.924.tar.gz)'
+
+
+EXTERNAL PROGRAMS
+
+BioPerl can interface with some external programs for executing
+analyses. These include clustalw and t_coffee for Multiple Sequence
+Alignment (Bio::Tools::Run::Alignment::Clustalw and
+Bio::Tools::Run::Alignment::TCoffee) and blastall, blastpgp, and
+bl2seq for BLAST analyses (Bio::Tools::Run::StandAloneBlast), and to
+all the programs in the EMBOSS suite (Bio::Factory::EMBOSS).  Most
+of the modules which 'wrap' these programs are located in the separate
+bioperl-run distribution; however, two commonly-used modules are still
+distributed with the BioPerl core (Bio::Tools::Run::StandAloneBlast,
+Bio::Tools::Run::RemoteBlast).
+
+    * Environment Variables
+
+Some modules which run external programs need certain environment
+variables set. If you do not have a local copy of the specific
+executable you do not need to set these variables. Additionally the
+modules will attempt to locate the specific applications in your
+runtime PATH variable. You may also need to set an environment
+variable to tell BioPerl about your network configuration if your site
+uses a firewall.
+
+Setting environment variables on unix means adding lines like the
+following to your shell *rc file.
+
+   For bash or sh:
+
+ export BLASTDIR=/data1/blast
+
+   For csh or tcsh:
+
+ setenv BLASTDIR /data1/blast
+
+Some environment variables include:
+
++------------------------------------------------------------------------+
+| Env. Variable |                      Description                       |
+|---------------+--------------------------------------------------------|
+|               |Specifies where the NCBI blastall, blastpgp, bl2seq,    |
+|BLASTDIR       |etc.. are located. A 'data' directory could also be     |
+|               |present in this directory as well, you could put your   |
+|               |blastable databases here.                               |
+|---------------+--------------------------------------------------------|
+|               |If one does not want to locate the data dir within the  |
+|BLASTDATADIR or|same dir as where the BLASTDIR variable points, a       |
+|BLASTDB        |BLASTDATADIR or BLASTDB variable can be set to point to |
+|               |a dir where BLAST database indexes are located.         |
+|---------------+--------------------------------------------------------|
+|BLASTMAT       |The directory containing the substitution matrices such |
+|               |as BLOSUM62.                                            |
+|---------------+--------------------------------------------------------|
+|CLUSTALDIR     |The directory where the clustalw executable is located. |
+|---------------+--------------------------------------------------------|
+|TCOFFEEDIR     |The directory where the t_coffee executable is located. |
+|---------------+--------------------------------------------------------|
+|               |If you access the internet via a proxy server then you  |
+|               |can tell the BioPerl modules which require network      |
+|               |access about this by using the http_proxy environment   |
+|http_proxy     |variable. The value set includes the proxy address and  |
+|               |the port, with optional username/password for           |
+|               |authentication purposes                                 |
+|               |(e.g. http://USERNAME:PASSWORD@proxy.example.com:8080). |
++------------------------------------------------------------------------+
+
+
+INSTALLING BIOPERL SCRIPTS
+
+BioPerl comes with a set of production-quality scripts that are
+kept in the scripts/ directory. You can install these scripts if you'd
+like, simply answer the questions during 'perl Build.PL'.
+The installation directory can be specified by:
+
+ perl Build.PL
+ ./Build install --install_path script=/foo/scripts
+
+By default they install to /usr/bin or similar, depending on platform.
+
+
+THE TEST SYSTEM
+
+The BioPerl test system is located in the t/ directory and is
+automatically run whenever you execute the './Build test' command.
+
+For the 1.6 release and beyond, tests have been organized into groups
+based upon the specific task or class the module being tested belongs
+to. If you want to investigate the behavior of a specific test such as
+the Seq test you would type:
+
+ >./Build test --test_files t/Seq/Seq.t --verbose
+
+The --test_files argument can be used multiple times to try a set of test 
+scripts in one go. The --verbose arguement outputs the detailed test results, 
+instead of just the summary you see during './Build test'.
+
+The '--test-files' argument can also work as a glob. For instance, to
+run tests on all SearchIO modules, use the following:
+
+ >./Build test --test_files t/SearchIO* --verbose
+
+If you are trying to learn how to use a module, often the test suite
+is a good place to look. All good extreme programmers try and write a
+test BEFORE they write the module to insure that their module behaves
+the way they expect. You'll notice some 'ok' and 'skip' commands in a
+test, this is part of the Perl test suite that signifies a passed test
+with an 'ok N', where N is the test number. Alternatively you can tell
+Perl to skip tests. This is useful when, for example, your test
+detects that the network is not present and thus should skip, not
+fail, any tests that require a network connection.
+
+The core developers have indicated that future releases of BioPerl
+will require that new modules come with a test suite with some minimal
+tests.  Modules that lack adequate tests or could otherwise be
+considered 'unstable' will be moved into a separate developer
+distribution until adequate tests are added and the API stablizes.
