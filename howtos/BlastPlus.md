@@ -6,16 +6,16 @@ layout: default
 Abstract
 --------
 
-Using BioPerl to create, manage, and query [BLAST] databases using the [NCBI's](http://www.ncbi.nlm.nih.gov/) `blast+` suite.
+Using BioPerl to create, manage, and query [BLAST](http://en.wikipedia.org/wiki/BLAST) databases using the [NCBI's](http://www.ncbi.nlm.nih.gov/) `blast+` suite.
 
-Quicklink to [Synopsis].
+Quicklink to [Synopsis]().
 
 __TOC__
 
 Author
 ------
 
-[Mark A. Jensen]
+[Mark A. Jensen](http://www.bioperl.org/wiki/User:Majensen)
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -24,16 +24,16 @@ Author
 Introduction
 ------------
 
-[`blast+`](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from the &lt;span style='plainlinks'>[NCBI](http://www.ncbi.nlm.nih.gov/)</span> that create, manipulate, manage and query [BLAST] sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
+[`blast+`](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from [NCBI](http://www.ncbi.nlm.nih.gov/)</span> that creates, manipulates, manages and queries [BLAST](http://en.wikipedia.org/wiki/BLAST) sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
 
 Dependencies and Installation
 -----------------------------
 
-(r16783) and (r16834) can be found in the [master](http://github.com/bioperl/bioperl-run/tree/master/lib/Bio/Tools/Run) of [bioperl-run]. These depend on a lower-level wrapper, and (@ r16472 in [bioperl-run]), and extensions to , (@ r16780), in the [master](http://github.com/bioperl/bioperl-live/tree/master/Bio/Tools/Run) of [bioperl-live].
+[Bio::Tools::Run::StandAloneBlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::StandAloneBlastPlus) (r16783) and  [Bio::Tools::Run::StandAloneBlastPlus::BlastMethods](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::StandAloneBlastPlus::BlastMethods) (r16834) can be found in the [master](http://github.com/bioperl/bioperl-run/tree/master/lib/Bio/Tools/Run) of [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run). These depend on a lower-level wrapper, [Bio::Tools::Run::BlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::BlastPlus) and [Bio::Tools::Run::BlastPlus::Config](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::BlastPlus::Config) (@ r16472 in [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run)), and extensions to [Bio::Tools::Run::WrapperBase](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::WrapperBase), [Bio::Tools::Run::WrapperBase::CommandExts](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::WrapperBase::CommandExts) (@ r16780), in the [master](http://github.com/bioperl/bioperl-live/tree/master/Bio/Tools/Run) of [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live).
 
-To download and install BioPerl core and packages from github see [Using Git].
+To download and install BioPerl core and packages from github see [Using Git](http://www.bioperl.org/wiki/Using_Git).
 
-Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the NCBI FTP site: [1](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The &lt;span style='plainlinks'>[user manual](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/user_manual.pdf)</span> is very helpful.
+Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site] (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/user_manual.pdf) is very helpful.
 
 Overview
 --------
