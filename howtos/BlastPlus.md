@@ -24,7 +24,7 @@ Author
 Introduction
 ------------
 
-[`blast+`](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from [NCBI](http://www.ncbi.nlm.nih.gov/)</span> that creates, manipulates, manages and queries [BLAST](http://en.wikipedia.org/wiki/BLAST) sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
+[blast+](http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from [NCBI](http://www.ncbi.nlm.nih.gov/)</span> that creates, manipulates, manages and queries [BLAST](http://en.wikipedia.org/wiki/BLAST) sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
 
 Dependencies and Installation
 -----------------------------
@@ -33,7 +33,7 @@ Dependencies and Installation
 
 To download and install BioPerl core and packages from github see [Using Git](http://www.bioperl.org/wiki/Using_Git).
 
-Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site] (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/user_manual.pdf) is very helpful.
+Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site] (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](http://www.ncbi.nlm.nih.gov/books/NBK279690/) is very helpful.
 
 Overview
 --------
