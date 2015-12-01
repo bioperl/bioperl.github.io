@@ -18,7 +18,8 @@ Steve Chervitz
 
 ### Copyright
 
-This document is copyright Brian Osborne. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.perl.com/pub/language/misc/Artistic.html).
+This document is copyright Brian Osborne. It can be copied and distributed under
+the terms of the [Perl Artistic License](http://www.perl.com/pub/language/misc/Artistic.html).
 
 Abstract
 --------
@@ -28,39 +29,99 @@ This is a HOWTO that explains how to use the SeqFeature and Annotation objects o
 Introduction
 ------------
 
-There's no more central notion in bioinformatics than the idea that portions of protein or nucleotide sequence have specific characteristics (or [features]). A given stretch of DNA may have been found to be essential for the proper transcriptional regulation of a gene, or a particular amino acid sequence may bind a particular ion, for example. This simple idea turns out to be a bit more complicated in the bioinformatics world where there's a need to represent the actual data in all its varied forms. The promoter region may not be precisely defined down to the base pair, a transcribed region may be divided into discontinuous exons, a gene may have different numbered positions on different maps, a sequence may have a sub-sequence which itself possesses some characteristic, an experimental observation may be associated with a literature reference, and so on.
+There's no more central notion in bioinformatics than the idea that portions of
+protein or nucleotide sequence have specific characteristics (or [features]). A
+given stretch of DNA may have been found to be essential for the proper
+transcriptional regulation of a gene, or a particular amino acid sequence may
+bind a particular ion, for example. This simple idea turns out to be a bit more
+complicated in the bioinformatics world where there's a need to represent the
+actual data in all its varied forms. The promoter region may not be precisely
+defined down to the base pair, a transcribed region may be divided into
+discontinuous exons, a gene may have different numbered positions on different
+maps, a sequence may have a sub-sequence which itself possesses some
+characteristic, an experimental observation may be associated with a literature
+reference, and so on.
 
-This HOWTO describes aspects of Bioperl's approach. The problem is how to create software that accepts, analyzes, and displays any and all of this sequence annotation with the required attention to detail yet remains flexible and easy to use. The general names for the modules or objects that serve these purposes in Bioperl are and .
+This HOWTO describes aspects of Bioperl's approach. The problem is how to create
+software that accepts, analyzes, and displays any and all of this sequence
+annotation with the required attention to detail yet remains flexible and easy
+to use. The general names for the modules or objects that serve these purposes
+in Bioperl are and .
 
-The HOWTO will discuss these objects and the differences between them. There's also discussion of how to get useful data from these objects and the basics of how to create your own sequence [annotations] using the objects.
+The HOWTO will discuss these objects and the differences between them. There's
+also discussion of how to get useful data from these objects and the basics of
+how to create your own sequence [annotations] using the objects.
 
 The Basics
 ----------
 
-Some BioPerl [neophytes] may also be new to [object-oriented programming  and this notion of an object. OOP is not the subject of this HOWTO but there should be some discussion of how objects are used in BioPerl. In the BioPerl world parsing a [GenBank file] doesn't give you data, it gives you an object and you can ask the object, a kind of variable, for data. While annotating you don't create a file or database entry directly. You might create a "sequence object" and an "annotation object", then put these two together to create an "annotated sequence object". You could then tell this object to make a version of itself as a file, or pass this object to a "database object" in order to enter some data into the database. This is a very flexible and logical way to design a complex piece of software like BioPerl, since each part of the system can be created and evaluated separately.
+Some BioPerl [neophytes] may also be new to [object-oriented programming and
+this notion of an object. OOP is not the subject of this HOWTO but there should
+be some discussion of how objects are used in BioPerl. In the BioPerl world
+parsing a [GenBank file] doesn't give you data, it gives you an object and you
+can ask the object, a kind of variable, for data. While annotating you don't
+create a file or database entry directly. You might create a "sequence object"
+and an "annotation object", then put these two together to create an "annotated
+sequence object". You could then tell this object to make a version of itself as
+a file, or pass this object to a "database object" in order to enter some data
+into the database. This is a very flexible and logical way to design a complex
+piece of software like BioPerl, since each part of the system can be created and
+evaluated separately.
 
-A central idea in OOP is [inheritance], which means that a child object can derive some of its capabilities or functionality from a parent object. The OOP approach also allows new modules to modify or add functionality, distinct from the parent. Practically speaking this means that there's not one definitive SeqFeature or Annotation object but many, each a variation on a theme. The details of the these varieties will be discussed in other sections, but for now we could use some broad definitions that apply to all the variations.
+A central idea in OOP is [inheritance], which means that a child object can
+derive some of its capabilities or functionality from a parent object. The OOP
+approach also allows new modules to modify or add functionality, distinct from
+the parent. Practically speaking this means that there's not one definitive
+SeqFeature or Annotation object but many, each a variation on a theme. The
+details of the these varieties will be discussed in other sections, but for now
+we could use some broad definitions that apply to all the variations.
 
-A [SeqFeature object] : is designed to be associated with a sequence, and can have a location on that sequence - it's a way of describing the characteristics of a specific part of a sequence. SeqFeature objects can also have features themselves, which you could call sub-features but which, in fact, are complete SeqFeature objects. SeqFeature objects can also have one or more Annotations associated with them (see [Features_vs._Annotations] for an in-depth discussion of that).  
+A [SeqFeature object] : is designed to be associated with a sequence, and can
+have a location on that sequence - it's a way of describing the characteristics
+of a specific part of a sequence. SeqFeature objects can also have features
+themselves, which you could call sub-features but which, in fact, are complete
+SeqFeature objects. SeqFeature objects can also have one or more Annotations
+associated with them (see [Features_vs._Annotations] for an in-depth discussion
+of that). 
 
 <!-- -->
 
-An Annotation object : is also associated with a sequence as you'd expect but it does not have a location on the sequence, it's associated with an entire sequence. This is one of the important differences between a SeqFeature and an Annotation. Annotations also can't have SeqFeatures, which makes sense since SeqFeature objects typically have locations. The relative simplicity of the Annotation has made it amenable to the creation of a useful set of Annotation objects, each devoted to a particular kind of fact or observation.  
+An Annotation object : is also associated with a sequence as you'd expect but it
+does not have a location on the sequence, it's associated with an entire
+sequence. This is one of the important differences between a SeqFeature and an
+Annotation. Annotations also can't have SeqFeatures, which makes sense since
+SeqFeature objects typically have locations. The relative simplicity of the
+Annotation has made it amenable to the creation of a useful set of Annotation
+objects, each devoted to a particular kind of fact or observation.
 
-Locations were discussed, above. Describing locations can be complicated in certain situations, say when some feature is located on different sequences with varying degrees of precision. One location could also be shared between disparate objects, such as two different kinds of SeqFeatures. You may also want to describe a feature with many locations, like a repeated sequence motif in a protein. Because of these sorts of complexities and because one may want to create different types of locations the BioPerl authors elected to keep location functionality inside dedicated '''Location objects'''.
+Locations were discussed, above. Describing locations can be complicated in
+certain situations, say when some feature is located on different sequences with
+varying degrees of precision. One location could also be shared between
+disparate objects, such as two different kinds of SeqFeatures. You may also want
+to describe a feature with many locations, like a repeated sequence motif in a
+protein. Because of these sorts of complexities and because one may want to
+create different types of locations the BioPerl authors elected to keep location
+functionality inside dedicated '''Location objects'''.
 
-SeqFeatures and Annotations will make the most sense if you're already somewhat familiar with [BioPerl] and its central and objects. The reader is referred to the ,, and the for more information on these topics. Here's a bit of code, to summarize:
+SeqFeatures and Annotations will make the most sense if you're already somewhat
+familiar with [BioPerl] and its central and objects. The reader is referred to
+the ,, and the for more information on these topics. Here's a bit of code, to
+summarize:
 
 ```perl
 
 # BAB55667.gb is a Genbank file, and Bioperl knows that it
-2.  is a Genbank file because of the '.gb' file suffix
+# is a Genbank file because of the '.gb' file suffix
 
-use Bio::SeqIO; my $seqio_object = Bio::SeqIO->new(-file => "BAB55667.gb" ); my $seq_object = $seqio_object->next_seq;
+use Bio::SeqIO;
+my $seqio_object = Bio::SeqIO->new(-file => "BAB55667.gb" );
+my $seq_object = $seqio_object->next_seq;
 
 ```
 
-''Note'': `$seq_object` is a object. A object, such as would be returned from a fasta file, does not have associated feature or annotation objects (see [Table 6 below]).
+''Note'': `$seq_object` is a object. A object, such as would be returned from a
+fasta file, does not have associated feature or annotation objects (see [Table 6
+below]).
 
 Now that we have a sequence object in hand we can examine its features and annotations.
 
