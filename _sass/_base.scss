@@ -166,7 +166,6 @@ pre {
  * Icons
  */
 .icon {
-
     > svg {
         display: inline-block;
         width: 16px;
@@ -182,13 +181,16 @@ pre {
 /**
  * Tables
  */
-th {
-    text-align: left;
-    padding: 7px;
-}
 table {
     border-collapse: collapse;
     text-align: left;
+    max-width: 100%;
+    font-family: Courier;
+    font-size: 14px;
+}
+th {
+    text-align: left;
+    padding: 7px;
 }
 td {
     padding: 7px;
@@ -196,14 +198,14 @@ td {
 table, th, td {
     border: 1px solid black;
 }
-
-
-
+tbody tr:nth-child(odd) {
+   background: $grey-color-light;
+}
 
 // Zebra-striping
 //
 // Default zebra-stripe styles (alternating gray and transparent backgrounds)
-//.table-striped {
+//table {
 //  > tbody > tr:nth-of-type(odd) {
 //    background-color: $table-bg-accent;
 //  }

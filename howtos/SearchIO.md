@@ -32,22 +32,23 @@ The generality of the [Bio::SearchIO](http://search.cpan.org/search?query=Bio::S
 
 | Name | Description |
 |------|----------------------------------------------------------------|
-|blast      | BLAST (BLAST, PSIBLAST, PSITBLASTN, RPSBLAST, WUBLAST, bl2seq, WU-BLAST, BLASTZ, BLAT, Paracel BTK ) |
-|fasta| FASTA -m9 and -m0                                                                                    |
-|blasttable| BLAST tabular -m9 or -m8 (NCBI) and -mformat 2 or -mformat 3 (WU-BLAST)                              |
-|blastxml| NCBI BLAST XML and WU-BLAST XML                                                                      |
-|erpin| ERPIN versions 4.2.5 and above                                                                       |
-|infernal| Infernal versions 0.7 and above                                                                      |
-|megablast| MEGABLAST                                                                                            |
-|psl| UCSC formats PSL                                                          |
-|waba| WABA                                                                              |
-|axt| [AXT](http://genome.ucsc.edu/goldenPath/help/axt.html)                           |
-|sim4| Sim4                                                                              |
-|hmmer| [HMMER](http://hmmer.janelia.org) (hmmpfam, hmmsearch, and nhmmer)                                             |
-|exonerate| Exonerate CIGAR                                                              |
-|wise| Genewise -genesf                                                              |
-|rnamotif| raw rnamotif output for RNAMotif versions 3.0 and above                                              |
-||
+|blast| BLAST (BLAST, PSIBLAST, PSITBLASTN, RPSBLAST, WUBLAST, bl2seq, WU-BLAST, BLASTZ, BLAT, Paracel BTK ) |
+|fasta| FASTA -m9 and -m0 |
+|blasttable| BLAST tabular -m9 or -m8 (NCBI) and -mformat 2 or -mformat 3 (WU-BLAST) |
+|blastxml| NCBI BLAST XML and WU-BLAST XML |
+|erpin| ERPIN versions 4.2.5 and above  |
+|infernal| Infernal versions 0.7 and above |
+|megablast| MEGABLAST |
+|psl| UCSC formats PSL |
+|waba| WABA |
+|axt| [AXT](http://genome.ucsc.edu/goldenPath/help/axt.html) |
+|sim4| Sim4 |
+|hmmer| [HMMER](http://hmmer.janelia.org) (hmmpfam, hmmsearch, and nhmmer) |
+|exonerate| Exonerate CIGAR |
+|wise| Genewise -genesf |
+|rnamotif| raw rnamotif output for RNAMotif versions 3.0 and above
+
+Table 1. Bio::SearchIO input formats.
 
 Parsing with Bio::SearchIO
 --------------------------
@@ -139,11 +140,13 @@ A plaintext NCBI-BLAST report like that used in the example above probably remai
 | Result | num_hits             | 1                                   | number of hits                                                                                                             |
 | Result | hitst               |                                     | List of all [Bio::Search::Hit::GenericHit] object(s) for this Result       |
 | Result | rewindt             |                                     | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits. |
-|        |
 
-Table 2.1: All the data returned by methods used by the Result objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
-| Object | Method            | Example          | Description                                                                                                                                     |
+Table 2.1: All the data returned by methods used by the Result objects when the report shown above is used as input. 
+
+Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
+
+| Object | Method            | Example          | Description  |
 |--------|-------------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
 | Hit    | name              | gb|443893|124775 | hit name                                                                                                                                        |
 | Hit    | length            | 331              | Length of the Hit sequence                                                                                                                      |
@@ -158,18 +161,20 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | Hit    | locus             | 124775           | locus name                                                                                                                                      |
 | Hit    | accession_number | 443893           | accession number                                                                                                                                |
 | Hit    | rewind            |                  | Resets the internal counter for next_hsp() so that the iterator will begin at the beginning of the list                                        |
-|        |
 
-`Table 2.2: All the data returned by methods used by the Hit objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
-| Object | Method                                               | Example                                  | Description                                                                            |
+Table 2.2. All the data returned by methods used by the Hit objects when the report shown above is used as input.
+
+Many of the methods shown can be used to either get or set values, but we're just showing what they get.
+
+
+| Object | Method                                               | Example                                  | Description  |
 |--------|------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------|
 | HSP    | algorithm                                            | BLASTX                                   | algorithm                                                                              |
 | HSP    | evalue                                               | 2e-022                                   | e-value                                                                                |
 | HSP    | expect                                               | 2e-022                                   | alias for evalue()                                                                     |
-| HSP    | frac_identical                                      | 0.884615384615385                        | Fraction identical                                                                     |
-| HSP    | frac_conserved                                      | 0.923076923076923                        | fraction conserved (conservative and identical replacements aka "fraction similar")    
-                                                                                                            (only valid for Protein alignments will be same as frac_identical)                     |
+| HSP    | frac_identical                                      | 0.884615384615385                        | fraction identical   |
+| HSP    | frac_conserved                                      | 0.923076923076923                        | fraction conserved (conservative and identical replacements aka "fraction similar")             |
 | HSP    | gaps                                                 | 2                                        | number of gaps                                                                         |
 | HSP    | query_string                                        | DMGRCSSG ..                              | query string from alignment                                                            |
 | HSP    | hit_string                                          | DIVQNSS ...                              | hit string from alignment                                                              |
@@ -201,16 +206,17 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | HSP    | end('hit')                                       | 246                                      | end position from alignment                                                            |
 | HSP    | matches('hit')                                   | (46,48)                                  | number of identical and conserved as array                                             |
 | HSP    | matches('query')                                 | (46,48)                                  | number of identical and conserved as array                                             |
-| HSP    | get_aln                                             | ''sequence alignment''           | object                                                                                 |
-| HSPt | hsp_group                                           | ''Not available in this report'' | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
+| HSP    | get_aln                                             | ''sequence alignment''           | object  |
+| HSPt | hsp_group   | ''Not available in this report'' | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
 | HSP    | links                                                | ''Not available in this report'' | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
-|        |
 
-Table 2.3: All the data returned by methods used by the HSP objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
+Table 2.3. All the data returned by methods used by the HSP objects when the report shown above is used as input. 
+
+Many of the methods shown can be used to either get or set values, but we're just showing what they get. Also note that `frac_conserved` is only useful for protein alignments, if used with nucleotide alignments it will be same as `frac_identical`.
 
 ### Using the methods
 
-Table 2 shows that a method can return a string, an array, or an object. When an object is returned some additional code will probably be needed to get the data of interest.
+The tables above show that a method can return a string, an array, or an object. When an object is returned some additional code will probably be needed to get the data of interest.
 
 #### get_aln()
 
@@ -232,12 +238,14 @@ On one hand it appears to be a complication, but by entering the worlds of the a
 
 Some of these methods deserve a bit more explanation since they do more than simply extract data directly from the output. For example, the `ambiguous_aln()` method is designed to tell us whether two or more HSPs from a given hit overlap, and whether the overlap refers to the queries or the hits, or both. One situation is where overlaps would be found in one but not the other arises where there are repeats in the query or hit. The `ambiguous_aln()` method will return one of these 4 values:
 
-| q   | query sequence contains overlapping sub-sequences while hit sequence does not                                                          |
-|-----|----------------------------------------------------------------------------------------------------------------------------------------|
-| s   | hit sequence contains overlapping sub-sequences while query does not                                                                   |
-| qw  | query and hit sequences contain overlapping sub-sequences relative to each other                                                       |
+| Value | Description |
+|------|----------------------------------------------------------------|
+| q   | query sequence contains overlapping sub-sequences while hit sequence does not |
+| s   | hit sequence contains overlapping sub-sequences while query does not |
+| qw  | query and hit sequences contain overlapping sub-sequences relative to each other |
 | -   | query and hit sequence do not contain multiple domains relative to each other OR both contain the same distribution of similar domains |
-||
+
+Table 2.4. Values used by the `ambiguous_aln` method.
 
 #### seq_inds()
 
