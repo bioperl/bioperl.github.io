@@ -500,75 +500,79 @@ To access this data you'll need to get a Species object from the Sequence object
 
 # legible and long
 
-my $species_object = $seq_object->species; my $species_string = $species_object->node_name;
+my $species_object = $seq_object->species;
+my $species_string = $species_object->node_name;
 
 # Perlish
-
 my $species_string = $seq_object->species->node_name;
 
 # either way, $species_string is "Homo sapiens"
 
-<!-- -->
-
 # get all taxa from the ORGANISM section in an array
-
 my @classification = $seq_object->species->classification;
 
 # "sapiens Homo Hominidae Catarrhini Primates Eutheria Mammalia
-2.  Euteleostomi Vertebrata Craniata Chordata Metazoa Eukaryota"
+# Euteleostomi Vertebrata Craniata Chordata Metazoa Eukaryota"
 
 ```
 
-The reason that ORGANISM isn't treated only as a plain tag is that there are a variety of things one would want to do with taxonomic information, so returning just an array wouldn't suffice. See the documentation on for more information on its methods.
+The reason that ORGANISM isn't treated only as a plain tag is that there are a
+variety of things one would want to do with taxonomic information, so returning
+just an array wouldn't suffice. See the documentation on for more information on
+its methods.
 
 Getting the Annotations
 -----------------------
 
-There's still quite a bit of data left in our Genbank files that's not in SeqFeature objects, and much of it is parsed into Annotation objects. Annotations, if you recall, are those values that are assigned to a sequence that have no specific location on that sequence. In order to get access to these objects we will get an AnnotationCollection object, which is exactly what it sounds like:
+There's still quite a bit of data left in our Genbank files that's not in
+SeqFeature objects, and much of it is parsed into Annotation objects.
+Annotations, if you recall, are those values that are assigned to a sequence
+that have no specific location on that sequence. In order to get access to these
+objects we will get an AnnotationCollection object, which is exactly what it
+sounds like:
 
 ```perl
 
-my $io = Bio::SeqIO->new(-file => $file, -format => "genbank" ); my $seq_obj = $io->next_seq; my $anno_collection = $seq_obj->annotation;
+my $io = Bio::SeqIO->new(-file => $file, -format => "genbank" );
+my $seq_obj = $io->next_seq; my $anno_collection = $seq_obj->annotation;
 
 ```
 
-Now we can access each Annotation in the AnnotationCollection object. The Annotation objects can be retrieved in arrays:
+Now we can access each Annotation in the AnnotationCollection object. The
+Annotation objects can be retrieved in arrays:
 
 ```perl
 
 for my $key ( $anno_collection->get_all_annotation_keys ) {
 
-`  my @annotations = $anno_collection->get_Annotations($key);`
-`  for my $value ( @annotations ) {`
-`     print "tagname : ", $value->tagname, "\`
-
-";
-
-`     # $value is an Bio::Annotation, and also has an "as_text" method`
-`     print "  annotation value: ", $value->display_text, "\`
-
-";
-
-`  }`
-
+    my @annotations = $anno_collection->get_Annotations($key);
+      
+    for my $value ( @annotations ) {
+        print "tagname : ", $value->tagname, "\n";
+        
+        # $value is an Bio::Annotation, and also has an "as_text" method
+        print "  annotation value: ", $value->display_text, "\n";
+    }
 }
 
-```
+ ``
 
 It turns out the value of `$key`, above, and `$value->tagname` are the same. The code will print something like:
 
+```
     tagname : comment
       annotation value: Comment: REVIEWED REFSEQ: This record has been curated by NCBI staff. The reference sequence was derived from X65882.1. Summary: NDP is the genetic locus identified as harboring mutations that result in Norrie disease.
     tagname : reference
       annotation value: Reference: The molecular biology of Norrie's disease
     tagname : date_changed
       annotation value: Value: 31-OCT-2000
+```
 
 If you only wanted a specific annotation, like COMMENT, you can use the tagname as an argument:
 
 ```perl
 
-`      my @annotations = $anno_collection->get_Annotations('comment');`
+my @annotations = $anno_collection->get_Annotations('comment');
 
 ```
 
@@ -576,11 +580,12 @@ And if you'd simply like all of the Annotations, regardless of key, you can do t
 
 ```perl
 
-`      my @annotations = $anno_collection->get_Annotations();`
+my @annotations = $anno_collection->get_Annotations();
 
 ```
 
-The following is a table of some of the common Annotations, their keys in Bioperl, and what they're derived from in Genbank files:
+The following is a table of some of the common Annotations, their keys in
+Bioperl, and what they're derived from in Genbank files:
 
 | GenBank Text | Key                  | Object Type | Note                        |
 |--------------|----------------------|-------------|-----------------------------|
@@ -594,56 +599,63 @@ The following is a table of some of the common Annotations, their keys in Bioper
 | DBSOURCE     | dblink               | DBLink      | Link to entry in a database |
 ||
 
-Some Annotation objects, like Reference, make use of a `hash_tree()` method, which returns a hash reference. This is a more thorough way to look at the actual values than the `display_text()` method used above. For example, `display_text()` for a Reference object is only going to return the title of the reference, whereas the keys of the hash from `hash_tree()` will be "title", "authors", "location", "medline", "start", and "end".
+Some Annotation objects, like Reference, make use of a `hash_tree()` method,
+which returns a hash reference. This is a more thorough way to look at the
+actual values than the `display_text()` method used above. For example,
+`display_text()` for a Reference object is only going to return the title of the
+reference, whereas the keys of the hash from `hash_tree()` will be "title",
+"authors", "location", "medline", "start", and "end".
 
 ```perl
 
 if ($value->tagname eq "Reference") {
-
-`  my $hash_ref = $value->hash_tree;`
-`  for my $key (keys %{$hash_ref}) {`
-`     print $key,": ",$hash_ref->{$key},"\`
-
-";
-
-`  }`
-
+    my $hash_ref = $value->hash_tree;
+    for my $key (keys %{$hash_ref}) {
+         print $key,": ",$hash_ref->{$key},"\n";
+    }
 }
 
 ```
 
 Which yields:
 
-`authors: Meitinger,T., Meindl,A., Bork,P., Rost,B., Sander,C., Haasemann,M. and Murken,J.`
-`location: Nat. Genet. 5 (4), 376-380 (1993) `
-`medline: 94129616`
-`title: Molecular modelling of the Norrie disease protein predicts a cystine knot`
-`growth factor tertiary structure`
-`end: 1846`
-`start: 1`
+```
+ authors: Meitinger,T., Meindl,A., Bork,P., Rost,B., Sander,C., Haasemann,M. and Murken,J.
+ location: Nat. Genet. 5 (4), 376-380 (1993) 
+ medline: 94129616
+ title: Molecular modelling of the Norrie disease protein predicts a cystine knot
+ growth factor tertiary structure
+ end: 1846
+ start: 1
+```
 
-Other Annotation objects, like SimpleValue, also have a `hash_tree()` method but the hash isn't populated with data and `display_text()` will suffice.
+Other Annotation objects, like SimpleValue, also have a `hash_tree()` method but
+the hash isn't populated with data and `display_text()` will suffice.
 
-The simplest bits of Genbank text, like KEYWORDS, end up in these objects, the COMMENT ends up in a object, and references are transformed into objects. Some of these specialized objects will have specialized methods. Take the object, for example:
+The simplest bits of Genbank text, like KEYWORDS, end up in these objects, the
+COMMENT ends up in a object, and references are transformed into objects. Some
+of these specialized objects will have specialized methods. Take the object, for
+example:
 
 ```perl
 
 if ($value->tagname eq "reference") {
-
-`   print "author: ",$value->authors(), "\`
-
-"; }
+    print "author: ",$value->authors(), "\n";
+}
 
 ```
 
-There's also `title()`, `publisher()`, `medline()`, `editors()`, `database()`, `pubmed()` and a number of other methods.
+There's also `title()`, `publisher()`, `medline()`, `editors()`, `database()`,
+`pubmed()` and a number of other methods.
 
 Directly From the Sequence Object
 ---------------------------------
 
-This is just a reminder that some of the "annotation" data in your sequence files can be accessed directly, without looking at SeqFeatures or Annotations.
+This is just a reminder that some of the "annotation" data in your sequence
+files can be accessed directly, without looking at SeqFeatures or Annotations.
 
-For example, if the Sequence object in hand is a object then here are some useful methods:
+For example, if the Sequence object in hand is a object then here are some
+useful methods:
 
 | Method                     | Returns |
 |----------------------------|---------|
@@ -655,12 +667,17 @@ For example, if the Sequence object in hand is a object then here are some usefu
 | division                   | string  |
 ||
 
-These objects are created automatically when you use to read from EMBL, GenBank, GAME, Chado XML, TIGR XML, Locuslink, BSML, KEGG, Entrez Gene, and SwissProt sequence files. However, it's not guaranteed that each of these formats will supply data for all of the methods above.
+These objects are created automatically when you use to read from EMBL, GenBank,
+GAME, Chado XML, TIGR XML, Locuslink, BSML, KEGG, Entrez Gene, and SwissProt
+sequence files. However, it's not guaranteed that each of these formats will
+supply data for all of the methods above.
 
 Other Sequence File Formats
 ---------------------------
 
-It is worth mentioning other sequence file formats. The table below shows what sorts of objects, Annotation or SeqFeature, you'll get when you parse other sequence formats using .
+It is worth mentioning other sequence file formats. The table below shows what
+sorts of objects, Annotation or SeqFeature, you'll get when you parse other
+sequence formats using .
 
 | Format      | SeqIO Name | SeqFeature | Annotation |
 |-------------|------------|------------|------------|
@@ -676,34 +693,39 @@ It is worth mentioning other sequence file formats. The table below shows what s
 | Entrez Gene | entrezgene | no         | yes        |
 ||
 
-How does one find out what data is in which object in these formats? In general the individual module documentation is not going to provide all the answers, you'll need to do some investigation yourself. Let's use an approach we used earlier to dissect a Locuslink entry in a file, "148.ll". Here's the file:
+How does one find out what data is in which object in these formats? In general
+the individual module documentation is not going to provide all the answers,
+you'll need to do some investigation yourself. Let's use an approach we used
+earlier to dissect a Locuslink entry in a file, "148.ll". Here's the file:
 
-`LOCUSID: 148`
-`LOCUS_CONFIRMED: yes`
-`LOCUS_TYPE: gene with protein product, function known or inferred `
-`ORGANISM: Homo sapiens`
-`STATUS: REVIEWED `
-`NM: NM_000680|4501960|na`
-`NP: NP_000671|4501961`
-`PROT: AAA93114|409029`
-`ACCNUM: M11313|177869|na|na|na`
-`TYPE: p`
-`PROT: P35348|1168246`
-`OFFICIAL_SYMBOL: ADRA1A`
-`OFFICIAL_GENE_NAME: adrenergic, alpha-1A-, receptor`
-`ALIAS_SYMBOL: ADRA1C`
-`SUMMARY: Summary: Alpha-1-ARs are members of the GPCR superfamily.`
-`CHR: 8`
-`STS: SGC35557|8|8124|na|seq_map|epcr `
-`COMP: 10090|Adra1a|14|14  cM|11549|8|ADRA1A|ncbi_mgd`
-`ALIAS_PROT: adrenergic, alpha-1C-, receptor`
-`BUTTON: unigene.gif`
-`LINK: http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=Hs&CID=52931`
-`UNIGENE: Hs.52931`
-`OMIM: 104221`
-`MAP: 8p21-p11.2|RefSeq|C|`
-`MAPLINK: default_human_gene|ADRA1A`
-`GO: cellular component|integral to plasma membrane|P|`[`GO:0005887|Proteome|8396931`](GO:0005887%7CProteome%7C8396931)
+```
+ LOCUSID: 148
+ LOCUS_CONFIRMED: yes
+ LOCUS_TYPE: gene with protein product, function known or inferred 
+ ORGANISM: Homo sapiens
+ STATUS: REVIEWED 
+ NM: NM_000680|4501960|na
+ NP: NP_000671|4501961
+ PROT: AAA93114|409029
+ ACCNUM: M11313|177869|na|na|na
+ TYPE: p
+ PROT: P35348|1168246
+ OFFICIAL_SYMBOL: ADRA1A
+ OFFICIAL_GENE_NAME: adrenergic, alpha-1A-, receptor
+ ALIAS_SYMBOL: ADRA1C
+ SUMMARY: Summary: Alpha-1-ARs are members of the GPCR superfamily.
+ CHR: 8
+ STS: SGC35557|8|8124|na|seq_map|epcr 
+ COMP: 10090|Adra1a|14|14  cM|11549|8|ADRA1A|ncbi_mgd
+ ALIAS_PROT: adrenergic, alpha-1C-, receptor
+ BUTTON: unigene.gif
+ LINK: http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=Hs&CID=52931
+ UNIGENE: Hs.52931
+ OMIM: 104221
+ MAP: 8p21-p11.2|RefSeq|C|
+ MAPLINK: default_human_gene|ADRA1A
+ GO: cellular component|integral to plasma membrane|P|`[`GO:0005887|Proteome|8396931`](GO:0005887%7CProteome%7C8396931)
+```
 
 First collect all the annotations:
 
@@ -719,7 +741,7 @@ And from this array of Annotations let's extract a hash containing the `as_text`
 
 ```perl
 
-`      my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } @annotations;`
+    my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } @annotations;
 
 ```
 
@@ -749,22 +771,37 @@ The contents of the `%tagname_type` hash can be represented in table form, below
 | Direct database link to P35348 in database GenBank                    | dblink               | Bio::Annotation::DBLink       |
 ||
 
-The output from the script shows that Locuslink Annotations come in a variety of types, including DBLink, OntologyTerm, Comment, and SimpleValue. In order to extract the exact value you want, as opposed to the one returned by the `as_text` method, you'll need to find the desired method in the documentation for the Annotation in question.
+The output from the script shows that Locuslink Annotations come in a variety of
+types, including DBLink, OntologyTerm, Comment, and SimpleValue. In order to
+extract the exact value you want, as opposed to the one returned by the
+`as_text` method, you'll need to find the desired method in the documentation
+for the Annotation in question.
 
-If you were only interested in a certain type of Annotation you could retrieve it efficently with something like this:
+If you were only interested in a certain type of Annotation you could retrieve
+it efficently with something like this:
 
 ```perl
 
-`         @ontology_terms = map { $_->isa("Bio::Ontology::TermI"); } $seq_object->get_Annotations();`
+@ontology_terms = map { $_->isa("Bio::Ontology::TermI"); } $seq_object->get_Annotations();
 
 ```
 
-To completely parse these sequence formats you may also need to use methods that don't have anything to do with Features or Annotations ''per se''. For example, the `display_id` method returns the LOCUS name of a Genbank entry or the ID from a SwissProt file. The `desc()` method will return the DEFINITION line of a Genbank file or the DE field in a SwissProt file. Again, this is a situation where you may have to examine a module, probably a SeqIO::\* module, to find out more of the details.
+To completely parse these sequence formats you may also need to use methods that
+don't have anything to do with Features or Annotations ''per se''. For example,
+the `display_id` method returns the LOCUS name of a Genbank entry or the ID from
+a SwissProt file. The `desc()` method will return the DEFINITION line of a
+Genbank file or the DE field in a SwissProt file. Again, this is a situation
+where you may have to examine a module, probably a SeqIO::\* module, to find out
+more of the details.
 
 Building Your Own Sequences
 ---------------------------
 
-We've taken a look at getting data from SeqFeature and Annotation objects, but what about creating these objects when you already have the data? The object is probably the best SeqFeature object for this purpose, in part because of its flexibility. Let's assume we have a sequence that has an interesting sub-sequence, going from position 10 to 22 on the + or 1 or [sense] strand.
+We've taken a look at getting data from SeqFeature and Annotation objects, but
+what about creating these objects when you already have the data? The object is
+probably the best SeqFeature object for this purpose, in part because of its
+flexibility. Let's assume we have a sequence that has an interesting
+sub-sequence, going from position 10 to 22 on the + or 1 or [sense] strand.
 
 ```perl
 
@@ -774,43 +811,50 @@ use Bio::SeqFeature::Generic;
 
 my $feat = new Bio::SeqFeature::Generic(-start => 10,
 
-`                                       -end         => 22,`
-`                                       -strand      => 1,`
-`                                       -primary_tag => 'TATA_signal',`
-`                                       -tag => {evidence => 'predicted',`
-`                                                note     => 'TATA box' } );`
+                                        -end         => 22,
+                                        -strand      => 1,
+                                        -primary_tag => 'TATA_signal',
+                                        -tag => {evidence => 'predicted',
+                                                 note     => 'TATA box' } );
 
 ```
 
-The SeqFeature::Generic object offers the user a "tag system" for addition of data that's not explicitly accounted for by its methods, that's what the "-tag" is for, above. Since the value passed to "-tag" could be any kind of scalar, like a reference, it's clear that this approach should be able to handle just about any sort of data.
+The SeqFeature::Generic object offers the user a "tag system" for addition of
+data that's not explicitly accounted for by its methods, that's what the "-tag"
+is for, above. Since the value passed to "-tag" could be any kind of scalar,
+like a reference, it's clear that this approach should be able to handle just
+about any sort of data.
 
-You can build on the Feature as well. Here we'll add some Annotations to the newly-created Feature:
+You can build on the Feature as well. Here we'll add some Annotations to the
+newly-created Feature:
 
 ```perl
 
-$feat->add_tag_value("match1","PF000123 e-7.2"); $feat->add_tag_value("match2","PF002534 e-3.1");
+$feat->add_tag_value("match1","PF000123 e-7.2");
+$feat->add_tag_value("match2","PF002534 e-3.1");
 
-my @tags = $feat->get_all_tags; for my $tag (@tags) {
+my @tags = $feat->get_all_tags;
 
-`  for my $val ( $feat->get_tag_values($tag) ) {`
-`     print $tag,":",$val,"\`
-
-";
-
-`  }`
-
+for my $tag (@tags) {
+    for my $val ( $feat->get_tag_values($tag) ) {
+       print $tag,":",$val,"\n";
+    }
 }
 
 ```
 
 This prints out:
 
-` evidence:predicted`
-` match1:PF000123 e-7.2`
-` match2:PF002534 e-3.1`
-` note:TATA box`
+```
+  evidence:predicted
+  match1:PF000123 e-7.2
+  match2:PF002534 e-3.1
+  note:TATA box
+```
 
-NOTE: If you need to add a tag that don't have any value when printed (like /pseudo, /trans_splicing, or /environmental_sample), you can use the special value '_no_value' to make BioPerl print the tag without any associated value:
+NOTE: If you need to add a tag that don't have any value when printed (like
+/pseudo, /trans_splicing, or /environmental_sample), you can use the special
+value '_no_value' to make BioPerl print the tag without any associated value:
 
 ```perl
 
@@ -827,8 +871,7 @@ use Bio::Seq;
 # create a simple Sequence object
 
 my $seq_obj = Bio::Seq->new(-seq => "attcccccttataaaattttttttttgaggggtggg",
-
-`                           -display_id => "BIO52" );`
+                            -display_id => "BIO52" );
 
 # then add the feature we've created to the sequence
 
@@ -842,9 +885,14 @@ What if you wanted to add an Annotation to a sequence? You'll create the Annotat
 
 ```perl
 
-use Bio::Annotation::Collection; use Bio::Annotation::Comment;
+use Bio::Annotation::Collection;
+use Bio::Annotation::Comment;
 
-my $comment = Bio::Annotation::Comment->new; $comment->text("This looks like a good TATA box"); my $coll = new Bio::Annotation::Collection; $coll->add_Annotation('comment',$comment); $seq_obj->annotation($coll);
+my $comment = Bio::Annotation::Comment->new;
+$comment->text("This looks like a good TATA box");
+my $coll = new Bio::Annotation::Collection;
+$coll->add_Annotation('comment',$comment);
+$seq_obj->annotation($coll);
 
 ```
 
@@ -852,7 +900,11 @@ Now let's examine what we've created by writing the contents of `$seq_obj` to a 
 
 ```perl
 
-use Bio::SeqIO; my $io = Bio::SeqIO->new(-format => "genbank", -file => ">test.gb" ); $io->write_seq($seq_obj);
+use Bio::SeqIO;
+my $io = Bio::SeqIO->new(-format => "genbank",
+                            -file => ">test.gb" );
+                            
+$io->write_seq($seq_obj);
 
 ```
 
@@ -860,19 +912,21 @@ use Bio::SeqIO; my $io = Bio::SeqIO->new(-format => "genbank", -file => ">test.g
 
 `test.gb` now reads:
 
-` LOCUS       BIO52                    36 bp    dna     linear   UNK`
-` ACCESSION   unknown`
-` COMMENT     This looks like a good TATA box`
-` FEATURES             Location/Qualifiers`
-`      TATA_signal     10..22`
-`                      /match2="PF002534 e-3.1"`
-`                      /match1="PF000123 e-7.2"`
-`                      /evidence=predicted`
-`                      /note="TATA box"`
-`                      /pseudo`
-` ORIGIN`
-`         1 attccccctt ataaaatttt ttttttgagg ggtggg`
-` //`
+```
+ LOCUS       BIO52                    36 bp    dna     linear   UNK
+ ACCESSION   unknown
+ COMMENT     This looks like a good TATA box
+ FEATURES             Location/Qualifiers
+      TATA_signal     10..22
+                      /match2="PF002534 e-3.1"
+                      /match1="PF000123 e-7.2"
+                      /evidence=predicted
+                      /note="TATA box"
+                      /pseudo
+ ORIGIN
+         1 attccccctt ataaaatttt ttttttgagg ggtggg
+ //
+```
 
 Customizing Sequence Object Construction
 ----------------------------------------
@@ -881,28 +935,39 @@ When you don't need access to the complete set of annotations in a set of potent
 
 ```perl
 
-my $seqin = Bio::SeqIO->new( -fh=> \*STDIN, -format=> 'genbank' ); my $builder = $seqin->sequence_builder(); $builder->want_all(1); $builder->add_unwanted_slot('seq','features','annotation');
+my $seqin = Bio::SeqIO->new( -fh=> \*STDIN, -format=> 'genbank' );
+my $builder = $seqin->sequence_builder();
+$builder->want_all(1);
+$builder->add_unwanted_slot('seq','features','annotation');
 
 # Then go and use the SeqIO object as normal
 
 while(my $seq = $seqin->next_seq()) {
 
-`   # do something`
+    # do something
 
 }
 
 ```
 
-This also skips annotations, which includes things like comments, references, and dblinks. This can speed up parsing by a factor of two or better, depending on the complexity of the sequence records.
+This also skips annotations, which includes things like comments, references,
+and dblinks. This can speed up parsing by a factor of two or better, depending
+on the complexity of the sequence records.
 
-As of version 1.5.1 this ability to customize your Sequence objects is only available for .
+As of version 1.5.1 this ability to customize your Sequence objects is only
+available for .
 
 See [Bio::Seq::SeqBuilder] and [HOWTO:SeqIO] for more documentation on this.
 
 Additional Information
 ----------------------
 
-If you would like to learn about representing sequences and features in graphical form take a look at the [Graphics HOWTO]. The documentation for each of the individual SeqFeature, Range, Location and Annotation modules is also very useful, here's a list of them. If you have questions or comments that aren't addressed herein then write the Bioperl community at [bioperl-l@bioperl.org](http://bioperl.open-bio.org/wiki/Mailing_lists).
+If you would like to learn about representing sequences and features in
+graphical form take a look at the [Graphics HOWTO]. The documentation for each
+of the individual SeqFeature, Range, Location and Annotation modules is also
+very useful, here's a list of them. If you have questions or comments that
+aren't addressed herein then write the Bioperl community at
+[bioperl-l@bioperl.org](http://bioperl.open-bio.org/wiki/Mailing_lists).
 
 '''SeqFeature Modules'''
 
