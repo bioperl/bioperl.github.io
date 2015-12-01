@@ -1,8 +1,3 @@
----
-title: "HOWTO:EUtilities Cookbook"
-layout: default
----
-
 The API described here for refers to the version currently found in as a separate release on CPAN. It is not compatible with the experimental API used in older BioPerl releases.
 
 Also see the [EUtilities Web Service HOWTO].
@@ -537,7 +532,6 @@ use Bio::DB::EUtilities;
 # set optional history queue
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
-
                                        -email      => 'mymail@foo.bar',
                                        -db         => 'protein',
                                        -term       => 'BRCA1 AND human',
@@ -546,13 +540,11 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
 my $count = $factory->get_count;
 
 # get history from queue
-
-my $hist = $factory->next_History || die 'No history data returned'; print "History returned ";
+my $hist = $factory->next_History || die 'No history data returned';
+print "History returned\n";
 
 # note db carries over from above
-
 $factory->set_parameters(-eutil => 'efetch',
-
                          -rettype => 'fasta',
                          -history => $hist);
 
@@ -560,19 +552,17 @@ my $retry = 0; my ($retmax, $retstart) = (500,0);
 
 open (my $out, '>', 'seqs.fa') || die "Can't open <file:$>!";
 
-RETRIEVE_SEQS: while ($retstart < $count) {
+RETRIEVE_SEQS:
+while ($retstart < $count) {
     $factory->set_parameters(-retmax => $retmax,
-
                              -retstart => $retstart);
+
     eval{
         $factory->get_Response(-cb => sub {my ($data) = @_; print $out $data} );
     };
     if ($@) {
         die "Server error: $@.  Try again later" if $retry == 5;
-        print STDERR "Server error, redo #$retry\
-
-";
-
+        print STDERR "Server error, redo #$retry\n";
         $retry++ && redo RETRIEVE_SEQS;
     }
     say "Retrieved $retstart";
@@ -593,7 +583,6 @@ Set the `-reldate  parameter to the number of days prior to today's date. As a n
 use Bio::DB::EUtilities;
 
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'esearch',
-
                                      -email      => 'mymail@foo.bar',
                                      -db         => 'nucest',
                                      -term       => 'Drosophila[ORGN]',
@@ -607,7 +596,6 @@ my $ct = $eutil->get_count;
 my $hist = $eutil->next_History || die "No history data returned";
 
 $eutil->set_parameters(-eutil => 'efetch',
-
                        -rettype => 'fasta',
                        -history => $hist);
 
@@ -631,13 +619,11 @@ use Bio::DB::EUtilities;
 my @ids = @ARGV;
 
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'esummary',
-
                                        -email => 'mymail@foo.bar',
                                        -db    => 'gene',
                                        -id    => @ids);
 
 my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
-
                                        -email => 'mymail@foo.bar',
                                        -db      => 'nucleotide',
                                        -rettype => 'gb');
@@ -661,10 +647,7 @@ while (my $docsum = $eutil->next_DocSum) {
     }
     
     my $strand = $item_data{ChrStart} > $item_data{ChrStop} ? 2 : 1;
-    printf("Retrieving %s, from %d-%d, strand %d\
-
-", $item_data{ChrAccVer},
-
+    printf("Retrieving %s, from %d-%d, strand %d\n", $item_data{ChrAccVer},
                                                     $item_data{ChrStart},
                                                     $item_data{ChrStop},
                                                     $strand
@@ -691,22 +674,20 @@ use Bio::DB::EUtilities;
 my @ids = @ARGV;
 
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'esummary',
-
                                        -email => 'mymail@foo.bar',
                                        -db    => 'gene',
                                        -id    => @ids);
 
 my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
-
                                        -email   => 'mymail@foo.bar',
                                        -db      => 'nucleotide',
                                        -rettype => 'gb');
 
 while (my $docsum = $eutil->next_DocSum) {
-
     # This version uses the updated interface in bioperl-live that will be in
     # BioPerl 1.6.1 (consider it a minor bug fix for the obfuscated version
     # above)
+
     my ($item) = $docsum->get_Items_by_name('GenomicInfoType');
     next unless $item;
     
@@ -715,16 +696,12 @@ while (my $docsum = $eutil->next_DocSum) {
                                $item->get_contents_by_name('ChrStop'));
 
     my $strand = $start > $end ? 2 : 1;
-    printf("Retrieving %s, from %d-%d, strand %d\
-
-", $acc, $start, $end,$strand );
-
+    printf("Retrieving %s, from %d-%d, strand %d\n", $acc, $start, $end,$strand );
     $fetcher->set_parameters(-id        => $acc,
                              -seq_start => $start + 1,
                              -seq_stop  => $end + 1,
                              -strand    => $strand);
     print $fetcher->get_Response->content;
-
 }
 
 ```
@@ -745,7 +722,6 @@ use Bio::DB::EUtilities;
 my @accs = qw(CAB02640 EAS10332 YP_250808 NP_623143 P41007);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
-
                                        -email => 'mymail@foo.bar',
                                        -db    => 'protein',
                                        -term  => join(',',@accs) );
@@ -753,27 +729,20 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
 my @uids = $factory->get_ids;
 
 $factory->reset_parameters(-eutil => 'esummary',
-
                            -db    => 'protein',
                            -id    => @uids);
 
 while (my $ds = $factory->next_DocSum) {
-
-    print "ID: ",$ds->get_id,"\
-
-";
+    print "ID: ",$ds->get_id,"\n";
 
     # flattened mode
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\
-
-",$item->get_name,$item->get_content) if $item->get_content;
+        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
 
     }
-    print "\
-
-"; }
+    print "\n";
+}
 
 ```
 
@@ -793,7 +762,6 @@ use Bio::DB::EUtilities;
 # get the GI
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
-
                                        -email      => 'mymail@foo.bar',
                                        -term       => 'BAA20519',
                                        -db         => 'protein',
@@ -804,7 +772,6 @@ my $hist1 = $factory->next_History || die 'esearch failed';
 # get neighbor proteins (note db=dbfrom, using neighbor_history)
 
 $factory->reset_parameters(-eutil => 'elink',
-
                            -history => $hist1,
                            -db      => 'protein',
                            -dbfrom  => 'protein',
@@ -815,7 +782,6 @@ my $hist2 = $factory->next_History || die 'elink1 failed';
 # get structural neighbors for the protein GIs on the server
 
 $factory->reset_parameters(-eutil => 'elink',
-
                            -history => $hist2,
                            -db      => 'structure',
                            -dbfrom  => 'protein',
@@ -826,25 +792,18 @@ my $hist3 = $factory->next_History || die 'elink2 failed';
 # get docsums for the structure IDs on the server
 
 $factory->reset_parameters(-eutil => 'esummary',
-
                            -history => $hist3,
                            -db      => 'structure');
 
 for my $ds ( $factory->get_DocSums) {
-
-    print "ID: ",$ds->get_id,"\
-
-";
+    print "ID: ",$ds->get_id,"\n";
 
     while (my $item = $ds->next_Item('flattened'))  {
-        printf("%-20s:%s\
-
-",$item->get_name,$item->get_content) if $item->get_content;
+        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
 
     }
-    print "\
-
-"; }
+    print "\n";
+}
 
 ```
 
@@ -863,7 +822,6 @@ use Bio::DB::EUtilities;
 my $term = '"Luciferase Profiling Assay"';
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
-
                                        -email   => 'mymail@foo.bar',
                                        -db      => 'pcassay',
                                        -term    => $term,
@@ -872,7 +830,6 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
 my @ids = $factory->get_ids;
 
 $factory->reset_parameters(-eutil => 'elink',
-
                            -db          => 'pccompound',
                            -dbfrom      => 'pcassay',
                            -linkname    => 'pcassay_pccompound_active',
@@ -884,7 +841,6 @@ my $hist = $factory->next_History || die "Arghh!";
 # you may want to iterate through chunks of summary info using retstart/retmax
 
 $factory->reset_parameters(-eutil => 'esummary',
-
                            -db          => 'pccompound',
                            -history     => $hist); 
 
@@ -906,7 +862,6 @@ use Bio::DB::EUtilities;
 my $id = '224809339';
 
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'elink',
-
                                     -id      => $id,
                                     -email   => 'setyourown@foo.bar',
                                     -verbose => 1,
@@ -917,7 +872,6 @@ my $eutil = Bio::DB::EUtilities->new(-eutil => 'elink',
 my $hist = $eutil->next_History || die "No history data returned";
 
 $eutil->set_parameters(-eutil => 'efetch',
-
                       -history => $hist,
                       -retmode => 'text',
                       # 'chr', 'flt', 'brief', 'rsr', 'docset'
@@ -928,7 +882,6 @@ $eutil->get_Response(-file => 'snps.txt');
 # or ...
 
 $eutil->set_parameters(-eutil => 'esummary',
-
                        -history => $hist);
 
 $eutil->print_all;
@@ -938,7 +891,6 @@ $eutil->print_all;
 References / See Also
 =====================
 
--   [HOWTO:EUtilities Web Service] - more info about the SOAP interface
--   The official [NCBI EUtilities Help manual](http://www.ncbi.nlm.nih.gov/books/NBK25501/)'
+- [HOWTO:EUtilities Web Service] - more info about the SOAP interface
+- The official [NCBI EUtilities Help manual](http://www.ncbi.nlm.nih.gov/books/NBK25501/)'
 
- <Category:Fetching/Scrapbook>
