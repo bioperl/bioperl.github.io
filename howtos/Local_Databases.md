@@ -32,8 +32,8 @@ use Bio::Index::Fasta;
 my $index_file_name = shift;
 
 my $inx = Bio::Index::Fasta->new(
--filename => $index_file_name,
--write_flag => 1);
+-filename => $index_file_name,
+-write_flag => 1);
 
 $inx->make_index(@sequence_files);
 ```
@@ -53,9 +53,9 @@ my $index_file_name = shift;
 my $inx = Bio::Index::Fasta->new($index_file_name);
 
 for my $id (@ARGV) {
-    # Returns Bio::Seq object
-    my $seq = $inx->fetch($id);
-    # do something with the sequence
+    # Returns Bio::Seq object
+    my $seq = $inx->fetch($id);
+    # do something with the sequence
 }
 
 ```
@@ -105,7 +105,7 @@ $ENV{BIOPERL_INDEX} = ".";
 
 my $file_name = "test.fa";
 my $inx = Bio::Index::Fasta->new( -filename => $file_name . ".idx",
-write_flag => 1 );
+write_flag => 1 );
 
 # pass a reference to the critical function to the Bio::Index object
 $inx->id_parser(&get_id);
@@ -115,8 +115,8 @@ $inx->make_index($file_name);
 
 # here is where the retrieval key is specified
 sub get_id {
-    my $header = shift;
-    $header =~ /^>.*sp|([A-Z]d{5}b)/;
+    my $header = shift;
+    $header =~ /^>.*sp|([A-Z]d{5}b)/;
     $1;
 }
 
@@ -142,10 +142,10 @@ Modify the function that's passed to the id_parser() method:
 ```perl
 
 sub get_id {
-    my $header = shift;
-    my (@sps) = $header =~ /^>.*sp|([A-Z]d{5})/g;
-    my (@gis) = $header =~ /gi|(d+)/g;
-    return (@sps,@gis);
+    my $header = shift;
+    my (@sps) = $header =~ /^>.*sp|([A-Z]d{5})/g;
+    my (@gis) = $header =~ /gi|(d+)/g;
+    return (@sps,@gis);
 }
 
 ```
@@ -158,8 +158,8 @@ my $db = Bio::DB::Fasta->new('test.fa', -makeid=>&make_my_id);
 my $seqobj = $db->get_Seq_by_id($id);
 
 sub make_my_id {
-    $description_line = shift;
-    $description_line =~ /gi|(d+)|emb|(w+)/;
+    $description_line = shift;
+    $description_line =~ /gi|(d+)|emb|(w+)/;
     ($1,$2);
 }
 

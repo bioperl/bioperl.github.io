@@ -134,19 +134,19 @@ use strict; use base 'Bio::Graphics::Glyph::box';
 
 sub draw_component {
 
-` my $self = shift;`
-` my ($gd,$dx,$dy) = @_;`
-` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
+` my $self = shift;`
+` my ($gd,$dx,$dy) = @_;`
+` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
 
-` # draw the hourglass as a polygon`
-` my $poly = GD::Polygon->new;`
-` $poly->addPt($left,$top);`
-` $poly->addPt($right,$bottom);`
-` $poly->addPt($right,$top);`
-` $poly->addPt($left,$bottom);`
-` $poly->addPt($left,$top);`
-` $gd->filledPolygon($poly,$self->bgcolor);`
-` $gd->polygon($poly,$self->fgcolor);`
+` # draw the hourglass as a polygon`
+` my $poly = GD::Polygon->new;`
+` $poly->addPt($left,$top);`
+` $poly->addPt($right,$bottom);`
+` $poly->addPt($right,$top);`
+` $poly->addPt($left,$bottom);`
+` $poly->addPt($left,$top);`
+` $gd->filledPolygon($poly,$self->bgcolor);`
+` $gd->polygon($poly,$self->fgcolor);`
 
 }
 
@@ -186,23 +186,23 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; my $bsg = 'Bio::SeqFeature::Gen
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>300,-end=>700,
 
-`                            -display_name=>\'Test Feature\',`
-`                            -source_tag=>\'This is only a test\');`
+`                            -display_name=>\'Test Feature\',`
+`                            -source_tag=>\'This is only a test\');`
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
-`                                            -pad_left=>12,-pad_right=>12);`
+`                                            -pad_left=>12,-pad_right=>12);`
 
 $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track($test_feature,
 
-`                 -glyph   => \'hourglass\',`
-`                 -bgcolor => \'orange\',`
-`                 -font2color => \'red\',`
-`                 -height  => 20,`
-`                 -label   => 1,`
-`                 -description => 1);`
+`                 -glyph   => \'hourglass\',`
+`                 -bgcolor => \'orange\',`
+`                 -font2color => \'red\',`
+`                 -height  => 20,`
+`                 -label   => 1,`
+`                 -description => 1);`
 
 print $panel->png;
 
@@ -370,12 +370,12 @@ use constant ARROW_LENGTH => 20;
 
 sub draw_component {
 
-` my $self = shift;`
-` $self->SUPER::draw_component(@_);`
+` my $self = shift;`
+` $self->SUPER::draw_component(@_);`
 
-` my ($gd,$dx,$dy) = @_;`
-` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
-` $self->arrow($gd,$right,$right+ARROW_LENGTH,($bottom+$top)/2);`
+` my ($gd,$dx,$dy) = @_;`
+` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
+` $self->arrow($gd,$right,$right+ARROW_LENGTH,($bottom+$top)/2);`
 
 }
 
@@ -403,24 +403,24 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; my $bsg = 'Bio::SeqFeature::Gen
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>300,-end=>700,
 
-`                            -display_name=>\'Test Feature\',`
-`                            -source_tag=>\'This is only a test\');`
+`                            -display_name=>\'Test Feature\',`
+`                            -source_tag=>\'This is only a test\');`
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
-`                                            -pad_left=>12,-pad_right=>12);`
+`                                            -pad_left=>12,-pad_right=>12);`
 
 $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track($test_feature,
 
-`                 -glyph   => \'hourglass_arrow\',`
-`                 -bgcolor => \'orange\',`
-`                 -font2color => \'red\',`
-`                 -height  => 20,`
-`                 -label   => 1,`
-`                 -description => 1,`
-`  );`
+`                 -glyph   => \'hourglass_arrow\',`
+`                 -bgcolor => \'orange\',`
+`                 -font2color => \'red\',`
+`                 -height  => 20,`
+`                 -label   => 1,`
+`                 -description => 1,`
+`  );`
 
 print $panel->png;
 
@@ -446,28 +446,28 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; my $bsg = 'Bio::SeqFeature::Gen
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>300,-end=>700,
 
-`                            -display_name=>\'Test Feature\',`
-`                            -source_tag=>\'This is only a test\');`
+`                            -display_name=>\'Test Feature\',`
+`                            -source_tag=>\'This is only a test\');`
 
 my $test2_feature = $bsg->new(-start=>710,-end=>800,
 
-`        -display_name=>\'Test Feature 2\');`
+`        -display_name=>\'Test Feature 2\');`
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
-`                                            -pad_left=>12,-pad_right=>12);`
+`                                            -pad_left=>12,-pad_right=>12);`
 
 $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track(\[$test_feature,$test2_feature\],
 
-`                 -glyph   => \'hourglass_arrow\',`
-`                 -bgcolor => \'orange\',`
-`                 -font2color => \'red\',`
-`                 -height  => 20,`
-`                 -label   => 1,`
-`                 -description => 1,`
-`  );`
+`                 -glyph   => \'hourglass_arrow\',`
+`                 -bgcolor => \'orange\',`
+`                 -font2color => \'red\',`
+`                 -height  => 20,`
+`                 -label   => 1,`
+`                 -description => 1,`
+`  );`
 
 print $panel->png;
 
@@ -493,11 +493,11 @@ sub pad_right { return ARROW_LENGTH }
 
 sub draw_component {
 
-` my $self = shift;`
-` my ($gd,$dx,$dy) = @_;`
-` $self->SUPER::draw_component(@_);`
-` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
-` $self->arrow($gd,$right,$right+ARROW_LENGTH,($bottom+$top)/2);`
+` my $self = shift;`
+` my ($gd,$dx,$dy) = @_;`
+` $self->SUPER::draw_component(@_);`
+` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
+` $self->arrow($gd,$right,$right+ARROW_LENGTH,($bottom+$top)/2);`
 
 }
 
@@ -529,29 +529,29 @@ use constant ARROW_LENGTH => 20;
 
 sub pad_right {
 
-` my $self = shift;`
-` return $self->arrow_length;`
+` my $self = shift;`
+` return $self->arrow_length;`
 
 }
 
 sub arrow_length {
 
-` my $self = shift;`
-` my $requested_len = $self->option(\'arrow_length\');`
-` if (defined $requested_len) {`
-`   return $requested_len;`
-` }`
-` else {`
-`   return ARROW_LENGTH;`
-` }`
+` my $self = shift;`
+` my $requested_len = $self->option(\'arrow_length\');`
+` if (defined $requested_len) {`
+`   return $requested_len;`
+` }`
+` else {`
+`   return ARROW_LENGTH;`
+` }`
 
 } sub draw_component {
 
-` my $self = shift;`
-` my ($gd,$dx,$dy) = @_;`
-` $self->SUPER::draw_component(@_);`
-` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
-` $self->arrow($gd,$right,$right+$self->arrow_length,($bottom+$top)/2);`
+` my $self = shift;`
+` my ($gd,$dx,$dy) = @_;`
+` $self->SUPER::draw_component(@_);`
+` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
+` $self->arrow($gd,$right,$right+$self->arrow_length,($bottom+$top)/2);`
 
 }
 
@@ -569,14 +569,14 @@ To test whether this new feature works, modify the test script's second add_trac
 
 $panel->add_track(\[$test_feature,$test2_feature\],
 
-`                 -glyph   => \'hourglass_arrow\',`
-`                 -bgcolor => \'orange\',`
-`                 -font2color => \'red\',`
-`                 -height  => 20,`
-`                 -label   => 1,`
-`                 -description => 1,`
-`                 -arrow_length => 100,`
-`  );`
+`                 -glyph   => \'hourglass_arrow\',`
+`                 -bgcolor => \'orange\',`
+`                 -font2color => \'red\',`
+`                 -height  => 20,`
+`                 -label   => 1,`
+`                 -description => 1,`
+`                 -arrow_length => 100,`
+`  );`
 
 ```
 
@@ -590,18 +590,18 @@ The nice thing about this is that you can pass a callback (subroutine coderef) t
 
 $panel->add_track(\[$test_feature,$test2_feature\],
 
-`                 -glyph   => \'hourglass_arrow\',`
-`                 -bgcolor => \'orange\',`
-`                 -font2color => \'red\',`
-`                 -height  => 20,`
-`                 -label   => 1,`
-`                 -description => 1,`
-`                 -arrow_length => suHandling Multi-Part Featuresb {`
-`                          my $feature = shift;`
-`                          return 100 if $feature eq $test_feature;`
-`                          return  50 if $feature eq $test2_feature;`
-`               }`
-`   );`
+`                 -glyph   => \'hourglass_arrow\',`
+`                 -bgcolor => \'orange\',`
+`                 -font2color => \'red\',`
+`                 -height  => 20,`
+`                 -label   => 1,`
+`                 -description => 1,`
+`                 -arrow_length => suHandling Multi-Part Featuresb {`
+`                          my $feature = shift;`
+`                          return 100 if $feature eq $test_feature;`
+`                          return  50 if $feature eq $test2_feature;`
+`               }`
+`   );`
 
 ```
 
@@ -625,26 +625,26 @@ use constant T_LENGTH => 30; use constant T_WIDE => 7;
 
 sub t_length {
 
-` shift->option(\'tee_length\') || T_LENGTH;`
+` shift->option(\'tee_length\') || T_LENGTH;`
 
 }
 
 sub pad_top {
 
-` my $self = shift;`
-` my $parent_pad = $self->SUPER::pad_top;`
-` my $height     = $self->height/2;`
-` my $extra      = $self->t_length - $height;`
-` return $parent_pad if $extra `<= 0;
+` my $self = shift;`
+` my $parent_pad = $self->SUPER::pad_top;`
+` my $height     = $self->height/2;`
+` my $extra      = $self->t_length - $height;`
+` return $parent_pad if $extra `<= 0;
   return $parent_pad + $extra;
 }
 
 sub pad_bottom {
   my $self = shift;
   my $parent_pad = $self->`SUPER::pad_bottom;`
-` my $height     = $self->height/2;`
-` my $extra      = $self->t_length - $height;`
-` return $parent_pad if $extra `<= 0;
+` my $height     = $self->height/2;`
+` my $extra      = $self->t_length - $height;`
+` return $parent_pad if $extra `<= 0;
   return $parent_pad + $extra;
 }
 
@@ -652,17 +652,17 @@ sub draw_component {
   my $self = shift;
   $self->`SUPER::draw_component(@_);`
 
-` my $gd  = shift;`
-` my ($left,$top,$right,$bottom) = $self->bounds(@_);`
+` my $gd  = shift;`
+` my ($left,$top,$right,$bottom) = $self->bounds(@_);`
 
-` my $tee_x       = ($left + $right)/2;`
-` my $tee_top     = ($top + $bottom)/2 - $self->t_length;`
-` my $tee_bottom  = ($top + $bottom)/2 + $self->t_length;`
+` my $tee_x       = ($left + $right)/2;`
+` my $tee_top     = ($top + $bottom)/2 - $self->t_length;`
+` my $tee_bottom  = ($top + $bottom)/2 + $self->t_length;`
 
-` $gd->line($tee_x,$tee_top,$tee_x,$tee_bottom,$self->fgcolor);`
+` $gd->line($tee_x,$tee_top,$tee_x,$tee_bottom,$self->fgcolor);`
 
-` $gd->line($tee_x - T_WIDE/2, $tee_top,   $tee_x + T_WIDE/2, $tee_top,    $self->fgcolor);`
-` $gd->line($tee_x - T_WIDE/2, $tee_bottom,$tee_x + T_WIDE/2, $tee_bottom, $self->fgcolor);`
+` $gd->line($tee_x - T_WIDE/2, $tee_top,   $tee_x + T_WIDE/2, $tee_top,    $self->fgcolor);`
+` $gd->line($tee_x - T_WIDE/2, $tee_bottom,$tee_x + T_WIDE/2, $tee_bottom, $self->fgcolor);`
 
 }
 
@@ -689,19 +689,19 @@ use strict; use base 'Bio::Graphics::Glyph::segments';
 
 sub draw_component {
 
-` my $self = shift;`
-` my ($gd,$dx,$dy) = @_;`
-` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
+` my $self = shift;`
+` my ($gd,$dx,$dy) = @_;`
+` my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
 
-` # draw the hourglass as a polygon`
-` my $poly = GD::Polygon->new;`
-` $poly->addPt($left,$top);`
-` $poly->addPt($right,$bottom);`
-` $poly->addPt($right,$top);`
-` $poly->addPt($left,$bottom);`
-` $poly->addPt($left,$top);`
-` $gd->filledPolygon($poly,$self->bgcolor);`
-` $gd->polygon($poly,$self->fgcolor);`
+` # draw the hourglass as a polygon`
+` my $poly = GD::Polygon->new;`
+` $poly->addPt($left,$top);`
+` $poly->addPt($right,$bottom);`
+` $poly->addPt($right,$top);`
+` $poly->addPt($left,$bottom);`
+` $poly->addPt($left,$top);`
+` $gd->filledPolygon($poly,$self->bgcolor);`
+` $gd->polygon($poly,$self->fgcolor);`
 
 }
 
@@ -725,8 +725,8 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; use Bio::Location::Split; use B
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>100,-end=>700,
 
-`                            -display_name=>\'Test Feature 1\',`
-`                            -source_tag=>\'Multiple subfeatures\');`
+`                            -display_name=>\'Test Feature 1\',`
+`                            -source_tag=>\'Multiple subfeatures\');`
 
 $test_feature->add_SeqFeature($bsg->new(-start=>100,-end=>400)); $test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600)); $test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
 
@@ -736,18 +736,18 @@ my $test3_feature = $bsg->new(-display_name => 'Test Feature 3', ttt -source_tag
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
-`                                            -pad_left=>12,-pad_right=>12);`
+`                                            -pad_left=>12,-pad_right=>12);`
 
 $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track(\[$test_feature,$test2_feature,$test3_feature\],
 
-`                 -glyph   => \'multihourglass\',`
-`                 -bgcolor => \'orange\',`
-`                 -font2color => \'red\',`
-`                 -height  => 20,`
-`                 -label   => 1,`
-`                 -description => 1,`
+`                 -glyph   => \'multihourglass\',`
+`                 -bgcolor => \'orange\',`
+`                 -font2color => \'red\',`
+`                 -height  => 20,`
+`                 -label   => 1,`
+`                 -description => 1,`
 
 tt );
 
@@ -775,8 +775,8 @@ To test this option, we will modify the Example 10 script so that $test_feature 
 
 my $test_feature = $bsg->new(-start=>100,-end=>700,
 
-`                            -display_name=>\'Test Feature 1\',`
-`                            -source_tag=>\'Multiple subfeatures\');`
+`                            -display_name=>\'Test Feature 1\',`
+`                            -source_tag=>\'Multiple subfeatures\');`
 
 my $subfeat = $bsg->new(-start=>100,-end=>400); $subfeat->add_SeqFeature($bsg->new(-start=>100,-end=>200)); $subfeat->add_SeqFeature($bsg->new(-start=>300,-end=>400)); $test_feature->add_SeqFeature($subfeat); $test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600)); $test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
 
@@ -800,7 +800,7 @@ sub maxdepth { 2 }
 
 sub draw_component {
 
-` # as in example 9`
+` # as in example 9`
 
 }
 
@@ -834,24 +834,24 @@ sub maxdepth { 2 }
 
 sub draw {
 
-` my $self = shift;`
+` my $self = shift;`
 
-` if ($self->level == 1 && $self->parts) {`
-`   my ($gd,$dx,$dy) = @_;`
-`   my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
-`   $gd->filledRectangle($left,$top,$right,$bottom,`
+` if ($self->level == 1 && $self->parts) {`
+`   my ($gd,$dx,$dy) = @_;`
+`   my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
+`   $gd->filledRectangle($left,$top,$right,$bottom,`
 
 ttt $self->translate_color('lightgrey'));
 
-` }`
+` }`
 
-` $self->SUPER::draw(@_);`
+` $self->SUPER::draw(@_);`
 
 }
 
 sub draw_component {
 
-` #unchanged`
+` #unchanged`
 
 }
 
@@ -880,98 +880,98 @@ use strict; use Bio::Graphics; use base 'Bio::Graphics::Glyph::fixedwidth';
 
 sub column_count {
 
-` return shift->option(\'columns\') || 2;`
+` return shift->option(\'columns\') || 2;`
 
 }
 
 sub row_count {
 
-` return shift->option(\'rows\') || 2;`
+` return shift->option(\'rows\') || 2;`
 
 }
 
 sub cell_height {
 
-` my $self = shift;`
-` my $font = $self->font;`
-` my $lineheight = $font->height;`
-` return $lineheight + 2;`
+` my $self = shift;`
+` my $font = $self->font;`
+` my $lineheight = $font->height;`
+` return $lineheight + 2;`
 
 }
 
 sub cell_width {
 
-` my $self = shift;`
-` my @cell_data = $self->cell_data;`
-` my $max_size = 0;`
-` foreach (@cell_data) {`
-`   $max_size = length($_) if $max_size `< length($_);
+` my $self = shift;`
+` my @cell_data = $self->cell_data;`
+` my $max_size = 0;`
+` foreach (@cell_data) {`
+`   $max_size = length($_) if $max_size `< length($_);
   }
 
 
   my $font = $self->`font;`
-` return $max_size * $font->width + 3;`
+` return $max_size * $font->width + 3;`
 
 }
 
 sub cell_data {
 
-` my $self = shift;`
-` my $feature = $self->feature;`
-` return unless $feature->has_tag(\'cell_data\');`
-` my ($cell_data) = $feature->get_tag_values(\'cell_data\');`
-` return split /s+/,$cell_data;`
+` my $self = shift;`
+` my $feature = $self->feature;`
+` return unless $feature->has_tag(\'cell_data\');`
+` my ($cell_data) = $feature->get_tag_values(\'cell_data\');`
+` return split /s+/,$cell_data;`
 
 }
 
 sub width_needed {
 
-` my $self = shift;`
-` return $self->cell_width * $self->column_count;`
+` my $self = shift;`
+` return $self->cell_width * $self->column_count;`
 
 } sub height_needed {
 
-` my $self = shift;`
-` return ($self->cell_height+1) * $self->row_count;`
+` my $self = shift;`
+` return ($self->cell_height+1) * $self->row_count;`
 
 }
 
 sub draw_contents {
 
-` my $self = shift;`
-` my ($gd,$left,$top,$right,$bottom) = @_;`
-` $self->filled_box($gd,$left,$top,$right,$bottom);`
+` my $self = shift;`
+` my ($gd,$left,$top,$right,$bottom) = @_;`
+` $self->filled_box($gd,$left,$top,$right,$bottom);`
 
-` my $width  = $right-$left;`
-` my $height = $bottom-$top;`
+` my $width  = $right-$left;`
+` my $height = $bottom-$top;`
 
-` my $cell_width  = $self->cell_width;`
-` my $cell_height = $self->cell_height;`
+` my $cell_width  = $self->cell_width;`
+` my $cell_height = $self->cell_height;`
 
-` my $row_count    = $self->row_count;`
-` my $column_count = $self->column_count;`
-` my $fontwidth    = $self->font->width;`
+` my $row_count    = $self->row_count;`
+` my $column_count = $self->column_count;`
+` my $fontwidth    = $self->font->width;`
 
-` for (my $i=0;$i`<$row_count-1;$i++) {
+` for (my $i=0;$i`<$row_count-1;$i++) {
     my $y = $top + ($i+1) * $cell_height;
     $gd->`line($left,$y,$right,$y,$self->fgcolor);`
-` }`
+` }`
 
-` for (my $i=0;$i`<$column_count-1;$i++) {
+` for (my $i=0;$i`<$column_count-1;$i++) {
     my $x = $left + ($i+1) * $cell_width;
     $gd->`line($x,$top,$x,$bottom,$self->fgcolor);`
-` }`
+` }`
 
-` my @cell_data = $self->cell_data;`
+` my @cell_data = $self->cell_data;`
 
-` for my $row (0..$row_count-1) {`
-`   for my $col (0..$column_count-1) {`
-`     my $cell_data = $cell_data[$row*$column_count + $col];`
-`     my $x = $left + ($col+1) * $cell_width - length($cell_data) * $fontwidth - 1;`
-`     my $y = $top  + $row * $cell_height + 1;`
-`     $gd->string($self->font,$x,$y,$cell_data,$self->fontcolor);`
-`   }`
-` }`
+` for my $row (0..$row_count-1) {`
+`   for my $col (0..$column_count-1) {`
+`     my $cell_data = $cell_data[$row*$column_count + $col];`
+`     my $x = $left + ($col+1) * $cell_width - length($cell_data) * $fontwidth - 1;`
+`     my $y = $top  + $row * $cell_height + 1;`
+`     $gd->string($self->font,$x,$y,$cell_data,$self->fontcolor);`
+`   }`
+` }`
 
 }
 
@@ -991,38 +991,38 @@ use lib "$ENV{HOME}/lib"; use Bio::Graphics; use Bio::Graphics::Feature; use Bio
 
 my $segment = Bio::Graphics::Feature->new(-start=>1,-end=>700); my $snp1 = Bio::SeqFeature::Generic ->new (-start => 100,
 
-`           -end=>400,`
-`           -display_name =>\'bioseqfeature\',`
-`           -source => \'foo bar\',`
-`           -display_name =>\'bar foo\',`
-`           -tag => {`
-`      cell_data => \'1 2 3 4 5 6\',`
-`            },`
-`           );`
+`           -end=>400,`
+`           -display_name =>\'bioseqfeature\',`
+`           -source => \'foo bar\',`
+`           -display_name =>\'bar foo\',`
+`           -tag => {`
+`      cell_data => \'1 2 3 4 5 6\',`
+`            },`
+`           );`
 
 my $snp2 = Bio::SeqFeature::Generic->new(-start => 500,
 
-`         -end       => 501,`
-`         -display_name      => \'rs12345\',`
-`         -tag => {`
-`           cell_data => \'one two three four five six\',`
-`          },`
-`        );`
+`         -end       => 501,`
+`         -display_name      => \'rs12345\',`
+`         -tag => {`
+`           cell_data => \'one two three four five six\',`
+`          },`
+`        );`
 
 my $panel = Bio::Graphics::Panel->new(-segment=>$segment,-width=>800);
 
 $panel->add_track($segment,-glyph=>'arrow',-double=>1,-tick=>2); $panel->add_track(\[$snp1,$snp2\],
 
-`   -label       => 1,`
-`   -font        => \'gdLargeFont\',`
-`   -glyph       => \'table\',`
-`   -description => 1,`
-`   -bgcolor     => \'lightyellow\',`
-`   -fixed_gap   => 20,`
-`   -cell_size   => 50,`
-`   -rows        => 2,`
-`   -columns     => 3,`
-`  );`
+`   -label       => 1,`
+`   -font        => \'gdLargeFont\',`
+`   -glyph       => \'table\',`
+`   -description => 1,`
+`   -bgcolor     => \'lightyellow\',`
+`   -fixed_gap   => 20,`
+`   -cell_size   => 50,`
+`   -rows        => 2,`
+`   -columns     => 3,`
+`  );`
 
 my $gd = $panel->gd;
 

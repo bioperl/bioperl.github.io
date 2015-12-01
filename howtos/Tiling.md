@@ -92,13 +92,13 @@ my $hit;
 
 my $blio = Bio::SearchIO->new( -format => 'blast',
 
-`                              -file   => \'myblast.txt\');`
+`                              -file   => \'myblast.txt\');`
 
 my $result = $blio->next_result;
 
 while ($hit = $result->next_hit) {
 
-` last if $hit->name =~ /Xenopus/;`
+` last if $hit->name =~ /Xenopus/;`
 
 }
 
@@ -106,7 +106,7 @@ my $tiling = Bio::Search::Tiling::MapTiling->new($hit);
 
 printf("global fraction identical against Xenopus: %.2f ",
 
-`      $tiling->frac_identical(-type => \'query\', -action => \'exact\'));`
+`      $tiling->frac_identical(-type => \'query\', -action => \'exact\'));`
 
 ```
 
@@ -132,34 +132,34 @@ my $result = $blio->next_result;
 
 my ($best_tiling, $best_context, $max_ident, $max_frac_cons) =
 
-`   get_the_best($result);`
+`   get_the_best($result);`
 
 while (my @tiled_hsps = $best_tiling->next_tiling('subject', $best_context)) {
 
-`   # do stuff with my array of tiled HSP objects`
+`   # do stuff with my array of tiled HSP objects`
 
 }
 
 sub get_the_best {
 
-`   my $result = shift;`
-`   my @hits = $result->hits;`
+`   my $result = shift;`
+`   my @hits = $result->hits;`
 
 # initialize
 
-`   my $best_hit = pop @hits;`
-`   my $best_tiling = Bio::Search::Tiling::MapTiling->new($best_hit);`
-`   my $max_ident = $best_tiling->identities(\'query\',\'exact\');`
-`   `
+`   my $best_hit = pop @hits;`
+`   my $best_tiling = Bio::Search::Tiling::MapTiling->new($best_hit);`
+`   my $max_ident = $best_tiling->identities(\'query\',\'exact\');`
+`   `
 
 # search through hits
 
-`   foreach my $hit (@hit) {`
+`   foreach my $hit (@hit) {`
 
 tmy $tiling = Bio::Search::Tiling::MapTiling->new($hit); tmy $ident = $tiling->identities('query','exact'); tif ( $ident > $max_ident ) { t $max_ident = $ident; t $best_tiling = $tiling; t}
 
-`   }`
-`   `
+`   }`
+`   `
 
 # now, have the hit providing the most identities against the query
 2.  search the contexts in the \*subject\* sequences
@@ -168,23 +168,23 @@ tmy $tiling = Bio::Search::Tiling::MapTiling->new($hit); tmy $ident = $tiling->i
 
 # initialize
 
-`   my @contexts = $best_tiling->contexts(\'subject\');`
-`   my $best_context = pop @contexts;`
-`   my $max_frac = $best_tiling->frac_conserved(-type=>\'subject\',`
+`   my @contexts = $best_tiling->contexts(\'subject\');`
+`   my $best_context = pop @contexts;`
+`   my $max_frac = $best_tiling->frac_conserved(-type=>\'subject\',`
 
 tttttt-action=>'exact', tttttt-context=>$best_context);
 
 # search through contexts
 
-`   for my $context (@contexts) {`
+`   for my $context (@contexts) {`
 
 tmy $frac = $best_tiling->frac_conserved(-type=>'subject', tttttt-action=>'exact', tttttt-context=>$context); tif ($frac > $max_frac) { t $max_frac = $frac; t $best_context = $context; t}
 
-`   }`
+`   }`
 
 # return the objects and the values
 
-`   return ($best_tiling, $best_context, $max_ident, $max_frac);`
+`   return ($best_tiling, $best_context, $max_ident, $max_frac);`
 
 }
 
@@ -214,12 +214,12 @@ my $result = $blio->next_result;
 
 my $top_name, $top_value = 0; while (my $hit = $result->next_hit) {
 
-`   $tiling = Bio::Search::Tiling::MapTiling->new($hit);`
-`   if (my $id = $tiling->identical(\'subject\',\'fast\') > $top_value) {`
+`   $tiling = Bio::Search::Tiling::MapTiling->new($hit);`
+`   if (my $id = $tiling->identical(\'subject\',\'fast\') > $top_value) {`
 
 t$top_name = $hit->name; t$top_value = $id;
 
-`   }`
+`   }`
 
 }
 
@@ -257,17 +257,17 @@ The sequences in each alignment contain features (even though they are objects) 
 
 $aln = ($tiling->get_tiled_alns)\[0\]; $qseq = $aln->get_seq_by_id('query'); $hseq = $aln->get_seq_by_id('subject'); foreach my $feat ($qseq->get_SeqFeatures) {
 
-`  $org_start = ($feat->get_tag_values(\'query_start\'))[0];`
-`  $org_end = ($feat->get_tag_values(\'query_end\'))[0];`
-`  # original fragment as represented in the tiled alignment:`
-`  $org_fragment = $feat->seq;`
+`  $org_start = ($feat->get_tag_values(\'query_start\'))[0];`
+`  $org_end = ($feat->get_tag_values(\'query_end\'))[0];`
+`  # original fragment as represented in the tiled alignment:`
+`  $org_fragment = $feat->seq;`
 
 } foreach my $feat ($hseq->get_SeqFeatures) {
 
-`  $org_start = ($feat->get_tag_values(\'subject_start\'))[0];`
-`  $org_end = ($feat->get_tag_values(\'subject_end\'))[0];`
-`  # original fragment as represented in the tiled alignment:`
-`  $org_fragment = $feat->seq;`
+`  $org_start = ($feat->get_tag_values(\'subject_start\'))[0];`
+`  $org_end = ($feat->get_tag_values(\'subject_end\'))[0];`
+`  # original fragment as represented in the tiled alignment:`
+`  $org_fragment = $feat->seq;`
 
 }
 
@@ -299,8 +299,8 @@ In the `MapTiling` implementation, strand/frame ''contexts'' (see [key concepts]
 
 To avoid the proliferation of ` -strand => $strand, -frame => $frame ` arguments in already long argument lists, and to reduce the ''context'' to a single simple entity, `MapTiling` uses yet another ad-hoc representation of strand/frame specification. In the code and pod, this is called the ''context string''. Its syntax is as follows (with apologies to the W3C, as well as the reader):
 
-`ContextString ::= \'all\' | (ContextStrandFrameString)`
-`ContextStrandFrameString ::= (\'m\' | \'p\') (\'0\' | \'1\' | \'2\' | \'_\')`
+`ContextString ::= \'all\' | (ContextStrandFrameString)`
+`ContextStrandFrameString ::= (\'m\' | \'p\') (\'0\' | \'1\' | \'2\' | \'_\')`
 
 The context `all` indicates that, for the given sequence type, all HSPs in the hit are in the same context. This is true, e.g., for both query and hit types in a BLASTP report. However, the `all` context cannot be used to indicate that for all HSPs in a given hit, a given sequence type happens be in the same ''strand/frame context''. This context must be given explicitly. However, the user can test whether a type has only one context represented with something like:
 
@@ -308,9 +308,9 @@ The context `all` indicates that, for the given sequence type, all HSPs in the h
 
 sub lone_context {
 
-` my $tiling = shift;`
-` return ($tiling->contexts($type))[0] if scalar ($tiling->contexts($type)) == 1;`
-` return;`
+` my $tiling = shift;`
+` return ($tiling->contexts($type))[0] if scalar ($tiling->contexts($type)) == 1;`
+` return;`
 
 }
 
@@ -392,7 +392,7 @@ The algorithms that cause the difficulty are currently BLASTX, TBLASTN, and TBLA
 
 if ($alg =~ /^T/ && $type eq 'hit') {
 
-`  $length = $self->length/3;`
+`  $length = $self->length/3;`
 
 }
 
@@ -417,39 +417,39 @@ Here are few not-too-gory details about the underlying algorithm, with more code
 
 The guts of `MapTiling` are based on a fairly simple back-of-envelope idea. To describe it, first we back out of the sequence-related details, and just consider a set of possibly overlapping real intervals, with endpoints that are positive integers, like so:
 
-`          111111111122222222223`
+`          111111111122222222223`
 `0123456789012345678901234567890`
 `-------------------------------`
-`   [       ]`
-`         [     ]`
-`      [      ]`
-`                   [       ]`
-`                      []`
+`   [       ]`
+`         [     ]`
+`      [      ]`
+`                   [       ]`
+`                      []`
 
 Of course, each interval represents the range of a sequence type in an HSP. Then the union of all these intervals is the minimum set of intervals that cover all the intervals; in our example, it's { \[3,15\], \[19,27\] }:
 
-`          111111111122222222223`
+`          111111111122222222223`
 `0123456789012345678901234567890`
 `-------------------------------`
-`   [           ]   [       ]`
+`   [           ]   [       ]`
 
 So, this is the set of intervals we want to tile in the strict sense. We want to divide this ''minimum covering set'' into a set of disjoint (i.e., non-overlapping) intervals whose union also equals the minimum covering set. You can see there are uncountably infinitely many ways to do this.
 
 Reduce the complexity of the problem now by considering an "interval" `[$a0, $a1]` with `$a0 <= $a1` both positive integers, to be the set of positive integers {`$a0`, `$a0 + 1`, ..., `$a1`}. The tiling of the minimum covering set in this context that is constructed by the algorithm, which I'm calling the ''disjoint decomposition'', is unique and based directly on the endpoints of the original input intervals. Here is a graphical construction of a disjoint decomposition:
 
-`          111111111122222222223`
+`          111111111122222222223`
 `0123456789012345678901234567890`
 `-------------------------------`
-`* the input intervals...      *`
-`   [       ]`
-`   .     [ .   ]`
-`   .  [  . . ] .               `
-`   .  .  . . . .   [       ]`
-`   .  .  . . . .   .  []   .   `
-`   .  .  . . . .   .  ..   .  `
-`   .  .  . . . .   .  ..   .   `
-`   [ ][ ][ ][][]   [ ][][  ]  `
-`* the decomposition...        *`
+`* the input intervals...      *`
+`   [       ]`
+`   .     [ .   ]`
+`   .  [  . . ] .               `
+`   .  .  . . . .   [       ]`
+`   .  .  . . . .   .  []   .   `
+`   .  .  . . . .   .  ..   .  `
+`   .  .  . . . .   .  ..   .   `
+`   [ ][ ][ ][][]   [ ][][  ]  `
+`* the decomposition...        *`
 
 The code in identifies the minimum covering set and the disjoint decomposition, given set of intervals (which are coded as arrays of 2 element arrays `[$a0, $a1]`, with scalar integers `$a0 <= $a1`). The code uses some tricks to do this pretty fast, and to get the creation of singleton intervals right.
 
@@ -459,7 +459,7 @@ The disjoint decomposition is explicitly constructed such that each ''component 
 
 The ''coverage map'' is the useful association of the disjoint decomposition with the HSPs the input intervals represent. It is an array of the following structures:
 
-`[ [$a0, $a1], [ $hsp_object_0, $hsp_object_1, ...] ]`
+`[ [$a0, $a1], [ $hsp_object_0, $hsp_object_1, ...] ]`
 
 The first element is one of the ''component intervals'', and the second is an array containing all the ''HSP objects'' whose coordinate range '''for the given sequence type''' contain the component interval. So we note that coverage maps are specific for hit objects '''and''' sequence type. For reports with translated nucleotides, the coverage map is also dependent on the sequence ''context'' (see [key concepts]). The coverage map for a tiling can be accessed with the `coverage_map($type, $context)` method:
 
@@ -483,31 +483,31 @@ You can get a visual on a coverage map with `coverage_map_as_text`. For example 
 `7\t\t\t\t\t\t\t*\t\t\t\t\t\t`
 `8\t\t\t\t\t\t\t\t\t*\t\t\t\t`
 `9\t\t\t\t\t\t\t\t\t\t\t*\t\t`
-`Interval legend`
-`0\t[12, 510]`
-`1\t[511, 517]`
-`2\t[518, 573]`
-`3\t[574, 589]`
-`4\t[590, 592]`
-`5\t[692, 728]`
-`6\t[729, 807]`
-`7\t[808, 898]`
-`8\t[926, 962]`
-`9\t[1028, 1101]`
-`10\t[1241, 1275]`
-`11\t[1344, 1417]`
-`12\t[1503, 1834]`
-`HSP legend`
-`0\t[12, 517]`
-`1\t[1503, 1834]`
-`2\t[1344, 1417]`
-`3\t[511, 592]`
-`4\t[692, 898]`
-`5\t[1028, 1101]`
-`6\t[574, 589]`
-`7\t[729, 807]`
-`8\t[926, 962]`
-`9\t[1241, 1275]`
+`Interval legend`
+`0\t[12, 510]`
+`1\t[511, 517]`
+`2\t[518, 573]`
+`3\t[574, 589]`
+`4\t[590, 592]`
+`5\t[692, 728]`
+`6\t[729, 807]`
+`7\t[808, 898]`
+`8\t[926, 962]`
+`9\t[1028, 1101]`
+`10\t[1241, 1275]`
+`11\t[1344, 1417]`
+`12\t[1503, 1834]`
+`HSP legend`
+`0\t[12, 517]`
+`1\t[1503, 1834]`
+`2\t[1344, 1417]`
+`3\t[511, 592]`
+`4\t[692, 898]`
+`5\t[1028, 1101]`
+`6\t[574, 589]`
+`7\t[729, 807]`
+`8\t[926, 962]`
+`9\t[1241, 1275]`
 
 From this output, we see that the disjoint decomposition is what we advertised: non-overlapping, and completely covering (if we move from saying that `[$a0, $a1]` represents an interval, to saying that it represents the set of consecutive positive integers from `$a0` to `$a1`, inclusive).
 
@@ -517,7 +517,7 @@ We can see, too, how this representation could help in calculating estimates for
 
 my $ident = 0; for (3, 6) {
 
-`   $ident += ($tiling->hsps)[$_]->matches_MT(-type=>\'query\', `
+`   $ident += ($tiling->hsps)[$_]->matches_MT(-type=>\'query\', `
 
 ttttt -action=>'identities', ttttt -start=>574, ttttt -end=>589); } $ident /= 2;
 

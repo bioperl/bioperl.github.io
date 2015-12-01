@@ -47,16 +47,16 @@ use strict;
 
 BEGIN {
 
-`   use lib \'.\'; # for core package test scripts only`
-`   use Bio::Root::Test;`
+`   use lib \'.\'; # for core package test scripts only`
+`   use Bio::Root::Test;`
 
-`   test_begin(-tests => 20,`
-`              -requires_modules => [qw(IO::String XML::Parser)],`
-`              -requires_networking => 1);`
+`   test_begin(-tests => 20,`
+`              -requires_modules => [qw(IO::String XML::Parser)],`
+`              -requires_networking => 1);`
 
-`   # at this point Test::More, Test::Exception and Test::Warn have been loaded for us,`
-`   # and if network tests have been enabled and IO::String`
-`   # and XML::Parser are installed, we will continue with our tests`
+`   # at this point Test::More, Test::Exception and Test::Warn have been loaded for us,`
+`   # and if network tests have been enabled and IO::String`
+`   # and XML::Parser are installed, we will continue with our tests`
 
 }
 
@@ -124,12 +124,12 @@ use strict;
 
 BEGIN {
 
-    use lib \'.\'; # for core package test scripts only`
-    use Bio::Root::Test;`
+    use lib \'.\'; # for core package test scripts only`
+    use Bio::Root::Test;`
 
-    test_begin(-tests => 20,`
-               -requires_modules => [qw(IO::String)],`
-               -requires_networking => 1);`
+    test_begin(-tests => 20,`
+               -requires_modules => [qw(IO::String)],`
+               -requires_networking => 1);`
 
     use_ok(\'Bio::ModuleUnderTest\');`
 }
@@ -244,11 +244,11 @@ is($value,12,"$value not okay");
 
 will have a misleading descriptive message when tests are run, which may lead one to think tests have failed:
 
-` ...`
-` ok 66`
-` ok 67 - 12 not okay`
-` ok 68`
-` ...`
+` ...`
+` ok 66`
+` ok 67 - 12 not okay`
+` ok 68`
+` ...`
 
 More complex tests
 ------------------
@@ -280,10 +280,10 @@ Skipped tests require the use of a `SKIP:{}` block. When a skip statement is enc
 
 SKIP: {
 
-`   ...`
-`   skip(\'No val\', 10) if !$val;`
-`   is($val, 10); `
-`   # and 9 other tests`
+`   ...`
+`   skip(\'No val\', 10) if !$val;`
+`   is($val, 10); `
+`   # and 9 other tests`
 
 }
 
@@ -295,11 +295,11 @@ It is also required that these are used in cases where issues beyond the control
 
 SKIP: {
 
-`   my $db = Bio::DB::GenBank->new();`
-`   eval {$seq = $db->get_Seq_by_id(\'AB12345\');};`
-`   skip(\'Remote database issues\',10) if $@;`
-`   isa_ok($seq, \'Bio::SeqI\'); `
-`   # and 9 other tests`
+`   my $db = Bio::DB::GenBank->new();`
+`   eval {$seq = $db->get_Seq_by_id(\'AB12345\');};`
+`   skip(\'Remote database issues\',10) if $@;`
+`   isa_ok($seq, \'Bio::SeqI\'); `
+`   # and 9 other tests`
 
 }
 
@@ -311,20 +311,20 @@ In the special cases of skipping due to missing optional external dependencies, 
 
 SKIP: {
 
-`   test_skip(-tests => 10, -requires_module => \'Optional::Module\');`
-`   use_ok(\'Optional::Module\');`
+`   test_skip(-tests => 10, -requires_module => \'Optional::Module\');`
+`   use_ok(\'Optional::Module\');`
 
-`   # 9 other optional tests that need Optional::Module`
+`   # 9 other optional tests that need Optional::Module`
 
 }
 
 SKIP: {
 
-`   test_skip(-tests => 10, -requires_networking => 1);`
+`   test_skip(-tests => 10, -requires_networking => 1);`
 
-`   # 10 optional tests that require internet access (only makes sense in the`
-`   # context of a script that doesn\'t use -requires_networking in the call to`
-`   # &test_begin)`
+`   # 10 optional tests that require internet access (only makes sense in the`
+`   # context of a script that doesn\'t use -requires_networking in the call to`
+`   # &test_begin)`
 
 }
 
@@ -341,10 +341,10 @@ TODO blocks are very useful during development. They let you declare tests you e
 
 TODO: {
 
-`   local $TODO = \'next_val not implemented yet\';`
-`   my $val = $foo->next_val;`
-`   is ($val, 1);`
-`   ...`
+`   local $TODO = \'next_val not implemented yet\';`
+`   my $val = $foo->next_val;`
+`   is ($val, 1);`
+`   ...`
 
 }
 

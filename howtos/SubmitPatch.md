@@ -32,40 +32,40 @@ Step by Step
 
 You should ensure you are using the latest developer version of BioPerl - this means checking out [bioperl-live] (or the appropriate repository) from Subversion. Here are [instructions on how to do this]. This is important because the change you want to make may have already been made!
 
-` mkdir -p ~/src/bioperl`
-` cd ~/src/bioperl `
-` svn co `[`svn://code.open-bio.org/bioperl/bioperl-live/trunk`](svn://code.open-bio.org/bioperl/bioperl-live/trunk)` bioperl-live`
+` mkdir -p ~/src/bioperl`
+` cd ~/src/bioperl `
+` svn co `[`svn://code.open-bio.org/bioperl/bioperl-live/trunk`](svn://code.open-bio.org/bioperl/bioperl-live/trunk)` bioperl-live`
 
 ### Back up the original file
 
 Let's imagine you want to modify something in `Bio::SeqIO::fasta`. First make a backup copy:
 
-` cd ~/src/bioperl/bioperl-live`
-` cp Bio/SeqIO/fasta.pm Bio/SeqIO/fasta.pm.orig`
+` cd ~/src/bioperl/bioperl-live`
+` cp Bio/SeqIO/fasta.pm Bio/SeqIO/fasta.pm.orig`
 
 ### Modify the file
 
 Now go ahead and modify `Bio/SeqIO/fasta.pm` to make the changes you think will enhance the module or rectify a bug. Make sure you check it for syntax too.
 
-` perl -I. -c Bio/SeqIO/fasta.pm`
+` perl -I. -c Bio/SeqIO/fasta.pm`
 
 ### Try your script
 
 You need to now check that you fixed the problem. At this point you will probably re-run the original script which brought the bug to your attention in the first place.
 
-` perl -I. /path/to/my_test_script.pl `
+` perl -I. /path/to/my_test_script.pl `
 
 ### Write a test
 
 Although trivial bug fixes will be accepted as-is, anything which modifies functionality or any major change will require a [test case] for it to be accepted with any confidence. This will mean either adding extra tests to an existing test file (`t/fasta.t` in this example - make sure you back it up to `t/fasta.t.orig`), or you will need to create a new test file. I would recommend naming it `SeqIO-fasta.t` in this case to avoid future clashes. If your test needs data files, place them in `t/data/`.
 
-` cp t/fasta.t t/fasta.t.orig`
+` cp t/fasta.t t/fasta.t.orig`
 
 ### Run the test
 
 You need to make sure the test is successful too.
 
-` perl -w -I. t/fasta.t`
+` perl -w -I. t/fasta.t`
 
 The -w option ensures that all the warnings are reported just like they will be when the perl test harness runs all BioPerl tests.
 
@@ -77,17 +77,17 @@ You now need to produce a difference file for each modified (or new) file relate
 
 For single files or directories:
 
-` svn diff Bio/SeqIO/`
-` svn diff Bio/SeqIO/fasta.pm`
+` svn diff Bio/SeqIO/`
+` svn diff Bio/SeqIO/fasta.pm`
 
 For everything:
 
-` svn diff `
+` svn diff `
 
 -   Use the [diff] tool in Unix.
 
-` diff -Bub Bio/SeqIO/fasta.pm.orig Bio/SeqIO/fasta.pm > /tmp/fasta.pm.diff`
-` diff -Bub t/fasta.t.orig          t/fasta.t          > /tmp/fasta.t.diff`
+` diff -Bub Bio/SeqIO/fasta.pm.orig Bio/SeqIO/fasta.pm > /tmp/fasta.pm.diff`
+` diff -Bub t/fasta.t.orig          t/fasta.t          > /tmp/fasta.t.diff`
 
 ### Submit the patch
 
@@ -97,13 +97,13 @@ First read about [Bugs] then log into [Redmine](http://redmine.bioperl.org/). Su
 
 Eventually your bug submission will be processed and assimilated into [bioperl-live] (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list] which most [BioPerl] developers read.
 
-` while true; do echo "Waiting..."; sleep 3600; done`
+` while true; do echo "Waiting..."; sleep 3600; done`
 
 ### Update your local Git repository
 
 Don't forget to regularly update your Git version of [BioPerl]!
 
-` git pull origin master`
+` git pull origin master`
 
 Conclusion
 ----------

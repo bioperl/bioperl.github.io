@@ -160,8 +160,8 @@ Options can be directed to the `aln` and `samse/sampe` components of the assembl
 
 then in the factory construction, specify the desired parameters prefixed by `aln_`, `sms_`, or `smp_`, as appropriate (note, '''no''' `-command` parameter is specified in the `run()` method):
 
-`$bwa = Bio::Tools::Run::BWA->new( -aln_n_threads => 3 );`
-`$assy = $bwa->run( "read1.fastq", "refseq.fas" );`
+`$bwa = Bio::Tools::Run::BWA->new( -aln_n_threads => 3 );`
+`$assy = $bwa->run( "read1.fastq", "refseq.fas" );`
 
 See the `bwa` [manpage](http://samtools.sourceforge.net/samtools.shtml) for many gory details.
 
@@ -178,13 +178,13 @@ $bwa = Bio::Tools::Run::BWA->new( -command => 'aln' ); @filespec = $bwa->filespe
 This example returns the following array:
 
 `fas`
-`faq `
+`faq `
 `>sai`
 
 This indicates that the FASTA database (fas) and the FASTQ reads (faq) MUST be specified, and the STDOUT of this program (SA coordinates) will be slurped into a file specified in the `run_bwa` argument list:
 
-`$bwa->run_bwa( -fas => \'my.db.fas\', -faq => \'reads.faq\',`
-`                  -sai => \'out.sai\' );`
+`$bwa->run_bwa( -fas => \'my.db.fas\', -faq => \'reads.faq\',`
+`                  -sai => \'out.sai\' );`
 
 If capture files are not specified per the filespec, text sent to STDOUT and STDERR is saved and is accessible with `$bwa->stdout()` and `$bwa->stderr()`.
 
@@ -197,9 +197,9 @@ By an odd coincidence, the wrapper accesses the `samtools` commands in a similar
 
 $converter = Bio::Tools::Run::Samtools->new(
 
-` -command => \'view\',`
-` -sam_input => 1,`
-` -bam_output => 1`
+` -command => \'view\',`
+` -sam_input => 1,`
+` -bam_output => 1`
 
 );
 
@@ -236,25 +236,25 @@ $bwa->out_type( 'assy_prd.bam' ); $bwa->run( 'read1.fastq', 'refseqs.fas', 'read
 
 $start1 = 150000; $end1 = 200000; $start2 = 250000; $end2 = 275000; $samt = Bio::Tools::Run::Samtools->new(
 
-` -command => \'view\',`
-` -bam_output => 1`
-` );`
+` -command => \'view\',`
+` -bam_output => 1`
+` );`
 
 $samt->run( -bam => 'assy_prd.bam',
 
-`           -rgn => [ "my_seqid:$start1-$end1",`
-`                     "my_seqid:$start2-$end2" ],`
-`           -out => \'assy_rgns.bam\'`
-`           );`
+`           -rgn => [ "my_seqid:$start1-$end1",`
+`                     "my_seqid:$start2-$end2" ],`
+`           -out => \'assy_rgns.bam\'`
+`           );`
 
 # convert a text SAM to binary format
 
 $samt = Bio::Tools::Run::Samtools->new(
 
-` -command => \'view\',`
-` -sam_input => 1,`
-` -bam_output => 1`
-` );`
+` -command => \'view\',`
+` -sam_input => 1,`
+` -bam_output => 1`
+` );`
 
 $samt->run( -bam => 'mysam.sam', -out => 'mysam.bam' );
 
@@ -262,8 +262,8 @@ $samt->run( -bam => 'mysam.sam', -out => 'mysam.bam' );
 
 $samt = Bio::Tools::Run::Samtools->new(
 
-` -command => \'sort\'`
-` );`
+` -command => \'sort\'`
+` );`
 
 # creates 'mysam.srt.bam':
 
