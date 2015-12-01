@@ -111,7 +111,7 @@ And make this the first line of the script:
 
 ### Creating a sequence, and an Object
 
-Our first script will create a sequence. Well, not just a sequence, you will be creating a ''sequence object'', since Bioperl is written in an object-oriented way. Why be object-oriented? Why introduce these odd or intrusive notions into software that should be ''biological'' or ''intuitive''? The reason is that thinking in terms of modules or objects turns out to be the most flexible, and ultimately the simplest, way to deal with data as complex as biological data. Once you get over your initial skepticism, and have written a few scripts, you will find this idea of an object becoming a bit more natural.
+Our first script will create a sequence. Well, not just a sequence, you will be creating a 'sequence object', since Bioperl is written in an object-oriented way. Why be object-oriented? Why introduce these odd or intrusive notions into software that should be 'biological' or 'intuitive? The reason is that thinking in terms of modules or objects turns out to be the most flexible, and ultimately the simplest, way to deal with data as complex as biological data. Once you get over your initial skepticism, and have written a few scripts, you will find this idea of an object becoming a bit more natural.
 
 One way to think about an object in software is that it is a container for data. The typical sequence entry contains different sorts of data (a sequence, one or more identifiers, and so on) so it will serve as a nice example of what an object can be.
 
@@ -172,7 +172,7 @@ $seq_obj = Bio::Seq->new(-seq        => "aaaatgggggggggggccccgtt",
 print $seq_obj->seq();
 ```
 
-'''aaaatgggggggggggccccgtt''', '''\#12345''', and '''example 1''' are called "arguments" in programming jargon. You could say that this example shows how to pass arguments to the `new()` method.
+'''aaaatgggggggggggccccgtt''', '''#12345''', and '''example 1''' are called "arguments" in programming jargon. You could say that this example shows how to pass arguments to the `new()` method.
 
 ### Writing a sequence to a file
 
@@ -185,7 +185,7 @@ $seqio_obj = Bio::SeqIO->new(-file => '>sequence.fasta',
                              -format => 'fasta' );
 ```
 
-Note that > in the `-file` argument. This character indicates that we're going to write to the file named "sequence.fasta", the same character we'd use if we were using Perl's `open()` function to write to a file. The `-format` argument, "fasta", tells the object that it should create the file in [fasta format].
+Note that `>` in the `-file` argument. This character indicates that we're going to write to the file named "sequence.fasta", the same character we'd use if we were using Perl's `open()` function to write to a file. The `-format` argument, "fasta", tells the object that it should create the file in [fasta format].
 
 Let's put our 2 examples together:
 
