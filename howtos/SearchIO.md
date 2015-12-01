@@ -10,8 +10,6 @@ This is a HOWTO about the system, how to use it, and how one goes about writing 
 
 ### Authors
 
-`\t`
-
 -   [Jason Stajich] [jason at bioperl.org](mailto:jason-at-bioperl.org)
 -   [Brian Osborne] [briano at bioteam.net](mailto:briano@bioteam.net)
 
@@ -64,64 +62,66 @@ See <HOWTO:BlastPlus> for more on running [BLAST].
 
 In order to display all these methods and what they return let's use a report as input, a simple BLASTX result:
 
-`BLASTX 2.2.4 [Aug-26-2002]`
-`Reference: Altschul, Stephen F., Thomas L. Madden, Alejandro A. Schaffer, `
-`Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), `
-`"Gapped BLAST and PSI-BLAST: a new generation of protein database search`
-`programs",  Nucleic Acids Res. 25:3389-3402.`
-`Query= gi|20521485|dbj|AP004641.2 Oryza sativa (japonica`
-`cultivar-group) genomic DNA, chromosome 1, BAC clone:B1147B04, 3785`
-`bases, 977CE9AF checksum.`
-`         (3059 letters)`
-`Database: test.fa `
-`           5 sequences; 1291 total letters`
-`                                                                Score    E`
-`Sequences producing significant alignments:                     (bits) Value`
-`gb|443893|124775 LaForas sequence                                 92   2e-022`
-`>gb|443893|124775 LaForas sequence`
-`          Length = 331`
-` Score = 92.0 bits (227), Expect = 2e-022`
-` Identities = 46/52 (88%), Positives = 48/52 (91%)`
-` Frame = +1`
-`Query: 2896 DMGRCSSGCNRYPEPMTPDTMIKLYREKEGLGAYIWMPTPDMSTEGRVQMLP 3051`
-`            D+ + SSGCNRYPEPMTPDTMIKLYRE EGL AYIWMPTPDMSTEGRVQMLP`
-`Sbjct: 197  DIVQNSSGCNRYPEPMTPDTMIKLYRE-EGL-AYIWMPTPDMSTEGRVQMLP 246 `
-`  Database: test.fa`
-`    Posted date:  Feb 12, 2003  9:51 AM`
-`  Number of letters in database: 1291`
-`  Number of sequences in database:  5`
-`  `
-`Lambda     K      H`
-`   0.318    0.135    0.401 `
-`Gapped`
-`Lambda     K      H`
-`   0.267   0.0410    0.140 `
-`Matrix: BLOSUM62`
-`Gap Penalties: Existence: 11, Extension: 1`
-`Number of Hits to DB: 7140`
-`Number of Sequences: 5`
-`Number of extensions: 180`
-`Number of successful extensions: 2`
-`Number of sequences better than 10.0: 2`
-`Number of HSP\'s better than 10.0 without gapping: 1`
-`Number of HSP\'s successfully gapped in prelim test: 0`
-`Number of HSP\'s that attempted gapping in prelim test: 0 `
-`Number of HSP\'s gapped (non-prelim): 1`
-`length of database: 1291`
-`effective HSP length: 46`
-`effective length of database: 1061`
-`effective search space used:  1032353`
-`frameshift window, decay const: 50,  0.1`
-`T: 12 `
-`A: 40`
-`X1: 16 ( 7.3 bits)`
-`X2: 38 (14.6 bits)`
-`X3: 64 (24.7 bits)`
-`S1: 32 (17.6 bits)`
+```
+BLASTX 2.2.4 [Aug-26-2002]
+Reference: Altschul, Stephen F., Thomas L. Madden, Alejandro A. Schaffer, 
+Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), 
+"Gapped BLAST and PSI-BLAST: a new generation of protein database search
+programs",  Nucleic Acids Res. 25:3389-3402.
+Query= gi|20521485|dbj|AP004641.2 Oryza sativa (japonica
+cultivar-group) genomic DNA, chromosome 1, BAC clone:B1147B04, 3785
+bases, 977CE9AF checksum.
+         (3059 letters)
+Database: test.fa 
+           5 sequences; 1291 total letters
+                                                                Score    E
+Sequences producing significant alignments:                     (bits) Value
+gb|443893|124775 LaForas sequence                                 92   2e-022
+>gb|443893|124775 LaForas sequence
+          Length = 331
+ Score = 92.0 bits (227), Expect = 2e-022
+ Identities = 46/52 (88%), Positives = 48/52 (91%)
+ Frame = +1
+Query: 2896 DMGRCSSGCNRYPEPMTPDTMIKLYREKEGLGAYIWMPTPDMSTEGRVQMLP 3051
+            D+ + SSGCNRYPEPMTPDTMIKLYRE EGL AYIWMPTPDMSTEGRVQMLP
+Sbjct: 197  DIVQNSSGCNRYPEPMTPDTMIKLYRE-EGL-AYIWMPTPDMSTEGRVQMLP 246 
+  Database: test.fa
+    Posted date:  Feb 12, 2003  9:51 AM
+  Number of letters in database: 1291
+  Number of sequences in database:  5
+  
+Lambda     K      H
+   0.318    0.135    0.401 
+Gapped
+Lambda     K      H
+   0.267   0.0410    0.140 
+Matrix: BLOSUM62
+Gap Penalties: Existence: 11, Extension: 1
+Number of Hits to DB: 7140
+Number of Sequences: 5
+Number of extensions: 180
+Number of successful extensions: 2
+Number of sequences better than 10.0: 2
+Number of HSP's better than 10.0 without gapping: 1
+Number of HSP's successfully gapped in prelim test: 0
+Number of HSP's that attempted gapping in prelim test: 0 
+Number of HSP's gapped (non-prelim): 1
+length of database: 1291
+effective HSP length: 46
+effective length of database: 1061
+effective search space used:  1032353
+frameshift window, decay const: 50,  0.1
+T: 12 
+A: 40
+X1: 16 ( 7.3 bits)
+X2: 38 (14.6 bits)
+X3: 64 (24.7 bits)
+S1: 32 (17.6 bits)
+```
 
 ### NCBI-BLAST parsing problems
 
-A plaintext [NCBI-BLAST] report like that used in the example above probably remains the most common BLAST output format in use. However, since the NCBI has [stated] that this format can change without warning, the SearchIO BLAST parser will break from time to time. To avoid this instability, you can have NCBI-BLAST produce its report in XML format with the `-m7` command-line option. To parse blastxml reports with SearchIO, use `-format=>\'blastxml\'` instead of `-format=>\'blast\'`. Parsing BLAST XML output [may also be faster](http://article.gmane.org/gmane.comp.lang.perl.bio.general/14366). [WU-BLAST] offers XML output as well through the command-line option `mformat=7`, although its standard reports may work when NCBI-BLAST's do not.
+A plaintext [NCBI-BLAST] report like that used in the example above probably remains the most common BLAST output format in use. However, since the NCBI has [stated] that this format can change without warning, the SearchIO BLAST parser will break from time to time. To avoid this instability, you can have NCBI-BLAST produce its report in XML format with the `-m7` command-line option. To parse blastxml reports with SearchIO, use `-format=>'blastxml'` instead of `-format=>'blast'`. Parsing BLAST XML output [may also be faster](http://article.gmane.org/gmane.comp.lang.perl.bio.general/14366). [WU-BLAST] offers XML output as well through the command-line option `mformat=7`, although its standard reports may work when NCBI-BLAST's do not.
 
 ### Table of Methods
 
@@ -162,7 +162,7 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | Hit    | rewind            |                  | Resets the internal counter for next_hsp() so that the iterator will begin at the beginning of the list                                        |
 |        |
 
-`Table 2.2: All the data returned by methods used by the Hit objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we\'re just showing what they get.`
+`Table 2.2: All the data returned by methods used by the Hit objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
 | Object | Method                                               | Example                                  | Description                                                                            |
 |--------|------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------|
@@ -208,7 +208,7 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | HSP    | links                                                | ''Not available in this report'' | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
 |        |
 
-`Table 2.3: All the data returned by methods used by the HSP objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we\'re just showing what they get.`
+`Table 2.3: All the data returned by methods used by the HSP objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
 ### Using the methods
 
@@ -246,34 +246,27 @@ Some of these methods deserve a bit more explanation since they do more than sim
 Another method that's useful in dissecting an [HSP] is the `seq_inds()` method of the [HSP object]. What this method does is tell us what the positions are of all the identical, conserved, mismatched, or gap ("identical", "conserved", "nomatch", "gap") residues in the query or hit sequence as deduced from the HSP alignment. The returned positions refer to the query or hit sequence ("sbjct" is synonymous with "hit"). It could be used like this:
 
 ```perl
-
 # put all the conserved matches in query strand into an array
-
-my @str_array = split "",$hsp->query_string; foreach ( $hsp->seq_inds('query','conserved') ){
-
-` push @conserved,$str_array[$_ - 1];`
-
+my @str_array = split "",$hsp->query_string; 
+for ( $hsp->seq_inds('query','conserved') ){
+    push @conserved,$str_array[$_ - 1];
 }
-
 ```
 
 For 'gaps', the returned positions are the sequence indices prior to a gap insertion; if the gap insert is greater than 1 then the position is repeated based on the number of insertions. You can regain the gap length using a simple temporary hash:
 
 ```perl
-
 # grab hsp
-
-my %gap_pos; for my $pos ($hsp->seq_inds('query'=>'gaps')) {
-
-`      $gap_pos{$pos}++;`
-
-} print "Ind: $_ Gaps: $gap_pos{$_} " for sort {$a <=> $b} keys %gap_pos;
-
+my %gap_pos; 
+for my $pos ($hsp->seq_inds('query'=>'gaps')) {
+    $gap_pos{$pos}++;
+}
+print "Ind: $_ Gaps: $gap_pos{$_} " for sort {$a <=> $b} keys %gap_pos;
 ```
 
 `seq_inds()` can be very useful for extracting the mismatch bases in an alignment. If you wanted to figure out which bases are not matching in an alignment you could use `seq_inds` to get these positions and then extract out these specific bases from the alignment. '''Note''': translated sequences in a HSP (such as those used for TBLASTN, BLASTX, etc.) are by nature ambiguous as the sequence coordinates reported in the HSP map back to the original (nucleotide) sequence; under these circumstances all redundant nucleotide positions are returned for that match.
 
-One final note when using `seq_inds()`: if you want a list of ranges or only care about the positions of the gaps (not the gap length) and don't want repeated positions, you can use `my @inds = $hsp->seq_inds(\'query\'=>\'gaps\',1)`; the last argument is a boolean flag with collapses consecutive positions into ranges and single sequence positions.
+One final note when using `seq_inds()`: if you want a list of ranges or only care about the positions of the gaps (not the gap length) and don't want repeated positions, you can use `my @inds = $hsp->seq_inds('query'=>'gaps',1)`; the last argument is a boolean flag with collapses consecutive positions into ranges and single sequence positions.
 
 #### frame()
 
@@ -282,49 +275,42 @@ In most cases the SearchIO methods extract data directly from output but there's
 Specifically, the `frame()` method returns 0, 1, or 2 instead of the expected -3, -2, -1, +1, +2, or +3 in BLAST. [GFF] frame values are meaningful relative to the strand of the hit or query sequence so in order to reconstruct the [BLAST] frame you need both the strand, 1 or -1, and the [GFF] frame value:
 
 ```perl
-
-`my $blast_frame = ($hsp->query->frame + 1) * $hsp->query->strand;`
-
+my $blast_frame = ($hsp->query->frame + 1) * $hsp->query->strand;
 ```
 
 ### Analyzing a single report in different ways
 
 Another common example is analyzing data from a single [BLAST] report several different ways, such as sorting hits based on particular criteria then printing all hits and [HSPs]. One could iterate through the list twice, once for sorting the objects and then a second time for printing. Note that in this script:
 
--   A object is passed to the subroutines, not the [SearchIO object] in `$blast_report`
+-   A object is passed to the subroutines, not the [SearchIO object] in `$blast_report
 -   You must use `rewind` to reset the iterator for the object since there are two iterations through this object (one in each subroutine)
 
 ```perl
-
-... my $result = $blast_report->next_result; &sort_results($result); $result->rewind; &print_blast_results($result);
+# ... 
+my $result = $blast_report->next_result; 
+sort_results($result);
+$result->rewind;
+print_blast_results($result);
 
 sub sort_results{
-
-`  my $result = shift;`
-`  my @hits;`
-`  while(my $hit = $result->next_hit()){`
-`     push @hits, $hit;`
-`  }`
-`  # sort by accessions`
-`  my @acc = sort {$a->accession cmp $b->accession} @hits;`
-`  print join("t", $_->accession,$_->description),"\`
-
-" for @acc; }
-
-sub print_blast_results{
-
-`  my $result = shift;`
-`  while(my $hit = $result->next_hit()){`
-`     while(my $hsp = $hit->next_hsp()){`
-`        print join(", ",$hit->name,$hsp->bits)."\`
-
-";
-
-`     }`
-`  }`
-
+    my $result = shift;
+    my @hits;
+    while( my $hit = $result->next_hit() ) {
+        push @hits, $hit;
+    }
+    # sort by accessions
+    my @acc = sort { $a->accession cmp $b->accession } @hits;
+    print join("\t", $_->accession, $_->description ) . "\n" for @acc;
 }
 
+sub print_blast_results {
+    my $result = shift;
+    while ( my $hit = $result->next_hit() ) {
+        while( my $hsp = $hit->next_hsp() ) {
+            print join(", ", $hit->name, $hsp->bits) . "\n";
+        }
+    }
+}
 ```
 
 If you parsed a report already and want to reset the parser (i.e. if you sent the [SearchIO] object to the subs above instead of the object, then iterated through everything twice), you would need to reset the [SearchIO] object itself by using `seek($blast_report->_fh, 0);`. We don't recommend doing this for two reasons. First, each round of parsing takes the same length of time since you start parsing the report from scratch, so you'll take a time hit. Second, if you saved objects from the first round of parsing you will take a memory hit, because a new set of objects is generated for each subsequent round of parsing the report. Hence, we use the already-generated object in the subroutines instead.
@@ -333,16 +319,15 @@ To simplify things here a bit more, you could simply grab all the hits at once u
 
 ```perl
 
-... &sort_results($result); &print_blast_results($result);
+# ... 
+&sort_results($result); 
+&print_blast_results($result);
 
-sub sort_results{
-
-`  my $result = shift;`
-`  my @acc = sort {$a->accession cmp $b->accession} $result->hits;`
-`  print join("t", $_->accession,$_->description),"\`
-
-" for @acc; }
-
+sub sort_results {
+    my $result = shift;
+    my @acc = sort {$a->accession cmp $b->accession} $result->hits;
+    print join("t", $_->accession,$_->description),"\n" for @acc; 
+}
 ```
 
 Similar methods exist for objects to rewind the iterator for HSP's (`$hit->rewind`) and to grab all HSP's(`$hit->hsps`).
@@ -355,12 +340,10 @@ Sorting
 One frequently-asked question has to do with getting sorted output from a report, or sorting hits or [HSPs] just as they're sorted in the input file. There's little in the way of sorting in 's methods, generally speaking you'll just use a standard Perl approach. Here is an example that sorts hits according to their bit scores:
 
 ```perl
-
-`my @hits = $result->hits;`
-`for my $hit ( sort { $a->bits `<=>` $b->bits } @hits ) {`
-`  # Do something...`
-`}`
-
+my @hits = $result->hits;
+for my $hit ( sort { $a->bits `<=>` $b->bits } @hits ) {
+  # Do something...
+}
 ```
 
 Creating Reports for SearchIO
@@ -368,20 +351,24 @@ Creating Reports for SearchIO
 
 One note on creating reports that can be parsed by : the developers haven't attempted to parse all the possible reports that could be created by programs with many command-line options, like blastall. Certainly you should be able to parse reports created using the default settings, but if you're running blastall, say, using some special set of options and you've encountered a parsing problem this may be the explanation.
 
-For example, one can currently parse [BLAST] output created with the default settings as well as the reports created when using the "-m 8" or "-m 9" options (use `-format=>\'blasttable\'`) or the "-m 7" XML-formatted reports (use `-format=>\'blastxml\'`) but it's still possible to find sets of options that can't parse.
+For example, one can currently parse [BLAST] output created with the default settings as well as the reports created when using the "-m 8" or "-m 9" options (use `-format=>'blasttable'`) or the "-m 7" XML-formatted reports (use `-format=>'blastxml'`) but it's still possible to find sets of options that can't parse.
 
 You might also find it useful not to have to create reports as files. , like , is aware of `STDIN` so you can pipe output from the search application directly to it (on operating systems that allow such things). It could look something like this:
 
 ```perl
+use strict; 
+use Bio::SearchIO;
 
-use strict; use Bio::SearchIO;
-
-my $fh; my $fasta = "/usr/local/bin/fasta34"; my $library = "hs.seq"; my $query = "deserts.seq"; my $options = "-E 0.01 -m 0 -d 10 -Q"; my $command = "$fasta $options $query $library";
+my $fh; 
+my $fasta = "/usr/local/bin/fasta34"; 
+my $library = "hs.seq"; 
+my $query = "deserts.seq"; 
+my $options = "-E 0.01 -m 0 -d 10 -Q"; 
+my $command = "$fasta $options $query $library";
 
 open $fh,"$command |" || die("cannot run fasta cmd of $command: $! ");
 
 my $searchio = Bio::SearchIO->new(-format => 'fasta', -fh => $fh);
-
 ```
 
 Implementation
@@ -410,40 +397,32 @@ The simplest way to output data in HTML format is as follows.
 
 ```perl
 
-my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
-
-`                                -file   => ">searchio.html");`
+my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); 
+my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
+                                -file   => ">searchio.html");
 
 # get a result from Bio::SearchIO parsing or build it up in memory
-
 $outhtml->write_result($result);
-
 ```
 
-If you want to output multiple results into a single html file, do the following:
+If you want to output multiple results into a single HTML file, do the following:
 
 ```perl
 
-my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
+my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); 
+my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
+                                -file   => ">searchio.html");
 
-`                                -file   => ">searchio.html");`
-
-# Loop through all the results, successively adding each one to the bottom of the HTML report
-
-while ( $result = $searchio->next_result()){
-
-`   $outhtml->write_report($result);`
-
+# Loop through all the results, successively adding each one to the bottom of # the HTML report
+while ( $result = $searchio->next_result() ) {  
+    $outhtml->write_report($result);
 }
-
 ```
 
 If you wanted to get the output as a string rather than write it out to a file, simply use the following.
 
 ```perl
-
-`$writerhtml->to_string($result);`
-
+$writerhtml->to_string($result);
 ```
 
 The supports setting your own remote database url for the sequence links in the event you'd like to point to your own [SRS] or local HTTP-based connection to the sequence data. Simply use the `remote_database_url` method which accepts a sequence type as input (protein or nucleotide).
@@ -460,57 +439,53 @@ The framework for is just a starting point for parsing these reports and creatin
 So, you're going to write your new special module, you do need to make sure it inherits from the base object. Additionally unless you want to reimplement all the initialization state in the current you should just plan to extend that object. You need to follow the chained constructor system that we have set up so that the arguments are properly processed. Here is a sample of what your code might look like (don't forget to write your own [POD] so that it will be documented, we've left it off here to keep things simple).
 
 ```perl
-
-package Bio::Search::HSP::RealignHSP; use strict; use Bio::Search::HSP::GenericHSP; use vars qw(@ISA); \# for inheritance @ISA = qw(Bio::Search::HSP::GenericHSP); \# RealignHSP inherits from GenericHSP
+package Bio::Search::HSP::RealignHSP; 
+use strict; 
+use Bio::Search::HSP::GenericHSP; 
+use vars qw(@ISA); 
+# for inheritance 
+@ISA = qw(Bio::Search::HSP::GenericHSP);
+# RealignHSP inherits from GenericHSP
 
 sub new {
-
-` my ($class,@args) = @_;`
-` my $self = $class->SUPER::new(@args); # chained contructor`
-` # process the 1 additional argument this object supports`
-` my ($ownarg1) = $self->_rearrange([OWNARG1],@args); `
-` return $self; # remember to pass the object reference back out   `
-
+    my ($class,@args) = @_;
+    my $self = $class->SUPER::new(@args); # chained contructor
+    # process the 1 additional argument this object supports
+    my ($ownarg1) = $self->_rearrange([OWNARG1],@args); 
+    return $self; # remember to pass the object reference back out   
 }
 
 sub realign_hsp {
-
-` my ($self) = @_;`
-` # implement my special realign method here`
-
+    my ($self) = @_;
+    # implement my special realign method here
 }
-
 ```
 
 The above code gives you a skeleton of how to start to implement your object. To register it so that it is used when the system makes [HSPs] you just need to call a couple of functions. The code below outlines them.
 
 ```perl
 
-use Bio::SearchIO; use Bio::Search::HSP::HSPFactory; use Bio::Search::Hit::HitFactory;
+use Bio::SearchIO; 
+use Bio::Search::HSP::HSPFactory; 
+use Bio::Search::Hit::HitFactory;
 
 # setup the blast parser, you can do this with and SearchIO parser however
-
 my $searchio = Bio::SearchIO->new(-file => $blastfile,
-
-`                                 -format =>\'blast\'); `
+                                  -format =>'blast'); 
 
 # build HSP factory with a certain type of HSPs to make
-2.  the default is Bio::Search::HSP::GenericHSP
-
+# the default is Bio::Search::HSP::GenericHSP
 my $hspfact = Bio::Search::HSP::HSPFactory->new(-type =>
-
-`                  \'Bio::Search::HSP::RealignHSP\');`
+                  'Bio::Search::HSP::RealignHSP');
 
 # if you wanted to replace the Hit factory you can do this as well
-2.  additionally there is an analagous
-3.  Bio::Search::Result::ResultFactory for setting custom Result objects
-
+# additionally there is an analagous
+# Bio::Search::Result::ResultFactory for setting custom Result objects
 my $hitfact = Bio::Search::Hit::HitFactory->new(-type =>
+                  'Bio::Search::Hit::SUPERDUPER_Hit');
 
-`                  \'Bio::Search::Hit::SUPERDUPER_Hit\');`
-
-$searchio->_eventHandler->register_factory('hsp', $hspfact); $searchio->_eventHandler->register_factory('hit', $hitfact);
-
+$searchio->_eventHandler->register_factory('hsp', $hspfact);
+$searchio->_eventHandler->register_factory('hit', $hitfact);
 ```
 
 We have to register the HSPFactory, which is the object which will create HSPI objects, by allowing this to be built by a factory rather than a hard-coded `Bio::Search::HSP::GenericHSP->new(...)` call. We are allowing the user to take advantage of the whole parsing structure and the ability to slot their own object into the process rather than re-implementing very much. We think this is very powerful and worth the system overhead, but it may not permit this to be as efficient in parsing as we would like. Future work will hopefully address speed and memory issues with this parser. Volunteers and improvement code are always welcome.
@@ -526,20 +501,17 @@ Here is an example of such a lightweight listener - `Bio::SearchIO::FastHitEvent
 
 ```perl
 
-use Bio::SearchIO; use Bio::SearchIO::FastHitEventBuilder; my $searchio = new Bio::SearchIO(-format => $format, -file => $file);
+use Bio::SearchIO; 
+use Bio::SearchIO::FastHitEventBuilder; 
+my $searchio = new Bio::SearchIO(-format => $format, -file => $file);
 
-$searchio->attach_EventHandler(Bio::SearchIO::FastHitEventBuilder->new); while( my $r = $searchio->next_result ) {
-
-` while( my $h = $r->next_hit ) {`
-`  # Hits will NOT have HSPs`
-`  print $h->significance,"\`
-
-";
-
-` }`
-
+$searchio->attach_EventHandler(Bio::SearchIO::FastHitEventBuilder->new); 
+while ( my $r = $searchio->next_result ) {
+    while( my $h = $r->next_hit ) {
+        # Hits will NOT have HSPs
+        print $h->significance,"\n";
+    }
 }
-
 ```
 
 You could also build your own listener object - SearchResultEventBuilder and FastHitEventBuilder are two example implementations that specify the type of Result/Hit/HSP objects that are created by the listeners. You could create some lightweight Hit and HSP objects and have SearchResultEventBuilder create these instead of the default full-fledged ones.
@@ -559,8 +531,4 @@ There had been some confusion about the names and functions of the objects for h
 
 Both [Steve Chervitz] and [Jason Stajich] had implemented parsers in this system. The basic objects Jason has created are called `Bio::Search::XXX::GenericXXX` where, again, `XXX` is HSP, Hit, and Result. Most of the implementations use these simple objects for sorting the data. Steve created the psiblast parser (which was later merged into the module) and a host of objects named `Bio::Search::XXX::BlastXXX` where `XXX` is HSP, Hit, and Result. These objects have additional functions related to output from [BLAST].
 
-The important take home message is that you cannot assume that methods in the `BlastXXX` objects are in fact implemented by the `GenericHSP` objects. More likely than not the `BlastXXX` objects will be deprecated and dismantled as their functionality is ported to the `GenericHSP` objects. For this reason we only discuss the Generic\* objects, though we used the terms 'hit', 'HSP', and 'result'.
-
-'
-
-
+The important take home message is that you cannot assume that methods in the `BlastXXX` objects are in fact implemented by the `GenericHSP` objects. More likely than not the `BlastXXX` objects will be deprecated and dismantled as their functionality is ported to the `GenericHSP` objects. For this reason we only discuss the Generic* objects, though we used the terms 'hit', 'HSP', and 'result'.
