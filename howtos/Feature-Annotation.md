@@ -130,30 +130,31 @@ Getting the Features
 
 The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features or annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the Feature table section, something like this:
 
-`FEATURES            Location/Qualifiers`
-`    source          1..1846`
-`                    /organism="Homo sapiens"`
-`                    /db_xref="taxon:9606"`
-`                    /chromosome="X"`
-`                    /map="Xp11.4"`
-`    gene            1..1846`
-`                    /gene="NDP"`
-`                    /note="ND"`
-`                    /db_xref="LocusID:4693"`
-`                    /db_xref="MIM:310600"`
-`    CDS             409..810`
-`                    /gene="NDP"`
-`                    /note="Norrie disease (norrin)"`
-`                    /codon_start=1`
-`                    /product="Norrie disease protein"`
-`                    /protein_id="NP_000257.1"`
-`                    /db_xref="GI:4557789"`
-`                    /db_xref="LocusID:4693"`
-`                    /db_xref="MIM:310600"`
-`                    /translation="MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHY`
-`                    VDSISHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCCRPQTSK`
-`                    LKALRLRCSGGMRLTATYRYILSCHCEECNS"`
-` `
+```
+ FEATURES            Location/Qualifiers
+     source          1..1846
+                     /organism="Homo sapiens"
+                     /db_xref="taxon:9606"
+                     /chromosome="X"
+                     /map="Xp11.4"
+     gene            1..1846
+                     /gene="NDP"
+                     /note="ND"
+                     /db_xref="LocusID:4693"
+                     /db_xref="MIM:310600"
+     CDS             409..810
+                     /gene="NDP"
+                     /note="Norrie disease (norrin)"
+                     /codon_start=1
+                     /product="Norrie disease protein"
+                     /protein_id="NP_000257.1"
+                     /db_xref="GI:4557789"
+                     /db_xref="LocusID:4693"
+                     /db_xref="MIM:310600"
+                     /translation="MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHY
+                     VDSISHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCCRPQTSK
+                     LKALRLRCSGGMRLTATYRYILSCHCEECNS"
+```
 
 Features in Bioperl are accessed using their tags, either a "primary tag" or a plain "tag". Examples of primary tags and tags in this Genbank entry are shown below. You can see that in this case the primary tag is a means to access the tags and it's the tags that are directly associated with the data from the file.
 
@@ -169,113 +170,129 @@ Features in Bioperl are accessed using their tags, either a "primary tag" or a p
 | db_xref    | tag         | MIM:310600       |
 ||
 
-When a Genbank file like the one above is parsed the feature data is converted into objects, specifically objects. How many? In this case 3, one for each of the primary tags.
+When a Genbank file like the one above is parsed the feature data is converted
+into objects, specifically objects. How many? In this case 3, one for each of
+the primary tags.
 
-In other parts of the Bioperl documentation one finds discussions of the "SeqFeature object", but there's more than one kind of these, as we'll see later, so what is this a reference to? More than likely it's referring to this same object. Think of it as the default SeqFeature object. Now, should you care what kind of object is being made? For the most part no, you can write lots of useful and powerful Bioperl code without ever knowing these specific details.
+In other parts of the Bioperl documentation one finds discussions of the
+"SeqFeature object", but there's more than one kind of these, as we'll see
+later, so what is this a reference to? More than likely it's referring to this
+same object. Think of it as the default SeqFeature object. Now, should you care
+what kind of object is being made? For the most part no, you can write lots of
+useful and powerful Bioperl code without ever knowing these specific details.
 
-By the way, how does one know what kind of object one has in hand? Try something like:
+By the way, how does one know what kind of object one has in hand? Try something
+like:
 
 ```perl
 
 print ref($seq_object);
-
 # results in "Bio::Seq::RichSeq"
 
 ```
 
-The SeqFeature::Generic object uses tag/value pairs to store information, and the values are always returned as arrays. A simple way to access all the data in the features of a Seq object would look something like this:
+The SeqFeature::Generic object uses tag/value pairs to store information, and
+the values are always returned as arrays. A simple way to access all the data in
+the features of a Seq object would look something like this:
 
 ```perl
 
 for my $feat_object ($seq_object->get_SeqFeatures) {
+    print "primary tag: ", $feat_object->primary_tag, "\n";
 
-`  print "primary tag: ", $feat_object->primary_tag, "\`
-
-";
-
-`  for my $tag ($feat_object->get_all_tags) {             `
-`     print "  tag: ", $tag, "\`
-
-";
-
-`     for my $value ($feat_object->get_tag_values($tag)) {                `
-`        print "    value: ", $value, "\`
-
-";
-
-`     }          `
-`  }       `
-
+    for my $tag ($feat_object->get_all_tags) {
+        print "  tag: ", $tag, "\n";
+        for my $value ($feat_object->get_tag_values($tag)) {
+            print "    value: ", $value, "\n";
+        }
+    }
 }
 
 ```
 
 This bit would print out something like:
 
-`primary tag: source`
-`  tag: chromosome`
-`    value: X`
-`  tag: db_xref`
-`    value: taxon:9606`
-`  tag: map`
-`    value: Xp11.4`
-`  tag: organism`
-`    value: Homo sapiens`
-`primary tag: gene`
-`  tag: gene`
-`    value: NDP`
-`  tag: note`
-`    value: ND`
-`primary tag: CDS`
-`  tag: codon_start`
-`    value: 1`
-`  tag: db_xref`
-`    value: GI:4557789`
-`    value: LocusID:4693`
-`    value: MIM:310600`
-`  tag: product`
-`    value: Norrie disease protein`
-`  tag: protein_id`
-`    value: NP_000257.1`
-`  tag: translation`
-`    value: MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHYVDSI`
-`           SHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCC`
-`           RPQTSKLKALRLRCSGGMRLTATYRYILSCHCEECNS`
+```
+ primary tag: source
+   tag: chromosome
+     value: X
+   tag: db_xref
+     value: taxon:9606
+   tag: map
+     value: Xp11.4
+   tag: organism
+     value: Homo sapiens
+ primary tag: gene
+   tag: gene
+     value: NDP
+   tag: note
+     value: ND
+ primary tag: CDS
+   tag: codon_start
+     value: 1
+   tag: db_xref
+     value: GI:4557789
+     value: LocusID:4693
+     value: MIM:310600
+   tag: product
+     value: Norrie disease protein
+   tag: protein_id
+     value: NP_000257.1
+   tag: translation
+     value: MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHYVDSI
+            SHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCC
+            RPQTSKLKALRLRCSGGMRLTATYRYILSCHCEECNS
+```
 
 So to retrieve specific values, like all the database identifiers, you could do:
 
 ```perl
 
 for my $feat_object ($seq_object->get_SeqFeatures) {
-
-`  push @ids, $feat_object->get_tag_values("db_xref") if ($feat_object->has_tag("db_xref"));     `
-
+    push @ids, $feat_object->get_tag_values("db_xref") if ($feat_object->has_tag("db_xref"));
 }
 
 ```
 
-Important: Make sure to include that `if ($feat_object->has_tag("..."))` part, otherwise you'll get errors when the feature does not have the tag you're requesting.
+Important: Make sure to include that `if ($feat_object->has_tag("..."))` part,
+otherwise you'll get errors when the feature does not have the tag you're
+requesting.
 
-One last note on Genbank features. The Bioperl parsers for Genbank and EMBL are built to respect the specification for the feature tables agreed upon by Genbank, EMBL, and DDBJ (see the [Feature Table Definition](http://www.ncbi.nlm.nih.gov/projects/collab/FT) for the details). Check this page if you're interested in a complete listing and description of all the Genbank, EMBL, and DDBJ feature tags.
+One last note on Genbank features. The Bioperl parsers for Genbank and EMBL are
+built to respect the specification for the feature tables agreed upon by
+Genbank, EMBL, and DDBJ (see the [Feature Table
+Definition](http://www.ncbi.nlm.nih.gov/projects/collab/FT) for the details).
+Check this page if you're interested in a complete listing and description of
+all the Genbank, EMBL, and DDBJ feature tags.
 
-Despite this specification some non-standard feature tags have crept into Genbank, like "bond". When the Bioperl Genbank parser encounters a non-standard feature like this it's going to throw a fatal exception. The work-around is to use `eval{}` so your script doesn't die, something like:
+Despite this specification some non-standard feature tags have crept into
+Genbank, like "bond". When the Bioperl Genbank parser encounters a non-standard
+feature like this it's going to throw a fatal exception. The work-around is to
+use `eval{}` so your script doesn't die, something like:
 
 ```perl
 
 use Bio::SeqIO;
 
-my $seq_object; my $seqio_object = Bio::SeqIO->new(-file => $gb_file, -format => "genbank"); eval { $seq_object = $seqio_object->next_seq; };
+my $seq_object;
+my $seqio_object = Bio::SeqIO->new(-file => $gb_file,
+                                   -format => "genbank");
+
+eval { $seq_object = $seqio_object->next_seq; };
 
 # if there's an error
 
-print "Problem in $gb_file. Bad feature perhaps? " if $@;
+print "Problem in $gb_file. Bad feature perhaps?\n" if $@;
 
 ```
 
 Getting Sequences
 -----------------
 
-One commonly asked question is "How do I get the sequence of a SeqFeature?" The answer is "It depends on what you're looking for." If you'd like the sequence of the parent, the sequence object that the SeqFeature is associated with, then use `entire_seq()`:
+One commonly asked question is "How do I get the sequence of a SeqFeature?" The
+answer is "It depends on what you're looking for." If you'd like the sequence of
+the parent, the sequence object that the SeqFeature is associated with, then use
+`entire_seq()`:
 
 ```perl
 
@@ -283,25 +300,33 @@ $seq_object = $feat_object->entire_seq;
 
 ```
 
-This doesn't return the parent's sequence directly but rather a object corresponding to the parent sequence. Now that you have this object you can call its `seq()` method to get the sequence string, or you could do this all in one step:
+This doesn't return the parent's sequence directly but rather a object
+corresponding to the parent sequence. Now that you have this object you can call
+its `seq()` method to get the sequence string, or you could do this all in one
+step:
 
 ```perl
 
-`      my $sequence_string = $feat_object->entire_seq->seq;`
+my $sequence_string = $feat_object->entire_seq->seq;
 
 ```
 
 There are 2 other useful methods, `seq()` and `spliced_seq()`. Consider the following Genbank example:
 
-`FEATURES             Location/Qualifiers`
-`     source          1..177`
-`                     /organism="Mus musculus"`
-`                     /mol_type="genomic DNA"`
-`                     /db_xref="taxon:10090"`
-`     tRNA            join(103..111,121..157)`
-`                     /gene="Phe-tRNA"`
+```
+ FEATURES             Location/Qualifiers
+      source          1..177
+                      /organism="Mus musculus"
+                      /mol_type="genomic DNA"
+                      /db_xref="taxon:10090"
+      tRNA            join(103..111,121..157)
+                      /gene="Phe-tRNA"
+```
 
-To get the sequence string from the start to the end of the tRNA feature use `seq()`. To get the spliced sequence string, accounting for the start and end locations of each sub-sequence, use `spliced_seq()`. Here are the methods and the corresponding example coordinates:
+To get the sequence string from the start to the end of the tRNA feature use
+`seq()`. To get the spliced sequence string, accounting for the start and end
+locations of each sub-sequence, use `spliced_seq()`. Here are the methods and
+the corresponding example coordinates:
 
 | Method         | Coordinates       |
 |----------------|-------------------|
@@ -310,45 +335,45 @@ To get the sequence string from the start to the end of the tRNA feature use `se
 | spliced_seq() | 103..111,121..157 |
 ||
 
-It's not unusual for a Genbank file to have multiple CDS or gene features (and recall that 'CDS' and 'gene' are common primary tags in Genbank format), each with a number of tags, like 'note', 'protein_id', or 'product'. How can we get, say, the nucleotide sequences and gene names from all these CDS features? By putting all of this together we arrive at something like:
+It's not unusual for a Genbank file to have multiple CDS or gene features (and
+recall that 'CDS' and 'gene' are common primary tags in Genbank format), each
+with a number of tags, like 'note', 'protein_id', or 'product'. How can we get,
+say, the nucleotide sequences and gene names from all these CDS features? By
+putting all of this together we arrive at something like:
 
 ```perl
 
 use Bio::SeqIO;
 
-my $seqio_object = Bio::SeqIO->new(-file => $gb_file); my $seq_object = $seqio_object->next_seq;
+my $seqio_object = Bio::SeqIO->new(-file => $gb_file);
+my $seq_object = $seqio_object->next_seq;
 
 for my $feat_object ($seq_object->get_SeqFeatures) {
-
-`  if ($feat_object->primary_tag eq "CDS") {`
-`     print $feat_object->spliced_seq->seq,"\`
-
-";
-
-`     # e.g. \'ATTATTTTCGCTCGCTTCTCGCGCTTTTTGAGATAAGGTCGCGT...\'`
-`     if ($feat_object->has_tag(\'gene\')) {`
-`        for my $val ($feat_object->get_tag_values(\'gene\')){`
-`           print "gene: ",$val,"\`
-
-";
-
-`           # e.g. \'NDP\', from a line like \'/gene="NDP"\'`
-`        }`
-`     }`
-`  }`
-
+    if ($feat_object->primary_tag eq "CDS") {
+        print $feat_object->spliced_seq->seq,"\n";
+        # e.g. 'ATTATTTTCGCTCGCTTCTCGCGCTTTTTGAGATAAGGTCGCGT...'
+        
+        if ($feat_object->has_tag('gene')) {
+            for my $val ($feat_object->get_tag_values('gene')) {
+                print "gene: ",$val,"\n";
+                # e.g. 'NDP', from a line like '/gene="NDP"'
+            }
+        }
+    }
 }
 
-```
+ ``
 
 Compact Code
 ------------
 
-Many people wouldn't write code in the rather deliberate style used above. The following is more compact code that gets all the features with a primary tag of 'CDS', starting with a Genbank file:
+Many people wouldn't write code in the rather deliberate style used above. The
+following is more compact code that gets all the features with a primary tag of
+'CDS', starting with a Genbank file:
 
 ```perl
 
-`      my @cds_features = grep { $_->primary_tag eq \'CDS\' } Bio::SeqIO->new(-file => $gb_file)->next_seq->get_SeqFeatures;`
+my @cds_features = grep { $_->primary_tag eq 'CDS' } Bio::SeqIO->new(-file => $gb_file)->next_seq->get_SeqFeatures;
 
 ```
 
@@ -356,73 +381,95 @@ With this array of SeqFeatures you could do all sorts of useful things, such as 
 
 ```perl
 
-`      my %gene_sequences = map {$_->get_tag_values(\'gene\'), $_->spliced_seq->seq } @cds_features;`
+my %gene_sequences = map {$_->get_tag_values('gene'), $_->spliced_seq->seq } @cds_features;
 
 ```
 
 Because you're asking for a specific primary tag and tag, 'CDS' and 'gene' respectively, this code would only work when there are features that looked something like this:
 
-`    CDS             735..1829`
-`                    /gene="MG001"`
-`                    /codon_start=1`
-`                    /product="DNA polymerase III, subunit beta (dnaN)"`
-`                    /protein_id="AAC71217.1"`
-`                    /translation="MNNVIISNNKIKPHHSYFLIEAKEKEINFYANNEYFSVKCNLNK`
-`                    NIDILEQGSLIVKGKIFNDLINGIKEEIITIQEKDQTLLVKTKKTSINLNTINVNEFP`
-`                    RIRFNEKNDLSEFNQFKINYSLLVKGIKKIFHSVSNNREISSKFNGVNFNGSNGKEIF`
-`                    LEASDTYKLSVFEIKQETEPFDFILESNLLSFINSFNPEEDKSIVFYYRKDNKDSFST`
-`                    EMLISMDNFMISYTSVNEKFPEVNYFFEFEPETKIVVQKNELKDALQRIQTLAQNERT`
-`                    FLCDMQINSSELKIRAIVNNIGNSLEEISCLKFEGYKLNISFNPSSLLDHIESFESNE`
-`                    INFDFQGNSKYFLITSKSEPELKQILVPSR"`
+```
+     CDS             735..182
+                     /gene="MG001
+                     /codon_start=
+                     /product="DNA polymerase III, subunit beta (dnaN)
+                     /protein_id="AAC71217.1
+                     /translation="MNNVIISNNKIKPHHSYFLIEAKEKEINFYANNEYFSVKCNLN
+                     NIDILEQGSLIVKGKIFNDLINGIKEEIITIQEKDQTLLVKTKKTSINLNTINVNEF
+                     RIRFNEKNDLSEFNQFKINYSLLVKGIKKIFHSVSNNREISSKFNGVNFNGSNGKEI
+                     LEASDTYKLSVFEIKQETEPFDFILESNLLSFINSFNPEEDKSIVFYYRKDNKDSFS
+                     EMLISMDNFMISYTSVNEKFPEVNYFFEFEPETKIVVQKNELKDALQRIQTLAQNER
+                     FLCDMQINSSELKIRAIVNNIGNSLEEISCLKFEGYKLNISFNPSSLLDHIESFESN
+                     INFDFQGNSKYFLITSKSEPELKQILVPSR
+```
 
 Location Objects
 ----------------
 
-There's quite a bit to this idea of location, so much that it probably deserves its own HOWTO. Another way of saying this is that if this topic interests you should take a closer look at the modules that are concerned with both Location and Range such as , , and . The Range object is the simpler of the two, it holds the "start", "end", and "strand" (1, -1) information for a sequence that is located on some other sequence, typically a larger one. The Range object can only describe exact locations.
+There's quite a bit to this idea of location, so much that it probably deserves
+its own HOWTO. Another way of saying this is that if this topic interests you
+should take a closer look at the modules that are concerned with both Location
+and Range such as , , and . The Range object is the simpler of the two, it holds
+the "start", "end", and "strand" (1, -1) information for a sequence that is
+located on some other sequence, typically a larger one. The Range object can
+only describe exact locations.
 
-The Location object is a Range object but it has additional capabilities designed to handle inexact or "fuzzy" locations, where the "start" and "end" of a particular sub-sequence themselves have start and end positions, or are not precisely defined.
+The Location object is a Range object but it has additional capabilities
+designed to handle inexact or "fuzzy" locations, where the "start" and "end" of
+a particular sub-sequence themselves have start and end positions, or are not
+precisely defined.
 
-Both these objects use methods like `overlaps()`, `contains()`, `union()` and `intersection()` that act on pairs of Ranges or Locations. The table below is meant to illustrate some of the modules' descriptive capabilities.
+Both these objects use methods like `overlaps()`, `contains()`, `union()` and
+`intersection()` that act on pairs of Ranges or Locations. The table below is
+meant to illustrate some of the modules' descriptive capabilities.
 
 | Type      | Example       |
 |-----------|---------------|
 | EXACT     | (5..100)      |
-| BEFORE    | (&lt;5..100)  |
+| BEFORE    | (<5..100)  |
 | AFTER     | (>5..100)  |
 | WITHIN    | ((5.10)..100) |
 | BETWEEN   | (99^100)      |
 | UNCERTAIN | (99.?100)     |
 ||
 
-One type that might not be self-explanatory is 'WITHIN'. The example means "starting somewhere between positions 5 and 10, inclusive, and ending at 100". 'BETWEEN' is interesting - the example means "between 99 and 100, exclusive". A biological example of such a location would be a cleavage site, between two bases or residues, but not including them.
+One type that might not be self-explanatory is 'WITHIN'. The example means
+"starting somewhere between positions 5 and 10, inclusive, and ending at 100".
+'BETWEEN' is interesting - the example means "between 99 and 100, exclusive". A
+biological example of such a location would be a cleavage site, between two
+bases or residues, but not including them.
 
 The UNCERTAIN attribute means what it says, not known. This value is found occasionally in SwissProt features.
 
-In their simplest form the Location and Range objects are used to get or set start and end positions, getting the positions could look like this:
+In their simplest form the Location and Range objects are used to get or set
+start and end positions, getting the positions could look like this:
 
-`      # polyA_signal    1811..1815       `
-`      #                 /gene="NDP"       `
-`      my $start = $feat_object->location->start;       `
-`      my $end = $feat_object->location->end;`
+```
+       # polyA_signal    1811..1815 
+       #                 /gene="NDP"
+       my $start = $feat_object->location->start;
+       my $end = $feat_object->location->end;
+```
 
 By now you've figured out that the `location()` method returns a Location object - this object has `end()` and `start()` methods.
 
-Another way of describing a feature in Genbank involves multiple start and end positions. These could be called "split" locations, and a very common example is the join statement in the CDS feature found in Genbank entries (e.g. `join(45..122,233..267)`). This calls for a specialized object, , which is a container for Location objects:
+Another way of describing a feature in Genbank involves multiple start and end
+positions. These could be called "split" locations, and a very common example is
+the join statement in the CDS feature found in Genbank entries (e.g.
+`join(45..122,233..267)`). This calls for a specialized object, , which is a
+container for Location objects:
 
 ```perl
 
 for my $feature ($seqobj->top_SeqFeatures){
 
-`  if ( $feature->location->isa(\'Bio::Location::SplitLocationI\')`
-`              && $feature->primary_tag eq \'CDS\' )  {`
-`     for my $location ( $feature->location->sub_Location ) {`
-`        print $location->start . ".." . $location->end . "\`
+    if ( $feature->location->isa('Bio::Location::SplitLocationI')
+         && $feature->primary_tag eq 'CDS' )  {
+         
+        for my $location ( $feature->location->sub_Location ) {
+            print $location->start . ".." . $location->end . "\n";
+        }
 
-";
-
-`     }`
-`  }`
-
+    }
 }
 
 ```
@@ -430,14 +477,22 @@ for my $feature ($seqobj->top_SeqFeatures){
 The Species Object
 ------------------
 
-'''NOTE''' : Future use of beyond release 1.6 is deprecated. We will be switching to a new, more reliable system based on and anticipate updating these notes soon.
+'''NOTE''' : Future use of beyond release 1.6 is deprecated. We will be
+switching to a new, more reliable system based on and anticipate updating these
+notes soon.
 
-Some data in a Genbank file is accessible both as a feature and through a specialized object. Taxonomic information on a sequence, below, can be accessed through a Species object as well as a value to the "organism" tag, and you'll get more information from the object. The taxonomic information for sequence looks like this in GenBank format:
+Some data in a Genbank file is accessible both as a feature and through a
+specialized object. Taxonomic information on a sequence, below, can be accessed
+through a Species object as well as a value to the "organism" tag, and you'll
+get more information from the object. The taxonomic information for sequence
+looks like this in GenBank format:
 
-`SOURCE      human.`
-`  ORGANISM  Homo sapiens`
-`            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;`
-`            Mammalia; Eutheria; Primates; Catarrhini; Hominidae; Homo.`
+```
+ SOURCE      human.
+   ORGANISM  Homo sapiens
+             Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+             Mammalia; Eutheria; Primates; Catarrhini; Hominidae; Homo.
+```
 
 To access this data you'll need to get a Species object from the Sequence object, and then use its methods:
 
@@ -505,7 +560,7 @@ It turns out the value of `$key`, above, and `$value->tagname` are the same. The
     tagname : comment
       annotation value: Comment: REVIEWED REFSEQ: This record has been curated by NCBI staff. The reference sequence was derived from X65882.1. Summary: NDP is the genetic locus identified as harboring mutations that result in Norrie disease.
     tagname : reference
-      annotation value: Reference: The molecular biology of Norrie\'s disease
+      annotation value: Reference: The molecular biology of Norrie's disease
     tagname : date_changed
       annotation value: Value: 31-OCT-2000
 
@@ -513,7 +568,7 @@ If you only wanted a specific annotation, like COMMENT, you can use the tagname 
 
 ```perl
 
-`      my @annotations = $anno_collection->get_Annotations(\'comment\');`
+`      my @annotations = $anno_collection->get_Annotations('comment');`
 
 ```
 
@@ -721,9 +776,9 @@ my $feat = new Bio::SeqFeature::Generic(-start => 10,
 
 `                                       -end         => 22,`
 `                                       -strand      => 1,`
-`                                       -primary_tag => \'TATA_signal\',`
-`                                       -tag => {evidence => \'predicted\',`
-`                                                note     => \'TATA box\' } );`
+`                                       -primary_tag => 'TATA_signal',`
+`                                       -tag => {evidence => 'predicted',`
+`                                                note     => 'TATA box' } );`
 
 ```
 
