@@ -9,8 +9,14 @@ url: "http://yourdomain.com" # the base hostname & protocol for your site
 encoding: UTF-8
 # Build settings
 markdown: redcarpet
+<<<<<<< HEAD
 markdown_ext:  markdown,mkdown,mkdn,mkd,mkd,md
 redcarpet:
   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]
 
 include: ['howtos']
+=======
+markdown_ext:  markdown,mkdown,mkdn,mkd,md
+redcarpet:
+  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]
+>>>>>>> f05f575c825964f06046b60f17000d46892dda5c
