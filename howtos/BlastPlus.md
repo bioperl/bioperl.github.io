@@ -40,11 +40,11 @@ Overview
 
 The [Bio::Tools::Run::StandAloneBlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::StandAloneBlastPlus) object is a "factory" or harness that directs the execution of the various `blast+` programs. The basic mantra is to (1) create a `StandAloneBlastPlus` factory using the `new()` constructor, and (2) perform BLAST analyses by calling the desired BLAST program by name off the factory object. The database can be pre-existing, or can be created directly using a [FASTA](http://en.wikipedia.org/wiki/FASTA) file or a BioPerl sequence collection object. Low-complexity or other masking can also be applied as the database is constructed.
 
-The BLAST database itself and any masking data are attached to the factory object ([step 1](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Database_construction)). Query sequences and any parameters associated with particular programs are provided to the blast method call ([step 2](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Blast_method_execution)), and are run against the attached database. (We present step 2 first, since it's what people will do many times after creating their database once.)
+The BLAST database itself and any masking data are attached to the factory object ([step 1](#Database_construction)). Query sequences and any parameters associated with particular programs are provided to the blast method call ([step 2](#Blast_method_execution)), and are run against the attached database. (We present step 2 first, since it's what people will do many times after creating their database once.)
 
-`blast+` also provides facilities for blasting sequences against NCBI databases over the network. See [Remote BLAST](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Remote_BLAST) for details.
+`blast+` also provides facilities for blasting sequences against NCBI databases over the network. See [Remote BLAST](#Remote_BLAST) for details.
 
-BLAST method execution
+BLAST method execution<a name="Blast_method_execution"></a>
 ----------------------
 
 Given a `StandAloneBlastPlus` factory, such as
@@ -134,7 +134,7 @@ Other parameters ( `-method_args`, `-outfile`, and `-outformat` ) are valid.
 
 The return value is always a [Bio::Search::Result::BlastResult](http://www.bioperl.org/wiki/Module:Bio::Search::Result::BlastResult) object on success, `undef` on failure.
 
-Database construction
+Database construction<a name="Database_construction"></a>
 ---------------------
 ### Factory construction and initialization<a name="Factory_construction_and_initialization"></a>
 
@@ -216,7 +216,7 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 );
 ```
 
-Other collections (e.g., [Bio::SeqIO](http://www.bioperl.org/wiki/Module:Bio::SeqIO)) are valid. If a certain type does not work, please submit an [enhancement request](http://bugzilla.bioperl.org).
+Other collections (e.g., [Bio::SeqIO](http://www.bioperl.org/wiki/Module:Bio::SeqIO)) are valid. If a certain type does not work, please open a new [issue](https://github.com/bioperl/bioperl-live/issues).
 
 To create temporary databases, leave out the `-db_name`, e.g.
 
@@ -250,7 +250,7 @@ and so on.
 
 ### Creating and using mask data
 
-The blast+ mask utilities `windowmasker`, `segmasker`, and `dustmasker` are available. Masking can be rolled into database creation, or can be executed later. If your mask data is already created and in ASN1 format, set the `-mask_file` attribute on construction (see [Factory construction/initialization](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Factory_construction.2Finitialization)).
+The blast+ mask utilities `windowmasker`, `segmasker`, and `dustmasker` are available. Masking can be rolled into database creation, or can be executed later. If your mask data is already created and in ASN1 format, set the `-mask_file` attribute on construction (see [Factory construction/initialization](#Factory_construction_and_initialization)).
 
 To create a mask from raw data or an existing database and apply the mask upon database creation, construct the factory like so:
 
@@ -342,7 +342,7 @@ without a `-db_name` specification) are registered for cleanup. Any file or data
 
 `$fac->_register_temp_for_cleanup('testdb');`
 
-### Remote BLAST
+### Remote BLAST<a name="Remote_BLAST"></a>
 
 `StandAloneBlastPlus` can access NCBI databases remotely. Just create a factory with the desired database and `-remote => 1`:
 
