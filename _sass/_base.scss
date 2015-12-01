@@ -196,21 +196,12 @@ td {
     padding: 7px;
 }
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid blue;
 }
+// Zebra stripes
 tbody tr:nth-child(odd) {
    background: $grey-color-light;
 }
-
-// Zebra-striping
-//
-// Default zebra-stripe styles (alternating gray and transparent backgrounds)
-//table {
-//  > tbody > tr:nth-of-type(odd) {
-//    background-color: $table-bg-accent;
-//  }
-//}
-
 
 
 
