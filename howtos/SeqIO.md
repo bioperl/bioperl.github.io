@@ -155,9 +155,9 @@ my $usage = "getaccs.pl file format "; my $file = shift or die $usage; my $forma
 
 my $inseq = Bio::SeqIO->new(
 
-`                           -file   => "`<$file",
-                            -format =>` $format,`
-`                           );`
+`                           -file   => "`<$file",
+                            -format =>` $format,`
+`                           );`
 
 # Now that we have a seq stream,
 2.  we need to tell it to give us a $seq.
@@ -165,7 +165,7 @@ my $inseq = Bio::SeqIO->new(
 
 while (my $seq = $inseq->next_seq) {
 
-`   print $seq->accession_number,"\`
+`   print $seq->accession_number,"\`
 
 "; }
 
@@ -183,9 +183,9 @@ my $input_file = shift;
 
 my $seq_in = Bio::SeqIO->new(
 
-`                             -format => \'embl\',`
-`                             -file   => $input_file,`
-`                             );`
+`                             -format => \'embl\',`
+`                             -file   => $input_file,`
+`                             );`
 
 # loads the whole file into memory - be careful
 2.  if this is a big file, then this script will
@@ -193,7 +193,7 @@ my $seq_in = Bio::SeqIO->new(
 
 my $seq; my @seq_array; while( $seq = $seq_in->next_seq() ) {
 
-`   push(@seq_array,$seq);`
+`   push(@seq_array,$seq);`
 
 }
 
@@ -204,8 +204,8 @@ my $seq; my @seq_array; while( $seq = $seq_in->next_seq() ) {
 
 my $total = 0; my $count = 0; foreach my $seq ( @seq_array ) {
 
-`   $total += $seq->length;`
-`   $count++;`
+`   $total += $seq->length;`
+`   $count++;`
 
 }
 
@@ -227,21 +227,21 @@ my $usage = "x2y.pl infile infileformat outfile outfileformat "; my $infile = sh
 
 my $seq_in = Bio::SeqIO->new(
 
-`                            -file   => "`<$infile",
-                             -format =>` $infileformat,`
-`                            );`
+`                            -file   => "`<$infile",
+                             -format =>` $infileformat,`
+`                            );`
 
 my $seq_out = Bio::SeqIO->new(
 
-`                             -file   => ">$outfile",`
-`                             -format => $outfileformat,`
-`                             );`
+`                             -file   => ">$outfile",`
+`                             -format => $outfileformat,`
+`                             );`
 
 # write each entry in the input file to the output file
 
 while (my $inseq = $seq_in->next_seq) {
 
-`   $seq_out->write_seq($inseq);`
+`   $seq_out->write_seq($inseq);`
 
 }
 
@@ -255,7 +255,7 @@ Notice that the universal formatter only required a few more lines of code than 
 
 Now, let's play around with the previous code, changing aspects of it to exploit the functionality of the SeqIO system. Let's take a stream from `STDIN`, so that we can use other programs to stream data of a particular format into the program, and write out a file of a particular format. Here we have to make use of two new things: one Perl-specific, and one SeqIO-specific. Perl allows you to 'GLOB' a filehandle by placing a '\*' in front of the handle name, making it available for use as a variable, or as in this case, as an argument to a function. In concert, allows you to pass a GLOB'ed filehandle to it using the `-fh` parameter in place of the `-file` parameter. Here is a program that takes a stream of sequences in a given format from `STDIN`, meaning it could be used like this:
 
-`    >cat myseqs.fa | all2y.pl fasta newseqs.gb genbank`
+`    >cat myseqs.fa | all2y.pl fasta newseqs.gb genbank`
 
 The code for `all2y.pl` is:
 
@@ -272,21 +272,21 @@ my $usage = "all2y.pl informat outfile outfileformat "; my $informat = shift or 
 
 my $seqin = Bio::SeqIO->new(
 
-`                           -fh     => *STDIN,`
-`                           -format => $informat,`
-`                           );`
+`                           -fh     => *STDIN,`
+`                           -format => $informat,`
+`                           );`
 
 my $seqout = Bio::SeqIO->new(
 
-`                            -file   => ">$outfile",`
-`                            -format => $outformat,`
-`                            );`
+`                            -file   => ">$outfile",`
+`                            -format => $outformat,`
+`                            );`
 
 # write each entry in the input file to the output file
 
 while (my $inseq = $seqin->next_seq) {
 
-`   $seqout->write_seq($inseq);`
+`   $seqout->write_seq($inseq);`
 
 }
 
@@ -294,7 +294,7 @@ while (my $inseq = $seqin->next_seq) {
 
 Why use files at all? We can pipe `STDIN` to `STDOUT`, which could allow us to plug this into some other pipeline, something like:
 
-`    cat *.seq | in2out.pl EMBL Genbank | someother program`
+`    cat *.seq | in2out.pl EMBL Genbank | someother program`
 
 The code for `in2out.pl` could be:
 
@@ -310,21 +310,21 @@ my $usage = "in2out.pl informat outformat "; my $informat = shift or die $usage;
 
 my $seqin = Bio::SeqIO->new(
 
-`                           -fh     => *STDIN,`
-`                           -format => $informat,`
-`                           );`
+`                           -fh     => *STDIN,`
+`                           -format => $informat,`
+`                           );`
 
 my $outseq = Bio::SeqIO->new(
 
-`                            -fh     => *STDOUT,`
-`                            -format => $outformat,`
-`                            );`
+`                            -fh     => *STDOUT,`
+`                            -format => $outformat,`
+`                            );`
 
 # write each entry in the input to the output
 
 while (my $inseq = $seqin->next_seq) {
 
-`   $outseq->write_seq($inseq);`
+`   $outseq->write_seq($inseq);`
 
 }
 
@@ -349,14 +349,14 @@ my $stringfh = IO::String->new($string); \# Use this for Perl BEFORE 5.8.0 open(
 
 my $seqio = Bio::SeqIO-> new(
 
-`                            -fh     => $stringfh,`
-`                            -format => $format,`
-`                            );`
+`                            -fh     => $stringfh,`
+`                            -format => $format,`
+`                            );`
 
 while( my $seq = $seqio->next_seq ) {
 
-`   # process each seq`
-`   print $seq->id . \' = \'.$seq->seq()."\`
+`   # process each seq`
+`   print $seq->id . \' = \'.$seq->seq()."\`
 
 "; }
 
@@ -372,9 +372,9 @@ my $string; my $stringfh = IO::String->new($string); \# Use this for Perl BEFORE
 
 my $seqOut = Bio::SeqIO->new(
 
-`                            -format => \'swiss\',`
-`                            -fh     => $io,`
-`                            );`
+`                            -format => \'swiss\',`
+`                            -fh     => $io,`
+`                            );`
 
 $seqOut->write_seq($seq_obj); print $string;
 
@@ -385,7 +385,7 @@ And more examples...
 
 The `-file` parameter in can take more than a filename. It can also take a string that tells it to [pipe] something else into it. This is of the form `\'-file\' => \'command |\'`. Notice the vertical bar at the end, just before the single quote. This is especially useful when you are working with large, [gzipped] files because you just don't have enough disk space to unzip them (e.g. a [Genbank full release file]), but can make [FASTA files] from them. Here is a program that takes a gzipped file of a given format and writes out a FASTA file, used like:
 
-`     gzip2fasta.pl gbpri1.seq.gz Genbank gbpri1.fa`
+`     gzip2fasta.pl gbpri1.seq.gz Genbank gbpri1.fa`
 
 Let the the code begin...
 
@@ -401,21 +401,21 @@ my $usage = "gzip2fasta.pl infile informat outfile "; my $infile = shift or die 
 
 my $seqin = Bio::SeqIO->new(
 
-`                           -file   => "/usr/local/bin/gunzip -c $infile |",`
-`                           -format => $informat,`
-`                           );`
+`                           -file   => "/usr/local/bin/gunzip -c $infile |",`
+`                           -format => $informat,`
+`                           );`
 
 my $seqout = Bio::SeqIO->new(
 
-`                            -file   => ">$outfile",`
-`                            -format => \'Fasta\',`
-`                            );`
+`                            -file   => ">$outfile",`
+`                            -format => \'Fasta\',`
+`                            );`
 
 # write each entry in the input to the output file
 
 while (my $inseq = $seqin->next_seq) {
 
-`   $seqout->write_seq($inseq);`
+`   $seqout->write_seq($inseq);`
 
 }
 
@@ -423,7 +423,7 @@ while (my $inseq = $seqin->next_seq) {
 
 Bioperl also allows a `\'pipe - out\'` to be given as an argument to `-file`. This is of the form `\'-file\' => "| command"`. This time the vertical bar is at the beginning, just after the first quote. Let's write a program to take an input file, and write it directly to a WashU Blastable Database, without ever writing out a FASTA file, like:
 
-`    any2wublastable.pl myfile.gb Genbank mywublastable p`
+`    any2wublastable.pl myfile.gb Genbank mywublastable p`
 
 And the code for `any2wublastable.pl` is:
 
@@ -439,21 +439,21 @@ my $usage = "any2wublastable.pl infile informat outdbname outdbtype "; my $infil
 
 my $seqin = Bio::SeqIO->new(
 
-`                           -file   => "`<$infile",
-                            -format =>` $informat,`
-`                           );`
+`                           -file   => "`<$infile",
+                            -format =>` $informat,`
+`                           );`
 
 my $seqout = Bio::SeqIO->new(
 
-`                            -file => "| /usr/local/bin/xdformat -o $outdbname -${outdbtype} -- -",`
-`                            -format => \'Fasta\',`
-`                            );`
+`                            -file => "| /usr/local/bin/xdformat -o $outdbname -${outdbtype} -- -",`
+`                            -format => \'Fasta\',`
+`                            );`
 
 # write each entry in the input to the output
 
 while (my $inseq = $seqin->next_seq) {
 
-`   $seqout->write_seq($inseq);`
+`   $seqout->write_seq($inseq);`
 
 }
 
@@ -461,7 +461,7 @@ while (my $inseq = $seqin->next_seq) {
 
 Some of the more seasoned Perl [hackers] may have noticed that the `new` method returns a reference, which can be placed into any of the data structures used in Perl. For instance, let's say you wanted to take a GenBank file with multiple sequences, and split the human sequences out into a `human.gb` file, and all the rest of the sequences into the `other.gb` file. In this case, we will use a hash to store the two handles where 'human' is the key for the human output, and 'other' is the key to other, so the usage would be:
 
-`     splitgb.pl inseq.gb`
+`     splitgb.pl inseq.gb`
 
 Here's what `splitgb.pl` looks like:
 
@@ -475,32 +475,32 @@ my $usage = "splitgb.pl infile "; my $infile = shift or die $usage;
 
 my $inseq = Bio::SeqIO->new(
 
-`                           -file   => "`<$infile",
-                            -format =>` \'Genbank\',`
-`                           );`
+`                           -file   => "`<$infile",
+                            -format =>` \'Genbank\',`
+`                           );`
 
 my %outfiles = (
 
-`               \'human\' => Bio::SeqIO->new(`
-`                                          -file   => \'>human.gb\',`
-`                                          -format => \'Genbank\',`
-`                                          ),`
-`               \'other\' => Bio::SeqIO->new(`
-`                                          -file   => \'>other.gb\',`
-`                                          -format => \'Genbank\',`
-`                                          ),`
-`               );`
+`               \'human\' => Bio::SeqIO->new(`
+`                                          -file   => \'>human.gb\',`
+`                                          -format => \'Genbank\',`
+`                                          ),`
+`               \'other\' => Bio::SeqIO->new(`
+`                                          -file   => \'>other.gb\',`
+`                                          -format => \'Genbank\',`
+`                                          ),`
+`               );`
 
 while (my $seqin = $inseq->next_seq) {
 
-`   # here we make use of the species attribute, which returns a`
-`   # species object, which has a binomial attribute that`
-`   # holds the binomial species name of the source of the sequence`
-`   if ($seqin->species->binomial =~ m/Homo sapiens/) {`
-`       $outfiles{\'human\'}->write_seq($seqin);`
-`   } else {`
-`       $outfiles{\'other\'}->write_seq($seqin);`
-`   }`
+`   # here we make use of the species attribute, which returns a`
+`   # species object, which has a binomial attribute that`
+`   # holds the binomial species name of the source of the sequence`
+`   if ($seqin->species->binomial =~ m/Homo sapiens/) {`
+`       $outfiles{\'human\'}->write_seq($seqin);`
+`   } else {`
+`       $outfiles{\'other\'}->write_seq($seqin);`
+`   }`
 
 }
 
@@ -518,43 +518,43 @@ my $usage = "splitgb.pl infile "; my $infile = shift or die $usage;
 
 my $inseq = Bio::SeqIO->new(
 
-`                           -file   => "`<$infile",
-                            -format =>` \'Genbank\',`
-`                           );`
+`                           -file   => "`<$infile",
+                            -format =>` \'Genbank\',`
+`                           );`
 
 my %outfiles = (
 
-`               human => {`
-`                         Genbank => Bio::SeqIO->new(`
-`                                                    -file   => \'>human.gb\',`
-`                                                    -format => \'Genbank\',`
-`                                                    ),`
-`                         Fasta   => Bio::SeqIO->new(`
-`                                                    -file   => \'>human.fa\',`
-`                                                    -format => \'Fasta\',`
-`                                                    ),`
-`                         },`
-`               other => {`
-`                         Genbank => Bio::SeqIO->new(`
-`                                                    -file   => \'>other.gb\',`
-`                                                    -format => \'Genbank\',`
-`                                                    ),`
-`                         Fasta   => Bio::SeqIO->new(`
-`                                                    -file => \'>other.fa\',`
-`                                                    -format => \'Fasta\',`
-`                                                    ),`
-`                         }`
-`               );`
+`               human => {`
+`                         Genbank => Bio::SeqIO->new(`
+`                                                    -file   => \'>human.gb\',`
+`                                                    -format => \'Genbank\',`
+`                                                    ),`
+`                         Fasta   => Bio::SeqIO->new(`
+`                                                    -file   => \'>human.fa\',`
+`                                                    -format => \'Fasta\',`
+`                                                    ),`
+`                         },`
+`               other => {`
+`                         Genbank => Bio::SeqIO->new(`
+`                                                    -file   => \'>other.gb\',`
+`                                                    -format => \'Genbank\',`
+`                                                    ),`
+`                         Fasta   => Bio::SeqIO->new(`
+`                                                    -file => \'>other.fa\',`
+`                                                    -format => \'Fasta\',`
+`                                                    ),`
+`                         }`
+`               );`
 
 while (my $seqin = $inseq->next_seq) {
 
-`   if ($seqin->species->binomial =~ m/Homo sapiens/) {`
-`       $outfiles{\'human\'}->{\'Genbank\'}->write_seq($seqin);`
-`       $outfiles{\'human\'}->{\'Fasta\'}->write_seq($seqin);`
-`   } else {`
-`       $outfiles{\'other\'}->{\'Genbank\'}->write_seq($seqin);`
-`       $outfiles{\'other\'}->{\'Fasta\'}->write_seq($seqin);`
-`   }`
+`   if ($seqin->species->binomial =~ m/Homo sapiens/) {`
+`       $outfiles{\'human\'}->{\'Genbank\'}->write_seq($seqin);`
+`       $outfiles{\'human\'}->{\'Fasta\'}->write_seq($seqin);`
+`   } else {`
+`       $outfiles{\'other\'}->{\'Genbank\'}->write_seq($seqin);`
+`       $outfiles{\'other\'}->{\'Fasta\'}->write_seq($seqin);`
+`   }`
 
 }
 
@@ -562,9 +562,9 @@ while (my $seqin = $inseq->next_seq) {
 
 And finally, you might want to make use of the SeqIO object in a Perl [one-liner]. Perl one-liners are Perl programs that make use of flags to the Perl binary allowing you to run programs from the command-line without actually needing to write a script into a file. The `-e` flag takes a quoted string, usually single quoted, and attempts to execute it as code, while the `-M` flag takes a module name and tells the one-liner to use that module. When using a single quote to enclose the string to `-e`, you also have to make use of perl's string modifier `q(string)` to single quote a string without confusing the shell. Let's find out how many GSS sequences are in `gbpri1.seq.gz`. Note that we have placed new-line characters in this to make it easier to read, but in practice you wouldn't actually hit the return key until you were ready to run the program.
 
-`     perl -MBio::SeqIO -e \'my $gss = 0; my $in = Bio::SeqIO->new(q(-file) => q(/usr/local/bin/gunzip -c gbpri1.seq.gz |),`
-`     q(-format) => q(Genbank)); while (my $seq = $in->next_seq) { $gss++ if ($seq->keywords =~ m/GSS/);}`
-`     print "There are $gss GSS sequences in gbpri1.seq.gz\`
+`     perl -MBio::SeqIO -e \'my $gss = 0; my $in = Bio::SeqIO->new(q(-file) => q(/usr/local/bin/gunzip -c gbpri1.seq.gz |),`
+`     q(-format) => q(Genbank)); while (my $seq = $in->next_seq) { $gss++ if ($seq->keywords =~ m/GSS/);}`
+`     print "There are $gss GSS sequences in gbpri1.seq.gz\`
 
 ";'
 
@@ -578,16 +578,16 @@ Error Handling
 
 If you gave an impossible filename to the first script, it would have in fact died with an informative error message. In programming jargon, this is called "[throwing an exception]". An example would look like:
 
-`      user@localhost ~/src/bioperl-live> perl t.pl bollocks silly`
-`      ------------- EXCEPTION  -------------`
-`      MSG: Could not open bollocks for reading: No such file or directory`
-`      STACK Bio::Root::IO::_initialize_io Bio/Root/IO.pm:259`
-`      STACK Bio::SeqIO::_initialize Bio/SeqIO.pm:441`
-`      STACK Bio::SeqIO::genbank::_initialize Bio/SeqIO/genbank.pm:122`
-`      STACK Bio::SeqIO::new Bio/SeqIO.pm:359`
-`      STACK Bio::SeqIO::new Bio/SeqIO.pm:372`
-`      STACK toplevel t.pl:9`
-`      --------------------------------------`
+`      user@localhost ~/src/bioperl-live> perl t.pl bollocks silly`
+`      ------------- EXCEPTION  -------------`
+`      MSG: Could not open bollocks for reading: No such file or directory`
+`      STACK Bio::Root::IO::_initialize_io Bio/Root/IO.pm:259`
+`      STACK Bio::SeqIO::_initialize Bio/SeqIO.pm:441`
+`      STACK Bio::SeqIO::genbank::_initialize Bio/SeqIO/genbank.pm:122`
+`      STACK Bio::SeqIO::new Bio/SeqIO.pm:359`
+`      STACK Bio::SeqIO::new Bio/SeqIO.pm:372`
+`      STACK toplevel t.pl:9`
+`      --------------------------------------`
 
 These exceptions are very useful when errors occur because you can see the full route, or "[stack trace]", of where the error occurred and right at the end of this is the line number of the script which caused the error, which in this case we called `t.pl`.
 
@@ -606,31 +606,31 @@ my $seq_in; my $seq_out;
 
 eval {
 
-`   $seq_in   = Bio::SeqIO->new(`
-`                               -format => \'genbank\',`
-`                               -file   => $input_file,`
-`                               );`
+`   $seq_in   = Bio::SeqIO->new(`
+`                               -format => \'genbank\',`
+`                               -file   => $input_file,`
+`                               );`
 
-`   $seq_out  = Bio::SeqIO->new(`
-`                               -format => \'fasta\',`
-`                               -file   => ">$output_file",`
-`                               );`
+`   $seq_out  = Bio::SeqIO->new(`
+`                               -format => \'fasta\',`
+`                               -file   => ">$output_file",`
+`                               );`
 
 }; if( $@ ) { \# an error occurred
 
-`   print "Was not able to open files, sorry!\`
+`   print "Was not able to open files, sorry!\`
 
 ";
 
-`   print "Full error is\`
+`   print "Full error is\`
 
  $@ ";
 
-`   exit(-1);`
+`   exit(-1);`
 
 } my $seq; while( $seq = $seq_in->next_seq() ) {
 
-`   $seq_out->write_seq($seq);`
+`   $seq_out->write_seq($seq);`
 
 }
 
@@ -655,31 +655,31 @@ my $file = "gbbct10.seq";
 
 timethis(1, sub {
 
-`  my $in = Bio::SeqIO->new(-file => $file, -format => "genbank");`
-`  for (1..1000) {`
-`     my $seq = $in->next_seq;`
-`  }`
+`  my $in = Bio::SeqIO->new(-file => $file, -format => "genbank");`
+`  for (1..1000) {`
+`     my $seq = $in->next_seq;`
+`  }`
 
 });
 
 timethis(1, sub {
 
-`  my $in = Bio::SeqIO->new(-file => $file, -format => "genbank");`
-`  my $builder = $in->sequence_builder();`
-`  $builder->want_none();`
-`  $builder->add_wanted_slot(\'display_id\',\'desc\',\'seq\');`
-`  for (1..1000) {`
-`     my $seq = $in->next_seq;`
-`  }`
+`  my $in = Bio::SeqIO->new(-file => $file, -format => "genbank");`
+`  my $builder = $in->sequence_builder();`
+`  $builder->want_none();`
+`  $builder->add_wanted_slot(\'display_id\',\'desc\',\'seq\');`
+`  for (1..1000) {`
+`     my $seq = $in->next_seq;`
+`  }`
 
 });
 
 ```
 
-`timethis 1: 10 wallclock secs ( 9.64 usr +  0.02 sys =  9.66 CPU) @  0.10/s (n=1)`
-`            (warning: too few iterations for a reliable count)`
-`timethis 1:  1 wallclock secs ( 1.63 usr +  0.00 sys =  1.63 CPU) @  0.61/s (n=1)`
-`            (warning: too few iterations for a reliable count)`
+`timethis 1: 10 wallclock secs ( 9.64 usr +  0.02 sys =  9.66 CPU) @  0.10/s (n=1)`
+`            (warning: too few iterations for a reliable count)`
+`timethis 1:  1 wallclock secs ( 1.63 usr +  0.00 sys =  1.63 CPU) @  0.61/s (n=1)`
+`            (warning: too few iterations for a reliable count)`
 
 See [HOWTO:Feature-Annotation] for more discussion.
 

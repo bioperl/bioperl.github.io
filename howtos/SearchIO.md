@@ -64,60 +64,60 @@ See <HOWTO:BlastPlus> for more on running [BLAST].
 
 In order to display all these methods and what they return let's use a report as input, a simple BLASTX result:
 
-`BLASTX 2.2.4 [Aug-26-2002]`
-`Reference: Altschul, Stephen F., Thomas L. Madden, Alejandro A. Schaffer, `
-`Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), `
-`"Gapped BLAST and PSI-BLAST: a new generation of protein database search`
-`programs",  Nucleic Acids Res. 25:3389-3402.`
-`Query= gi|20521485|dbj|AP004641.2 Oryza sativa (japonica`
-`cultivar-group) genomic DNA, chromosome 1, BAC clone:B1147B04, 3785`
-`bases, 977CE9AF checksum.`
-`         (3059 letters)`
-`Database: test.fa `
-`           5 sequences; 1291 total letters`
-`                                                                Score    E`
-`Sequences producing significant alignments:                     (bits) Value`
-`gb|443893|124775 LaForas sequence                                 92   2e-022`
-`>gb|443893|124775 LaForas sequence`
-`          Length = 331`
-` Score = 92.0 bits (227), Expect = 2e-022`
-` Identities = 46/52 (88%), Positives = 48/52 (91%)`
-` Frame = +1`
-`Query: 2896 DMGRCSSGCNRYPEPMTPDTMIKLYREKEGLGAYIWMPTPDMSTEGRVQMLP 3051`
-`            D+ + SSGCNRYPEPMTPDTMIKLYRE EGL AYIWMPTPDMSTEGRVQMLP`
-`Sbjct: 197  DIVQNSSGCNRYPEPMTPDTMIKLYRE-EGL-AYIWMPTPDMSTEGRVQMLP 246 `
-`  Database: test.fa`
-`    Posted date:  Feb 12, 2003  9:51 AM`
-`  Number of letters in database: 1291`
-`  Number of sequences in database:  5`
-`  `
-`Lambda     K      H`
-`   0.318    0.135    0.401 `
+`BLASTX 2.2.4 [Aug-26-2002]`
+`Reference: Altschul, Stephen F., Thomas L. Madden, Alejandro A. Schaffer, `
+`Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), `
+`"Gapped BLAST and PSI-BLAST: a new generation of protein database search`
+`programs",  Nucleic Acids Res. 25:3389-3402.`
+`Query= gi|20521485|dbj|AP004641.2 Oryza sativa (japonica`
+`cultivar-group) genomic DNA, chromosome 1, BAC clone:B1147B04, 3785`
+`bases, 977CE9AF checksum.`
+`         (3059 letters)`
+`Database: test.fa `
+`           5 sequences; 1291 total letters`
+`                                                                Score    E`
+`Sequences producing significant alignments:                     (bits) Value`
+`gb|443893|124775 LaForas sequence                                 92   2e-022`
+`>gb|443893|124775 LaForas sequence`
+`          Length = 331`
+` Score = 92.0 bits (227), Expect = 2e-022`
+` Identities = 46/52 (88%), Positives = 48/52 (91%)`
+` Frame = +1`
+`Query: 2896 DMGRCSSGCNRYPEPMTPDTMIKLYREKEGLGAYIWMPTPDMSTEGRVQMLP 3051`
+`            D+ + SSGCNRYPEPMTPDTMIKLYRE EGL AYIWMPTPDMSTEGRVQMLP`
+`Sbjct: 197  DIVQNSSGCNRYPEPMTPDTMIKLYRE-EGL-AYIWMPTPDMSTEGRVQMLP 246 `
+`  Database: test.fa`
+`    Posted date:  Feb 12, 2003  9:51 AM`
+`  Number of letters in database: 1291`
+`  Number of sequences in database:  5`
+`  `
+`Lambda     K      H`
+`   0.318    0.135    0.401 `
 `Gapped`
-`Lambda     K      H`
-`   0.267   0.0410    0.140 `
-`Matrix: BLOSUM62`
-`Gap Penalties: Existence: 11, Extension: 1`
-`Number of Hits to DB: 7140`
-`Number of Sequences: 5`
-`Number of extensions: 180`
-`Number of successful extensions: 2`
-`Number of sequences better than 10.0: 2`
-`Number of HSP\'s better than 10.0 without gapping: 1`
-`Number of HSP\'s successfully gapped in prelim test: 0`
-`Number of HSP\'s that attempted gapping in prelim test: 0 `
-`Number of HSP\'s gapped (non-prelim): 1`
-`length of database: 1291`
-`effective HSP length: 46`
-`effective length of database: 1061`
-`effective search space used:  1032353`
-`frameshift window, decay const: 50,  0.1`
-`T: 12 `
-`A: 40`
-`X1: 16 ( 7.3 bits)`
-`X2: 38 (14.6 bits)`
-`X3: 64 (24.7 bits)`
-`S1: 32 (17.6 bits)`
+`Lambda     K      H`
+`   0.267   0.0410    0.140 `
+`Matrix: BLOSUM62`
+`Gap Penalties: Existence: 11, Extension: 1`
+`Number of Hits to DB: 7140`
+`Number of Sequences: 5`
+`Number of extensions: 180`
+`Number of successful extensions: 2`
+`Number of sequences better than 10.0: 2`
+`Number of HSP\'s better than 10.0 without gapping: 1`
+`Number of HSP\'s successfully gapped in prelim test: 0`
+`Number of HSP\'s that attempted gapping in prelim test: 0 `
+`Number of HSP\'s gapped (non-prelim): 1`
+`length of database: 1291`
+`effective HSP length: 46`
+`effective length of database: 1061`
+`effective search space used:  1032353`
+`frameshift window, decay const: 50,  0.1`
+`T: 12 `
+`A: 40`
+`X1: 16 ( 7.3 bits)`
+`X2: 38 (14.6 bits)`
+`X3: 64 (24.7 bits)`
+`S1: 32 (17.6 bits)`
 
 ### NCBI-BLAST parsing problems
 
@@ -162,7 +162,7 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | Hit    | rewind            |                  | Resets the internal counter for next_hsp() so that the iterator will begin at the beginning of the list                                        |
 |        |
 
-`Table 2.2: All the data returned by methods used by the Hit objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we\'re just showing what they get.`
+`Table 2.2: All the data returned by methods used by the Hit objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we\'re just showing what they get.`
 
 | Object | Method                                               | Example                                  | Description                                                                            |
 |--------|------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------|
@@ -208,7 +208,7 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | HSP    | links                                                | ''Not available in this report'' | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
 |        |
 
-`Table 2.3: All the data returned by methods used by the HSP objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we\'re just showing what they get.`
+`Table 2.3: All the data returned by methods used by the HSP objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we\'re just showing what they get.`
 
 ### Using the methods
 
@@ -251,7 +251,7 @@ Another method that's useful in dissecting an [HSP] is the `seq_inds()` method o
 
 my @str_array = split "",$hsp->query_string; foreach ( $hsp->seq_inds('query','conserved') ){
 
-` push @conserved,$str_array[$_ - 1];`
+` push @conserved,$str_array[$_ - 1];`
 
 }
 
@@ -265,7 +265,7 @@ For 'gaps', the returned positions are the sequence indices prior to a gap inser
 
 my %gap_pos; for my $pos ($hsp->seq_inds('query'=>'gaps')) {
 
-`      $gap_pos{$pos}++;`
+`      $gap_pos{$pos}++;`
 
 } print "Ind: $_ Gaps: $gap_pos{$_} " for sort {$a <=> $b} keys %gap_pos;
 
@@ -283,7 +283,7 @@ Specifically, the `frame()` method returns 0, 1, or 2 instead of the expected -3
 
 ```perl
 
-`my $blast_frame = ($hsp->query->frame + 1) * $hsp->query->strand;`
+`my $blast_frame = ($hsp->query->frame + 1) * $hsp->query->strand;`
 
 ```
 
@@ -300,28 +300,28 @@ Another common example is analyzing data from a single [BLAST] report several di
 
 sub sort_results{
 
-`  my $result = shift;`
-`  my @hits;`
-`  while(my $hit = $result->next_hit()){`
-`     push @hits, $hit;`
-`  }`
-`  # sort by accessions`
-`  my @acc = sort {$a->accession cmp $b->accession} @hits;`
-`  print join("t", $_->accession,$_->description),"\`
+`  my $result = shift;`
+`  my @hits;`
+`  while(my $hit = $result->next_hit()){`
+`     push @hits, $hit;`
+`  }`
+`  # sort by accessions`
+`  my @acc = sort {$a->accession cmp $b->accession} @hits;`
+`  print join("t", $_->accession,$_->description),"\`
 
 " for @acc; }
 
 sub print_blast_results{
 
-`  my $result = shift;`
-`  while(my $hit = $result->next_hit()){`
-`     while(my $hsp = $hit->next_hsp()){`
-`        print join(", ",$hit->name,$hsp->bits)."\`
+`  my $result = shift;`
+`  while(my $hit = $result->next_hit()){`
+`     while(my $hsp = $hit->next_hsp()){`
+`        print join(", ",$hit->name,$hsp->bits)."\`
 
 ";
 
-`     }`
-`  }`
+`     }`
+`  }`
 
 }
 
@@ -337,9 +337,9 @@ To simplify things here a bit more, you could simply grab all the hits at once u
 
 sub sort_results{
 
-`  my $result = shift;`
-`  my @acc = sort {$a->accession cmp $b->accession} $result->hits;`
-`  print join("t", $_->accession,$_->description),"\`
+`  my $result = shift;`
+`  my @acc = sort {$a->accession cmp $b->accession} $result->hits;`
+`  print join("t", $_->accession,$_->description),"\`
 
 " for @acc; }
 
@@ -356,9 +356,9 @@ One frequently-asked question has to do with getting sorted output from a report
 
 ```perl
 
-`my @hits = $result->hits;`
-`for my $hit ( sort { $a->bits `<=>` $b->bits } @hits ) {`
-`  # Do something...`
+`my @hits = $result->hits;`
+`for my $hit ( sort { $a->bits `<=>` $b->bits } @hits ) {`
+`  # Do something...`
 `}`
 
 ```
@@ -412,7 +412,7 @@ The simplest way to output data in HTML format is as follows.
 
 my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
 
-`                                -file   => ">searchio.html");`
+`                                -file   => ">searchio.html");`
 
 # get a result from Bio::SearchIO parsing or build it up in memory
 
@@ -426,13 +426,13 @@ If you want to output multiple results into a single html file, do the following
 
 my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
 
-`                                -file   => ">searchio.html");`
+`                                -file   => ">searchio.html");`
 
 # Loop through all the results, successively adding each one to the bottom of the HTML report
 
 while ( $result = $searchio->next_result()){
 
-`   $outhtml->write_report($result);`
+`   $outhtml->write_report($result);`
 
 }
 
@@ -465,18 +465,18 @@ package Bio::Search::HSP::RealignHSP; use strict; use Bio::Search::HSP::GenericH
 
 sub new {
 
-` my ($class,@args) = @_;`
-` my $self = $class->SUPER::new(@args); # chained contructor`
-` # process the 1 additional argument this object supports`
-` my ($ownarg1) = $self->_rearrange([OWNARG1],@args); `
-` return $self; # remember to pass the object reference back out   `
+` my ($class,@args) = @_;`
+` my $self = $class->SUPER::new(@args); # chained contructor`
+` # process the 1 additional argument this object supports`
+` my ($ownarg1) = $self->_rearrange([OWNARG1],@args); `
+` return $self; # remember to pass the object reference back out   `
 
 }
 
 sub realign_hsp {
 
-` my ($self) = @_;`
-` # implement my special realign method here`
+` my ($self) = @_;`
+` # implement my special realign method here`
 
 }
 
@@ -492,14 +492,14 @@ use Bio::SearchIO; use Bio::Search::HSP::HSPFactory; use Bio::Search::Hit::HitFa
 
 my $searchio = Bio::SearchIO->new(-file => $blastfile,
 
-`                                 -format =>\'blast\'); `
+`                                 -format =>\'blast\'); `
 
 # build HSP factory with a certain type of HSPs to make
 2.  the default is Bio::Search::HSP::GenericHSP
 
 my $hspfact = Bio::Search::HSP::HSPFactory->new(-type =>
 
-`                  \'Bio::Search::HSP::RealignHSP\');`
+`                  \'Bio::Search::HSP::RealignHSP\');`
 
 # if you wanted to replace the Hit factory you can do this as well
 2.  additionally there is an analagous
@@ -507,7 +507,7 @@ my $hspfact = Bio::Search::HSP::HSPFactory->new(-type =>
 
 my $hitfact = Bio::Search::Hit::HitFactory->new(-type =>
 
-`                  \'Bio::Search::Hit::SUPERDUPER_Hit\');`
+`                  \'Bio::Search::Hit::SUPERDUPER_Hit\');`
 
 $searchio->_eventHandler->register_factory('hsp', $hspfact); $searchio->_eventHandler->register_factory('hit', $hitfact);
 
@@ -530,13 +530,13 @@ use Bio::SearchIO; use Bio::SearchIO::FastHitEventBuilder; my $searchio = new Bi
 
 $searchio->attach_EventHandler(Bio::SearchIO::FastHitEventBuilder->new); while( my $r = $searchio->next_result ) {
 
-` while( my $h = $r->next_hit ) {`
-`  # Hits will NOT have HSPs`
-`  print $h->significance,"\`
+` while( my $h = $r->next_hit ) {`
+`  # Hits will NOT have HSPs`
+`  print $h->significance,"\`
 
 ";
 
-` }`
+` }`
 
 }
 
