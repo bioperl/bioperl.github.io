@@ -6,7 +6,7 @@ layout: default
 Abstract
 --------
 
-This is a HOWTO about the system, how to use it, and how one goes about writing new adaptors to different output formats. We will also describe how the modules work for outputting various formats from Bio::Search objects. __TOC__
+This is a HOWTO about the Bio::SearchIO system, how to use it, and how one goes about writing new adaptors to different output formats. We will also describe how the modules work for outputting various formats from Bio::Search objects.
 
 ### Authors
 
@@ -16,7 +16,7 @@ This is a HOWTO about the system, how to use it, and how one goes about writing 
 Background and Design
 ---------------------
 
-One of the most common and necessary tasks in [bioinformatics] is parsing analysis reports so that one can write programs which can help interpret the sheer volume of data that can be produced by processing many sequences. A popular tool for comparing sequences is the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) package from NCBI. The parsers for BLAST output are part of BioPerl's SearchIO.
+One of the most common and necessary tasks in [bioinformatics] is parsing analysis reports so that one can write programs which can help interpret the sheer volume of data that can be produced by processing many sequences. A popular tool for comparing sequences is the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) package from NCBI. The parsers for BLAST output are part of BioPerl's Bio::SearchIO.
 
 The system was designed with the following assumptions: That all reports parsed with it could be separated into a hierarchy of components. The Result is the entire analysis for a single query sequence, and multiple Results can be concatenated together into a single file (i.e. running blastall with a fasta database as the input file rather than a single sequence). Each Result is a set of Hits for the query sequence. Hits are sequences in the searched database which could be aligned to the query sequence and met the minimal search parameters, such as e-value threshold. Each Hit has one or more High-scoring segment Pairs ) which are the alignments of the query and hit sequence. Each Result has a set of one or more Hits and each Hit has a set of one or more HSPs, and this relationship can be used to describe results from all pairwise alignment programs including [BLAST], [FastA], and implementations of the [Smith-Waterman] and [Needleman-Wunsch] algorithms.
 
@@ -208,7 +208,7 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 | HSP    | links                                                | ''Not available in this report'' | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
 |        |
 
-`Table 2.3: All the data returned by methods used by the HSP objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
+Table 2.3: All the data returned by methods used by the HSP objects when the report shown above is used as input. Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
 ### Using the methods
 
@@ -219,13 +219,13 @@ Table 2 shows that a method can return a string, an array, or an object. When an
 For example, if you wanted a printable alignment after you'd parsed [BLAST] output you could use the `get_aln()` method, retrieve a object and use it like this:
 
 ```perl
-
 use Bio::AlignIO;
 
 # $aln will be a Bio::SimpleAlign object
-
-my $aln = $hsp->get_aln; my $alnIO = Bio::AlignIO->new(-format =>"msf", -file => ">hsp.msf"); $alnIO->write_aln($aln);
-
+my $aln = $hsp->get_aln; 
+my $alnIO = Bio::AlignIO->new(-format => "msf", 
+                              -file => ">hsp.msf"); 
+$alnIO->write_aln($aln);
 ```
 
 On one hand it appears to be a complication, but by entering the worlds of the and objects you now have access to their functionality and flexibility. This is the beauty of [BioPerl].
