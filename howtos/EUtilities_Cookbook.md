@@ -30,7 +30,8 @@ This example uses a file intermediate between and . You could feasibly use a tem
 
 ```perl
 
-use Bio::DB::EUtilities; use Bio::SeqIO;
+use Bio::DB::EUtilities;
+use Bio::SeqIO;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -db      => 'protein',
@@ -70,7 +71,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
 
 my @accs = split(m{ },$factory->get_Response->content);
 
-print join(',',@accs), " ";
+print join(',',@accs), "\n";
 
 ```
 
@@ -87,7 +88,6 @@ use Bio::DB::EUtilities;
 my @ids = qw(CAB02640 EAS10332 YP_250808 NP_623143 P41007);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
-
                                        -db      => 'protein',
                                        -id      => @ids,
                                        -email   => 'mymail@foo.bar',
@@ -95,7 +95,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
 
 my @gis = split(m{ },$factory->get_Response->content);
 
-print join(',',@gis), " ";
+print join(',',@gis), "\n";
 
 ```
 
@@ -112,9 +112,7 @@ use Bio::DB::EUtilities;
 my $id = 27479347;
 
 # No sequence, just CONTIG
-
 my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
-
                                        -db      => 'nucleotide',
                                        -id      => $id,
                                        -email   => 'mymail@foo.bar',
@@ -123,11 +121,9 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
 $factory->get_Response(-file => 'contigfile.gb');
 
 # Get sequence and all features
-
 $factory->set_parameters(-rettype => 'gbwithparts');
 
 # file with sequence
-
 $factory->get_Response(-file => 'full_contig.gb');
 
 ```
@@ -143,14 +139,13 @@ use Bio::DB::EUtilities;
 my $id = 527031;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
-
                                        -email => 'mymail@foo.bar',
                                        -db    => 'taxonomy',
                                        -id    => $id );
 
 my ($name) = $factory->next_DocSum->get_contents_by_name('ScientificName');
 
-print "$name ";
+print "$name\n";
 
 ```
 
@@ -166,22 +161,18 @@ Here we use the the simple query 'BRCA1 and human' to answer the question: "What
 use Bio::DB::EUtilities;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
-
                                        -db     => 'protein',
                                        -term   => 'BRCA1 AND human',
                                        -email  => 'mymail@foo.bar',
                                        -retmax => 5000);
 
 # query terms are mapped; what's the actual query?
-
-print "Query translation: ",$factory->get_query_translation," ";
+print "Query translation: ",$factory->get_query_translation,"\n";
 
 # query hits
-
-print "Count = ",$factory->get_count," ";
+print "Count = ",$factory->get_count,"\n";
 
 # UIDs
-
 my @ids = $factory->get_ids;
 
 ```
@@ -198,10 +189,9 @@ einfo generally is used to return specific information about a database, but if 
 use Bio::DB::EUtilities;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'einfo',
-
                                        -email => 'mymail@foo.bar',);
 
-print "available databases:  t", join(" t",$factory->get_available_databases)," ";
+print "available databases:  t", join(" t",$factory->get_available_databases),"\n";
 
 ```
 
@@ -212,15 +202,14 @@ or as a one-liner. The following:
 gets:
 
     EUtil               :einfo
-
     DB                  :pubmed, protein, nucleotide, nuccore, nucgss, nucest, structure, genome,
-      \t\t        :biosystems, books, cancerchromosomes, cdd, gap,
-    \t\t        :domains, gene, genomeprj, gensat, geo, gds,
-    \t\t        :homologene, journals, mesh, ncbisearch, nlmcatalog,
-    \t\t        :omia, omim, pepdome, pmc, popset, probe,
-    \t\t        :proteinclusters, pcassay, pccompound, pcsubstance,
-    \t\t        :seqannot, snp, sra, taxonomy, toolkit, toolkitall,
-    \t\t        :unigene, unists
+                        :biosystems, books, cancerchromosomes, cdd, gap,
+                        :domains, gene, genomeprj, gensat, geo, gds,
+                        :homologene, journals, mesh, ncbisearch, nlmcatalog,
+                        :omia, omim, pepdome, pmc, popset, probe,
+                        :proteinclusters, pcassay, pccompound, pcsubstance,
+                        :seqannot, snp, sra, taxonomy, toolkit, toolkitall,
+                        :unigene, unists
 
 ### What information is available for database 'x'?
 
@@ -231,63 +220,35 @@ You can retrieve field codes, link names, updates, terms, and other things. In t
 use Bio::DB::EUtilities;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'einfo',
-
                                        -email => 'mymail@foo.bar',
                                        -db    => 'pubmed');
 
 # for quick simple output, use:
-2.  $factory->print_all;
-3.  or use snippets of the following for what you need
-
-<!-- -->
+# 1.  $factory->print_all;
+# 2.  or use snippets of the following for what you need
 
 # get database info
-
-print "Database: ",$factory->get_database," "; print " Desc: ",$factory->get_description," "; print " Name: ",$factory->get_menu_name," "; print " Records: ",$factory->get_record_count," "; print " Updated: ",$factory->get_last_update,"  ";
+print "Database: ",$factory->get_database,"\n";
+print " Desc: ",$factory->get_description,"\n";
+print " Name: ",$factory->get_menu_name,"\n";
+print " Records: ",$factory->get_record_count,"\n";
+print " Updated: ",$factory->get_last_update,"\n";
 
 # iterate through FieldInfo and LinkInfo objects to get field and link data
-
 while (my $field = $factory->next_FieldInfo) {
-
-    print "tField code: ",$field->get_field_code,"\
-
-";
-
-    print "t      name: ",$field->get_field_name,"\
-
-";
-
-    print "t      desc: ",$field->get_field_description,"\
-
-";
-
-    print "t     count: ",$field->get_term_count,"\
-
-";
-
-    print "tAttributes: ";
-    print join(',', grep {$field->$_} qw(is_date
-               is_singletoken is_hierarchy is_hidden is_numerical)),"\
-
- "; }
+    print "\tField code: ",$field->get_field_code,"\n";
+    print "\t\tname: ",$field->get_field_name,"\n";
+    print "\t\tdesc: ",$field->get_field_description,"\n";
+    print "\t\tcount: ",$field->get_term_count,"\n";
+    print "\t\tAttributes: ";
+    print join(',', grep {$field->$_} qw(is_date is_singletoken is_hierarchy is_hidden is_numerical)),"\n"; }
 
 while (my $link = $factory->next_LinkInfo) {
-
-    print "tLink name: ",$link->get_link_name,"\
-
-";
-
-    print "t     desc: ",$link->get_link_description,"\
-
-";
-
-    print "t   dbfrom: ",$link->get_dbfrom,"\
-
-"; \# same as get_database()
-
-    print "t     dbto: ",$link->get_dbto,"\
-
- "; \# database linked to }
+    print "\t\tLink name: ",$link->get_link_name,"\n";
+    print "\t\tdesc: ",$link->get_link_description,"\n";
+    print "\t\tdbfrom: ",$link->get_dbfrom,"\n"; # same as get_database()
+    print "\t\tdbto: ",$link->get_dbto,"\n"; # database linked to
+}
 
 ```
 
@@ -303,35 +264,25 @@ You can use egquery to do this. Note this only gives you the count (no IDs), but
 use Bio::DB::EUtilities;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'egquery',
-
                                        -email => 'mymail@foo.bar',
                                        -term  => 'BRCA1 and human');
 
 # for quick simple output, use:
-2.  $factory->print_all;
-3.  or use snippets of the following for what you need
-
-<!-- -->
+# 1.  $factory->print_all;
+# 2.  or use snippets of the following for what you need
 
 # iterate through GlobalQuery objects
 
 while (my $gq = $factory->next_GlobalQuery) {
-
-    print "Database: ",$gq->get_database,"\
-
-";
-
-    print "   Count: ",$gq->get_count,"\
-
-";
-
-    print "  Status: ",$gq->get_status,"\
-
- "; }
+    print "Database: ",$gq->get_database,"\n";
+    print "   Count: ",$gq->get_count,"\n";
+    print "  Status: ",$gq->get_status,"\n ";
+}
 
 # counts from specific databases
 
-print "PubMed Count: ", $factory->get_count('pubmed')," "; print "Protein Count: ", $factory->get_count('protein')," ";
+print "PubMed Count: ", $factory->get_count('pubmed'),"\n";
+print "Protein Count: ", $factory->get_count('protein'),"\n";
 
 ```
 
@@ -349,7 +300,6 @@ use Bio::DB::EUtilities;
 my @ids = qw(828392 790 470338);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
-
                                        -email => 'mymail@foo.bar',
                                        -db    => 'gene',
                                        -id    => @ids);
@@ -357,22 +307,16 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
 # iterate through the individual DocSum objects (one per ID)
 
 while (my $ds = $factory->next_DocSum) {
-
-    print "ID: ",$ds->get_id,"\
-
-";
+    print "ID: ",$ds->get_id,"\n";
 
     # flattened mode, iterates through all Item objects
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\
-
-",$item->get_name,$item->get_content) if $item->get_content;
-
+        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
     }
-    print "\
 
-"; }
+    print "\n";
+}
 
 ```
 
@@ -387,28 +331,21 @@ use Bio::DB::EUtilities;
 my @ids = qw(403164 45447012 27806117);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
-
                                        -email => 'mymail@foo.bar',
                                        -db    => 'protein',
                                        -id    => @ids);
 
 while (my $ds = $factory->next_DocSum) {
-
-    print "ID: ",$ds->get_id,"\
-
-";
+    print "ID: ",$ds->get_id,"\n";
 
     # flattened mode
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\
-
-",$item->get_name,$item->get_content) if $item->get_content;
-
+        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
     }
-    print "\
 
-"; }
+    print "\n";
+}
 
 ```
 
@@ -428,7 +365,6 @@ use Bio::DB::EUtilities;
 my @ids = qw(1621261 89318838 68536103 20807972 730439);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
-
                                        -email  => 'mymail@foo.bar',
                                        -db     => 'nucleotide',
                                        -dbfrom => 'protein',
@@ -437,18 +373,11 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
 # iterate through the LinkSet objects
 
 while (my $ds = $factory->next_LinkSet) {
+    print "   Link name: ",$ds->get_link_name,"\n";
+    print "Protein IDs: ",join(',',$ds->get_submitted_ids),"\n";
 
-    print "   Link name: ",$ds->get_link_name,"\
-
-";
-
-    print "Protein IDs: ",join(',',$ds->get_submitted_ids),"\
-
-";
-
-    print "    Nuc IDs: ",join(',',$ds->get_ids),"\
-
-"; }
+    print "    Nuc IDs: ",join(',',$ds->get_ids),"\n";
+}
 
 ```
 
@@ -461,7 +390,6 @@ use Bio::DB::EUtilities;
 my @ids = qw(1621261 89318838 68536103 20807972 730439);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
-
                                        -email          => 'mymail@foo.bar',
                                        -db             => 'nucleotide',
                                        -dbfrom         => 'protein',
@@ -471,18 +399,10 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
 # iterate through the LinkSet objects
 
 while (my $ds = $factory->next_LinkSet) {
-
-    print "   Link name: ",$ds->get_link_name,"\
-
-";
-
-    print "Protein IDs: ",join(',',$ds->get_submitted_ids),"\
-
-";
-
-    print "    Nuc IDs: ",join(',',$ds->get_ids),"\
-
-"; }
+    print "   Link name: ",$ds->get_link_name,"\n";
+    print "Protein IDs: ",join(',',$ds->get_submitted_ids),"\n";
+    print "    Nuc IDs: ",join(',',$ds->get_ids),"\n";
+}
 
 ```
 
@@ -497,32 +417,21 @@ Set '-dbfrom' = '-db'. This retrieves a list of neighbors based on a score (also
 use Bio::DB::EUtilities;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
-
                                        -email  => 'mymail@foo.bar',
                                        -db     => 'protein',
                                        -dbfrom => 'protein',
                                        -id     => 1621261);
 
 while (my $ls = $factory->next_LinkSet) {
+    print "    Link name: ",$ls->get_link_name,"\n";
 
-    print "    Link name: ",$ls->get_link_name,"\
-
-";
-
-    print " Protein IDs: ",join(',',$ls->get_submitted_ids),"\
-
-";
+    print " Protein IDs: ",join(',',$ls->get_submitted_ids),"\n";
 
     my @ids = $ls->get_ids;
-    print "Neighbor IDs: \
-
-";
+    print "Neighbor IDs: \n";
 
     for my $id (@ids) {
-        printf("tID:%-15d Score: %d\
-
-",$id, $ls->get_score_by_id($id));
-
+        printf("tID:%-15d Score: %d\n",$id, $ls->get_score_by_id($id));
     }
 
 }
@@ -538,7 +447,6 @@ LinkOut URLs are provided as a service by NCBI and link to information present o
 use Bio::DB::EUtilities;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
-
                                        -email  => 'mymail@foo.bar',
                                        -dbfrom => 'nucleotide',
                                        -cmd    => 'llinks',
@@ -546,21 +454,12 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
                                                       14336674 1817575)]);
 
 while (my $ls = $factory->next_LinkSet) {
-
     my ($id) = $ls->get_ids; # these are evaluated per id by default
-    print "ID:$id\
-
-";
+    print "ID:$id\n";
 
     while (my $linkout = $ls->next_UrlLink) {
-        print "tProvider: ",$linkout->get_provider_name,"\
-
-";
-
-        print "tLink    : ",$linkout->get_url,"\
-
-";
-
+        print "tProvider: ",$linkout->get_provider_name,"\n";
+        print "tLink    : ",$linkout->get_url,"\n";
     }
 
 }
@@ -579,11 +478,10 @@ Note: This was added for completeness. Not sure how much use it'll get but you n
 use Bio::DB::EUtilities;
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'espell',
-
                                        -email => 'mymail@foo.bar',
                                        -term  => 'brest cnacer');
 
-print "Did you mean "",$factory->get_corrected_query, ""? ";
+print "Did you mean ",$factory->get_corrected_query, "?\n";
 
 ```
 
@@ -601,25 +499,16 @@ use Bio::DB::EUtilities;
 my @ids = qw(1621261 89318838 68536103 20807972 730439);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'epost',
-
                                        -email          => 'mymail@foo.bar',
                                        -db             => 'protein',
                                        -id             => @ids,
                                        -keep_histories => 1);
 
 if (my $history = $factory->next_History) {
-
-    print "Posted successfully\
-
-";
-
-    print "WebEnv    : ",$history->get_webenv,"\
-
-";
-
-    print "Query_key : ",$history->get_query_key,"\
-
-"; }
+    print "Posted successfully\n";
+    print "WebEnv    : ",$history->get_webenv,"\n";
+    print "Query_key : ",$history->get_query_key,"\n";
+}
 
 ```
 
