@@ -20,7 +20,7 @@ One of the most common and necessary tasks in bioinformatics is parsing analysis
 
 The system was designed with the following assumptions: That all reports parsed with it could be separated into a hierarchy of components. The Result is the entire analysis for a single query sequence, and multiple Results can be concatenated together into a single file (i.e. running [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) with a fasta database as the input file rather than a single sequence). Each Result is a set of Hits for the query sequence. Hits are sequences in the searched database which could be aligned to the query sequence and met the minimal search parameters, such as e-value threshold. Each Hit has one or more High-scoring segment Pairs ) which are the alignments of the query and hit sequence. Each Result has a set of one or more Hits and each Hit has a set of one or more HSPs, and this relationship can be used to describe results from all pairwise alignment programs including BLAST, FastA, and implementations of the Smith-Waterman and Needleman-Wunsch algorithms.
 
-A design pattern, called Factory, is utilized in object oriented programming to separate the entity which processes data from objects which will hold the information produced. In the same manner that the module is used to parse different file formats and produces objects which are compliant, we have written to produce the Bio::Search objects. Sequences are a little less complicated so there is only one primary object while Search results need three main components to represent the data processed in a file:
+A design pattern, called Factory, is utilized in object oriented programming to separate the entity which processes data from objects which will hold the information produced. In the same manner that the module is used to parse different file formats and produces objects which are compliant, we have written to produce the [Bio::Search](http://search.cpan.org/search?query=Bio::Search) objects. Sequences are a little less complicated so there is only one primary object while Search results need three main components to represent the data processed in a file:
 
 - Top level results: [Bio::Search::Result::ResultI](https://metacpan.org/pod/Bio::Search::Result::ResultI)
 - Hits: [Bio::Search::Hit::HitI](https://metacpan.org/pod/Bio::Search::Hit::HitI)
@@ -73,9 +73,9 @@ bases, 977CE9AF checksum.
          (3059 letters)
 Database: test.fa 
            5 sequences; 1291 total letters
-                                                                Score    E
+      Score    E
 Sequences producing significant alignments:                     (bits) Value
-gb|443893|124775 LaForas sequence                                 92   2e-022
+gb|443893|124775 LaForas sequence    92   2e-022
 >gb|443893|124775 LaForas sequence
           Length = 331
  Score = 92.0 bits (227), Expect = 2e-022
@@ -124,22 +124,22 @@ A plaintext NCBI-BLAST report like that used in the example above probably remai
 
 ### Table of Methods
 
-| Object | Method                | Example                             | Description                                                                                                                |
+| Object | Method                | Example                             | Description                         |
 |--------|-----------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| Result | algorithm             | BLASTX                              | algorithm string                                                                                                           |
-| Result | algorithm_version    | 2.2.4 \[Aug-26-2002\]               | algorithm version                                                                                                          |
-| Result | query_name           | gi|20521485|dbj|AP004641.2          | query name                                                                                                                 |
-| Result | query_accession      | AP004641.2                          | query accession                                                                                                            |
-| Result | query_length         | 3059                                | query length                                                                                                               |
-| Result | query_description    | Oryza sativa ... 977CE9AF checksum. | query description                                                                                                          |
-| Result | database_name        | test.fa                             | database name                                                                                                              |
-| Result | database_letters     | 1291                                | number of residues in database                                                                                             |
-| Result | database_entries     | 5                                   | number of database entries                                                                                                 |
-| Result | available_statistics | effectivespaceused ... dbletters    | statistics used                                                                                                            |
-| Result | available_parameters | gapext matrix allowgaps gapopen     | parameters used                                                                                                            |
-| Result | num_hits             | 1                                   | number of hits                                                                                                             |
-| Result | hits               |                                     | List of all [Bio::Search::Hit::GenericHit](https://metacpan.org/pod/Bio::Search::Hit::GenericHit) objects for this Result       |
-| Result | rewind             |                                     | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits |
+| Result | algorithm             | BLASTX | algorithm string                    |
+| Result | algorithm_version    | 2.2.4 [Aug-26-2002]               | algorithm version                   |
+| Result | query_name           | gi|20521485|dbj|AP004641.2          | query name                          |
+| Result | query_accession      | AP004641.2                          | query accession                     |
+| Result | query_length         | 3059   | query length                        |
+| Result | query_description    | Oryza sativa ... 977CE9AF checksum. | query description                   |
+| Result | database_name        | test.fa                             | database name                       |
+| Result | database_letters     | 1291   | number of residues in database      |
+| Result | database_entries     | 5      | number of database entries          |
+| Result | available_statistics | effectivespaceused ... dbletters    | statistics used                     |
+| Result | available_parameters | gapext matrix allowgaps gapopen     | parameters used                     |
+| Result | num_hits             | 1      | number of hits                      |
+| Result | hits               |        | List of all [Bio::Search::Hit::GenericHit](https://metacpan.org/pod/Bio::Search::Hit::GenericHit) objects for this Result       |
+| Result | rewind             |        | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits |
 
 
 Table 2.1: All the data returned by methods used by the Result objects when the report shown above is used as input. 
@@ -168,47 +168,47 @@ Table 2.2. All the data returned by methods used by the Hit objects when the rep
 Many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
 
-| Object | Method                                               | Example                                  | Description  |
+| Object | Method                  | Example     | Description  |
 |--------|----------------------------------------------|-------|-------|
-| HSP    | algorithm                                            | BLASTX                                   | algorithm     |
-| HSP    | evalue                                               | 2e-022                                   | e-value                                                                                |
-| HSP    | expect                                               | 2e-022                                   | alias for evalue()                                                                     |
-| HSP    | frac_identical                                      | 0.884615384615385                        | fraction identical   |
-| HSP    | frac_conserved                                      | 0.923076923076923                        | fraction conserved (conservative and identical replacements aka "fraction similar")             |
-| HSP    | gaps                                                 | 2                                        | number of gaps                                                                         |
-| HSP    | query_string                                        | DMGRCSSG ..                              | query string from alignment                                                            |
-| HSP    | hit_string                                          | DIVQNSS ...                              | hit string from alignment                                                              |
-| HSPt | homology_string                                     | D+ + SSGCN ...                           | string from alignment  |
-| HSP    | length('total')                                  | 52                                       | length of HSP (including gaps)                                                         |
-| HSP    | length('hit')                                    | 50                                       | length of hit participating in alignment minus gaps                                    |
-| HSP    | length('query')t                               | 156                                      | length of query participating in alignment minus gaps                                  |
-| HSPt | hsp_length                                          | 52                                       | Length of the HSP (including gaps) alias for length('total')                       |
-| HSPt | frame                                                | 0                                        | $hsp->query->frame,$hsp->hit->frame                                        |
-| HSP    | num_conserved                                       | 48                                       | number of conserved (conservative replacements, aka "similar") residues                |
-| HSP    | num_identical                                       | 46                                       | number of identical residues                                                           |
-| HSPt | rank                                                 | 1                                        | rank of HSP                                                                            |
-| HSP    | seq_inds('query','identical')               | (966,971,972,973,974,975 ...)            | identical positions as array                                                           |
-| HSP    | seq_inds('query','conserved-not-identical') | (967,969)                                | conserved, but not identical positions as array                                        |
-| HSP    | seq_inds('query','conserved')               | (966,967,969,971,973,974,975, ...)       | conserved or identical positions as array                                              |
-| HSP    | seq_inds('hit','identical')                 | (197,202,203,204,205, ...)               | identical positions as array                                                           |
-| HSP    | seq_inds('hit','conserved-not-identical')   | (198,200)                                | conserved not identical positions as array                                             |
+| HSP    | algorithm               | BLASTX      | algorithm     |
+| HSP    | evalue                  | 2e-022      | e-value  |
+| HSP    | expect                  | 2e-022      | alias for evalue()           |
+| HSP    | frac_identical         | 0.884615384615385                        | fraction identical   |
+| HSP    | frac_conserved         | 0.923076923076923                        | fraction conserved (conservative and identical replacements aka "fraction similar")             |
+| HSP    | gaps                    | 2           | number of gaps               |
+| HSP    | query_string           | DMGRCSSG .. | query string from alignment  |
+| HSP    | hit_string             | DIVQNSS ... | hit string from alignment    |
+| HSPt | homology_string        | D+ + SSGCN ...                           | string from alignment  |
+| HSP    | length('total')     | 52          | length of HSP (including gaps)                            |
+| HSP    | length('hit')       | 50          | length of hit participating in alignment minus gaps       |
+| HSP    | length('query')t  | 156         | length of query participating in alignment minus gaps     |
+| HSPt | hsp_length             | 52          | Length of the HSP (including gaps) alias for length('total')                       |
+| HSPt | frame                   | 0           | $hsp->query->frame,$hsp->hit->frame           |
+| HSP    | num_conserved          | 48          | number of conserved (conservative replacements, aka "similar") residues                |
+| HSP    | num_identical          | 46          | number of identical residues                              |
+| HSPt | rank                    | 1           | rank of HSP  |
+| HSP    | seq_inds('query','identical')               | (966,971,972,973,974,975 ...)            | identical positions as array                              |
+| HSP    | seq_inds('query','conserved-not-identical') | (967,969)   | conserved, but not identical positions as array           |
+| HSP    | seq_inds('query','conserved')               | (966,967,969,971,973,974,975, ...)       | conserved or identical positions as array                 |
+| HSP    | seq_inds('hit','identical')                 | (197,202,203,204,205, ...)               | identical positions as array                              |
+| HSP    | seq_inds('hit','conserved-not-identical')   | (198,200)   | conserved not identical positions as array                |
 | HSP    | seq_inds('hit','conserved',1)               | (197,202-246)                            | conserved or identical positions as array, with runs of consecutive numbers compressed |
-| HSPt | score                                                | 227                                      | score   |
-| HSP    | bits                                                 | 92.0                                     | score in bits                                                                          |
-| HSP    | range('query')                                   | (2896,3051)                              | start and end as array                                                                 |
-| HSP    | range('hit')                                     | (197,246)                                | start and end as array                                                                 |
-| HSP    | percent_identity                                    | 88.4615384615385                         | % identical  |
-| HSP    | strand('hit')                                    | 1                                        | strand of the hit                                                                      |
-| HSP    | strand('query')                                  | 1                                        | strand of the query                                                                    |
-| HSP    | start('query')                                   | 2896                                     | start position from alignment                                                          |
-| HSP    | end('query')                                     | 3051                                     | end position from alignment                                                            |
-| HSP    | start('hit')                                     | 197                                      | start position from alignment                                                          |
-| HSP    | end('hit')                                       | 246                                      | end position from alignment                                                            |
-| HSP    | matches('hit')                                   | (46,48)                                  | number of identical and conserved as array                                             |
-| HSP    | matches('query')                                 | (46,48)                                  | number of identical and conserved as array                                             |
+| HSPt | score                   | 227         | score   |
+| HSP    | bits                    | 92.0        | score in bits                |
+| HSP    | range('query')      | (2896,3051) | start and end as array       |
+| HSP    | range('hit')        | (197,246)   | start and end as array       |
+| HSP    | percent_identity       | 88.4615384615385                         | % identical  |
+| HSP    | strand('hit')       | 1           | strand of the hit            |
+| HSP    | strand('query')     | 1           | strand of the query          |
+| HSP    | start('query')      | 2896        | start position from alignment                             |
+| HSP    | end('query')        | 3051        | end position from alignment  |
+| HSP    | start('hit')        | 197         | start position from alignment                             |
+| HSP    | end('hit')          | 246         | end position from alignment  |
+| HSP    | matches('hit')      | (46,48)     | number of identical and conserved as array                |
+| HSP    | matches('query')   | (46,48)  | number of identical and conserved as array                |
 | HSP    | get_aln | sequence alignment           | [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object  |
 | HSPt | hsp_group   | *Not available in this report* | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
-| HSP    | links                                                | *Not available in this report* | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
+| HSP    | links   | *Not available in this report* | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
 
 Table 2.3. All the data returned by methods used by the HSP objects when the report shown above is used as input. 
 
@@ -228,7 +228,7 @@ use Bio::AlignIO;
 # $aln will be a Bio::SimpleAlign object
 my $aln = $hsp->get_aln; 
 my $alnIO = Bio::AlignIO->new(-format => "msf", 
-                              -file => ">hsp.msf"); 
+ -file => ">hsp.msf"); 
 $alnIO->write_aln($aln);
 ```
 
@@ -272,7 +272,7 @@ print "Ind: $_ Gaps: $gap_pos{$_} " for sort {$a <=> $b} keys %gap_pos;
 
 `seq_inds()` can be very useful for extracting the mismatch bases in an alignment. If you wanted to figure out which bases are not matching in an alignment you could use `seq_inds` to get these positions and then extract out these specific bases from the alignment. *Note* translated sequences in a HSP (such as those used for TBLASTN, BLASTX, etc.) are by nature ambiguous as the sequence coordinates reported in the HSP map back to the original (nucleotide) sequence; under these circumstances all redundant nucleotide positions are returned for that match.
 
-One final note when using `seq_inds()`: if you want a list of ranges or only care about the positions of the gaps (not the gap length) and don't want repeated positions, you can use `my @inds = $hsp->seq_inds('query'=>'gaps',1)`; the last argument is a boolean flag with collapses consecutive positions into ranges and single sequence positions.
+One final note when using `seq_inds()`: if you want a list of ranges or only care about the positions of the gaps (not the gap length) and don't want repeated positions, you can do `my @inds = $hsp->seq_inds( 'query'=>'gaps', 1 )`, the last argument is a boolean flag with collapses consecutive positions into ranges and single sequence positions.
 
 #### frame()
 
@@ -319,7 +319,7 @@ sub print_blast_results {
 }
 ```
 
-If you parsed a report already and want to reset the parser (i.e. if you sent the SearchIO object to the subs above instead of the object, then iterated through everything twice), you would need to reset the SearchIO object itself by using `seek($blast_report->_fh, 0);`. We don't recommend doing this for two reasons. First, each round of parsing takes the same length of time since you start parsing the report from scratch, so you'll take a time hit. Second, if you saved objects from the first round of parsing you will take a memory hit, because a new set of objects is generated for each subsequent round of parsing the report. Hence, we use the already-generated object in the subroutines instead.
+If you parsed a report already and want to reset the parser (i.e. if you sent the SearchIO object to the subs above instead of the object, then iterated through everything twice), you would need to reset the SearchIO object itself by using `seek($blast_report->_fh, 0)`. We don't recommend doing this for two reasons. First, each round of parsing takes the same length of time since you start parsing the report from scratch, so you'll take a time hit. Second, if you saved objects from the first round of parsing you will take a memory hit, because a new set of objects is generated for each subsequent round of parsing the report. Hence, we use the already-generated object in the subroutines instead.
 
 To simplify things here a bit more, you could simply grab all the hits at once using `$result->hits` before you sort them, as demonstrated in a previous example. The `hits` method does not use the iterator; it simply returns a list of [Bio::Search::Hit::BlastHit](https://metacpan.org/pod/Bio::Search::Hit::BlastHit) objects. Hence, there is no need to `rewind` the object:
 
@@ -364,7 +364,7 @@ Creating Reports for SearchIO
 
 One note on creating reports that can be parsed by [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO): the developers haven't attempted to parse all the possible reports that could be created by programs with many command-line options, like [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual). Certainly you should be able to parse reports created using the default settings, but if you're running [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual), say, using some special set of options and you've encountered a parsing problem this may be the explanation.
 
-For example, one can currently parse [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) output created with the default settings as well as the reports created when using the "-m 8" or "-m 9" options (use `-format=>'blasttable'`) or the "-m 7" XML-formatted reports (use `-format=>'blastxml'`) but it's still possible to find sets of options that can't parse.
+For example, one can currently parse [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) output created with the default settings as well as the reports created when using the `-m 8` or `-m 9` options (use `-format=>'blasttable'`) or the `-m 7` XML-formatted reports (use `-format=>'blastxml'`) but it's still possible to find sets of options that can't parse.
 
 You might also find it useful not to have to create reports as files. [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) is aware of `STDIN` so you can pipe output from the search application directly to it (on operating systems that allow such things). It could look something like this:
 
@@ -412,7 +412,7 @@ The simplest way to output data in HTML format is as follows.
 
 my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); 
 my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
-                                -file   => ">searchio.html");
+   -file   => ">searchio.html");
 
 # get a result from Bio::SearchIO parsing or build it up in memory
 $outhtml->write_result($result);
@@ -424,7 +424,7 @@ If you want to output multiple results into a single HTML file, do the following
 
 my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter(); 
 my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
-                                -file   => ">searchio.html");
+   -file   => ">searchio.html");
 
 # Loop through all the results, successively adding each one to the bottom of # the HTML report
 while ( $result = $searchio->next_result() ) {  
@@ -484,7 +484,7 @@ use Bio::Search::Hit::HitFactory;
 
 # setup the blast parser, you can do this with and SearchIO parser however
 my $searchio = Bio::SearchIO->new(-file => $blastfile,
-                                  -format =>'blast'); 
+     -format =>'blast'); 
 
 # build HSP factory with a certain type of HSPs to make
 # the default is Bio::Search::HSP::GenericHSP
