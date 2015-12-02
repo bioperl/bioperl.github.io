@@ -6,71 +6,81 @@ layout: default
 Abstract
 --------
 
-A detailed description of the namespace, including how-tos for the application of to obtain global alignment statistics from BLAST-type search reports parsed by .
+A detailed description of the [Bio::Search::Tiling]() namespace, including how-tos for the application of [Bio::Search::Tiling::MapTiling]() to obtain global alignment statistics from BLAST-type search reports parsed by [Bio::SearchIO]().
 
-[Quick Link] to user tips.
+[Quick Link](#tips) to user tips.
 
 __TOC__
 
 Why Tile?
 ---------
 
-Frequently, users want to use a set of high-scoring pairs (HSPs) obtained from a BLAST or other search to assess the overall level of identity, conservation, or coverage represented by matches between a subject and a query sequence. Because a set of HSPs frequently describes multiple overlapping sequence fragments, a simple summation of a statistics over the HSPs will generally be an overestimate of the true value. To obtain an accurate estimate of global hit statistics, a ''[tiling]'' of HSPs onto either the subject or the query sequence must be performed, in order to properly correct for this. ''(Aside for pedants: The use of the term tiling is very imprecise in this article, but the underlying algorithm is based on the construction of an actual tiling of certain subsets of the natural numbers.)''
+Frequently, users want to use a set of high-scoring pairs (HSPs) obtained from a BLAST or other search to assess the overall level of identity, conservation, or coverage represented by matches between a subject and a query sequence. Because a set of HSPs frequently describes multiple overlapping sequence fragments, a simple summation of a statistics over the HSPs will generally be an overestimate of the true value. To obtain an accurate estimate of global hit statistics, a [tiling](http://en.wikipedia.org/wiki/Tessellation) of HSPs onto either the subject or the query sequence must be performed, in order to properly correct for this. _(Aside for pedants: The use of the term tiling is very imprecise in this article, but the underlying algorithm is based on the construction of an actual tiling of certain subsets of the natural numbers.)_
 
-BioPerl has long provided the means to estimate global statistics for a search report based on tiling ideas. The module, along with concurrent modifications to and , allows approximate tiling estimates of statistics such as number of identities, number of conserved sites, and fraction of site aligned. While these have been useful for many, the algorithm is not perfect, as the authors acknowledge (see [this post](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028584.html)), and there is a lack of trust in these estimates by core developers, to the extent that a ''de facto'' deprecation appears to be underway (see bioperl-l threads [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028502.html) and [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-May/029959.html), for examples).
+BioPerl has long provided the means to estimate global statistics for a search report based on tiling ideas. The [Bio::Search::SearchUtils]() module, along with concurrent modifications to [Bio::Search::Hit::HitI]() and [Bio::Search::HSP::HSPI](), allows approximate tiling estimates of statistics such as number of identities, number of conserved sites, and fraction of site aligned. While these have been useful for many, the algorithm is not perfect, as the authors acknowledged (see [this post](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028584.html)), and there was a lack of trust in these estimates by core developers, to the extent that a _de facto_ deprecation seemed to occur  (see bioperl-l threads [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028502.html) and [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-May/029959.html), for examples).
 
-The namespace and its associated modules were written from the ground up, in an attempt to provide BioPerl with a sound "pure-BioPerl" way to calculate global search statistics, and to address actual and perceived weaknesses in the current implementation. By creating a new namespace as well as an associated abstract interface (), we're forced to consider what constitutes a tiling as an entity separate from results, hits, and HSPs. This leads to easier conceptualization of the problem and the possibilities for both users and developers. We're also forced to isolate the code involved, rather than spread out the details over multiple namespaces, as the current implementation does. This hopefully makes the maintainer's job easier. This organization also creates an easy handle for developers interested in implementing different tiling algorithms, or extending the present one, .
+The namespace and its associated modules were written from the ground up, in an attempt to provide BioPerl with a sound "pure-BioPerl" way to calculate global search statistics, and to address actual and perceived weaknesses in the current implementation. By creating a new namespace as well as an associated abstract interface ([Bio::Search::Tiling::TilingI]()), we're forced to consider what constitutes a tiling as an entity separate from results, hits, and HSPs. This leads to easier conceptualization of the problem and the possibilities for both users and developers. We're also forced to isolate the code involved, rather than spread out the details over multiple namespaces, as the older implementation did. This hopefully makes the maintainer's job easier. This organization also creates an easy handle for developers interested in implementing different tiling algorithms, or extending the present one, [Bio::Search::Tiling::MapTiling]() .
 
 Key Organizing Concepts
 -----------------------
 
 `MapTiling` was designed around several concepts that drive the names of objects, methods and variables in the code, and that I will use freely in this article. These were invented to be able to talk concretely about some of the more fuzzy issues, where the difficulties and bugs tended to creep in.
 
-''Search report'' : This is just the file read by , which can come in many flavors. The flavor is the ''algorithm'', and '''not''' the ''format'' specified to `Bio::SearchIO::new()`. ''Algorithms'' are, e.g., BLASTX, BLASTN, TBLASTX, and so on.  
+## Search report ##
+
+This is just the file read by [Bio::SearchIO](), which can come in many flavors. The flavor is the _algorithm_, and *not* the _format_ specified to `Bio::SearchIO::new()`. _Algorithms_ are, e.g., BLASTX, BLASTN, TBLASTX, and so on.
 
 <!-- -->
 
-Sequence ''type'' : An HSP involves two sequences, aligned to each other: the ''query'' and the ''hit'' (or ''subject''). The query is often the sequence entered by the user, who is looking for matches among the subject sequences in a database. When a subject sequence matches (a portion of) the query well enough, it is reported as a hit, and the HSP describing the alignment is written to the search report. A sequence in an HSP is defined by its ''type'': ''query'' or ''hit'' (''subject'').  
+## Sequence _type_ ##
+
+An HSP involves two sequences, aligned to each other: the _query_ and the _hit_ (or _subject_). The query is often the sequence entered by the user, who is looking for matches among the subject sequences in a database. When a subject sequence matches (a portion of) the query well enough, it is reported as a hit, and the HSP describing the alignment is written to the search report. A sequence in an HSP is defined by its _type_: _query_ or _hit_ (_subject_).
 
 <!-- -->
 
-Sequence ''length'' : There are two lengths associated with each of the sequences in a given HSP: the ''aligned'' length, which is the length of the sequence (query or hit) actually involved in the HSP alignment, and the ''total'' length, which is the length of the entire sequence input by the user as a query, or the entire length of the hit sequence in the database. The distinction becomes important when calculating the fraction of a sequence successfully aligned over multiple HSPs in a search report.  
+## Sequence _length_ ##
+
+There are two lengths associated with each of the sequences in a given HSP: the ''aligned'' length, which is the length of the sequence (query or hit) actually involved in the HSP alignment, and the ''total'' length, which is the length of the entire sequence input by the user as a query, or the entire length of the hit sequence in the database. The distinction becomes important when calculating the fraction of a sequence successfully aligned over multiple HSPs in a search report.
 
 <!-- -->
 
-Coordinate ''mapping'' and ''conversion'' : These are concepts to help handle what has been the hardest part to get right in tiling. When aligning amino acid queries to amino acid subjects, or nucleotide queries to nucleotide subjects, there's no problem. The difficulties crop up when nucleotides are translated into amino acids, which are then aligned to protein (amino acid) or translated nucleotide databases.  
+## Coordinate _mapping_ and _conversion_ ##
+
+These are concepts to help handle what has been the hardest part to get right in tiling. When aligning amino acid queries to amino acid subjects, or nucleotide queries to nucleotide subjects, there's no problem. The difficulties crop up when nucleotides are translated into amino acids, which are then aligned to protein (amino acid) or translated nucleotide databases.
 
 <!-- -->
 
   
-There is a convention in BLAST search reports; the trick is to work it out, and code within it as transparently as possible. There is one more concept to get us through, that of ''reported'' vs. ''enumerated'' coordinates. ''Coordinates'' are just the numbers that represent the position of a residue in a sequence fragment. The reported coordinate of a residue, then, is a number ''given or deduced from the coordinate or length numbers contained in a search report''. An enumerated coordinate is a number calculated by ''measuring a string of symbols in a sequence'' parsed from a search report. The convention is: when a sequence is given as translated nucleotides (query sequences in BLASTX, subject sequences in TBLASTN, and both in TBLASTX), the reported coordinates count nucleotides, but the sequence symbols represent amino acids, so that 1 enumerated residue = 3 reported residues, for the translated sequence type, in a given search report.
+There is a convention in BLAST search reports; the trick is to work it out, and code within it as transparently as possible. There is one more concept to get us through, that of _reported_ vs. _enumerated_ coordinates. _Coordinates_ are just the numbers that represent the position of a residue in a sequence fragment. The reported coordinate of a residue, then, is a number _given or deduced from the coordinate or length numbers contained in a search report_. An enumerated coordinate is a number calculated by _measuring a string of symbols in a sequence_ parsed from a search report. The convention is: when a sequence is given as translated nucleotides (query sequences in BLASTX, subject sequences in TBLASTN, and both in TBLASTX), the reported coordinates count nucleotides, but the sequence symbols represent amino acids, so that 1 enumerated residue = 3 reported residues, for the translated sequence type, in a given search report.
 
 <!-- -->
 
   
-The ''mapping coefficient'' or ''mapping'' of a sequence type for a given report is either 1 for raw amino acids or untranslated nucleotides, or 3 for translated nucleotides. We don't hard code 3s everywhere, however, but attempt to make the mapping idea as general as possible. Because, who knows?
+The _mapping coefficient_ or _mapping_ of a sequence type for a given report is either 1 for raw amino acids or untranslated nucleotides, or 3 for translated nucleotides. We don't hard code 3s everywhere, however, but attempt to make the mapping idea as general as possible. Because, who knows?
 
 <!-- -->
 
-The ''context'' of a sequence type in an HSP : Either the plus or the minus strand of a nucleotide sequence can be involved in an alignment. When translated nucleotides are involved, then the translation frame must also be specified. Several algorithms automatically attempt to match both strands and all translations frames of query and/or subject sequences, so that search reports will contain HSPs involving different strand/frame ''contexts'' for the query and/or hit. Tiling HSPs onto a sequence type makes sense only if the HSPs share the same context for that type. `MapTiling` therefore provides methods for convenient context bookkeeping, and insists on the specification of strand/frame context when operating on search reports that require it.  
+## The _context_ of a sequence type in an HSP ##
+
+Either the plus or the minus strand of a nucleotide sequence can be involved in an alignment. When translated nucleotides are involved, then the translation frame must also be specified. Several algorithms automatically attempt to match both strands and all translations frames of query and/or subject sequences, so that search reports will contain HSPs involving different strand/frame _contexts_ for the query and/or hit. Tiling HSPs onto a sequence type makes sense only if the HSPs share the same context for that type. `MapTiling` therefore provides methods for convenient context bookkeeping, and insists on the specification of strand/frame context when operating on search reports that require it.
 
 <!-- -->
 
-The ''action'' of a method : There are several ways to assess the global "goodness" of a search: for example, the maximum number of identities over all tilings, or the average fraction identical over all HSPs in a given context. The ''action'' of a `MapTiling` stats method is just the descriptive string that selects the algorithm used to calculate the desired statistic. I used "action" in order to avoid using "method", which I like to reserve for its coding connotation.   
+## The _action_ of a method ##
 
-Tiling Your Searches with 
---------------------------
+There are several ways to assess the global "goodness" of a search: for example, the maximum number of identities over all tilings, or the average fraction identical over all HSPs in a given context. The _action_ of a `MapTiling` stats method is just the descriptive string that selects the algorithm used to calculate the desired statistic. I used "action" in order to avoid using "method", which I like to reserve for its coding connotation.
 
-### Overview
+Tiling Your Searches with [Bio::Search::Tiling::MapTiling]()
+------------------------------------------------------------
 
-Searches parsed with are organized as follows ''(see and [Parsing BLAST HSPs] for much more detail)'':
+## Overview ##
 
--   the object contains
-    -   , which contain
+Searches parsed with [Bio::SearchIO]() are organized as follows _(see [SearchIO HOWTO]() and [Parsing BLAST HSPs](#parse-blast-hsps) for much more detail)_:
 
-        -   , which contain
-
-            -   .
+*  the [Bio::SearchIO]() object contains
+   * [Results](), which contain
+		* [Hits]() , which contain
+			* [HSPs]().
 
 So the basic procedure is:
 
@@ -84,225 +94,209 @@ For example,
 
 ```perl
 
-# simple use of MapTiling object
+ # simple use of MapTiling object 
 
 use Bio::SearchIO; use Bio::Search::Tiling::MapTiling;
 
 my $hit;
-
 my $blio = Bio::SearchIO->new( -format => 'blast',
-
-`                              -file   => \'myblast.txt\');`
+                               -file   => 'myblast.txt');
 
 my $result = $blio->next_result;
 
 while ($hit = $result->next_hit) {
-
-` last if $hit->name =~ /Xenopus/;`
-
+  last if $hit->name =~ /Xenopus/;
 }
 
 my $tiling = Bio::Search::Tiling::MapTiling->new($hit);
 
 printf("global fraction identical against Xenopus: %.2f ",
-
-`      $tiling->frac_identical(-type => \'query\', -action => \'exact\'));`
-
+        $tiling->frac_identical(-type => 'query', -action => 'exact'));
 ```
 
-### Use Cases
+## Use Cases ##
 
 Add your own! (Along with solutions, that is...)
 
-#### Finding the "Best" Tiling
+### Finding the "Best" Tiling ###
 
-Frequently users want to find and extract the "best" set of HSPs in the hit. The definition of "best" will vary with the user and the problem, so `MapTiling` tries to be flexible, providing the user with several options for calculating statistics, but no built-in function `tiling_that_the_user_ought_to_be_grateful_for()`. The user can create her own optimizers. If they are useful, please submit them as enhancements on [Redmine](http://redmine.open-bio.org), and we can collect them into their own module in the namespace for the benefit of other users.
+Frequently users want to find and extract the "best" set of HSPs in the hit. The definition of "best" will vary with the user and the problem, so `MapTiling` tries to be flexible, providing the user with several options for calculating statistics, but no built-in function `tiling_that_the_user_ought_to_be_grateful_for()`. The user can create her own optimizers. If they are useful, please submit them as  [GitHub issues](https://github.com/bioperl/bioperl-live/issues), and we can collect them into their own module in the namespace for the benefit of other users.
 
--   ''Use case'':
+-   _Use case_:
 
 A user has a TBLASTN report, where a nucleotide query is compared to a translated nucleotide database. The user wants to find the hit that produced the most identities with the query, and then obtain HSPs from that hit in the subject strand/frame context that has the highest fraction of aligned, conserved residues. These HSPS should "cover" the query, to the extent possible within the context.
 
 ```perl
 
-use Bio::SearchIO; use Bio::Search::Tiling::MapTiling;
-
-my $blio = Bio::SearchIO->new( -format => 'blast', ttt -file => 'myblast.tblastn' );
-
+use Bio::SearchIO;
+use Bio::Search::Tiling::MapTiling;
+ 
+my $blio = Bio::SearchIO->new( -format => 'blast',
+                               -file => 'myblast.tblastn' );
+ 
 my $result = $blio->next_result;
+ 
+my ($best_tiling, $best_context, $max_ident, $max_frac_cons) = get_the_best($result);
 
-my ($best_tiling, $best_context, $max_ident, $max_frac_cons) =
-
-`   get_the_best($result);`
-
-while (my @tiled_hsps = $best_tiling->next_tiling('subject', $best_context)) {
-
-`   # do stuff with my array of tiled HSP objects`
-
-}
-
+ while (my @tiled_hsps = $best_tiling->next_tiling('subject', $best_context)) {
+    # do stuff with my array of tiled HSP objects
+ }
+ 
 sub get_the_best {
-
-`   my $result = shift;`
-`   my @hits = $result->hits;`
-
-# initialize
-
-`   my $best_hit = pop @hits;`
-`   my $best_tiling = Bio::Search::Tiling::MapTiling->new($best_hit);`
-`   my $max_ident = $best_tiling->identities(\'query\',\'exact\');`
-`   `
-
+    my $result = shift;
+    my @hits = $result->hits;
+# initialize 
+    my $best_hit = pop @hits;
+    my $best_tiling = Bio::Search::Tiling::MapTiling->new($best_hit);
+    my $max_ident = $best_tiling->identities('query','exact');
+ 
 # search through hits
-
-`   foreach my $hit (@hit) {`
-
-tmy $tiling = Bio::Search::Tiling::MapTiling->new($hit); tmy $ident = $tiling->identities('query','exact'); tif ( $ident > $max_ident ) { t $max_ident = $ident; t $best_tiling = $tiling; t}
-
-`   }`
-`   `
-
-# now, have the hit providing the most identities against the query
-2.  search the contexts in the \*subject\* sequences
-
-<!-- -->
-
-# initialize
-
-`   my @contexts = $best_tiling->contexts(\'subject\');`
-`   my $best_context = pop @contexts;`
-`   my $max_frac = $best_tiling->frac_conserved(-type=>\'subject\',`
-
-tttttt-action=>'exact', tttttt-context=>$best_context);
-
-# search through contexts
-
-`   for my $context (@contexts) {`
-
-tmy $frac = $best_tiling->frac_conserved(-type=>'subject', tttttt-action=>'exact', tttttt-context=>$context); tif ($frac > $max_frac) { t $max_frac = $frac; t $best_context = $context; t}
-
-`   }`
-
+    foreach my $hit (@hit) {
+        my $tiling = Bio::Search::Tiling::MapTiling->new($hit);
+        my $ident = $tiling->identities('query','exact');
+        if ( $ident > $max_ident ) {
+            $max_ident = $ident;
+            $best_tiling = $tiling;
+		}
+	}
+ 
+#now, have the hit providing the most identities against the query
+#search the contexts in the *subject* sequences
+ 
+#initialize    
+    my @contexts = $best_tiling->contexts('subject');
+    my $best_context = pop @contexts;
+    my $max_frac = $best_tiling->frac_conserved(-type=>'subject',
+                                                -action=>'exact',
+                                                -context=>$best_context);
+#search through contexts
+    for my $context (@contexts) {
+        my $frac = $best_tiling->frac_conserved(-type=>'subject',
+                                                -action=>'exact',
+                                                -context=>$context);
+        if ($frac > $max_frac) {
+            $max_frac = $frac;
+            $best_context = $context;
+        }
+    }
+ 
 # return the objects and the values
-
-`   return ($best_tiling, $best_context, $max_ident, $max_frac);`
-
+    return ($best_tiling, $best_context, $max_ident, $max_frac);
 }
 
 ```
 
-#### Quick and Dirty "Tiling"
+### Quick and Dirty "Tiling" ###
 
-In `MapTiling`, no work is done until it is requested and necessary. No tiling algorithm is executed until an action is called that needs it. So, we can create a `MapTiling` object, then perform other work on the HSPs (collect their contexts, for example, which ''is'' automatically done on construction), without triggering more complex calculations.
+In `MapTiling`, no work is done until it is requested and necessary. No tiling algorithm is executed until an action is called that needs it. So, we can create a `MapTiling` object, then perform other work on the HSPs (collect their contexts, for example, which _is_ automatically done on construction), without triggering more complex calculations.
 
-When one is faced with a huge number of hits, one occasionally hears someone mumble: "well, if you loop through the HSPs you could pick out the best one; should take about 20 lines of Perl". Huh? So, `MapTiling` provides the `\'fast\'` action as a convenience. This doesn't involve tiling at all (see comment above), but instead takes an average of a ''reported'' statistic (actually written to the report, not calculated), over all HSPs in a hit, weighted by the (reported) length of the HSPs. This estimate is often very good (generally within 1-5% of the 'est' action (see below), which relies on tiling), but sometimes bombs (~30% error). Decent for quick and dirty, >10000 hits, and no time to code.
+When one is faced with a huge number of hits, one occasionally hears someone mumble: "well, if you loop through the HSPs you could pick out the best one; should take about 20 lines of Perl". Huh? So, `MapTiling` provides the `'fast'` action as a convenience. This doesn't involve tiling at all (see comment above), but instead takes an average of a _reported_ statistic (actually written to the report, not calculated), over all HSPs in a hit, weighted by the (reported) length of the HSPs. This estimate is often very good (generally within 1-5% of the 'est' action (see below), which relies on tiling), but sometimes bombs (~30% error). Decent for quick and dirty, >10000 hits, and no time to code.
 
-The 'fast' action respects context.
+The `'fast'` action respects context.
 
--   ''Use case'':
+-   _Use case_:
 
 A user has a BLASTP report that contains 5000 hits against the query, with each hit containing between 1 and 1000 HSPs. The user really just wants to see if his favorite organism came out on top.
 
 ```perl
 
-use Bio::SearchIO; use Bio::Search::Tiling::MapTiling;
-
-my $blio = Bio::SearchIO->new( -format => 'blast', ttt -file => 'myhugeblast.blastp' );
-
+use Bio::SearchIO;
+use Bio::Search::Tiling::MapTiling;
+ 
+my $blio = Bio::SearchIO->new( -format => 'blast',
+                               -file => 'myhugeblast.blastp' );
+ 
 my $result = $blio->next_result;
-
+ 
 # play Tetris on your phone here....then
-
-my $top_name, $top_value = 0; while (my $hit = $result->next_hit) {
-
-`   $tiling = Bio::Search::Tiling::MapTiling->new($hit);`
-`   if (my $id = $tiling->identical(\'subject\',\'fast\') > $top_value) {`
-
-t$top_name = $hit->name; t$top_value = $id;
-
-`   }`
-
+ 
+my $top_name, $top_value = 0;
+while (my $hit = $result->next_hit) {
+    $tiling = Bio::Search::Tiling::MapTiling->new($hit);
+    if (my $id = $tiling->identical('subject','fast') > $top_value) {
+        $top_name = $hit->name;
+        $top_value = $id;
+    }
 }
-
-print "Best hit (Q&D): ${$top_name}, with est identities ${top_value} ";
+ 
+print "Best hit (Q&D): ${$top_name}, with est identities ${top_value}\n";
 
 ```
 
-#### Creating BioPerl Alignments from a Tiled Hit
+### Creating BioPerl Alignments from a Tiled Hit ###
 
--   ''Use case:''
+-   _Use case:_
 
 A user has BLASTed a set of contigs against a reference sequence, and would like to obtain an alignment constructed from a tiling of those contigs. The user really wants a concatenated sequence of the portions of the contigs that mapped to the reference.
 
 ```perl
-
-use Bio::SearchIO; use Bio::Search::Tiling::MapTiling
-
+use Bio::SearchIO;
+use Bio::Search::Tiling::MapTiling
+ 
 # Note that to get one hit, the user first blasts
-2.  the set of contigs against single sequence, the reference sequence.
-3.  The result of this BLAST run is in 'contig_tile.bls'
-
-$blio = Bio::SearchIO->new( -file => 'contig_tile.bls'); $result = $blio->next_result; $hit = $result->next_hit; $tiling = Bio::Search::Tiling::MapTiling->new($hit); @alns = $tiling->get_tiled_alns('query');
-
+# the set of contigs against single sequence, the reference sequence.
+# The result of this BLAST run is in 'contig_tile.bls'
+ 
+$blio = Bio::SearchIO->new( -file => 'contig_tile.bls');
+$result = $blio->next_result;
+$hit = $result->next_hit;
+$tiling = Bio::Search::Tiling::MapTiling->new($hit);
+@alns = $tiling->get_tiled_alns('query');
+ 
 # here's the concatenation:
-
-$concat_seq_obj = $alns\[0\]->get_seq_by_id('query');
+$concat_seq_obj = $alns[0]->get_seq_by_id('query');
 
 ```
 
-The experimental method `get_tiled_alns()` uses a tiling to concatenate tiled HSPs into a series of objects. Each alignment contains two sequences with ids 'query' and 'subject', and consists of a concatenation of tiling HSPs which overlap or are directly adjacent. The alignment are returned in `$type` sequence order. When HSPs overlap, the alignment sequence is taken from the HSP which comes first in the [coverage map] array.
+The experimental method `get_tiled_alns()` uses a tiling to concatenate tiled HSPs into a series of [Bio::SimpleAlign]() objects. Each alignment contains two sequences with ids 'query' and 'subject', and consists of a concatenation of tiling HSPs which overlap or are directly adjacent. The alignment are returned in `$type` sequence order. When HSPs overlap, the alignment sequence is taken from the HSP which comes first in the [coverage map]() array.
 
-The sequences in each alignment contain features (even though they are objects) which map the original query/subject coordinates to the new alignment sequence coordinates. You can determine the original BLAST fragments this way:
+The sequences in each alignment contain features (even though they are [Bio::LocatableSeq]() objects) which map the original query/subject coordinates to the new alignment sequence coordinates. You can determine the original BLAST fragments this way:
 
 ```perl
 
-$aln = ($tiling->get_tiled_alns)\[0\]; $qseq = $aln->get_seq_by_id('query'); $hseq = $aln->get_seq_by_id('subject'); foreach my $feat ($qseq->get_SeqFeatures) {
-
-`  $org_start = ($feat->get_tag_values(\'query_start\'))[0];`
-`  $org_end = ($feat->get_tag_values(\'query_end\'))[0];`
-`  # original fragment as represented in the tiled alignment:`
-`  $org_fragment = $feat->seq;`
-
-} foreach my $feat ($hseq->get_SeqFeatures) {
-
-`  $org_start = ($feat->get_tag_values(\'subject_start\'))[0];`
-`  $org_end = ($feat->get_tag_values(\'subject_end\'))[0];`
-`  # original fragment as represented in the tiled alignment:`
-`  $org_fragment = $feat->seq;`
-
+$aln = ($tiling->get_tiled_alns)[0];
+$qseq = $aln->get_seq_by_id('query');
+$hseq = $aln->get_seq_by_id('subject');
+foreach my $feat ($qseq->get_SeqFeatures) {
+   $org_start = ($feat->get_tag_values('query_start'))[0];
+   $org_end = ($feat->get_tag_values('query_end'))[0];
+   # original fragment as represented in the tiled alignment:
+   $org_fragment = $feat->seq;
+}
+foreach my $feat ($hseq->get_SeqFeatures) {
+   $org_start = ($feat->get_tag_values('subject_start'))[0];
+   $org_end = ($feat->get_tag_values('subject_end'))[0];
+   # original fragment as represented in the tiled alignment:
+   $org_fragment = $feat->seq;
 }
 
 ```
 
-Read more about features at [the HOWTO].
+Read more about features at [the Feature-annotation HOWTO]().
 
-### Statistics Method "Actions"
+## Statistics Method "Actions" ##
 
-The global statistics are calculated by summing quantities over the disjoint component intervals of the tiling, taking into account coverage of those intervals by multiple HSPs. The ''action'' parameter is a descriptive string used to select a particular algorithm for calculating the desired statistic. Here is a brief description of the algorithms.
+The global statistics are calculated by summing quantities over the disjoint component intervals of the tiling, taking into account coverage of those intervals by multiple HSPs. The _action_ parameter is a descriptive string used to select a particular algorithm for calculating the desired statistic. Here is a brief description of the algorithms.
 
--   '''''exact''''' counts characters in the appropriate segment of HSPs "homology string" (that's the one between the subject and query with the symbols)
+-   *_exact_* counts characters in the appropriate segment of HSPs "homology string" (that's the one between the subject and query with the symbols)
+-   *_est_* will estimate the statistics by multiplying the fraction of the HSP overlapped by the tiling components by the BLAST-reported identities/postives (this may be convenient for BLAST summary report formats)
 
-<!-- -->
+Both _exact_ and _est_ take the average over the number of HSPs that overlap the component interval. _est_ does not require sequence data to be present in the search report.
 
--   '''''est''''' will estimate the statistics by multiplying the fraction of the HSP overlapped by the tiling components by the BLAST-reported identities/postives (this may be convenient for BLAST summary report formats)
+-   *_max_* uses the exact method to calculate the statistics, but returns only the maximum identites/positives over overlapping HSPs for the component interval. No averaging is involved here.
 
-''Both ''exact'' and ''est'' take the average over the number of HSPs that overlap the component interval. ''est'' does not require sequence data to be present in the search report.''
+-   *_fast_* doesn't involve tiling at all and uses only reported values, and so does not require sequence data. It calculates an average of reported identities, conserved sites, and lengths, over unmodified hsps in the hit, weighted by the length of the hsps.
 
--   '''''max''''' uses the exact method to calculate the statistics, but returns only the maximum identites/positives over overlapping HSPs for the component interval. No averaging is involved here.
+## Specifying Strand/Frame Context **
 
-<!-- -->
+In the `MapTiling` implementation, strand/frame _contexts_ (see [key concepts]() above) are properties of sequence _types_ within HSPs, and not of HSPs themselves.
 
--   '''''fast''''' doesn't involve tiling at all and uses only reported values, and so does not require sequence data. It calculates an average of reported identities, conserved sites, and lengths, over unmodified hsps in the hit, weighted by the length of the hsps.
-
-### Specifying Strand/Frame Context
-
-In the `MapTiling` implementation, strand/frame ''contexts'' (see [key concepts] above) are properties of sequence ''types'' within HSPs, and not of HSPs themselves.
-
-To avoid the proliferation of ` -strand => $strand, -frame => $frame ` arguments in already long argument lists, and to reduce the ''context'' to a single simple entity, `MapTiling` uses yet another ad-hoc representation of strand/frame specification. In the code and pod, this is called the ''context string''. Its syntax is as follows (with apologies to the W3C, as well as the reader):
-
-`ContextString ::= \'all\' | (ContextStrandFrameString)`
-`ContextStrandFrameString ::= (\'m\' | \'p\') (\'0\' | \'1\' | \'2\' | \'_\')`
-
-The context `all` indicates that, for the given sequence type, all HSPs in the hit are in the same context. This is true, e.g., for both query and hit types in a BLASTP report. However, the `all` context cannot be used to indicate that for all HSPs in a given hit, a given sequence type happens be in the same ''strand/frame context''. This context must be given explicitly. However, the user can test whether a type has only one context represented with something like:
+To avoid the proliferation of ` -strand => $strand, -frame => $frame ` arguments in already long argument lists, and to reduce the _context_ to a single simple entity, `MapTiling` uses yet another ad hoc representation of strand/frame specification. In the code and pod, this is called the _context string_. Its syntax is as follows:
+```
+ContextString ::= 'all | (ContextStrandFrameString)
+ContextStrandFrameString ::= ('m' | 'p' ) ('0' | '1' | '2' | '_')
+```
+The context `all` indicates that, for the given sequence type, all HSPs in the hit are in the same context. This is true, e.g., for both query and hit types in a BLASTP report. However, the `all` context cannot be used to indicate that for all HSPs in a given hit, a given sequence type happens be in the same _strand/frame context_. This context must be given explicitly. However, the user can test whether a type has only one context represented with something like:
 
 ```perl
 
@@ -330,17 +324,17 @@ $tiling->conserved('query', 'fast', 'm2')
 
 ```
 
-The ''type'' must be specified to `_context` due to a semi-predicate issue in the `frame()` method of `B:S:HSP::HSPI`; ''viz.'', the frame is set to 0 and not `undef` when the frame context is not meaningful for a sequence type in the algorithm. So, we need to check the algorithm and sequence type to see whether the frame character should be '_' or '(0)' (see [Encapsulating the Kludge]).
+The _type_ must be specified to `_context` due to a semi-predicate issue in the `frame()` method of `B:S:HSP::HSPI`; _viz._, the frame is set to 0 and not `undef` when the frame context is not meaningful for a sequence type in the algorithm. So, we need to check the algorithm and sequence type to see whether the frame character should be '_' or '(0)' (see [Encapsulating the Kludge]).
 
 ### A Note on Argument Defaults
 
-The `MapTiling` API generally requests ''type'', ''action'', and ''context'' as arguments (see the section on [key concepts] above). Some internal methods require only ''type'' and ''context'', while the `frac` method also expects a ''denominator'' (''denom''). This is a pain, so some defaults are set up. Most of the stat methods default to
+The `MapTiling` API generally requests _type_, _action_, and _context_ as arguments (see the section on [key concepts] above). Some internal methods require only _type_ and _context_, while the `frac` method also expects a _denominator_ (_denom_). This is a pain, so some defaults are set up. Most of the stat methods default to
 
-:\* ''type'' : 'query';
+:\* _type_ : 'query';
 
-:\* ''action'' : 'exact' or 'est' (if the search report does not contain sequence information, e.g. BLAST `-m8`); and,
+:\* _action_ : 'exact' or 'est' (if the search report does not contain sequence information, e.g. BLAST `-m8`); and,
 
-:\* ''context'' : depends on algorithm - `undef` for any translated nucleotide sequence, 'p_' for nucleotides, 'all' for others
+:\* _context_ : depends on algorithm - `undef` for any translated nucleotide sequence, 'p_' for nucleotides, 'all' for others
 
 The 'all' context won't work in translated nucleotide searches for the translated sequence type; you'll get a throw if you expect the default (as it should be), and you'll need to provide an explicit context.
 
@@ -353,7 +347,7 @@ Here are more detailed explanations and motivations behind the design decisions 
 
 is a typical BioPerl interface module, that implements little but explains much, particularly to the developer of a new tiling module. It provides skeletal methods that are expected to be overridden by any new tiling module that intends to comply with the existing `Bio::Search::*` API. It also informs devs who wish to code for a general tiling object what methods they can count on having in such an object.
 
-The choice of methods for the `TilingI` interface was driven by the idea that users often want a "global" value (i.e., a value representative of all "relevant" HSPs in the entire hit) for the same statistics that can be obtained for ''individual'' HSP alignments. Many of these methods hark back to the global stats methods provided objects via the tiling algorithm implemented in . The method names were chosen in part to make code conversion from hit-object-based tiling relatively easy.
+The choice of methods for the `TilingI` interface was driven by the idea that users often want a "global" value (i.e., a value representative of all "relevant" HSPs in the entire hit) for the same statistics that can be obtained for _individual_ HSP alignments. Many of these methods hark back to the global stats methods provided objects via the tiling algorithm implemented in . The method names were chosen in part to make code conversion from hit-object-based tiling relatively easy.
 
 Therefore, the `TilingI`-specified methods include the following:
 
@@ -402,7 +396,7 @@ and so on. If the issue is not designed at the outset, then the code gradually b
 
 To do this, there is an algorithm lookup table in meant to contain specific kludgy details about the algorithm, essentially keyed by algorithm name (not precisely so, but check out the for the gory details).
 
-In the table, a ''mapping coefficient'' (either 1 or 3) is associated with each sequence type for each algorithm. The reading of the algorithm name is localized to the tiling object constructor, which sets the `mapping()` attribute to the looked-up mapping coefficient. In the algorithmic code, only the mapping attribute is accessed, and conversions are performed with calculations involving the mapping coefficient. The cost is that when the coefficient is 1, the conversions are essentially no-ops. The benefit is that the algorithmic code doesn't care how the coefficient is calculated, or even what value it takes, as long as it comes from `mapping`. This (IMHO) reduces the maintenance burden (new algorithms are basically added as configurations in the lookup table) and makes the prospect of extending the code more palatable.
+In the table, a _mapping coefficient_ (either 1 or 3) is associated with each sequence type for each algorithm. The reading of the algorithm name is localized to the tiling object constructor, which sets the `mapping()` attribute to the looked-up mapping coefficient. In the algorithmic code, only the mapping attribute is accessed, and conversions are performed with calculations involving the mapping coefficient. The cost is that when the coefficient is 1, the conversions are essentially no-ops. The benefit is that the algorithmic code doesn't care how the coefficient is calculated, or even what value it takes, as long as it comes from `mapping`. This (IMHO) reduces the maintenance burden (new algorithms are basically added as configurations in the lookup table) and makes the prospect of extending the code more palatable.
 
 #### Doing the Conversions
 
@@ -433,9 +427,9 @@ Of course, each interval represents the range of a sequence type in an HSP. Then
 `-------------------------------`
 `   [           ]   [       ]`
 
-So, this is the set of intervals we want to tile in the strict sense. We want to divide this ''minimum covering set'' into a set of disjoint (i.e., non-overlapping) intervals whose union also equals the minimum covering set. You can see there are uncountably infinitely many ways to do this.
+So, this is the set of intervals we want to tile in the strict sense. We want to divide this _minimum covering set_ into a set of disjoint (i.e., non-overlapping) intervals whose union also equals the minimum covering set. You can see there are uncountably infinitely many ways to do this.
 
-Reduce the complexity of the problem now by considering an "interval" `[$a0, $a1]` with `$a0 <= $a1` both positive integers, to be the set of positive integers {`$a0`, `$a0 + 1`, ..., `$a1`}. The tiling of the minimum covering set in this context that is constructed by the algorithm, which I'm calling the ''disjoint decomposition'', is unique and based directly on the endpoints of the original input intervals. Here is a graphical construction of a disjoint decomposition:
+Reduce the complexity of the problem now by considering an "interval" `[$a0, $a1]` with `$a0 <= $a1` both positive integers, to be the set of positive integers {`$a0`, `$a0 + 1`, ..., `$a1`}. The tiling of the minimum covering set in this context that is constructed by the algorithm, which I'm calling the _disjoint decomposition_, is unique and based directly on the endpoints of the original input intervals. Here is a graphical construction of a disjoint decomposition:
 
 `          111111111122222222223`
 `0123456789012345678901234567890`
@@ -453,15 +447,15 @@ Reduce the complexity of the problem now by considering an "interval" `[$a0, $a1
 
 The code in identifies the minimum covering set and the disjoint decomposition, given set of intervals (which are coded as arrays of 2 element arrays `[$a0, $a1]`, with scalar integers `$a0 <= $a1`). The code uses some tricks to do this pretty fast, and to get the creation of singleton intervals right.
 
-The disjoint decomposition is explicitly constructed such that each ''component interval'' of the decomposition is '''completely contained''' within one or more of the original input intervals. This allows us to make certain assumptions later when doing the statistic calculations in `MapTiling` (see example below).
+The disjoint decomposition is explicitly constructed such that each _component interval_ of the decomposition is '_completely contained_' within one or more of the original input intervals. This allows us to make certain assumptions later when doing the statistic calculations in `MapTiling` (see example below).
 
 ### The "Coverage Map"
 
-The ''coverage map'' is the useful association of the disjoint decomposition with the HSPs the input intervals represent. It is an array of the following structures:
+The _coverage map_ is the useful association of the disjoint decomposition with the HSPs the input intervals represent. It is an array of the following structures:
 
 `[ [$a0, $a1], [ $hsp_object_0, $hsp_object_1, ...] ]`
 
-The first element is one of the ''component intervals'', and the second is an array containing all the ''HSP objects'' whose coordinate range '''for the given sequence type''' contain the component interval. So we note that coverage maps are specific for hit objects '''and''' sequence type. For reports with translated nucleotides, the coverage map is also dependent on the sequence ''context'' (see [key concepts]). The coverage map for a tiling can be accessed with the `coverage_map($type, $context)` method:
+The first element is one of the _component intervals_, and the second is an array containing all the _HSP objects_ whose coordinate range '_for the given sequence type_' contain the component interval. So we note that coverage maps are specific for hit objects '_and_' sequence type. For reports with translated nucleotides, the coverage map is also dependent on the sequence _context_ (see [key concepts]). The coverage map for a tiling can be accessed with the `coverage_map($type, $context)` method:
 
 ```perl
 
