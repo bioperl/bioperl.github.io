@@ -58,9 +58,9 @@ This is accomplished like so:
 
 use Bio::DB::SoapEUtilities; my $fac = Bio::DB::SoapEUtilities->new(); \# step 1 my $seqio = $fac->esearch(
 
-`     -db => \'nucleotide\', `
-`     -term => \'HIV1 and CCR5 and Brazil\'`
-`  )->run(-auto_adapt => 1, -rettype => \'fasta\'); # step 2, 3`
+     -db => \'nucleotide\', `
+     -term => \'HIV1 and CCR5 and Brazil\'`
+  )->run(-auto_adapt => 1, -rettype => \'fasta\'); # step 2, 3`
 
 while ( my $seq = $seqio->next_seq ) { \# step 4
 
@@ -161,7 +161,7 @@ To retrieve a `Result` object with message elements parsed into accessors, inclu
 
 my $result = $fac->esearch->run() my $count = $result->count; my @Count = $result->Count; \# counts for each member of
 
-`                           # the translation stack`
+                           # the translation stack`
 
 my @ids = $result->IdList_Id; \# from automatic message parsing @ids = $result->ids; \# a convenient alias
 
@@ -183,7 +183,7 @@ $adp = $fac->$util->run( -auto_adapt => 1 );
 
 while ( my $obj = $adp->next_obj ) {
 
-`  # do stuff with $obj`
+  # do stuff with $obj`
 
 }
 
@@ -195,7 +195,7 @@ The adaptor itself occasionally possesses useful methods besides the iterator. T
 
 $seqio = $fac->esearch->run( -auto_adapt => 1 ); while ( my $seq = $seqio->next_seq ) {
 
-`  # do stuff with $seq`
+  # do stuff with $seq`
 
 }
 
@@ -215,19 +215,19 @@ Currently, there are FetchAdaptor subclasses for sequence data (both Genbank and
 
 $seqio = $fac->efetch( -db =>'nucleotide',
 
-`                      -id => @ids,`
-`                      -rettype => \'gb\' )->run( -auto_adapt => 1 );`
+                      -id => @ids,`
+                      -rettype => \'gb\' )->run( -auto_adapt => 1 );`
 
 while (my $seq = $seqio->next_seq) {
 
-`  my $taxio = $fac->efetch( `
+  my $taxio = $fac->efetch( `
 
 t-db => 'taxonomy', t-id => $seq->species->ncbi_taxid )->run(-auto_adapt => 1);
 
-`  my $tax = $taxio->next_species;`
-`  unless ( $tax->TaxId == $seq->species->ncbi_taxid ) {`
-`    print "more work for MAJ"`
-`  }`
+  my $tax = $taxio->next_species;`
+  unless ( $tax->TaxId == $seq->species->ncbi_taxid ) {`
+    print "more work for MAJ"`
+  }`
 
 }
 
@@ -257,7 +257,7 @@ $seqio->builder->add_wanted_slot('annotation');
 
 while ( my $seq = $seqio->next_seq ) {
 
-`   print join( "\`
+   print join( "\`
 
 ", ttmap { tt $_->pubmed tt} $seq->annotation->get_Annotations('reference')); }
 
@@ -271,8 +271,8 @@ The `LinkAdaptor` manages LinkSets. In `SoapEU`, an `elink` call '''always''' pr
 
 my $links = $fac->elink( -db => 'protein',
 
-`                        -dbfrom => \'nucleotide\',`
-`                        -id => @nucids )->run( -auto_adapt => 1 );`
+                        -dbfrom => \'nucleotide\',`
+                        -id => @nucids )->run( -auto_adapt => 1 );`
 
 # maybe more than one associated id...
 
@@ -286,9 +286,9 @@ Or iterate over the linksets:
 
 while ( my $ls = $links->next_linkset ) {
 
-`  @ids = $ls->ids;`
-`  @submitted_ids = $ls->submitted_ids;`
-`  # etc.`
+  @ids = $ls->ids;`
+  @submitted_ids = $ls->submitted_ids;`
+  # etc.`
 
 }
 
@@ -302,17 +302,17 @@ The `DocSumAdaptor` manages docsums, the `esummary` return type. The objects ret
 
 my $docs = $fac->esummary( -db => 'taxonomy',
 
-`                          -id => 527031 )->run(-auto_adapt=>1);`
+                          -id => 527031 )->run(-auto_adapt=>1);`
 
 # iterate over docsums
 
 while (my $d = $docs->next_docsum) {
 
-`  my @available_items = $d->item_names;`
-`  # any available item can be called as an accessor`
-`  # from the docsum object...watch your case...`
-`  my $sci_name = $d->ScientificName;`
-`  my $taxid = $d->TaxId;`
+  my @available_items = $d->item_names;`
+  # any available item can be called as an accessor`
+  # from the docsum object...watch your case...`
+  my $sci_name = $d->ScientificName;`
+  my $taxid = $d->TaxId;`
 
 }
 
@@ -326,8 +326,8 @@ The `GQueryAdaptor` manages global query items returned by calls to `egquery`, w
 
 my $queries = $fac->egquery(
 
-`   -term => \'BRCA and human\'`
-`  )->run(-auto_adapt=>1);`
+   -term => \'BRCA and human\'`
+  )->run(-auto_adapt=>1);`
 
 my @dbs = $queries->found_in_dbs;
 
@@ -339,7 +339,7 @@ Retrieve the global query info returned for '''any''' database with `query_by_db
 
 my $prot_q = $queries->query_by_db('protein'); if ($prot_q->count) {
 
-`  #do something`
+  #do something`
 
 }
 
@@ -351,9 +351,9 @@ Or iterate as usual:
 
 while ( my $q = $queries->next_query ) {
 
-`  if ($q->status eq \'Ok\') {`
-`    # do sth`
-`  }`
+  if ($q->status eq \'Ok\') {`
+    # do sth`
+  }`
 
 }
 
@@ -375,30 +375,30 @@ for this purpose. These store the details of your queries serverside.
 
 my $result1 = $fac->esearch(
 
-`   -term => \'BRCA and human\', `
-`   -db => \'nucleotide\',`
-`   -usehistory => 1 )->run( -no_parse=>1 );`
+   -term => \'BRCA and human\', `
+   -db => \'nucleotide\',`
+   -usehistory => 1 )->run( -no_parse=>1 );`
 
 my $result = $fac->esearch(
 
-`   -term => \'AND early onset\', `
-`   -QueryKey => $result1->query_key,`
-`   -WebEnv => $result1->webenv )->run( -no_parse => 1 );`
+   -term => \'AND early onset\', `
+   -QueryKey => $result1->query_key,`
+   -WebEnv => $result1->webenv )->run( -no_parse => 1 );`
 
 my $result = $fac->esearch(
 
-`  -db => \'protein\',`
-`  -term => \'sonic\', `
-`  -usehistory => 1 )->run( -no_parse => 1 );`
+  -db => \'protein\',`
+  -term => \'sonic\', `
+  -usehistory => 1 )->run( -no_parse => 1 );`
 
 # later (but not more than 8 hours later) that day...
 
 $result = $fac->esearch(
 
-`  -WebEnv => $result->webenv,`
-`  -QueryKey => $result->query_key,`
-`  -RetMax => 800 # get \'em all`
-`  )->run; # note we\'re parsing the result...`
+  -WebEnv => $result->webenv,`
+  -QueryKey => $result->query_key,`
+  -RetMax => 800 # get \'em all`
+  )->run; # note we\'re parsing the result...`
 
 @all_ids = $result->ids;
 
@@ -412,7 +412,7 @@ Two kinds of errors can ensue on an Entrez SOAP run. One is a SOAP fault, and th
 
 unless ( $result = $fac->$util->run ) {
 
-`  die $fac->errstr; # this will catch a SOAP fault`
+  die $fac->errstr; # this will catch a SOAP fault`
 
 }
 
@@ -420,10 +420,10 @@ unless ( $result = $fac->$util->run ) {
 
 if ($result->count == 0) {
 
-`  warn "No hits returned";`
-`  if ($result->ERROR) {`
-`    warn "Entrez error : ".$result->ERROR;`
-`  }`
+  warn "No hits returned";`
+  if ($result->ERROR) {`
+    warn "Entrez error : ".$result->ERROR;`
+  }`
 
 }
 
@@ -446,16 +446,16 @@ use Bio::DB::SoapEUtilities; use Bio::DB::SoapEUtilities::Result; use Bio::DB::S
 
 my $fac = Bio::DB::SoapEUtilities->new( -wsdl_file => my_wsdl.xml ); my $result = $fac->esummary(
 
-`                  -db => \'gene\',`
-`                  -id => 790 )->run( -no_parse => 1);`
+                  -db => \'gene\',`
+                  -id => 790 )->run( -no_parse => 1);`
 
 my $soap_lite_message = $result->som;
 
 unless ( $soap_lite_message->fault ) {
 
-` my $docs = Bio::DB::SoapEUtilities::DocSumAdaptor->new( `
-`             -result => $result`
-`            );`
+ my $docs = Bio::DB::SoapEUtilities::DocSumAdaptor->new( `
+             -result => $result`
+            );`
 
 }
 
@@ -480,36 +480,36 @@ my $fac = Bio::DB::SoapEUtilities->new()
 
 my $links = $fac->elink(
 
-`             -dbfrom => \'protein\',`
-`             -db => \'taxonomy\',`
-`             -id => @protein_ids )->run(-auto_adapt => 1);`
+             -dbfrom => \'protein\',`
+             -db => \'taxonomy\',`
+             -id => @protein_ids )->run(-auto_adapt => 1);`
 
 # get a Bio::DB::SoapEUtilities::Result object
 
 my $result = $fac->esearch(
 
-`             -db => \'gene\',`
-`             -term => \'sonic and human\')->run;`
+             -db => \'gene\',`
+             -term => \'sonic and human\')->run;`
 
 # get the raw XML message
 
 my $xml = $fac->efetch(
 
-`           -db => \'gene\',`
-`           -id => @gids )->run( -raw_xml => 1 );`
+           -db => \'gene\',`
+           -id => @gids )->run( -raw_xml => 1 );`
 
 # change parameters
 
 my $new_result = $fac->efetch(
 
-`                 -db => \'gene\',`
-`                 -id => @more_gids)->run;`
+                 -db => \'gene\',`
+                 -id => @more_gids)->run;`
 
 # reset parameters
 
 $fac->efetch->reset_parameters( -db => 'nucleotide',
 
-`                               -id => $nucid );`
+                               -id => $nucid );`
 
 $result = $fac->efetch->run;
 
@@ -519,13 +519,13 @@ $count = $result->count; @ids = $result->ids;
 
 while ( my $linkset = $links->next_link ) {
 
-`  $submitted = $linkset->submitted_id;`
+  $submitted = $linkset->submitted_id;`
 
 }
 
 ($taxid) = $links->id_map($submitted_prot_id); $species_io = $fac->efetch( -db => 'taxonomy',
 
-`                           -id => $taxid )->run( -auto_adapt => 1);`
+                           -id => $taxid )->run( -auto_adapt => 1);`
 
 $species = $species_io->next_species; $linnaeus = $species->binomial;
 

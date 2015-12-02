@@ -25,21 +25,21 @@ Synopsis
 ```perl
 
 `# create an assembly`
-` $maq_fac = Bio::Tools::Run::Maq->new();`
-` $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\' );`
-` # paired-end `
-` $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
-` # be more strict`
-` $maq_fac->set_parameters( -c2q_min_map_quality => 60 );`
-` $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
+ $maq_fac = Bio::Tools::Run::Maq->new();`
+ $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\' );`
+ # paired-end `
+ $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
+ # be more strict`
+ $maq_fac->set_parameters( -c2q_min_map_quality => 60 );`
+ $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
 
-` # run maq commands separately`
-` $maq_fac = Bio::Tools::Run::Maq->new(`
-`    -command => \'pileup\',`
-`    -single_end_quality => 1 );`
-` $maq_fac->run_maq( -bfa => \'refseq.bfa\',`
-`                    -map => \'maq_assy.map\',`
-`                    -txt => \'maq_assy.pup.txt\' );`
+ # run maq commands separately`
+ $maq_fac = Bio::Tools::Run::Maq->new(`
+    -command => \'pileup\',`
+    -single_end_quality => 1 );`
+ $maq_fac->run_maq( -bfa => \'refseq.bfa\',`
+                    -map => \'maq_assy.map\',`
+                    -txt => \'maq_assy.pup.txt\' );`
 
 ```
 
@@ -164,7 +164,7 @@ This indicates that map (`maq` binary mapfile), bfa (`maq` binary fasta), and bf
 
 $maqfac->run_maq( -map => 'my.map', -bfa => 'myrefseq.bfa',
 
-`                 -bfq1 => \'reads1.bfq\', -bfq2 => \'reads2.bfq\' );`
+                 -bfq1 => \'reads1.bfq\', -bfq2 => \'reads2.bfq\' );`
 
 ```
 

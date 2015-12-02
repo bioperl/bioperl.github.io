@@ -154,10 +154,10 @@ If you are using the biofetch protocol, you're all set. You can start reading se
 
 Once the flat database is created you can configure your seqdatabase.ini file. Let's say that you have used the `bioflat_index.pl` script to create the flat database and a new directory called `ppp` has been created in your `/home/sally/bioinf/` directory (and the `ppp/` directory contains the `config.dat` file). Your `sequence.ini` entry should contain these lines:
 
-` [ppp]`
-` protocol=flat       `
-` location=/home/sally/bioinf       `
-` dbname=ppp`
+ [ppp]`
+ protocol=flat       `
+ location=/home/sally/bioinf       `
+ dbname=ppp`
 
 The database name, in brackets, can be any useful name, it does not have to refer to existing files or directories, but the "dbname" should be the name of the newly created directory.
 
@@ -168,11 +168,11 @@ Once you've set up the [OBDA] registry file, accessing sequence data from within
 
 To use the registry from a Perl script, use something like the following:
 
-` use Bio::DB::Registry;   `
-` $registry = Bio::DB::Registry->new;   `
-` $db = $registry->get_database(\'embl\');   `
-` $seq = $db->get_Seq_by_acc("J02231");   `
-` print $seq->seq,"\`
+ use Bio::DB::Registry;   `
+ $registry = Bio::DB::Registry->new;   `
+ $db = $registry->get_database(\'embl\');   `
+ $seq = $db->get_Seq_by_acc("J02231");   `
+ print $seq->seq,"\`
 
 ";
 
@@ -191,7 +191,7 @@ Using biogetseq.pl to Access Registry Databases
 
 As a convenience, the BioPerl distribution includes the script `biogetseq.PLS` that enables one to have OBDA access to sequence data from the command line. It's located in the `scripts/DB` directory of the [BioPerl] distribution (it may also have been installed in your system if you asked for a script installation during the `make install` step). Move or add it into your path to run it. You can get this help text by running it with no arguments:
 
-` Usage: biogetseq.pl --dbname embl --format embl --namespace acc id [ id ... ]*      `
+ Usage: biogetseq.pl --dbname embl --format embl --namespace acc id [ id ... ]*      `
 
 The following are the script's defaults:
 
@@ -203,10 +203,10 @@ The rest of the arguments is a list of ids in the given namespace
 
 If you have a set of ids you want to fetch from [EMBL] database, you just give them as space-separated parameters:
 
-` >biogetseq.pl J02231 A21530 A10516`
+ >biogetseq.pl J02231 A21530 A10516`
 
 The output is directed to `STDOUT`, so it can be redirected to a file. The options can be given in the long "double hyphen" format or abbreviated to one-letter format (`--fasta` or `-f`):
 
-` >biogetseq.pl -f fasta -n acc J02231 A21530 A10516 > filed.seq'`
+ >biogetseq.pl -f fasta -n acc J02231 A21530 A10516 > filed.seq'`
 
 

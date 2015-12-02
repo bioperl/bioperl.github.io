@@ -184,7 +184,7 @@ This example returns the following array:
 This indicates that the FASTA database (fas) and the FASTQ reads (faq) MUST be specified, and the STDOUT of this program (SA coordinates) will be slurped into a file specified in the `run_bwa` argument list:
 
 `$bwa->run_bwa( -fas => \'my.db.fas\', -faq => \'reads.faq\',`
-`                  -sai => \'out.sai\' );`
+                  -sai => \'out.sai\' );`
 
 If capture files are not specified per the filespec, text sent to STDOUT and STDERR is saved and is accessible with `$bwa->stdout()` and `$bwa->stderr()`.
 
@@ -197,9 +197,9 @@ By an odd coincidence, the wrapper accesses the `samtools` commands in a similar
 
 $converter = Bio::Tools::Run::Samtools->new(
 
-` -command => \'view\',`
-` -sam_input => 1,`
-` -bam_output => 1`
+ -command => \'view\',`
+ -sam_input => 1,`
+ -bam_output => 1`
 
 );
 
@@ -236,25 +236,25 @@ $bwa->out_type( 'assy_prd.bam' ); $bwa->run( 'read1.fastq', 'refseqs.fas', 'read
 
 $start1 = 150000; $end1 = 200000; $start2 = 250000; $end2 = 275000; $samt = Bio::Tools::Run::Samtools->new(
 
-` -command => \'view\',`
-` -bam_output => 1`
-` );`
+ -command => \'view\',`
+ -bam_output => 1`
+ );`
 
 $samt->run( -bam => 'assy_prd.bam',
 
-`           -rgn => [ "my_seqid:$start1-$end1",`
-`                     "my_seqid:$start2-$end2" ],`
-`           -out => \'assy_rgns.bam\'`
-`           );`
+           -rgn => [ "my_seqid:$start1-$end1",`
+                     "my_seqid:$start2-$end2" ],`
+           -out => \'assy_rgns.bam\'`
+           );`
 
 # convert a text SAM to binary format
 
 $samt = Bio::Tools::Run::Samtools->new(
 
-` -command => \'view\',`
-` -sam_input => 1,`
-` -bam_output => 1`
-` );`
+ -command => \'view\',`
+ -sam_input => 1,`
+ -bam_output => 1`
+ );`
 
 $samt->run( -bam => 'mysam.sam', -out => 'mysam.bam' );
 
@@ -262,8 +262,8 @@ $samt->run( -bam => 'mysam.sam', -out => 'mysam.bam' );
 
 $samt = Bio::Tools::Run::Samtools->new(
 
-` -command => \'sort\'`
-` );`
+ -command => \'sort\'`
+ );`
 
 # creates 'mysam.srt.bam':
 

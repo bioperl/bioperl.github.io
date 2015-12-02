@@ -92,13 +92,13 @@ my $hit;
 
 my $blio = Bio::SearchIO->new( -format => 'blast',
 
-`                              -file   => \'myblast.txt\');`
+                              -file   => \'myblast.txt\');`
 
 my $result = $blio->next_result;
 
 while ($hit = $result->next_hit) {
 
-` last if $hit->name =~ /Xenopus/;`
+ last if $hit->name =~ /Xenopus/;`
 
 }
 
@@ -106,7 +106,7 @@ my $tiling = Bio::Search::Tiling::MapTiling->new($hit);
 
 printf("global fraction identical against Xenopus: %.2f ",
 
-`      $tiling->frac_identical(-type => \'query\', -action => \'exact\'));`
+      $tiling->frac_identical(-type => \'query\', -action => \'exact\'));`
 
 ```
 
@@ -132,34 +132,34 @@ my $result = $blio->next_result;
 
 my ($best_tiling, $best_context, $max_ident, $max_frac_cons) =
 
-`   get_the_best($result);`
+   get_the_best($result);`
 
 while (my @tiled_hsps = $best_tiling->next_tiling('subject', $best_context)) {
 
-`   # do stuff with my array of tiled HSP objects`
+   # do stuff with my array of tiled HSP objects`
 
 }
 
 sub get_the_best {
 
-`   my $result = shift;`
-`   my @hits = $result->hits;`
+   my $result = shift;`
+   my @hits = $result->hits;`
 
 # initialize
 
-`   my $best_hit = pop @hits;`
-`   my $best_tiling = Bio::Search::Tiling::MapTiling->new($best_hit);`
-`   my $max_ident = $best_tiling->identities(\'query\',\'exact\');`
-`   `
+   my $best_hit = pop @hits;`
+   my $best_tiling = Bio::Search::Tiling::MapTiling->new($best_hit);`
+   my $max_ident = $best_tiling->identities(\'query\',\'exact\');`
+   `
 
 # search through hits
 
-`   foreach my $hit (@hit) {`
+   foreach my $hit (@hit) {`
 
 tmy $tiling = Bio::Search::Tiling::MapTiling->new($hit); tmy $ident = $tiling->identities('query','exact'); tif ( $ident > $max_ident ) { t $max_ident = $ident; t $best_tiling = $tiling; t}
 
-`   }`
-`   `
+   }`
+   `
 
 # now, have the hit providing the most identities against the query
 2.  search the contexts in the \*subject\* sequences
@@ -168,23 +168,23 @@ tmy $tiling = Bio::Search::Tiling::MapTiling->new($hit); tmy $ident = $tiling->i
 
 # initialize
 
-`   my @contexts = $best_tiling->contexts(\'subject\');`
-`   my $best_context = pop @contexts;`
-`   my $max_frac = $best_tiling->frac_conserved(-type=>\'subject\',`
+   my @contexts = $best_tiling->contexts(\'subject\');`
+   my $best_context = pop @contexts;`
+   my $max_frac = $best_tiling->frac_conserved(-type=>\'subject\',`
 
 tttttt-action=>'exact', tttttt-context=>$best_context);
 
 # search through contexts
 
-`   for my $context (@contexts) {`
+   for my $context (@contexts) {`
 
 tmy $frac = $best_tiling->frac_conserved(-type=>'subject', tttttt-action=>'exact', tttttt-context=>$context); tif ($frac > $max_frac) { t $max_frac = $frac; t $best_context = $context; t}
 
-`   }`
+   }`
 
 # return the objects and the values
 
-`   return ($best_tiling, $best_context, $max_ident, $max_frac);`
+   return ($best_tiling, $best_context, $max_ident, $max_frac);`
 
 }
 
@@ -214,12 +214,12 @@ my $result = $blio->next_result;
 
 my $top_name, $top_value = 0; while (my $hit = $result->next_hit) {
 
-`   $tiling = Bio::Search::Tiling::MapTiling->new($hit);`
-`   if (my $id = $tiling->identical(\'subject\',\'fast\') > $top_value) {`
+   $tiling = Bio::Search::Tiling::MapTiling->new($hit);`
+   if (my $id = $tiling->identical(\'subject\',\'fast\') > $top_value) {`
 
 t$top_name = $hit->name; t$top_value = $id;
 
-`   }`
+   }`
 
 }
 
@@ -257,17 +257,17 @@ The sequences in each alignment contain features (even though they are objects) 
 
 $aln = ($tiling->get_tiled_alns)\[0\]; $qseq = $aln->get_seq_by_id('query'); $hseq = $aln->get_seq_by_id('subject'); foreach my $feat ($qseq->get_SeqFeatures) {
 
-`  $org_start = ($feat->get_tag_values(\'query_start\'))[0];`
-`  $org_end = ($feat->get_tag_values(\'query_end\'))[0];`
-`  # original fragment as represented in the tiled alignment:`
-`  $org_fragment = $feat->seq;`
+  $org_start = ($feat->get_tag_values(\'query_start\'))[0];`
+  $org_end = ($feat->get_tag_values(\'query_end\'))[0];`
+  # original fragment as represented in the tiled alignment:`
+  $org_fragment = $feat->seq;`
 
 } foreach my $feat ($hseq->get_SeqFeatures) {
 
-`  $org_start = ($feat->get_tag_values(\'subject_start\'))[0];`
-`  $org_end = ($feat->get_tag_values(\'subject_end\'))[0];`
-`  # original fragment as represented in the tiled alignment:`
-`  $org_fragment = $feat->seq;`
+  $org_start = ($feat->get_tag_values(\'subject_start\'))[0];`
+  $org_end = ($feat->get_tag_values(\'subject_end\'))[0];`
+  # original fragment as represented in the tiled alignment:`
+  $org_fragment = $feat->seq;`
 
 }
 
@@ -308,9 +308,9 @@ The context `all` indicates that, for the given sequence type, all HSPs in the h
 
 sub lone_context {
 
-` my $tiling = shift;`
-` return ($tiling->contexts($type))[0] if scalar ($tiling->contexts($type)) == 1;`
-` return;`
+ my $tiling = shift;`
+ return ($tiling->contexts($type))[0] if scalar ($tiling->contexts($type)) == 1;`
+ return;`
 
 }
 
@@ -392,7 +392,7 @@ The algorithms that cause the difficulty are currently BLASTX, TBLASTN, and TBLA
 
 if ($alg =~ /^T/ && $type eq 'hit') {
 
-`  $length = $self->length/3;`
+  $length = $self->length/3;`
 
 }
 
@@ -417,38 +417,38 @@ Here are few not-too-gory details about the underlying algorithm, with more code
 
 The guts of `MapTiling` are based on a fairly simple back-of-envelope idea. To describe it, first we back out of the sequence-related details, and just consider a set of possibly overlapping real intervals, with endpoints that are positive integers, like so:
 
-`          111111111122222222223`
+          111111111122222222223`
 `0123456789012345678901234567890`
 `-------------------------------`
-`   [       ]`
-`         [     ]`
-`      [      ]`
-`                   [       ]`
-`                      []`
+   [       ]`
+         [     ]`
+      [      ]`
+                   [       ]`
+                      []`
 
 Of course, each interval represents the range of a sequence type in an HSP. Then the union of all these intervals is the minimum set of intervals that cover all the intervals; in our example, it's { \[3,15\], \[19,27\] }:
 
-`          111111111122222222223`
+          111111111122222222223`
 `0123456789012345678901234567890`
 `-------------------------------`
-`   [           ]   [       ]`
+   [           ]   [       ]`
 
 So, this is the set of intervals we want to tile in the strict sense. We want to divide this ''minimum covering set'' into a set of disjoint (i.e., non-overlapping) intervals whose union also equals the minimum covering set. You can see there are uncountably infinitely many ways to do this.
 
 Reduce the complexity of the problem now by considering an "interval" `[$a0, $a1]` with `$a0 <= $a1` both positive integers, to be the set of positive integers {`$a0`, `$a0 + 1`, ..., `$a1`}. The tiling of the minimum covering set in this context that is constructed by the algorithm, which I'm calling the ''disjoint decomposition'', is unique and based directly on the endpoints of the original input intervals. Here is a graphical construction of a disjoint decomposition:
 
-`          111111111122222222223`
+          111111111122222222223`
 `0123456789012345678901234567890`
 `-------------------------------`
 `* the input intervals...      *`
-`   [       ]`
-`   .     [ .   ]`
-`   .  [  . . ] .               `
-`   .  .  . . . .   [       ]`
-`   .  .  . . . .   .  []   .   `
-`   .  .  . . . .   .  ..   .  `
-`   .  .  . . . .   .  ..   .   `
-`   [ ][ ][ ][][]   [ ][][  ]  `
+   [       ]`
+   .     [ .   ]`
+   .  [  . . ] .               `
+   .  .  . . . .   [       ]`
+   .  .  . . . .   .  []   .   `
+   .  .  . . . .   .  ..   .  `
+   .  .  . . . .   .  ..   .   `
+   [ ][ ][ ][][]   [ ][][  ]  `
 `* the decomposition...        *`
 
 The code in identifies the minimum covering set and the disjoint decomposition, given set of intervals (which are coded as arrays of 2 element arrays `[$a0, $a1]`, with scalar integers `$a0 <= $a1`). The code uses some tricks to do this pretty fast, and to get the creation of singleton intervals right.
@@ -517,7 +517,7 @@ We can see, too, how this representation could help in calculating estimates for
 
 my $ident = 0; for (3, 6) {
 
-`   $ident += ($tiling->hsps)[$_]->matches_MT(-type=>\'query\', `
+   $ident += ($tiling->hsps)[$_]->matches_MT(-type=>\'query\', `
 
 ttttt -action=>'identities', ttttt -start=>574, ttttt -end=>589); } $ident /= 2;
 

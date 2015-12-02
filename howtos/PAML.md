@@ -59,12 +59,12 @@ The BioPerl PAML result parser takes the view that a distinct ''recordset'' or s
 
 use Bio::Tools::Phylo::PAML; my $parser = Bio::Tools::Phylo::PAML->new(-file => "./output.mlc",
 
-`                                         -dir  => "./",`
-`                                         -ctlf => "./codeml.ctl");`
+                                         -dir  => "./",`
+                                         -ctlf => "./codeml.ctl");`
 
 while(my $result = $parser->next_result) {
 
-`   # do something with the results from this dataset ...`
+   # do something with the results from this dataset ...`
 
 }
 
@@ -99,7 +99,7 @@ my $aln_factory = Bio::Tools::Run::Alignment::Clustalw->new; my $seqdata = shift
 
 my $seqio = new Bio::SeqIO(-file => $seqdata,
 
-`                          -format => \'fasta\');`
+                          -format => \'fasta\');`
 
 my %seqs; my @prots;
 
@@ -107,19 +107,19 @@ my %seqs; my @prots;
 
 while ( my $seq = $seqio->next_seq ) {
 
-`   $seqs{$seq->display_id} = $seq;`
-`   # translate them into protein`
-`   my $protein = $seq->translate();`
-`   my $pseq = $protein->seq();`
-`   if( $pseq =~ /*/ &&`
-`       $pseq !~ /*$/ ) {`
-`         warn("provided a CDS sequence with a stop codon, PAML will choke!");`
-`         exit(0);`
-`   }`
-`   # Tcoffee can\'t handle \'*\' even if it is trailing`
-`   $pseq =~ s/*//g;`
-`   $protein->seq($pseq);`
-`   push @prots, $protein;`
+   $seqs{$seq->display_id} = $seq;`
+   # translate them into protein`
+   my $protein = $seq->translate();`
+   my $pseq = $protein->seq();`
+   if( $pseq =~ /*/ &&`
+       $pseq !~ /*$/ ) {`
+         warn("provided a CDS sequence with a stop codon, PAML will choke!");`
+         exit(0);`
+   }`
+   # Tcoffee can\'t handle \'*\' even if it is trailing`
+   $pseq =~ s/*//g;`
+   $protein->seq($pseq);`
+   push @prots, $protein;`
 
 }
 
@@ -142,9 +142,9 @@ my @each = $dna_aln->each_seq();
 
 my $kaks_factory = Bio::Tools::Run::Phylo::PAML::Codeml->new
 
-`                  ( -params => { \'runmode\' => -2,`
-`                                 \'seqtype\' => 1,`
-`                               } );`
+                  ( -params => { \'runmode\' => -2,`
+                                 \'seqtype\' => 1,`
+                               } );`
 
 # set the alignment object
 
@@ -161,30 +161,30 @@ my @otus = $result->get_seqs();
 
 my @pos = map {
 
-`   my $c= 1;`
-`   foreach my $s ( @each ) {`
-`     last if( $s->display_id eq $_->display_id );`
-`     $c++;`
-`   }`
-`   $c;`
-`  } @otus;`
+   my $c= 1;`
+   foreach my $s ( @each ) {`
+     last if( $s->display_id eq $_->display_id );`
+     $c++;`
+   }`
+   $c;`
+  } @otus;`
 
 print OUT join("t", qw(SEQ1 SEQ2 Ka Ks Ka/Ks PROT_PERCENTID CDNA_PERCENTID))," "; foreach my $i ( 0 .. $\#otus -1 ) {
 
-` foreach my $j ( $i+1 .. $#otus ) {`
-`   my $sub_aa_aln  = $aa_aln->select_noncont($pos[$i],$pos[$j]);`
-`   my $sub_dna_aln = $dna_aln->select_noncont($pos[$i],$pos[$j]);`
-`   print OUT join("t", $otus[$i]->display_id,`
-`                        $otus[$j]->display_id,$MLmatrix->[$i]->[$j]->{\'dN\'},`
-`                        $MLmatrix->[$i]->[$j]->{\'dS\'},`
-`                        $MLmatrix->[$i]->[$j]->{\'omega\'},`
-`                        sprintf("%.2f",$sub_aa_aln->percentage_identity),`
-`                        sprintf("%.2f",$sub_dna_aln->percentage_identity),`
-`                        ), "\`
+ foreach my $j ( $i+1 .. $#otus ) {`
+   my $sub_aa_aln  = $aa_aln->select_noncont($pos[$i],$pos[$j]);`
+   my $sub_dna_aln = $dna_aln->select_noncont($pos[$i],$pos[$j]);`
+   print OUT join("t", $otus[$i]->display_id,`
+                        $otus[$j]->display_id,$MLmatrix->[$i]->[$j]->{\'dN\'},`
+                        $MLmatrix->[$i]->[$j]->{\'dS\'},`
+                        $MLmatrix->[$i]->[$j]->{\'omega\'},`
+                        sprintf("%.2f",$sub_aa_aln->percentage_identity),`
+                        sprintf("%.2f",$sub_dna_aln->percentage_identity),`
+                        ), "\`
 
 ";
 
-` }`
+ }`
 
 }
 
@@ -208,17 +208,17 @@ my $in = Bio::TreeIO->new(-format => 'newick', ttt -fh => \*DATA); my $iostr = I
 
 while( my $t = $in->next_tree ) {
 
-`   my ($tip3) = $t->find_node(-id =>\'3\');`
-`   $tip3->id($tip3->id . " #1");`
-`   my ($tip4) = $t->find_node(-id =>\'4\');`
-`   $tip4->id($tip4->id . " #2");`
-`   my ($tip2) = $t->find_node(-id =>\'2\');`
-`   $tip2->id("#2 " . $tip2->id);`
+   my ($tip3) = $t->find_node(-id =>\'3\');`
+   $tip3->id($tip3->id . " #1");`
+   my ($tip4) = $t->find_node(-id =>\'4\');`
+   $tip4->id($tip4->id . " #2");`
+   my ($tip2) = $t->find_node(-id =>\'2\');`
+   $tip2->id("#2 " . $tip2->id);`
 
-`   $out->write_tree($t);`
-`   my $treestr = ${$iostr->string_ref};`
-`   $treestr =~ s/"//g;   #" for formatting only`
-`   print $treestr,"\`
+   $out->write_tree($t);`
+   my $treestr = ${$iostr->string_ref};`
+   $treestr =~ s/"//g;   #" for formatting only`
+   print $treestr,"\`
 
 ";
 
@@ -248,38 +248,38 @@ use Bio::Tools::Phylo::PAML::Result; use Bio::Tools::Phylo::PAML;
 
 my $outcodeml = shift(@ARGV); my $paml_parser = Bio::Tools::Phylo::PAML->newe(-file => $outcodeml,
 
-`                                             -dir => "./");`
+                                             -dir => "./");`
 
 if( my $result = $paml_parser->next_result() ) {
 
-` while ( my $tree = $result->next_tree ) {`
-`  for my $node ( $tree->get_nodes ) {`
-`    my $id;`
-`    # first we do some work to figure out what the ID should be.`
-`    # for a leaf or tip node this is just the taxon label`
-`    if( $node->is_Leaf() ) {`
-`       $id = $node->id;`
-`    } else {`
-`      # for the internal nodes it is just the name of all the sub-nodes`
-`      # put together, much like how Sanderson represents internal nodes`
-`      # in r8s`
-`       $id = "(".join(",", map { $_->id } grep { $_->is_Leaf }`
-`                                 $node->get_all_Descendents) .")";`
-`    }`
-`    if( ! $node->ancestor || ! $node->has_tag(\'t\') ) {`
-`      # skip when no values have been associated with this node`
-`      # (like the root node)`
-`      next;`
-`    }`
-`    printf "%stt=%.3ftS=%.1ftN=%.1ftdN/dS=%.4ftdN=%.4ft".`
-`            "dS=%.4ftS*dS=%.1ftN*dN=%.1f\`
+ while ( my $tree = $result->next_tree ) {`
+  for my $node ( $tree->get_nodes ) {`
+    my $id;`
+    # first we do some work to figure out what the ID should be.`
+    # for a leaf or tip node this is just the taxon label`
+    if( $node->is_Leaf() ) {`
+       $id = $node->id;`
+    } else {`
+      # for the internal nodes it is just the name of all the sub-nodes`
+      # put together, much like how Sanderson represents internal nodes`
+      # in r8s`
+       $id = "(".join(",", map { $_->id } grep { $_->is_Leaf }`
+                                 $node->get_all_Descendents) .")";`
+    }`
+    if( ! $node->ancestor || ! $node->has_tag(\'t\') ) {`
+      # skip when no values have been associated with this node`
+      # (like the root node)`
+      next;`
+    }`
+    printf "%stt=%.3ftS=%.1ftN=%.1ftdN/dS=%.4ftdN=%.4ft".`
+            "dS=%.4ftS*dS=%.1ftN*dN=%.1f\`
 
 ",
 
-`     $id,map { ($node->get_tag_values($_))[0] }`
-`     qw(t S N dN/dS dN dS), \'S*dS\', \'N*dN\';`
-`  }`
-` }`
+     $id,map { ($node->get_tag_values($_))[0] }`
+     qw(t S N dN/dS dN dS), \'S*dS\', \'N*dN\';`
+  }`
+ }`
 
 }
 
@@ -294,45 +294,45 @@ In cases where nssites=1 or nssites=2 is provided the data for the results is ac
 
 use Bio::Tools::Phylo::PAML; my $outcodeml = shift(@ARGV); my $paml_parser = Bio::Tools::Phylo::PAML->new(-file => $outcodeml,
 
-`                                              -dir => "./");`
+                                              -dir => "./");`
 
 if( my $result = $paml_parser->next_result() ) {
 
-` for my $ns_result ( $result->get_NSSite_results ) {`
-`   print "model ", $ns_result->model_num, " ",`
-`         $ns_result->model_description, "\`
+ for my $ns_result ( $result->get_NSSite_results ) {`
+   print "model ", $ns_result->model_num, " ",`
+         $ns_result->model_description, "\`
 
 ";
 
-`   while ( my $tree = $ns_result->next_tree ) {`
-`    for my $node ( $tree->get_nodes ) {`
-`       my $id;`
-`       # first we do some work to figure out what the ID should be.`
-`       # for a leaf or tip node this is just the taxon label`
-`       if( $node->is_Leaf() ) {`
-`        $id = $node->id;`
-`       } else {`
-`        # for the internal nodes it is just the name of all the sub-nodes`
-`        # put together, much like how Sanderson represents internal nodes`
-`        # in r8s`
-`        $id = "(".join(",", map { $_->id } grep { $_->is_Leaf }`
-`                                 $node->get_all_Descendents) .")";`
-`       }`
-`       if( ! $node->ancestor || ! $node->has_tag(\'t\') ) {`
-`        # skip when no values have been associated with this node`
-`        # (like the root node)`
-`        next;`
-`       }`
-`       printf "%stt=%.3ftS=%.1ftN=%.1ftdN/dS=%.4ftdN=%.4ft".`
-`              "dS=%.4ftS*dS=%.1ftN*dN=%.1f\`
+   while ( my $tree = $ns_result->next_tree ) {`
+    for my $node ( $tree->get_nodes ) {`
+       my $id;`
+       # first we do some work to figure out what the ID should be.`
+       # for a leaf or tip node this is just the taxon label`
+       if( $node->is_Leaf() ) {`
+        $id = $node->id;`
+       } else {`
+        # for the internal nodes it is just the name of all the sub-nodes`
+        # put together, much like how Sanderson represents internal nodes`
+        # in r8s`
+        $id = "(".join(",", map { $_->id } grep { $_->is_Leaf }`
+                                 $node->get_all_Descendents) .")";`
+       }`
+       if( ! $node->ancestor || ! $node->has_tag(\'t\') ) {`
+        # skip when no values have been associated with this node`
+        # (like the root node)`
+        next;`
+       }`
+       printf "%stt=%.3ftS=%.1ftN=%.1ftdN/dS=%.4ftdN=%.4ft".`
+              "dS=%.4ftS*dS=%.1ftN*dN=%.1f\`
 
 ",
 
-`       $id,map { ($node->get_tag_values($_))[0] }`
-`       qw(t S N dN/dS dN dS), \'S*dS\', \'N*dN\';`
-`    }`
-`   }`
-` }`
+       $id,map { ($node->get_tag_values($_))[0] }`
+       qw(t S N dN/dS dN dS), \'S*dS\', \'N*dN\';`
+    }`
+   }`
+ }`
 
 }
 

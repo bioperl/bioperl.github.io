@@ -62,7 +62,7 @@ Choosing Your Options
 
 The typical usage is as follows:
 
-`     bioflat_index.pl -c -l /usr/share/biodb -d genbank -i bdb -f fasta data/*.fa`
+     bioflat_index.pl -c -l /usr/share/biodb -d genbank -i bdb -f fasta data/*.fa`
 
 The following command line options are required:
 
@@ -116,15 +116,15 @@ Moving Database Files
 
 If you must change the location of the source sequence files after you create the index, there is a way to do so. Inside the root directory you will find a subdirectory named after the database, and inside that you will find a text file named `config.dat`. An example `config.dat` is shown here:
 
-`    index      flat/1`
-`    fileid_0   /share/data/alnfile.fasta       294`
-`    fileid_1   /share/data/genomic-seq.fasta   171524`
-`    fileid_2   /share/data/hs_owlmonkey.fasta  416`
-`    fileid_3   /share/data/test.fasta  804`
-`    fileid_4   /share/data/testaln.fasta       4620`
-`    primary_namespace  ACC`
-`    secondary_namespaces       ID`
-`    format     `[`URN:LSID:open-bio.org:fasta`](URN:LSID:open-bio.org:fasta)
+    index      flat/1`
+    fileid_0   /share/data/alnfile.fasta       294`
+    fileid_1   /share/data/genomic-seq.fasta   171524`
+    fileid_2   /share/data/hs_owlmonkey.fasta  416`
+    fileid_3   /share/data/test.fasta  804`
+    fileid_4   /share/data/testaln.fasta       4620`
+    primary_namespace  ACC`
+    secondary_namespaces       ID`
+    format     `[`URN:LSID:open-bio.org:fasta`](URN:LSID:open-bio.org:fasta)
 
 For each source file you have moved, find its corresponding "fileid" line and change the path. Be careful not to change anything else in the file or to inadvertently replace tab characters with spaces.
 
@@ -133,12 +133,12 @@ Secondary or custom namespaces
 
 The `bioflat_index` script creates what could be called a default index using sequence files in a few different formats. Each of these formats has its own default primary key, the key that can be used as a a query. Consider this fasta entry:
 
-`   >P84139 gi|443893    `
-`   MHHLLHGRHHRRQRKKKITEWSVKKKIIACNMIIRAHYTRQWPLMNVDS`
+   >P84139 gi|443893    `
+   MHHLLHGRHHRRQRKKKITEWSVKKKIIACNMIIRAHYTRQWPLMNVDS`
 
 The modules will use the first "word" in the fasta header as the primary key (`P84139` in this example), equivalent to this regular expression:
 
-`   >(S+)`
+   >(S+)`
 
 This value turns out to be same value returned by Sequence object's display_id() method for sequences in [FASTA sequence format]. The table below shows the default primary keys of the four formats.
 
@@ -152,29 +152,29 @@ This value turns out to be same value returned by Sequence object's display_id()
 
 What if you wanted to use some other part of the entry as a key, like the GI number in the example above? This could also be called specifying another namespace, or a secondary namespace. No problem, but now you've gone beyond the capabilities of the `bioflat_index` script, you'll need to write your own. It would look something like this:
 
-`     use strict;`
-`     use Bio::DB::Flat::BinarySearch;`
-`     # use single quotes so you don\'t have to write`
-`     # regular expressions like "gi|(d+)"`
-`     my $primary_pattern = \'^>(S+)\';`
-`     # one or more patterns stored in a hash:`
-`     my $secondary_patterns = {GI => \'gi|(d+)\'};`
-`     my $db = Bio::DB::Flat::BinarySearch->new(`
-`                           -directory          => "/home/bio",`
-`                           -dbname             => "ppp",`
-`                           -write_flag         => 1,`
-`                           -primary_pattern    => $primary_pattern,`
-`                           -primary_namespace  => \'ACC\',`
-`                           -secondary_patterns => $secondary_patterns,`
-`                           -verbose            => 1,`
-`                           -format             => \'fasta\'  );`
-`     $db->build_index("ppp.fa");`
+     use strict;`
+     use Bio::DB::Flat::BinarySearch;`
+     # use single quotes so you don\'t have to write`
+     # regular expressions like "gi|(d+)"`
+     my $primary_pattern = \'^>(S+)\';`
+     # one or more patterns stored in a hash:`
+     my $secondary_patterns = {GI => \'gi|(d+)\'};`
+     my $db = Bio::DB::Flat::BinarySearch->new(`
+                           -directory          => "/home/bio",`
+                           -dbname             => "ppp",`
+                           -write_flag         => 1,`
+                           -primary_pattern    => $primary_pattern,`
+                           -primary_namespace  => \'ACC\',`
+                           -secondary_patterns => $secondary_patterns,`
+                           -verbose            => 1,`
+                           -format             => \'fasta\'  );`
+     $db->build_index("ppp.fa");`
 
 This code will index the file `ppp.fa` and place the indexes in the directory `/home/bio/ppp`. Then you can retrieve sequences like this:
 
-`     $db->secondary_namespaces("GI");`
-`     my $acc_seq = $db->get_Seq_by_id("P84139");`
-`     my $gi_seq = $db->get_Seq_by_secondary("GI",443893);`
+     $db->secondary_namespaces("GI");`
+     my $acc_seq = $db->get_Seq_by_id("P84139");`
+     my $gi_seq = $db->get_Seq_by_secondary("GI",443893);`
 
 More Information
 ----------------
