@@ -6,7 +6,7 @@ layout: default
 Abstract
 --------
 
-This is a HOWTO about the [Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO) system, how to use it, and how one goes about writing new adaptors to different output formats. We will also describe how the modules work for outputting various formats from [Bio::Search](http://search.cpan.org/search?query=Bio::Search) objects.
+This is a HOWTO about the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) system, how to use it, and how one goes about writing new adaptors to different output formats. We will also describe how the modules work for outputting various formats from [Bio::Search](http://search.cpan.org/search?query=Bio::Search) objects.
 
 ### Authors
 
@@ -16,19 +16,19 @@ This is a HOWTO about the [Bio::SearchIO](http://search.cpan.org/search?query=Bi
 Background and Design
 ---------------------
 
-One of the most common and necessary tasks in bioinformatics is parsing analysis reports so that one can write programs which can help interpret the sheer volume of data that can be produced by processing many sequences. A popular tool for comparing sequences is the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) package from NCBI. The parsers for BLAST output are part of BioPerl's [Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO).
+One of the most common and necessary tasks in bioinformatics is parsing analysis reports so that one can write programs which can help interpret the sheer volume of data that can be produced by processing many sequences. A popular tool for comparing sequences is the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) package from NCBI. The parsers for BLAST output are part of BioPerl's [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO).
 
 The system was designed with the following assumptions: That all reports parsed with it could be separated into a hierarchy of components. The Result is the entire analysis for a single query sequence, and multiple Results can be concatenated together into a single file (i.e. running [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) with a fasta database as the input file rather than a single sequence). Each Result is a set of Hits for the query sequence. Hits are sequences in the searched database which could be aligned to the query sequence and met the minimal search parameters, such as e-value threshold. Each Hit has one or more High-scoring segment Pairs ) which are the alignments of the query and hit sequence. Each Result has a set of one or more Hits and each Hit has a set of one or more HSPs, and this relationship can be used to describe results from all pairwise alignment programs including BLAST, FastA, and implementations of the Smith-Waterman and Needleman-Wunsch algorithms.
 
 A design pattern, called Factory, is utilized in object oriented programming to separate the entity which processes data from objects which will hold the information produced. In the same manner that the module is used to parse different file formats and produces objects which are compliant, we have written to produce the Bio::Search objects. Sequences are a little less complicated so there is only one primary object while Search results need three main components to represent the data processed in a file:
 
-- Top level results: [Bio::Search::Result::ResultI](http://search.cpan.org/search?query= Bio::Search::Result::ResultI)
-- Hits: [Bio::Search::Hit::HitI](http://search.cpan.org/search?query= Bio::Search::Hit::HitI)
-- HSPs: [Bio::Search::HSP::HSPI](http://search.cpan.org/search?query= Bio::Search::HSP::HSPI)
+- Top level results: [Bio::Search::Result::ResultI](https://metacpan.org/pod/Bio::Search::Result::ResultI)
+- Hits: [Bio::Search::Hit::HitI](https://metacpan.org/pod/Bio::Search::Hit::HitI)
+- HSPs: [Bio::Search::HSP::HSPI](https://metacpan.org/pod/Bio::Search::HSP::HSPI)
 
-The [Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO) object is then a factory which produces [Bio::Search::Result::ResultI](http://search.cpan.org/search?query= Bio::Search::Result::ResultI) objects that contain information about the query, the database searched, and the full collection of Hits found for the query.
+The [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) object is then a factory which produces [Bio::Search::Result::ResultI](https://metacpan.org/pod/Bio::Search::Result::ResultI) objects that contain information about the query, the database searched, and the full collection of Hits found for the query.
 
-The generality of the [Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO) approach is demonstrated by the large number of report formats that have appeared since its introduction. These formats are listed below.
+The generality of the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) approach is demonstrated by the large number of report formats that have appeared since its introduction. These formats are listed below.
 
 | Name | Description |
 |------|----------------------------------------------------------------|
@@ -55,7 +55,7 @@ Parsing with Bio::SearchIO
 
 This section is going to describe how to use the system to process reports. We'll describe [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) reports but the idea is that once you understand the methods associated with the objects you won't need to know anything special about other parsers.
 
-See <HOWTO:BlastPlus> for more on running BLAST.
+See [the BLAST+ HOWTO](BlastPlus.html) for more on running BLAST.
 
 ### Using SearchIO
 
@@ -138,7 +138,7 @@ A plaintext NCBI-BLAST report like that used in the example above probably remai
 | Result | available_statistics | effectivespaceused ... dbletters    | statistics used                                                                                                            |
 | Result | available_parameters | gapext matrix allowgaps gapopen     | parameters used                                                                                                            |
 | Result | num_hits             | 1                                   | number of hits                                                                                                             |
-| Result | hits               |                                     | List of all [Bio::Search::Hit::GenericHit](http://search.cpan.org/search?query= Bio::Search::Hit::GenericHit) objects for this Result       |
+| Result | hits               |                                     | List of all [Bio::Search::Hit::GenericHit](https://metacpan.org/pod/Bio::Search::Hit::GenericHit) objects for this Result       |
 | Result | rewind             |                                     | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits |
 
 
@@ -156,7 +156,7 @@ Note that many of the methods shown can be used to either get or set values, but
 | Hit    | raw_score        | 92               | hit raw score       |
 | Hit    | significance      | 2e-022           | hit significance   |
 | Hit    | bits              | 92.0             | hit bits           |
-| Hit    | hsps              |                  | List of all [Bio::Search::HSP::GenericHSP](http://search.cpan.org/search?query= Bio::Search::HSP::GenericHSP) objects for this Hit |
+| Hit    | hsps              |                  | List of all [Bio::Search::HSP::GenericHSP](https://metacpan.org/pod/Bio::Search::HSP::GenericHSP) objects for this Hit |
 | Hit    | num_hsps         | 1                | number of HSPs in hit |
 | Hit    | locus             | 124775           | locus name  |
 | Hit    | accession_number | 443893           | accession number |
@@ -206,7 +206,7 @@ Many of the methods shown can be used to either get or set values, but we're jus
 | HSP    | end('hit')                                       | 246                                      | end position from alignment                                                            |
 | HSP    | matches('hit')                                   | (46,48)                                  | number of identical and conserved as array                                             |
 | HSP    | matches('query')                                 | (46,48)                                  | number of identical and conserved as array                                             |
-| HSP    | get_aln | sequence alignment           | [Bio::SimpleAlign](http://search.cpan.org/search?query= Bio::SimpleAlign) object  |
+| HSP    | get_aln | sequence alignment           | [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object  |
 | HSPt | hsp_group   | *Not available in this report* | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
 | HSP    | links                                                | *Not available in this report* | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
 
@@ -220,7 +220,7 @@ The tables above show that a method can return a string, an array, or an object.
 
 #### get_aln()
 
-For example, if you wanted a printable alignment after you'd parsed BLAST output you could use the `get_aln()` method, retrieve a [Bio::SimpleAlign](http://search.cpan.org/search?query= Bio::SimpleAlign) object and use it like this:
+For example, if you wanted a printable alignment after you'd parsed BLAST output you could use the `get_aln()` method, retrieve a [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object and use it like this:
 
 ```perl
 use Bio::AlignIO;
@@ -276,7 +276,7 @@ One final note when using `seq_inds()`: if you want a list of ranges or only car
 
 #### frame()
 
-In most cases the [Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO) methods extract data directly from output but there's one important exception, the `frame()` method of the HSP object. Instead of using the values in the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) report it converts them to values according to the GFF specification, which is a format used by many BioPerl modules involved in gene annotation.
+In most cases the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) methods extract data directly from output but there's one important exception, the `frame()` method of the HSP object. Instead of using the values in the [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) report it converts them to values according to the GFF specification, which is a format used by many BioPerl modules involved in gene annotation.
 
 Specifically, the `frame()` method returns 0, 1, or 2 instead of the expected -3, -2, -1, +1, +2, or +3 in BLAST. GFF frame values are meaningful relative to the strand of the hit or query sequence so in order to reconstruct the BLAST frame you need both the strand, 1 or -1, and the GFF frame value:
 
@@ -321,7 +321,7 @@ sub print_blast_results {
 
 If you parsed a report already and want to reset the parser (i.e. if you sent the SearchIO object to the subs above instead of the object, then iterated through everything twice), you would need to reset the SearchIO object itself by using `seek($blast_report->_fh, 0);`. We don't recommend doing this for two reasons. First, each round of parsing takes the same length of time since you start parsing the report from scratch, so you'll take a time hit. Second, if you saved objects from the first round of parsing you will take a memory hit, because a new set of objects is generated for each subsequent round of parsing the report. Hence, we use the already-generated object in the subroutines instead.
 
-To simplify things here a bit more, you could simply grab all the hits at once using `$result->hits` before you sort them, as demonstrated in a previous example. The `hits` method does not use the iterator; it simply returns a list of [Bio::Search::Hit::BlastHit](http://search.cpan.org/search?query=Bio::Search::Hit::BlastHit) objects. Hence, there is no need to `rewind` the object:
+To simplify things here a bit more, you could simply grab all the hits at once using `$result->hits` before you sort them, as demonstrated in a previous example. The `hits` method does not use the iterator; it simply returns a list of [Bio::Search::Hit::BlastHit](https://metacpan.org/pod/Bio::Search::Hit::BlastHit) objects. Hence, there is no need to `rewind` the object:
 
 ```perl
 
@@ -362,11 +362,11 @@ for my $hit ( sort { $a->bits `<=>` $b->bits } @hits ) {
 Creating Reports for SearchIO
 -----------------------------
 
-One note on creating reports that can be parsed by [Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO): the developers haven't attempted to parse all the possible reports that could be created by programs with many command-line options, like [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual). Certainly you should be able to parse reports created using the default settings, but if you're running [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual), say, using some special set of options and you've encountered a parsing problem this may be the explanation.
+One note on creating reports that can be parsed by [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO): the developers haven't attempted to parse all the possible reports that could be created by programs with many command-line options, like [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual). Certainly you should be able to parse reports created using the default settings, but if you're running [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual), say, using some special set of options and you've encountered a parsing problem this may be the explanation.
 
 For example, one can currently parse [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) output created with the default settings as well as the reports created when using the "-m 8" or "-m 9" options (use `-format=>'blasttable'`) or the "-m 7" XML-formatted reports (use `-format=>'blastxml'`) but it's still possible to find sets of options that can't parse.
 
-You might also find it useful not to have to create reports as files. [Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO) is aware of `STDIN` so you can pipe output from the search application directly to it (on operating systems that allow such things). It could look something like this:
+You might also find it useful not to have to create reports as files. [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) is aware of `STDIN` so you can pipe output from the search application directly to it (on operating systems that allow such things). It could look something like this:
 
 ```perl
 use strict; 
@@ -404,7 +404,7 @@ Writing and formatting output
 
 Often people want to write back out a [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) report for users who are most comfortable with that output or if you want to visualize the context of a weakly aligned region and use human intuition to score the confidence of a putative homologue. The modules are for creating output using the information.
 
-[Bio::SearchIO](http://search.cpan.org/search?query=Bio::SearchIO) currently creates output in a few different formats: text (recreating something like the BLAST report itself, in part or entirely), HTML, BSML, "ResultTable" (tab-delimited format), "HSPTable" (tab-delimited, for HSPs), and Gbrowse GFF.
+[Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) currently creates output in a few different formats: text (recreating something like the BLAST report itself, in part or entirely), HTML, BSML, "ResultTable" (tab-delimited format), "HSPTable" (tab-delimited, for HSPs), and Gbrowse GFF.
 
 The simplest way to output data in HTML format is as follows.
 

@@ -122,7 +122,7 @@ system directories you can install them in your home directory
 using local::lib. The instructions for first installing
 local::lib are found here:
 
-http://search.cpan.org/search?query=local%3A%3Alib
+https://metacpan.org/pod/local%3A%3Alib
 
 Once local::lib is installed you can install BioPerl using a 
 command like this:
