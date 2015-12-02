@@ -21,25 +21,25 @@ This is a HOWTO that talks about using Bioperl, for biologists who would like to
 
 If you're a molecular biologist it's likely that you're interested in gene and protein sequences, and you study them in some way on a regular basis. Perhaps you'd like to try your hand at automating some of these tasks, or you're just curious about learning more about the programming side of bioinformatics. In this HOWTO you'll see discussions of some of the common uses of Bioperl, like sequence analysis with [BLAST] and retrieving sequences from public databases. You'll also see how to write Bioperl scripts that chain these tasks together, that's how you'll be able to do really powerful things with Bioperl.
 
-You will also see some discussions of software concepts; this can't be avoided. The more you understand about programming the better but all efforts will be made to not introduce too much unfamiliar material. However, there will be an introduction to modularity, or objects. This is one of the aspects of the Bioperl package that you'll have to come to grips with as you attempt more complex tasks with your scripts.
+You will also see some discussions of software concepts, this can't be avoided. The more you understand about programming the better but all efforts will be made to not introduce too much unfamiliar material. However, there will be an introduction to modularity, or objects. This is one of the aspects of the Bioperl package that you'll have to come to grips with as you attempt more complex tasks with your scripts.
 
 One of the challenging aspects of learning a new skill is learning the jargon, and programming certainly has its share of interesting terms and buzz phrases. Be patient - remember that the programmers learning biology have had just as tough a task (if not worse - just ask them!).
 
-Note: This HOWTO does not discuss a very nice module that's designed for beginners, . The reason is that though this is an excellent introductory tool, it is not object-oriented and can't be extended. What we're attempting here is to introduce the core of Bioperl and show you ways to expand your new-found skills.
+Note: This HOWTO does not discuss a very nice module that's designed for beginners, [Bio::Perl](http://search.cpan.org/search?query= Bio::Perl). The reason is that though this is an excellent introductory tool, it is not object-oriented and can't be extended. What we're attempting here is to introduce the core of Bioperl and show you ways to expand your new-found skills.
 
 ### Installing Bioperl
 
-Start at [Installing Bioperl]. Many of the letters to the bioperl-l mailing list concern problems with installation, and there is a set of concerns that come up repeatedly:
+Start at [Installing Bioperl](/INSTALL.html). Many of the letters to the bioperl-l mailing list concern problems with installation, and there is a set of concerns that come up repeatedly:
 
-- On Windows, messages like: `Error: Failed to download URL http://bioperl.org/DIST/GD.ppd`, or `<some module> Not found`. The explanation is that Bioperl does not supply every accessory module that's necessary to run all of Bioperl. You'll need to search other repositories to install all of these accessory modules. See the [Installing_Bioperl_on_Windows] file for more information.
+- On Windows, messages like: `Error: Failed to download URL http://bioperl.org/DIST/GD.ppd`, or `<some module> Not found`. The explanation is that Bioperl does not supply every accessory module that's necessary to run all of Bioperl. You'll need to search other repositories to install all of these accessory modules. See the [INSTALL.WIN](/INSTALL.WIN.html) file for more information.
 
-- On Unix, messages like `Can't locate <some module>.pm in @INC...`. This means that Perl could not find a particular module and the explanation usually is that this module is not installed. See the [Installing_Bioperl_for_Unix] file for details.
+- On Unix, messages like `Can't locate <some module>.pm in @INC...`. This means that Perl could not find a particular module and the explanation usually is that this module is not installed.
 
-- Seeing messages like `Tests Failed`. If you see an error during installation consider whether this problem is going to affect your use of Bioperl. There are roughly 1000 modules in Bioperl, and ten times that many tests are run during the installation. If there's a complaint about GD it's only relevant if you want to use the modules, if you see an error about some XML parser it's only going to affect you if you're reading XML files. Yes, you could try and make each and every test pass, but that may be a lot of work, with much of it fixing modules that aren't in BioPerl itself.
+- Seeing messages like `Tests Failed`. If you see an error during installation consider whether this problem is going to affect your use of Bioperl. There are roughly 1000 modules in Bioperl, and ten times that many tests are run during the installation. If there's a complaint about GD it's only relevant if you want to use the modules, if you see an error about some XML parser it's only going to affect you if you're reading XML files.
 
 ### Getting Assistance
 
-You may run into problems installing Bioperl or writing scripts using Bioperl. If you need assistance the way to get it is to mail bioperl-l@bioperl.org. There are a good number of helpful people who regularly read this list but if you want their advice it's best to give sufficient detail.
+You may run into problems installing Bioperl or writing scripts using Bioperl. If you need assistance the way to get it is to mail bioperl-l@bioperl.org. There are many helpful people who regularly read this list but if you want their advice it's best to give sufficient detail.
 
 Please include:
 
@@ -49,7 +49,7 @@ Please include:
 -   The code that gives the error, if you're writing a script.
 -   Any error messages you saw.
 
-Every once in a while a message will appear in bioperl-l coming from someone in distress that goes unanswered. The explanation is usually that the person neglected to include 1 or more of the details above, usually the script or the error messages.
+Every once in a while a message will appear in `bioperl-l` coming from someone in distress that goes unanswered. The explanation is usually that the person neglected to include 1 or more of the details above, usually the script or the error messages.
 
 ### Perl Itself
 
@@ -59,7 +59,7 @@ Here are a few things you might want to look at if you want to learn more about 
 
 - [Perl in a Nutshell](http://www.oreilly.com/catalog/perlnut2/) is also good. Not much in the way of examples, but covers many topics succinctly.
 
-- Perl's own documentation. Do `perldoc perl` from the command-line for an introduction. Perldoc can give you documentation of any module that is installed on your system: do `perldoc <modulename>` to view documentation of <modulename>. Try for instance (assuming Bioperl has been installed):
+- Perl's own documentation. Do `perldoc perl` from the command-line for an introduction. Perldoc can give you documentation of any module that is installed on your system: do `perldoc <modulename>` to view documentation of some module. For instance (assuming Bioperl has been installed) try:
 
 `>perldoc Bio::SeqIO`
 
@@ -85,7 +85,7 @@ Internet, point your browser at http://www.perl.org/],
 the Perl Home Page.
 ```
 
-Hopefully you're using Perl version 5.4 or higher, earlier versions may be troublesome. Now let's find out where the Perl program is located:
+Hopefully you're using Perl version 5.8 or higher, earlier versions may be troublesome. Now let's find out where the Perl program is located:
 
 `which perl`
 
@@ -99,9 +99,7 @@ This will give you something like:
 
 `/bin/perl`
 
-Now that we know where Perl is located we're ready to write a script, and line 1 of the script will specify this location. You might be using some Unix word processor, emacs or vi, for example (or nano, very easy to use, but not found on all Unix machines unfortunately). If you're on Windows then Wordpad will work.
-
-Start to write your script by entering something like:
+Now that we know where Perl is located we're ready to write a script, and line 1 of the script will specify this location. You might be using some Unix word processor, emacs or vi, for example (or nano, very easy to use, but not found on all Unix machines unfortunately). If you're on Windows then Wordpad will work. Start to write your script by entering something like:
 
 `emacs seqio.pl`
 
@@ -123,7 +121,7 @@ All objects in Bioperl are created by specific Bioperl modules, so if you want t
 use Bio::Seq;
 ```
 
-This line tells Perl to use a module on your machine called "Bio/Seq.pm". We will use this module to create a object. The module is one of the central modules in Bioperl. The analogous object, or "Sequence object", or "Seq object", is ubiquitous in Bioperl, it contains a single sequence and associated names, identifiers, and properties. Let's create a very simple sequence object at first, like so:
+This line tells Perl to use a module on your machine called `Bio/Seq.pm`. We will use this module to create a object. The module is one of the central modules in Bioperl. The analogous object, or "Sequence object", or "Seq object", is ubiquitous in Bioperl, it contains a single sequence and associated names, identifiers, and properties. Let's create a very simple sequence object at first, like so:
 
 ```perl
 #!/bin/perl -w
@@ -134,13 +132,13 @@ $seq_obj = Bio::Seq->new(-seq => 'aaaatgggggggggggccccgtt',
                          -alphabet => 'dna' );
 ```
 
-That's it! The variable `$seq_obj` is the Sequence object, a simple one, containing just a sequence. Note that the code tells Bioperl that the sequence is DNA (the choices here are 'dna', 'rna', and 'protein'), this is the wise thing to do. If you don't tell Bioperl it will attempt to guess the alphabet. Normally it guesses correctly but if your sequence has lots of odd or ambiguous characters, such as N or X, Bioperl's guess may be incorrect and this may lead to some problems.
+That's it! The variable `$seq_obj` is the Sequence object, a simple one, containing just a sequence. Note that the code tells Bioperl that the sequence is DNA (the choices here are *dna*, *rna*, and *protein*), this is the wise thing to do. If you don't tell Bioperl it will attempt to guess the alphabet. Normally it guesses correctly but if your sequence has lots of odd or ambiguous characters, such as N or X, Bioperl's guess may be incorrect and this may lead to some problems.
 
 Sequence objects can be created manually, as above, but they're also created automatically in many operations in Bioperl, for example when alignment files or database entries or BLAST reports are parsed.
 
-Any time you explicitly create an object, you will use this `new()` method. The syntax of this line is one you'll see again and again in Bioperl: the name of the object or variable, the module name, the `->` symbol, the method name `new`, some argument name like '-seq', the `=>` symbol, and then the argument or value itself, like 'aaaatgggggggggggccccgtt'.
+Any time you explicitly create an object, you will use this `new()` method. The syntax of this line is one you'll see again and again in Bioperl: the name of the object or variable, the module name, the `->` symbol, the method name `new`, some argument name like `-seq`, the `=>` symbol, and then the argument or value itself, like `aaaatgggggggggggccccgtt`.
 
-Note: If you've programmed before you've come across the term "function" or "sub-routine". In object-oriented programming the term "method" is used instead.
+*Note* You may have come across the term "function" or "sub-routine". In object-oriented programming the term "method" is used instead.
 
 The object was described as a data container, but it is more than that. It can also do work, meaning it can use or call specific methods taken from the module or modules that were used to create it. For example, the Bio::Seq module can access a method named `seq()` that will print out the sequence of objects. You could use it like this:
 
@@ -155,7 +153,7 @@ $seq_obj = Bio::Seq->new(-seq => "aaaatgggggggggggccccgtt",
 print $seq_obj->seq;
 ```
 
-As you'd expect, this script will print out 'aaaatgggggggggggccccgtt'. That `->` symbol is used when an object calls or accesses its methods.
+As you'd expect, this script will print out *aaaatgggggggggggccccgtt*. That `->` symbol is used when an object calls or accesses its methods.
 
 Let's make our example a bit more true-to-life, since a typical sequence object needs an identifier, perhaps a description, in addition to its sequence.
 
@@ -172,11 +170,11 @@ $seq_obj = Bio::Seq->new(-seq        => "aaaatgggggggggggccccgtt",
 print $seq_obj->seq();
 ```
 
-'''aaaatgggggggggggccccgtt''', '''#12345''', and '''example 1''' are called "arguments" in programming jargon. You could say that this example shows how to pass arguments to the `new()` method.
+`aaaatgggggggggggccccgtt`, `#12345`, and `example 1` are called "arguments" in programming jargon. You could say that this example shows how to pass arguments to the `new()` method.
 
 ### Writing a sequence to a file
 
-This next example will show how two objects can work together to create a sequence file. We already have a Sequence object, `$seq_obj`, and we will create an additional object whose responsibility it is to read from and write to files. This object is the SeqIO object, where IO stands for Input-Output. By using in this manner you will be able to get input and make output for all of the sequence file formats supported by Bioperl (the [SeqIO HOWTO] has a complete list of supported formats). The way you create objects is very similar to the way we used `new()` to create a , or sequence, object:
+This next example will show how two objects can work together to create a sequence file. We already have a Sequence object, `$seq_obj`, and we will create an additional object whose responsibility it is to read from and write to files. This object is the [Bio::SeqIO](http://search.cpan.org/search?query= Bio::SeqIO) object, where IO stands for Input/Output. By using in this manner you will be able to get input and make output for all of the sequence file formats supported by Bioperl (the [SeqIO HOWTO](SeqIO.html) has a complete list of supported formats). The way you create objects is very similar to the way we used `new()` to create a [Bio::Seq](http://search.cpan.org/search?query= Bio::Seq), or sequence, object:
 
 ```perl
 use Bio::SeqIO;
@@ -185,7 +183,7 @@ $seqio_obj = Bio::SeqIO->new(-file => '>sequence.fasta',
                              -format => 'fasta' );
 ```
 
-Note that `>` in the `-file` argument. This character indicates that we're going to write to the file named "sequence.fasta", the same character we'd use if we were using Perl's `open()` function to write to a file. The `-format` argument, "fasta", tells the object that it should create the file in [fasta format].
+Note that `>` in the `-file` argument. This character indicates that we're going to write to the file named *sequence.fasta*, the same character we'd use if we were using Perl's `open()` function to write to a file. The `-format` argument, *fasta*, tells the object that it should create the file in fasta format.
 
 Let's put our 2 examples together:
 
@@ -205,18 +203,18 @@ $seqio_obj = Bio::SeqIO->new(-file => '>sequence.fasta',
 $seqio_obj->write_seq($seq_obj);
 ```
 
-Let's consider that last `write_seq` line where you see two objects since this is where some neophytes start to get a bit nervous. What's going on there? In that line we handed or passed the Sequence object to the object as an argument to its `write_seq` method. Another way to think about this is that we hand the Sequence object to the object since understands how to take information from the Sequence object and write to a file using that information, in this case in [fasta format]. If you run this script like this:
+Let's consider that last `write_seq` line where you see two objects since this is where some neophytes start to get a bit nervous. What's going on there? In that line we handed or passed the Sequence object to the object as an argument to its `write_seq` method. Another way to think about this is that we hand the Sequence object to the object since understands how to take information from the Sequence object and write to a file using that information, in this case in fasta format. If you run this script like this:
 
 `>perl seqio.pl`
 
-You should create a file called "sequence.fasta" that looks like this:
+You should create a file called *sequence.fasta* that looks like this:
 
 ```
 >#12345 example 1
 aaaatgggggggggggccccgtt
 ```
 
-Let's demonstrate the intelligence of the SeqIO - the example below shows what file content is created when the argument to `-format` is set to "genbank" instead of "fasta":
+Let's demonstrate the intelligence of the [Bio::SeqIO](http://search.cpan.org/search?query= Bio::SeqIO) - the example below shows what is created when the argument to `-format` is set to *genbank* instead of *fasta*:
 
 ```
 LOCUS       #12345                    23 bp    dna     linear   UNK
@@ -230,9 +228,9 @@ ORIGIN       1 aaaatggggg ggggggcccc gtt
 
 ### Retrieving a sequence from a file
 
-One beginner mistake is to not use when working with sequence files. This is understandable in some respects. You may have read about Perl's `open()` function, and Bioperl's way of retrieving sequences may look odd and overly complicated, at first. But don't use `open()`! Using `open(),` immediately forces you to do the parsing of the sequence file and this can get complicated very quickly. Trust the object, it's built to open and parse all the common [sequence formats], it can read and write to files, and it's built to operate with all the other Bioperl modules that you will want to use.
+One beginner mistake is to not use [Bio::SeqIO](http://search.cpan.org/search?query= Bio::SeqIO) when working with sequence files. This is understandable in some respects. You may have read about Perl's `open()` function, and Bioperl's way of retrieving sequences may look overly complicated, at first. But don't use `open()`! Using `open(),` immediately forces you to do the parsing of the sequence file and this can get complicated very quickly. Trust the object, it's built to open and parse all the common sequence formats, it can read and write to files, and it's built to operate with all the other Bioperl modules that you will want to use.
 
-Let's read the file we created previously, "sequence.fasta", using . The syntax will look familiar:
+Let's read the file we created previously, *sequence.fasta*, using [Bio::SeqIO](http://search.cpan.org/search?query= Bio::SeqIO). The syntax will look familiar:
 
 ```perl
 #!/bin/perl -w
@@ -243,7 +241,7 @@ $seqio_obj = Bio::SeqIO->new(-file => "sequence.fasta",
                              -format => "fasta" );
 ```
 
-One difference is immediately apparent: there is no '''>''' character. Just as with with the `open()` function this means we'll be reading from the "sequence.fasta" file. Let's add the key line, where we actually retrieve the Sequence object from the file using the `next_seq` method:
+One difference is immediately apparent: there is no `>` character. Just as with with the `open()` function this means we'll be reading from the *sequence.fasta* file. Let's add the key line, where we actually retrieve the Sequence object from the file using the `next_seq` method:
 
 ```perl
 #!/bin/perl -w
@@ -256,30 +254,30 @@ $seqio_obj = Bio::SeqIO->new(-file => "sequence.fasta",
 $seq_obj = $seqio_obj->next_seq;
 ```
 
-Here we've used the `next_seq()` method of the object. When you use, or call, `next_seq()` the object will get the next available sequence, in this case the first sequence in the file that was just opened. The Sequence object that's created, `$seq_obj`, is functionally just like the Sequence object we created manually in our first example. This is another idiom that's used frequently in Bioperl, the *next_something* method. You'll come across the same idea in the *next_aln* method of reading and writing alignment files and the *next_hit* method of reading the output of sequence comparison programs such as BLAST and HMMER.
+Here we've used the `next_seq()` method of the object. When you use, or call, `next_seq()` the object will get the next available sequence, in this case the first sequence in the file that was just opened. The Sequence object that's created, `$seq_obj`, is functionally identical to the Sequence object we created manually in our first example. This is another idiom that's used frequently in Bioperl, the *next_something* method. You'll come across the same idea in the `next_aln` method of reading and writing alignment files and the `next_hit` method of reading the output of sequence comparison programs such as BLAST and HMMER.
 
 If there were multiple sequences in the input file you could just continue to call `next_seq()` in some loop, and SeqIO would retrieve the Seq objects, one by one, until none were left:
 
 ```perl
-while ($seq_obj = $seqio_obj->next_seq){
+while ( $seq_obj = $seqio_obj->next_seq ) {
     # print the sequence
     print $seq_obj->seq,"\n";
 }
 ```
 
-Do you have to supply a `-format` argument when you are reading from a file, as we did? Not necessarily, but it's the safe thing to do. If you don't give a format then the SeqIO object will try to determine the format from the file suffix or extension (and a list of the file extensions is in the [SeqIO HOWTO]). In fact, the suffix "fasta" is one that SeqIO understands, so `-format` is unnecessary above. Without a known suffix SeqIO will attempt to guess the format based on the file's contents but there's no guarantee that it can guess correctly for every single format.
+Do you have to supply a `-format` argument when you are reading from a file, as we did? Not necessarily, but it's the safe thing to do. If you don't give a format then the SeqIO object will try to determine the format from the file suffix or extension (and a list of the file extensions is in the [SeqIO HOWTO](SeqIO.html). In fact, the suffix "fasta" is one that SeqIO understands, so `-format` is unnecessary above. Without a known suffix SeqIO will attempt to guess the format based on the file's contents but there's no guarantee that it can guess correctly for every single format.
 
-It may be useful to tell SeqIO the alphabet of the input, using the `-alphabet` argument. What this does is to tell SeqIO not to try to determine the alphabet ("dna", "rna", "protein"). This helps because Bioperl may guess incorrectly (for example, Bioperl is going to guess that the protein sequence '''MGGGGTCAATT''' is DNA). There may also be odd characters present in the sequence that SeqIO objects to (e.g. "`-~?`"). Set `-alphabet` to a value when reading sequences and SeqIO will not attempt to guess the alphabet of those sequences or validate the sequences.
+It may be useful to tell SeqIO the alphabet of the input, using the `-alphabet` argument. What this does is to tell SeqIO not to try to determine the alphabet (*dna*, *rna*, *protein*). This helps because Bioperl may guess incorrectly (for example, Bioperl is going to guess that the protein sequence `MGGGGTCAATT` is DNA). There may also be odd characters present in the sequence that SeqIO objects to (e.g. "`-~?`"). Set `-alphabet` to a value when reading sequences and SeqIO will not attempt to guess the alphabet of those sequences or validate the sequences.
 
 ### Retrieving a sequence from a database
 
-One of the strengths of Bioperl is that it allows you to retrieve sequences from all sorts of sources, files, remote databases, local databases, regardless of their format. Let's use this capability to get a entry from [Genbank] (). What will we retrieve? Again, a Sequence object. Let's choose our module:
+One of the strengths of Bioperl is that it allows you to retrieve sequences from all sorts of sources, files, remote databases, local databases, regardless of their format. Let's use this capability to get a entry from Genbank. What will we retrieve? Again, a Sequence object. Let's choose our module:
 
 ```perl
 use Bio::DB::GenBank;
 ```
 
-We could also query [SwissProt] (), GenPept (), [EMBL] (), SeqHound (), Entrez Gene (), or RefSeq () in an analogous fashion (e.g "use Bio::DB::SwissProt"). Now we'll create the object:
+We could also query SwissProt, GenPept, EMBL, SeqHound, Entrez Gene, or RefSeq in an analogous fashion (e.g `use Bio::DB::SwissProt`). Now we'll create the object:
 
 ```perl
 use Bio::DB::GenBank;
@@ -301,7 +299,7 @@ The argument passed to the `get_Seq_by_id` method is an identifier, 2, a Genbank
 
 ### Retrieving multiple sequences from a database
 
-There are more sophisticated ways to query [Genbank] than this. This next example attempts to do something "biological", using the module . Want all Arabidopsis topoisomerases from Genbank Nucleotide? This would be a reasonable first attempt:
+There are more sophisticated ways to query Genbank than this. This next example attempts to do something "biological", using the module [Bio::DB::Query::GenBank](http://search.cpan.org/search?query= Bio::DB::Query::GenBank). Want all Arabidopsis topoisomerases from Genbank Nucleotide? This would be a reasonable first attempt:
 
 ```perl
 use Bio::DB::Query::GenBank;
@@ -311,7 +309,7 @@ $query_obj = Bio::DB::Query::GenBank->new(-db => 'nucleotide',
                                           -query => $query );
 ```
 
-Note: This capability to query by string and field is only available for [GenBank] as of [Bioperl version 1.5], queries to other databases, like [Swissprot] or [EMBL], are limited to identifiers and accessions.
+Note: This capability to query by string and field is only available for [GenBank as of Bioperl version 1.5, queries to other databases, like Swissprot or EMBL, are limited to identifiers and accessions.
 
 Here's another query example, this one will retrieve all *Trypanosoma brucei* ESTs:
 
@@ -338,7 +336,7 @@ $gb_obj = Bio::DB::GenBank->new;
 $stream_obj = $gb_obj->get_Stream_by_query($query_obj);
 
 while ($seq_obj = $stream_obj->next_seq) {
-    # do something with the sequence object    `
+    # do something with the sequence object    
     print $seq_obj->display_id, "\t", $seq_obj->length, "\n";
 }
 ```
@@ -347,7 +345,7 @@ That `$stream_obj` and its `get_Stream_by_query` method may not look familiar. T
 
 Notice how carefully separated the responsibilities of each object are in the code above: there's an object just to hold the query, an object to execute the query using this query object, an object to do the I/O, and finally the sequence object.
 
-'''Warning'''. Be careful what you ask for, many of today's nucleotide database entries are genome-size and you will probably run out of memory if your query happens to match one of these monstrosities. You can use the SLEN field to limit the size of the sequences you retrieve.
+**Note** Be careful what you ask for, many of today's nucleotide database entries are genome-size and you will probably run out of memory if your query happens to match one of these monstrosities. You can use the `SLEN` field to limit the size of the sequences you retrieve.
 
 ### The Sequence Object
 
@@ -363,17 +361,17 @@ To set or assign a value:
 $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 ```
 
-| Name                       | Returns                                     | Example                                     | Note                                                        |
+| Name   | Returns   | Example    | Note   |
 |----------------------------|---------------------------------------------|---------------------------------------------|-------------------------------------------------------------|
 | accession_number          | identifier                                  | $acc = $so->accession_number            | get or set an identifier                                    |
 | alphabet                   | alphabet                                    | $so->alphabet('dna')                 | get or set the alphabet ('dna','rna','protein') |
-| authority                  | authority, if available                     | $so->authority("FlyBase")                | get or set the organization                                 |
+| authority                  | authority, if available                     | $so->authority("DB")                | get or set the organization                                 |
 | desc                       | description                                 | $so->desc("Example 1")                   | get or set a description                                    |
-| display_id                | identifier                                  | $so->display_id("NP_123456")           | get or set an identifier                                    |
+| display_id                | identifier                                  | $so->display_id("M123456")           | get or set an identifier                                    |
 | division                   | division, if available (e.g. PRI)           | $div = $so->division                     | get division (e.g. "PRI")                                   |
 | get_dates                 | array of dates, if available                | @dates = $so->get_dates                 | get dates                                                   |
 | get_secondary_accessions | array of secondary accessions, if available | @accs = $so->get_secondary_accessions  | get other identifiers                                       |
-| is_circular               | Boolean                                     | if $so->is_circular { \# }              | get or set                                                  |
+| is_circular               | Boolean                                     | if $so->is_circular{}              | get or set                                                  |
 | keywords                   | keywords, if available                      | @array = $so->keywords                   | get or set keywords                                         |
 | length                     | length, a number                            | $len = $so->length                       | get the length                                              |
 | molecule                   | molecule type, if available                 | $type = $so->molecule                    | get molecule (e.g. "RNA", "DNA")                            |
@@ -389,10 +387,11 @@ $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 | translate                  | protein Sequence object                     | $prot_obj = $dna_obj->translate        |                                                             |
 | trunc                      | Sequence object                             | $so2 = $so1->trunc(10,40)                | Arguments are start and end                                 |
 ||
+Table 1. Sequence objects method.
 
-The table above shows the methods you're likely to use that concern the Sequence object directly. Bear in mind that not all values, such as `molecule` or `division`, are found in all sequence formats, you have to know something about your input sequences in order to get some of these values.
+The table above shows the methods you're likely to use with the Sequence object directly. Bear in mind that not all values, such as `molecule` or `division`, are found in all sequence formats, you have to know something about your input sequences in order to get some of these values.
 
-There are also a number of methods that are concerned with the Features and Annotations associated with the Sequence object. This is something of a tangent but if you'd like to learn more see the [Feature-Annotation HOWTO]. The methods related to this topic are shown below.
+There are also a number of methods that are concerned with the Features and Annotations associated with the Sequence object. This is something of a tangent but if you'd like to learn more see the [Feature-Annotation HOWTO](Feature-Annotation.html). The methods related to this topic are shown below.
 
 | Name                  | Returns        | Note                  |
 |-----------------------|----------------|-----------------------|
@@ -401,11 +400,11 @@ There are also a number of methods that are concerned with the Features and Anno
 | remove_SeqFeatures   | array of SeqFeatures removed           |                       |
 | feature_count        | number of SeqFeature objects           |                       |
 | add_SeqFeature       | annotation array of Annotation objects | get or set            |
-||
+Table 2. Feature and Annotation methods.
 
 ### Example Sequence Objects
 
-Let's use some of the methods above and see what they return when the sequence object is obtained from different sources. In the [Genbank] example we're assuming we've used Genbank to retrieve or create a Sequence object. So this object could have have been retrieved like this:
+Let's use some of the methods above and see what they return when the sequence object is obtained from different sources. In the Genbank example we're assuming we've used Genbank to retrieve or create a Sequence object. So this object could have have been retrieved like this:
 
 ```perl
 use Bio::DB::GenBank;
@@ -447,9 +446,8 @@ TITLE       The nucleotide sequence of the rho gene of E. coli K-
 JOURNAL     Nucleic Acids Res. 11 (11), 3531-3545 (1983) 
 MEDLINE     83220759  
 PUBMED      6304634
-COMMENT     Original source text: Escherichia coli (strain K-12) DNA.           
-                      A clean copy of the sequence for [2] was kindly provided by           
-                      J.L.Pinkham and T.Platt.
+COMMENT     Original source text: Escherichia coli (strain K-12) DNA.            A clean copy of the sequence for [2 was kindly provided by 
+            J.L.Pinkham and T.Platt.
 FEATURES       Location/Qualifiers
      source    1..1880
                /organism="Escherichia coli"
@@ -511,11 +509,11 @@ Either way, the values returned by various methods are shown below.
 | molecule                   | DNA                                                            |
 | get_dates                 | 26-APR-1993                                                    |
 | get_secondary_accessions | J01674                                                         |
-||
+Table 3. Values from Genbank.
 
-There's a few comments that need to be made. First, you noticed that there's an awful lot of information missing. All of this missing information is stored in what Bioperl calls Features and Annotations, see the [Feature and Annotation HOWTO] if you'd like to learn more about this. Second, a few of the methods don't return anything, like `namespace` and `authority`. The reason is that though these are good values in principle there are no commonly agreed upon standard names - perhaps someday the authors will be able to rewrite the code when all our public databases agree what these values should be. Finally, you may be wondering why the method names are what they are and why particular fields or identifiers end up associated with particular methods. Again, without having standard names for things that are agreed upon by the creators of our public databases all the authors could do is use common sense, and these choices seem to be reasonable ones.
+There's a few comments that need to be made. First, you noticed that there's an awful lot of information missing. All of this missing information is stored in what Bioperl calls Features and Annotations, see the [Feature and Annotation HOWTO](Feature-Annotation.html) if you'd like to learn more about this. Second, a few of the methods don't return anything, like `namespace` and `authority`. The reason is that though these are good values in principle there are no commonly agreed upon standard names - perhaps someday the authors will be able to rewrite the code when all our public databases agree what these values should be. Finally, you may be wondering why the method names are what they are and why particular fields or identifiers end up associated with particular methods. Again, without having standard names for things that are agreed upon by the creators of our public databases all the authors could do is use common sense, and these choices seem to be reasonable ones.
 
-Next let's take a look at the values returned by the methods used by the Sequence object when a [fasta] file is used as input. The [fasta] file entry looks like this, clearly much simpler than the corresponding Genbank entry:
+Next let's take a look at the values returned by the methods used by the Sequence object when a Fasta file is used as input. The Fasta file entry looks like this, clearly much simpler than the corresponding Genbank entry:
 
 ```
 >gi|147605|gb|J01673.1|ECORHO E. coli rho gene coding for transcription termination factor
@@ -540,11 +538,11 @@ And here are the values:
 | authority     |                                                             |
 | length        | 1880                                                        |
 | seq           | AACCCT...ACAGGAC                                            |
-||
+Table 4. Values from Fasta.
 
-If you compare these values to the values taken from the [Genbank] entry you'll see that certain values are missing, like `seq_version`. That's because values like these aren't usually present in a [fasta] file.
+If you compare these values to the values taken from the Genbank entry you'll see that certain values are missing, like `seq_version`. That's because values like these aren't usually present in a Fasta file.
 
-Another natural question is why the values returned by methods like `display_id` are different even though the only thing distinguishing these entries are their respective formats. The reason is that there are no rules governing how one interconverts formats, meaning how Genbank creates [fasta] files from [Genbank] files may be different from how [SwissProt] performs the same interconversion. Until the organizations creating these databases agree on standard sets of names and formats all the Bioperl authors can do is do make reasonable choices.
+Another natural question is why the values returned by methods like `display_id` are different even though the only thing distinguishing these entries are their respective formats. The reason is that there are no rules governing how one interconverts formats, meaning how Genbank creates Fasta files from Genbank files may be different from how SwissProt performs the same interconversion. Until the organizations creating these databases agree on standard sets of names and formats all that Bioperl can do is do make reasonable choices.
 
 Yes, Bioperl could follow the conventions of a single organization like Genbank such that `display_id` returns the same value when using Genbank format or Genbank's fasta format but the authors have elected not to base [Bioperl] around the conventions of any one organization.
 
@@ -646,23 +644,23 @@ The corresponding set of values is shown below.
 | division                   | RAT                                             |
 | get_dates                 | 28-FEB-2003 (Rel. 41, Created)                  |
 | get_secondary_accessions | Q8R2H6 Q8R4G3                                   |
-||
+Table 5. Values from SwissProt.
 
-As in the Genbank example there's information that the Sequence object doesn't supply, and it's all stored in Annotation objects. See the [Feature and Annotation HOWTO] for more.
+As in the Genbank example there's information that the Sequence object doesn't supply, and it's all stored in Annotation objects. See the [Feature and Annotation HOWTO](Feature-Annotation.html) for more.
 
 ### Translating
 
 Translation in bioinformatics can mean slightly different things, either translating a nucleotide sequence from start to end or translate the actual coding regions in mRNAs or cDNAs. The Bioperl implementation of sequence translation does both of these.
 
-Any sequence object with an alphabet of 'dna' or 'rna' can be translated by simply using `translate` which returns a protein sequence object:
+Any sequence object with an alphabet of *dna* or *rna* can be translated by simply using `translate` which returns a protein sequence object:
 
 ```perl
 $prot_obj = $seq_object->translate;
 ```
 
-All codons will be translated, including those before and after any initiation and termination codons. For example, '''ttttttatgccctaggggg''' will be translated to '''FFMP*G'''
+All codons will be translated, including those before and after any initiation and termination codons. For example, *ttttttatgccctaggggg* will be translated to `FFMP*G`.
 
-However, the `translate()` method can also be passed several optional parameters to modify its behavior. For example, you can tell `translate()` to modify the characters used to represent terminator (default is '''\*''') and unknown amino acids (default is '''X''').
+However, the `translate()` method can also be passed several optional parameters to modify its behavior. For example, you can tell `translate()` to modify the characters used to represent terminator (default is *) and unknown amino acids (default is X).
 
 ```perl
 $prot_obj = $seq_object->translate(-terminator => '-'); 
@@ -681,13 +679,13 @@ If we want to translate full coding regions (CDS) the way major nucleotide datab
 $prot_obj = $seq_object->translate(-complete => 1);
 ```
 
-If "complete" is set to true and the criteria for a proper CDS are not met, the method, by default, issues a warning. By setting "throw" to 1, one can instead instruct the program to die if an improper CDS is found, e.g.
+If `complete` is set to true and the criteria for a proper CDS are not met, the method, by default, issues a warning. By setting `throw` to 1, one can instead instruct the program to die if an improper CDS is found, e.g.
 
 ```perl
 $prot_obj = $seq_object->translate(-complete => 1, -throw => 1);
 ```
 
-The codontable_id argument to `translate()` makes it possible to use alternative genetic codes. There are currently 16 codon tables defined, including 'Standard', 'Vertebrate Mitochondrial', 'Bacterial', 'Alternative Yeast Nuclear' and 'Ciliate, Dasycladacean and Hexamita Nuclear'. All these tables can be seen in . For example, for mitochondrial translation:
+The codontable_id argument to `translate()` makes it possible to use alternative genetic codes. There are currently 16 codon tables defined, including *Standard*, *Vertebrate Mitochondrial*, *Bacterial*, *Alternative Yeast Nuclear* and *Ciliate, Dasycladacean and Hexamita Nuclear*. All these tables can be seen in [Bio::Tools::CodonTable](http://search.cpan.org/search?query= Bio::Tools::CodonTable). For example, for mitochondrial translation:
 
 ```perl
 $prot_obj = $seq_obj->translate(-codontable_id => 2);
@@ -710,7 +708,7 @@ $id = $codon_table->add_table(@custom_table);
 $prot_obj = $seq_object->translate(-codontable_id => $id);
 ```
 
-See for information on the format of a codon table.
+See [Bio::Tools::CodonTable](http://search.cpan.org/search?query= Bio::Tools::CodonTable) for information on the format of a codon table.
 
 `translate()` can also find the open reading frame (ORF) starting at the 1st initiation codon in the nucleotide sequence, regardless of its frame, and translate that:
 
@@ -718,29 +716,29 @@ See for information on the format of a codon table.
 $prot_obj = $seq_object->translate(-orf => 1);
 ```
 
-Most of the codon tables, including the default codon table NCBI "Standard", have initiation codons in addition to ATG. To tell `translate()` to use only ATG or atg as the initiation codon set -start to "atg":
+Most of the codon tables, including the default codon table NCBI *Standard*, have initiation codons in addition to ATG. To tell `translate()` to use only *ATG* or *atg* as the initiation codon set -start to `atg`:
 
 ```perl
 $prot_obj = $seq_object->translate( -orf => 1, -start => "atg" );
 ```
 
-The -start argument only applies when -orf is set to 1.
+The `-start` argument only applies when `-orf` is set to 1.
 
-Last trick. By default `translate()` will translate the termination codon to some special character (the default is \*, but this can be reset using the -terminator argument).
+Last trick. By default `translate()` will translate the termination codon to some special character (the default is `*`, but this can be reset using the `-terminator` argument).
 
-When -complete is set to 1 this character is removed. So, with this:
+When `-complete` is set to 1 this character is removed. So, with this:
 
 ```perl
 $prot_obj = $seq_object->translate(-orf => 1, -complete => 1);
 ```
 
-the sequence '''tttttatgccctaggggg''' will be translated to '''MP''', not '''MP\*'''.
+the sequence *tttttatgccctaggggg* will be translated to `MP`, not `MP*`.
 
-See and for more information on translation.
+See [Bio::Tools::CodonTable](http://search.cpan.org/search?query= Bio::Tools::CodonTable) and [Bio::PrimarySeqI](http://search.cpan.org/search?query= Bio::PrimarySeqI) for more information on translation.
 
 ### Obtaining basic sequence statistics
 
-In addition to the methods directly available in the Seq object, Bioperl provides various helper objects to determine additional information about a sequence. For example, object provides methods for obtaining the molecular weight of the sequence as well the number of occurrences of each of the component residues (bases for a nucleic acid or amino acids for a protein.) For nucleic acids, also returns counts of the number of codons used. For example:
+In addition to the methods directly available in the Seq object, Bioperl provides various helper objects to determine additional information about a sequence. For example, the [Bio::Tools::SeqStats](http://search.cpan.org/search?query= Bio::Tools::SeqStats) object provides methods for obtaining the molecular weight of the sequence as well the number of occurrences of each of the component residues (bases for a nucleic acid or amino acids for a protein.) For nucleic acids, also returns counts of the number of codons used. For example:
 
 ```perl
 use Bio::Tools::SeqStats; 
@@ -753,13 +751,13 @@ $codon_ref = $seq_stats->count_codons();
 
 Note: sometimes sequences will contain ambiguous codes. For this reason, `get_mol_wt()` returns a reference to a two element array containing a greatest lower bound and a least upper bound of the molecular weight.
 
-The SeqWords object is similar to SeqStats and provides methods for calculating frequencies of "words" (e.g. tetramers or hexamers) within the sequence. See and for more information.
+The SeqWords object is similar to SeqStats and provides methods for calculating frequencies of "words" (e.g. tetramers or hexamers) within the sequence. See [Bio::Tools::SeqStats](http://search.cpan.org/search?query= Bio::Tools::SeqStats) and [Bio::Tools::SeqWords](http://search.cpan.org/search?query= Bio::Tools::SeqWords) for more information.
 
 ### BLAST
 
-**This section is outdated, please see <HOWTO:BlastPlus>. BLAST is no longer supported by NCBI, it has been superceded by BLAST+.**
+**This section is outdated, please see [HOWTO:BlastPlus](BlastPlus.html). BLAST is no longer supported by NCBI, it has been superceded by BLAST+.**
 
-You have access to a large number of sequence analysis programs within Bioperl. Typically this means you have a means to run the program and frequently a means of parsing the resulting output, or report, as well. Certainly the most popular analytical program is BLAST so let's use it as an example. First you'll need to get [BLAST](http://www.ncbi.nlm.nih.gov/blast/), also known as blastall, installed on your machine and running, versions of the program that can run on all the popular operating systems can be [downloaded](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) from NCBI. The example code assumes that you used the formatdb program to index the database sequence file "db.fa".
+You have access to a large number of sequence analysis programs within Bioperl. Typically this means you have a means to run the program and frequently a means of parsing the resulting output, or report, as well. Certainly the most popular analytical program is BLAST so let's use it as an example. First you'll need to get [BLAST](http://www.ncbi.nlm.nih.gov/blast/), installed on your machine and running, versions of the program that can run on all the popular operating systems can be [downloaded](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) from NCBI. The example code assumes that you used the formatdb program to index the database sequence file *db.fa*.
 
 As usual, we start by choosing a module to use, in this case . You stipulate some blastall parameters used by the blastall program by using `new()`. As you'd expect, we want to create a Blast object, and we will pass a Sequence object to the Blast object, this Sequence object will be used as the query:
 
@@ -805,7 +803,7 @@ while( $result = $report_obj->next_result ) {
 
 This code prints out details about the match when the HSP or aligned pair are greater than 75% identical.
 
-Sometimes you'll see errors when you try to use that have nothing to do with Bioperl. Make sure that [BLAST] is set up properly and running before you attempt to script it using . There are some notes on setting up BLAST in the [INSTALL](http://bioperl.open-bio.org/SRC/bioperl-live/INSTALL) file.
+Sometimes you'll see errors when you try to use that have nothing to do with Bioperl. Make sure that BLAST is set up properly and running before you attempt to script it using . There are some notes on setting up BLAST in the [INSTALL](http://bioperl.open-bio.org/SRC/bioperl-live/INSTALL) file.
 
 Bioperl enables you to run a wide variety of bioinformatics programs but in order to do so, in most cases, you will need to install the accessory bioperl-run package. In addition there is no guarantee that there is a corresponding parser for the program that you wish to run, but parsers have been built for the most popular programs. You can find the bioperl-run package on the download page.
 
@@ -815,7 +813,7 @@ One of the under-appreciated features of Bioperl is its ability to index sequenc
 
 There's only one requirement here, the term or id that you use to retrieve the sequence object must be unique in the index, these indices are not built to retrieve multiple sequence objects from one query.
 
-There are a few different modules in Bioperl that can index sequence files, the Bio::Index::\* modules and . All these modules are scripted in a similar way: you first index one or more files, then retrieve sequences from the indices. Let's begin our script with the use statement and also set up our environment with some variables (the sequence file, [FASTA sequence format], will be called "sequence.fa"):
+There are a few different modules in Bioperl that can index sequence files, the `Bio::Index::*` modules and [Bio::DB::Fasta](http://search.cpan.org/search?query= Bio::DB::Fasta). All these modules are scripted in a similar way: you first index one or more files, then retrieve sequences from the indices. Let's begin our script with the use statement and also set up our environment with some variables (the sequence file will be called *sequence.fa*):
 
 ```perl
 use Bio::Index::Fasta; 
@@ -830,7 +828,7 @@ Or the following in the bash shell:
 
 `>export BIOPERL_INDEX_TYPE=SDBM_File`
 
-The BIOPERL_INDEX_TYPE variable refers to the indexing scheme, and SDBM_File is the scheme that comes with Perl. BIOPERL_INDEX stipulates the location of the index file, and this way you could have more than one index file per sequence file if you wanted, by designating multiple locations (and the utility of more than 1 index will become apparent).
+The `BIOPERL_INDEX_TYPE` variable refers to the indexing scheme, and `SDBM_File` is the scheme that comes with Perl. `BIOPERL_INDEX` stipulates the location of the index file, and this way you could have more than one index file per sequence file if you wanted, by designating multiple locations (and the utility of more than 1 index will become apparent).
 
 Now let's construct the index:
 
@@ -845,17 +843,17 @@ $inx = Bio::Index::Fasta->new (-filename => $file_name . ".idx",
 $inx->make_index($file_name);
 ```
 
-You would execute this script in the directory containing the "sequence.fa" file, and it would create an index file called "sequence.fa.idx". Then you would retrieve a sequence object like this:
+You would execute this script in the directory containing the *sequence.fa* file, and it would create an index file called *sequence.fa.idx*. Then you would retrieve a sequence object like this:
 
 ```perl
 $seq_obj = $inx->fetch($id)
 ```
 
-By default the fasta indexing code will use the string following the '''>''' character as a key, meaning that fasta header line should look something like this if you want to fetch using the value "48882":
+By default the fasta indexing code will use the string following the `>` character as a key, meaning that fasta header line should look something like this if you want to fetch using the value *48882*:
 
 `>48882 pdb|1CRA`
 
-However, what if you wanted to retrieve using some other key, like "1CRA" in the example above? You can customize the index by using 's `id_parser` method, which accepts the name of a function as an argument where that function tells the indexing object what key to use. For example:
+However, what if you wanted to retrieve using some other key, like *1CRA* in the example above? You can customize the index by using [Bio::Index::Fasta](http://search.cpan.org/search?query= Bio::Index::Fasta)'s `id_parser` method, which accepts the name of a function as an argument where that function tells the indexing object what key to use. For example:
 
 ```perl
 $inx->id_parser(&get_id); 
@@ -870,7 +868,7 @@ sub get_id {
 
 To be precise, one would say that the `id_parser` method accepts a reference to a function as an argument.
 
-has some features that lacks, one of the more useful ones is that it was built to handle very large sequences and can retrieve sub-sequences from genome-size sequences efficiently. Here is an example:
+[Bio::DB::Fasta](http://search.cpan.org/search?query= Bio::DB::Fasta) has some features that [Bio::Index::Fasta](http://search.cpan.org/search?query= Bio::Index::Fasta) lacks, one of the more useful ones is that it was built to handle very large sequences and can retrieve sub-sequences from genome-size sequences efficiently. Here is an example:
 
 ```perl
 use Bio::DB::Fasta;
@@ -884,13 +882,13 @@ $seq_obj = $db->seq($id, $start, $end);
 print $seq_obj->seq;
 ```
 
-This script indexes the genome.fa file, then retrieves a sub-sequence of CHROMOSOME_I, starting at 11250 and ending at 11333. One can also specify what ids can be used as keys, just as in .
+This script indexes the *genome.fa* file, then retrieves a sub-sequence of CHROMOSOME_I, starting at 11250 and ending at 11333. One can also specify what ids can be used as keys, just as in [Bio::Index::Fasta](http://search.cpan.org/search?query= Bio::Index::Fasta).
 
-There's a bit more information on indexing in <HOWTO:Local_Databases>.
+There's a bit more information on indexing in [HOWTO:Local_Databases](Local_Databases.html).
 
 ### Searching for genes in genomic DNA
 
-Parsers for widely used gene prediction programs - Genscan, Sim4, Genemark, Grail, ESTScan and MZEF - are available in Bioperl. The interfaces for these parsers are all similar. The syntax is relatively self-explanatory, see , , , , , and for further details. Here are some examples on how to use these modules.
+Parsers for widely used gene prediction programs - Genscan, Sim4, Genemark, Grail, ESTScan and MZEF - are available in Bioperl. The interfaces for these parsers are all similar. The syntax is relatively self-explanatory, see [Bio::Tools::Genscan](http://search.cpan.org/search?query= Bio::Tools::Genscan), [Bio::Tools::Genemark](http://search.cpan.org/search?query= Bio::Tools::Genemark), [Bio::Tools::Grail](http://search.cpan.org/search?query= Bio::Tools::Grail), [Bio::Tools::ESTScan](http://search.cpan.org/search?query= Bio::Tools::ESTScan), [Bio::Tools::MZEF](http://search.cpan.org/search?query= Bio::Tools::MZEF), and [Bio::Tools::Sim4::Results](http://search.cpan.org/search?query= Bio::Tools::Sim4::Results) for further details. Here are some examples on how to use these modules.
 
 ```perl
 use Bio::Tools::Genscan; 
@@ -905,7 +903,7 @@ while ( $gene = $genscan->next_prediction() ) {
 $genscan->close();
 ```
 
-See and for more details.
+See [Bio::Tools::Prediction::Gene](http://search.cpan.org/search?query= Bio::Tools::Prediction::Gene) and [Bio::Tools::Prediction::Exon](http://search.cpan.org/search?query= Bio::Tools::Prediction::Exon) for more details.
 
 ```perl
 
@@ -926,9 +924,9 @@ $estname = $exons[$exon]->est_hit()->seqname();
 $sim4->close();
 ```
 
-See and for more information.
+See [Bio::SeqFeature::Generic](http://search.cpan.org/search?query= Bio::SeqFeature::Generic) and [Bio::Tools::Sim4::Exons](http://search.cpan.org/search?query= Bio::Tools::Sim4::Exons) for more information.
 
-A parser for the ePCR program is also available. The ePCR program identifies potential PCR-based sequence tagged sites (STSs) For more details see the documentation in . A sample skeleton script for parsing an ePCR report and using the data to annotate a genomic sequence might look like this:
+A parser for the ePCR program is also available. The ePCR program identifies potential PCR-based sequence tagged sites (STSs) For more details see the documentation in [Bio::Tools::EPCR](http://search.cpan.org/search?query= Bio::Tools::EPCR). A sample skeleton script for parsing an ePCR report and using the data to annotate a genomic sequence might look like this:
 
 ```perl
 use Bio::Tools::EPCR; 
@@ -946,23 +944,23 @@ $seq = $seqio->next_seq; while( $feat = $parser->next_feature ) {
 
 ### Code to query bibliographic databases
 
-objects are used to query bibliographic databases, such as MEDLINE. The associated modules are built to work with OpenBQS-compatible databases ( see <http://www.ebi.ac.uk/~senger/openbqs> ). A object can execute a query like:
+[Bio::Biblio](http://search.cpan.org/search?query= Bio::Biblio) objects are used to query bibliographic databases, such as MEDLINE. The associated modules are built to work with OpenBQS-compatible databases (see http://www.ebi.ac.uk/~senger/openbqs). A object can execute a query like:
 
 ```perl
 my $collection = $biblio->find ('brazma', 'authors'); 
 
 while ( $collection->has_next ) {
-    print $collection->get_next;
+    print $collection->get_next;
 }
 ```
 
-See , the scripts/biblio/biblio.PLS script, or the examples/biblio/biblio_examples.pl script for more information.
+See [Bio::Biblio](http://search.cpan.org/search?query= Bio::Biblio), the *scripts/biblio/biblio.PLS* script, or the *examples/biblio/biblio_examples.pl* script for more information.
 
 ### Using EMBOSS applications with Bioperl
 
-[EMBOSS] (European Molecular Biology Open Source Software) is an extensive collection of sequence analysis programs written in the C programming language (http://emboss.sourceforge.net/). There are a number of algorithms in [EMBOSS] that are not found in Bioperl (e.g. calculating DNA melting temperature, finding repeats, identifying prospective antigenic sites) so if you cannot find the function you want in Bioperl you might be able to find it in [EMBOSS]. The Bioperl code that runs EMBOSS programs is .
+EMBOSS is an extensive collection of sequence analysis programs written in the C programming language (http://emboss.sourceforge.net/). There are a number of algorithms in EMBOSS that are not found in Bioperl (e.g. calculating DNA melting temperature, finding repeats, identifying prospective antigenic sites) so if you cannot find the function you want in Bioperl you might be able to find it in EMBOSS. The Bioperl code that runs EMBOSS programs is [Bio::Factory::EMBOSS](http://search.cpan.org/search?query= Bio::Factory::EMBOSS).
 
-[EMBOSS] programs are usually called from the command line but the bioperl-run auxiliary library provides a Perl wrapper for [EMBOSS] function calls so that they can be executed from within a Perl script. Of course, the [EMBOSS] package as well as the bioperl-run must be installed in order for the Bioperl wrapper to function.
+EMBOSS programs are usually called from the command line but the bioperl-run auxiliary library provides a Perl wrapper for EMBOSS function calls so that they can be executed from within a Perl script. Of course, the EMBOSS package as well as the *bioperl-run* must be installed in order for the Bioperl wrapper to function.
 
 An example of the Bioperl wrapper where a file is returned would be:
 
@@ -986,7 +984,7 @@ Note that a Seq object was used as input. The EMBOSS object can also accept a fi
 -sequence => "inputfasta.fa"
 ```
 
-Some EMBOSS programs will return strings, others will create files that can be read directly using . It's worth mentioning that another way to align sequences in Bioperl is to run a program from the EMBOSS suite, such as 'matcher'. This can produce an output file that Bioperl can read in using AlignIO:
+Some EMBOSS programs will return strings, others will create files that can be read directly using [Bio::SeqIO](http://search.cpan.org/search?query= Bio::SeqIO). It's worth mentioning that another way to align sequences in Bioperl is to run a program from the EMBOSS suite, such as *matcher*. This can produce an output file that Bioperl can read in using [Bio::AlignIO](http://search.cpan.org/search?query= Bio::AlignIO):
 
 ```perl
 my $factory = new Bio::Factory::EMBOSS; 
@@ -1001,19 +999,19 @@ $prog->run({ -sequencea => Bio::Seq->new(-id => "seq1",
              -outfile => $outfile});
 
 my $alignio_fmt = "emboss"; 
-my $align_io = new Bio::AlignIO(-format => $alignio_fmt,
-                                -file => $outfile);
+my $align_io = Bio::AlignIO->new(-format => $alignio_fmt,
+                                 -file => $outfile);
 ```
 
 ### More on Bioperl
 
 Perhaps this article has gotten you interested in learning a bit more about Bioperl. Here are some other things you might want to look at:
 
--   [HOWTOs]. Each one covers a topic in some detail, but there are certainly some HOWTOs that are missing that we would like to see written. Would you like to become an expert and write one yourself?
+-   [HOWTOs](). Each one covers a topic in some detail, but there are certainly some HOWTOs that are missing that we would like to see written. Would you like to become an expert and write one yourself?
 
 -   The module documentation. Each module is documented, but the quality and quantity varies by module.
 
--   [Bioperl scripts]. You'll find them in the scripts/ directory and in the examples/ directory of the Bioperl package. The former contains more carefully written and documented scripts that can be installed along with Bioperl. You should feel free to contribute scripts to either of these directories.
+-   Bioperl scripts. You'll find them in the *scripts/* directory and in the *examples/* directory of the Bioperl package. The former contains more carefully written and documented scripts that can be installed along with Bioperl. You should feel free to contribute scripts to either of these directories.
 
 ### Perl's Documentation System
 
@@ -1057,7 +1055,7 @@ The main difference between this object-oriented example and the procedural exam
 
 #### Terminology
 
-In the object-oriented example above, `$seq_obj` is called an object, and `revcom` is called a method. An object is a data structure that has both data and methods associated with it. Objects are separated into types called classes, and the class of an object defines both the data that it can hold and the methods that it knows. A specific object that has a defined class is referred to as an instance of that class. In Perl you could say that each module is actually a class, but for some reason the author of Perl elected to use the term "module" rather than "class".
+In the object-oriented example above, `$seq_obj` is called an object, and `revcom` is called a method. An object is a data structure that has both data and methods associated with it. Objects are separated into types called classes, and the class of an object defines both the data that it can hold and the methods that it knows. A specific object that has a defined class is referred to as an instance of that class.
 
 That's the sort of explanation you'll get in most programming books, but what is a Perl object really? Usually a hash. In Bioperl the data that the object contains is stored in a single, complex hash and the object, like `$seq_obj`, is a reference to this hash. In addition, the methods that the object can use are also stored in this hash as particular kinds of references. You could say that an object in Perl is a special kind of hash reference.
 
@@ -1065,8 +1063,6 @@ Bioperl uses the object-oriented paradigm, and here are some texts if you want t
 
 -   [Object Oriented Perl](http://www.manning.com/conway/)
 
--   Bioperl's [Developer Information], particularly the [Advanced BioPerl page], for anyone who'd like to write their own modules.
-
--   The [ENSEMBL Perl API](http://www.ensembl.org/info/docs/api/core/core_tutorial.html), a way of accessing [ENSEMBL](http://www.ensembl.org)'s genomics data in a manner very much like Bioperl.'
+-   The [ENSEMBL Perl API](http://www.ensembl.org/info/docs/api/core/core_tutorial.html), a way of accessing [ENSEMBL](http://www.ensembl.org)'s genomics data in a manner very much like Bioperl.
 
 

@@ -138,8 +138,8 @@ A plaintext NCBI-BLAST report like that used in the example above probably remai
 | Result | available_statistics | effectivespaceused ... dbletters    | statistics used                                                                                                            |
 | Result | available_parameters | gapext matrix allowgaps gapopen     | parameters used                                                                                                            |
 | Result | num_hits             | 1                                   | number of hits                                                                                                             |
-| Result | hitst               |                                     | List of all [Bio::Search::Hit::GenericHit] object(s) for this Result       |
-| Result | rewindt             |                                     | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits. |
+| Result | hits               |                                     | List of all [Bio::Search::Hit::GenericHit](http://search.cpan.org/search?query= Bio::Search::Hit::GenericHit) objects for this Result       |
+| Result | rewind             |                                     | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits |
 
 
 Table 2.1: All the data returned by methods used by the Result objects when the report shown above is used as input. 
@@ -147,20 +147,20 @@ Table 2.1: All the data returned by methods used by the Result objects when the 
 Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
 | Object | Method            | Example          | Description  |
-|--------|-------------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| Hit    | name              | gb|443893|124775 | hit name                                                                                                                                        |
-| Hit    | length            | 331              | Length of the Hit sequence                                                                                                                      |
-| Hit    | accession         | 443893           | accession (usually when this is a genbank formatted id this will be an accession number- the part after the ''gb'' or ''emb'' ) |
-| Hit    | description       | LaForas sequence | hit description                                                                                                                                 |
-| Hit    | algorithm         | BLASTX           | algorithm                                                                                                                                       |
-| Hit    | raw_score        | 92               | hit raw score                                                                                                                                   |
-| Hit    | significance      | 2e-022           | hit significance                                                                                                                                |
-| Hit    | bits              | 92.0             | hit bits                                                                                                                                        |
-| Hit    | hsps              |                  | List of all [Bio::Search::HSP::GenericHSP] object(s) for this Hit                               |
-| Hit    | num_hsps         | 1                | number of HSPs in hit                                                                                                                           |
-| Hit    | locus             | 124775           | locus name                                                                                                                                      |
-| Hit    | accession_number | 443893           | accession number                                                                                                                                |
-| Hit    | rewind            |                  | Resets the internal counter for next_hsp() so that the iterator will begin at the beginning of the list                                        |
+|--------|-------------------|------------------|--------------------------|
+| Hit    | name              | gb|443893|124775 | hit name |
+| Hit    | length            | 331              | Length of the Hit sequence  |
+| Hit    | accession         | 443893           | accession (usually when this is a Genbank formatted id this will be an accession number - the part after the `gb` or `emb` ) |
+| Hit    | description       | LaForas sequence | hit description     |
+| Hit    | algorithm         | BLASTX           | algorithm           |
+| Hit    | raw_score        | 92               | hit raw score       |
+| Hit    | significance      | 2e-022           | hit significance   |
+| Hit    | bits              | 92.0             | hit bits           |
+| Hit    | hsps              |                  | List of all [Bio::Search::HSP::GenericHSP](http://search.cpan.org/search?query= Bio::Search::HSP::GenericHSP) objects for this Hit |
+| Hit    | num_hsps         | 1                | number of HSPs in hit |
+| Hit    | locus             | 124775           | locus name  |
+| Hit    | accession_number | 443893           | accession number |
+| Hit    | rewind            |                  | Resets the internal counter for next_hsp() so that the iterator will begin at the beginning of the list |
 
 
 Table 2.2. All the data returned by methods used by the Hit objects when the report shown above is used as input.
@@ -169,8 +169,8 @@ Many of the methods shown can be used to either get or set values, but we're jus
 
 
 | Object | Method                                               | Example                                  | Description  |
-|--------|------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------|
-| HSP    | algorithm                                            | BLASTX                                   | algorithm                                                                              |
+|--------|----------------------------------------------|-------|-------|
+| HSP    | algorithm                                            | BLASTX                                   | algorithm     |
 | HSP    | evalue                                               | 2e-022                                   | e-value                                                                                |
 | HSP    | expect                                               | 2e-022                                   | alias for evalue()                                                                     |
 | HSP    | frac_identical                                      | 0.884615384615385                        | fraction identical   |
@@ -178,7 +178,7 @@ Many of the methods shown can be used to either get or set values, but we're jus
 | HSP    | gaps                                                 | 2                                        | number of gaps                                                                         |
 | HSP    | query_string                                        | DMGRCSSG ..                              | query string from alignment                                                            |
 | HSP    | hit_string                                          | DIVQNSS ...                              | hit string from alignment                                                              |
-| HSPt | homology_string                                     | D+ + SSGCN ...                           | string from alignment                                                                  |
+| HSPt | homology_string                                     | D+ + SSGCN ...                           | string from alignment  |
 | HSP    | length('total')                                  | 52                                       | length of HSP (including gaps)                                                         |
 | HSP    | length('hit')                                    | 50                                       | length of hit participating in alignment minus gaps                                    |
 | HSP    | length('query')t                               | 156                                      | length of query participating in alignment minus gaps                                  |
@@ -193,11 +193,11 @@ Many of the methods shown can be used to either get or set values, but we're jus
 | HSP    | seq_inds('hit','identical')                 | (197,202,203,204,205, ...)               | identical positions as array                                                           |
 | HSP    | seq_inds('hit','conserved-not-identical')   | (198,200)                                | conserved not identical positions as array                                             |
 | HSP    | seq_inds('hit','conserved',1)               | (197,202-246)                            | conserved or identical positions as array, with runs of consecutive numbers compressed |
-| HSPt | score                                                | 227                                      | score                                                                                  |
+| HSPt | score                                                | 227                                      | score   |
 | HSP    | bits                                                 | 92.0                                     | score in bits                                                                          |
 | HSP    | range('query')                                   | (2896,3051)                              | start and end as array                                                                 |
 | HSP    | range('hit')                                     | (197,246)                                | start and end as array                                                                 |
-| HSP    | percent_identity                                    | 88.4615384615385                         | % identical                                                                            |
+| HSP    | percent_identity                                    | 88.4615384615385                         | % identical  |
 | HSP    | strand('hit')                                    | 1                                        | strand of the hit                                                                      |
 | HSP    | strand('query')                                  | 1                                        | strand of the query                                                                    |
 | HSP    | start('query')                                   | 2896                                     | start position from alignment                                                          |
@@ -206,9 +206,9 @@ Many of the methods shown can be used to either get or set values, but we're jus
 | HSP    | end('hit')                                       | 246                                      | end position from alignment                                                            |
 | HSP    | matches('hit')                                   | (46,48)                                  | number of identical and conserved as array                                             |
 | HSP    | matches('query')                                 | (46,48)                                  | number of identical and conserved as array                                             |
-| HSP    | get_aln                                             | ''sequence alignment''           | object  |
-| HSPt | hsp_group   | ''Not available in this report'' | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
-| HSP    | links                                                | ''Not available in this report'' | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
+| HSP    | get_aln | sequence alignment           | [Bio::SimpleAlign](http://search.cpan.org/search?query= Bio::SimpleAlign) object  |
+| HSPt | hsp_group   | *Not available in this report* | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
+| HSP    | links                                                | *Not available in this report* | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
 
 Table 2.3. All the data returned by methods used by the HSP objects when the report shown above is used as input. 
 
@@ -220,7 +220,7 @@ The tables above show that a method can return a string, an array, or an object.
 
 #### get_aln()
 
-For example, if you wanted a printable alignment after you'd parsed BLAST output you could use the `get_aln()` method, retrieve a object and use it like this:
+For example, if you wanted a printable alignment after you'd parsed BLAST output you could use the `get_aln()` method, retrieve a [Bio::SimpleAlign](http://search.cpan.org/search?query= Bio::SimpleAlign) object and use it like this:
 
 ```perl
 use Bio::AlignIO;
