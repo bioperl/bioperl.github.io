@@ -236,7 +236,7 @@ To preserve the branch lengths between the children and ancestor of the removed 
 $tree->splice(-remove_id => $node->id, -preserve_lengths => 1);
 
 # or specify the Names of nodes to keep and/or remove
-2.  this will remove all nodes with an id() of '1'.
+  this will remove all nodes with an id() of '1'.
 
 $tree->splice(-remove_id => \[1, 2\], -keep_id => \[2\])
 
@@ -293,9 +293,9 @@ Re-root a tree, specifying a different node as the root (and a different node as
 ```perl
 
 # node can either be a Leaf node in which case it becomes the
-2.  outgroup and its ancestor is the new root of the tree
-3.  or it can be an internal node which will become the new
-4.  root of the Tree
+  outgroup and its ancestor is the new root of the tree
+  or it can be an internal node which will become the new
+  root of the Tree
 
 $tree->reroot($node);
 
@@ -505,9 +505,9 @@ for( my $i = 0; $i < 10; $i++ ) {
      $out->write_tree($factory->next_tree); }
 
 # One can also just request a total number of taxa (8 here) and
-2.  not provide labels for them
-3.  In addition one can specify the total number of trees
-4.  the object should return so we can call this in a while
+  not provide labels for them
+  In addition one can specify the total number of trees
+  the object should return so we can call this in a while
 5.  loop
 
 $factory = new Bio::Tree::RandomFactory(-num_taxa => 8
@@ -530,9 +530,9 @@ References and More Reading
 For more reading and some references for the techniques above see these titles. <biblio>
 
 # felsenstein J. Felsenstein, "Infering Phylogenies" 2003. Sinuar and Associates. D. Swoffrod, Olsen, Waddell and D. Hillis, "Phylogenetic Inference" 1996. in Mol. Systematics, 2nd ed, 1996, Ch 11.
-2.  bsa Eddy SR, Durbin R, Krogh A, Mitchison G, "Biological Sequence Analysis" 1998. Cambridge Univ Press, Cambridge, UK.
-3.  RIO pmid=12028595
-4.  SDI pmid=11590098
+  bsa Eddy SR, Durbin R, Krogh A, Mitchison G, "Biological Sequence Analysis" 1998. Cambridge Univ Press, Cambridge, UK.
+  RIO pmid=12028595
+  SDI pmid=11590098
 5.  ATV pmid=11301314
 6.  Tamura92 pmid=1630306
 7.  Kimura80 pmid=7463489

@@ -38,7 +38,7 @@ Example script:
 use strict; use Bio::EnsEMBL::Registry; use Getopt::Long; use Bio::SeqIO;
 
 # old style (deprecated) use the Bio::EnsEMBL::Registry
-2.  use Bio::EnsEMBL::DBSQL::DBAdaptor;
+  use Bio::EnsEMBL::DBSQL::DBAdaptor;
 
 <!-- -->
 
@@ -62,8 +62,8 @@ my $out_seq = Bio::SeqIO->new(
                             );`
 
 # The current way for accesing ensemble is using the registry
-2.  it matches your API with its corresponding ensembl database version
-3.  Also takes care of the mysql port (now is in a non standard port 5306)
+  it matches your API with its corresponding ensembl database version
+  Also takes care of the mysql port (now is in a non standard port 5306)
 
 my $reg = 'Bio::EnsEMBL::Registry';
 

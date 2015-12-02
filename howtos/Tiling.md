@@ -162,7 +162,7 @@ tmy $tiling = Bio::Search::Tiling::MapTiling->new($hit); tmy $ident = $tiling->i
    `
 
 # now, have the hit providing the most identities against the query
-2.  search the contexts in the \*subject\* sequences
+  search the contexts in the \*subject\* sequences
 
 <!-- -->
 
@@ -238,8 +238,8 @@ A user has BLASTed a set of contigs against a reference sequence, and would like
 use Bio::SearchIO; use Bio::Search::Tiling::MapTiling
 
 # Note that to get one hit, the user first blasts
-2.  the set of contigs against single sequence, the reference sequence.
-3.  The result of this BLAST run is in 'contig_tile.bls'
+  the set of contigs against single sequence, the reference sequence.
+  The result of this BLAST run is in 'contig_tile.bls'
 
 $blio = Bio::SearchIO->new( -file => 'contig_tile.bls'); $result = $blio->next_result; $hit = $result->next_hit; $tiling = Bio::Search::Tiling::MapTiling->new($hit); @alns = $tiling->get_tiled_alns('query');
 

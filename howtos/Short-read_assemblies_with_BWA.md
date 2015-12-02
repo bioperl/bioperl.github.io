@@ -140,9 +140,9 @@ Options can be directed to the `aln` and `samse/sampe` components of the assembl
 @map_params = Bio::Tools::Run::Maq->new(-command => 'aln')->available_parameters();
 
 # returns:
-2.  'max_edit_dist'
-3.  'max_gap_opens'
-4.  'max_gap_extns'
+  'max_edit_dist'
+  'max_gap_opens'
+  'max_gap_extns'
 5.  'deln_protect_3p'
 6.  'deln_protect_ends'
 7.  'subseq_seed'

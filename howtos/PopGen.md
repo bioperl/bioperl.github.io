@@ -307,9 +307,9 @@ Bibliography
 <biblio>
 
 # perlymorphism pmid=15356276
-2.  hahn2004 pmid=15238535
-3.  rockman2003 pmid=14654003
-4.  hahn2002_HeterogeneityTest pmid=12019219
+  hahn2004 pmid=15238535
+  rockman2003 pmid=14654003
+  hahn2002_HeterogeneityTest pmid=12019219
 5.  paml pmid=9367129
 
 </biblio>'

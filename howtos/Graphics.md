@@ -457,8 +457,8 @@ With you can render the feature table of a [GenBank] or [EMBL] file quite easily
 <!-- -->
 
 # file: embl2picture.pl
-2.  This is code example 5 in the Graphics-HOWTO
-3.  Author: Lincoln Stein
+  This is code example 5 in the Graphics-HOWTO
+  Author: Lincoln Stein
 
 use strict; use lib "$ENV{HOME}/projects/bioperl-live"; use Bio::Graphics; use Bio::SeqIO; use Bio::SeqFeature::Generic;
 
@@ -558,8 +558,8 @@ However, it's quite easy to customize the display, making the script into a gene
 <!-- -->
 
 # file: embl2picture.pl
-2.  This is code example 6 in the Graphics-HOWTO
-3.  Author: Lincoln Stein
+  This is code example 6 in the Graphics-HOWTO
+  Author: Lincoln Stein
 
 use strict; use lib "$ENV{HOME}/projects/bioperl-live"; use Bio::Graphics; use Bio::SeqIO; use Bio::SeqFeature::Generic;
 

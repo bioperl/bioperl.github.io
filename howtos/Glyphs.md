@@ -758,8 +758,8 @@ print $panel->png;
 This script creates three features:
 
 # '''Test feature 1''' is a complex feature containing three sub seqfeatures.
-2.  '''Test feature 2''', which is a simple feature with no subparts.
-3.  '''Test feature 3''', a simple feature with a three-part split location.
+  '''Test feature 2''', which is a simple feature with no subparts.
+  '''Test feature 3''', a simple feature with a three-part split location.
 
 The result is shown in Figure 8. As you can see, the glyph handles all three cases in the way that you'd expect.
 

@@ -174,8 +174,8 @@ Most of the hard work is done by and . Any module must inherit from this latter 
 For a minimal prediction server which takes just sequence as a parameter (e.g., [Domcut](http://www.bork.embl-heidelberg.de/~suyama/domcut/)), only three methods need to be explicitly written:
 
 # `_run()` which mimics the web form, submits the sequence and extracts the raw text data of the result from the HTML.
-2.  `result()` which parses the raw data into whatever useful format you wish. Usually these include SeqFeature objects, standard Perl data structures and meta sequences if there is a result for each residue in the sequence.
-3.  `_init()` which imports the analysis specifications into the Analysis object
+  `result()` which parses the raw data into whatever useful format you wish. Usually these include SeqFeature objects, standard Perl data structures and meta sequences if there is a result for each residue in the sequence.
+  `_init()` which imports the analysis specifications into the Analysis object
 
 As well as these methods, various file scoped lexical hashes need to be defined which hold constant data about the analysis, and the analysis result. These are useful for reference and are incorporated into the analysis objects.
 

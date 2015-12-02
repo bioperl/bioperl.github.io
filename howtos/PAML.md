@@ -41,8 +41,8 @@ Background
 The [PAML] package consists of many different executable programs, but the [BioPerl] object (hereafter referred to as simply the paml object) focuses on dealing with the output of the main analysis programs "baseml", "codeml" (sometimes called "aaml") and "codemlsites" (a batch version of "codeml"). All of these programs use maximum likelihood methods to fit a mathematical model of evolution to sequence data provided by the user. The main difference between these programs is the type of sequence on which they operate (baseml for raw DNA, codeml for DNA organized as codons, aaml for amino acids). While the general maximum likelihood approach used by the paml programs is the same for all of them, the specific evolutionary models available for each sequence type vary greatly, as do the parameters specific to each model. The programs function in a handful of disparate modes, each requiring slight variations of inputs that can possibly include:
 
 # multiply-aligned sequences. representing 1 or more distinct genes ( paml parameter Mgene = 1 ), in 1 or more distinct datasets ( paml ndata > 1 )
-2.  a user-provided tree topology (or multiple tree topologies to be evaluated and contrasted)
-3.  a set of instructions in a control file that specify the model (or models) to be used, various options to specify how to handle the sequence data (e.g. whether to dismiss columns with gaps or not ( cleandata = 1 )), initial or fixed values for model parameters, and the filenames for other input data.
+  a user-provided tree topology (or multiple tree topologies to be evaluated and contrasted)
+  a set of instructions in a control file that specify the model (or models) to be used, various options to specify how to handle the sequence data (e.g. whether to dismiss columns with gaps or not ( cleandata = 1 )), initial or fixed values for model parameters, and the filenames for other input data.
 
 The output from PAML is directed to multiple "targets". Data is written to the user-specified primary output file (conventionally named with an .mlc extension), as well as various accessory files with fixed names (e.g. 2ML.t, 2ML.dN, 2ML.dS for pairwise Maximum Likelihood calculations) that appear in the same directory that the output file is found.
 
@@ -157,7 +157,7 @@ my ($rc,$parser) = $kaks_factory->run(); my $result = $parser->next_result; my $
 my @otus = $result->get_seqs();
 
 # this gives us a mapping from the PAML order of sequences back to
-2.  the input order (since names get truncated)
+  the input order (since names get truncated)
 
 my @pos = map {
 
@@ -204,7 +204,7 @@ use strict; use Bio::TreeIO; use IO::String;
 my $in = Bio::TreeIO->new(-format => 'newick', ttt -fh => \*DATA); my $iostr = IO::String->new; my $out = Bio::TreeIO->new(-format => 'newick', ttt -fh => $iostr, ttt );
 
 # desired:
-2.  ((((3 \#1, 4 \#2),1), \#2 2),5);
+  ((((3 \#1, 4 \#2),1), \#2 2),5);
 
 while( my $t = $in->next_tree ) {
 
@@ -346,9 +346,9 @@ References
 <biblio>
 
 # goldman94 pmid=7968486
-2.  PAML97 pmid=9367129
-3.  YN00 pmid=10666704
-4.  Yang00 pmid=10790415
+  PAML97 pmid=9367129
+  YN00 pmid=10666704
+  Yang00 pmid=10790415
 5.  Yang2000 pmid=12032247
 6.  YangBEB2004 pmid=15689528
 

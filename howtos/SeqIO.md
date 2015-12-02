@@ -129,21 +129,21 @@ The simplest script for parsing sequence files is written out below. It prints o
 use Bio::SeqIO;
 
 # Notice that you do not have to use any Bio:SeqI
-2.  objects, because SeqIO does this for you. In fact, it
-3.  even knows which SeqI object to use for the provided
-4.  format.
+  objects, because SeqIO does this for you. In fact, it
+  even knows which SeqI object to use for the provided
+  format.
 
 <!-- -->
 
 # Bring in the file and format, or die with a nice
-2.  usage statement if one or both arguments are missing.
+  usage statement if one or both arguments are missing.
 
 my $usage = "getaccs.pl file format "; my $file = shift or die $usage; my $format = shift or die $usage;
 
 # Now create a new SeqIO object to bring in the input
-2.  file. The new method takes arguments in the format
-3.  key => value, key => value. The basic keys that it
-4.  can accept values for are '-file' which expects some
+  file. The new method takes arguments in the format
+  key => value, key => value. The basic keys that it
+  can accept values for are '-file' which expects some
 5.  information on how to access your data, and '-format'
 6.  which expects one of the Bioperl-format-labels mentioned
 7.  above. Although it is optional, it is good
@@ -160,8 +160,8 @@ my $inseq = Bio::SeqIO->new(
                            );`
 
 # Now that we have a seq stream,
-2.  we need to tell it to give us a $seq.
-3.  We do this using the 'next_seq' method of SeqIO.
+  we need to tell it to give us a $seq.
+  We do this using the 'next_seq' method of SeqIO.
 
 while (my $seq = $inseq->next_seq) {
 
@@ -188,8 +188,8 @@ my $seq_in = Bio::SeqIO->new(
                              );`
 
 # loads the whole file into memory - be careful
-2.  if this is a big file, then this script will
-3.  use a lot of memory
+  if this is a big file, then this script will
+  use a lot of memory
 
 my $seq; my @seq_array; while( $seq = $seq_in->next_seq() ) {
 
@@ -198,7 +198,7 @@ my $seq; my @seq_array; while( $seq = $seq_in->next_seq() ) {
 }
 
 # now do something with these. First sort by length,
-2.  find the average and median lengths and print them out
+  find the average and median lengths and print them out
 
 @seq_array = sort { $a->length <=> $b->length } @seq_array;
 
@@ -268,7 +268,7 @@ use Bio::SeqIO;
 my $usage = "all2y.pl informat outfile outfileformat "; my $informat = shift or die $usage; my $outfile = shift or die $usage; my $outformat = shift or die $usage;
 
 # create one SeqIO object to read in, and another to write out
-2.  -   STDIN is a 'globbed' filehandle with the contents of Standard In
+  -   STDIN is a 'globbed' filehandle with the contents of Standard In
 
 my $seqin = Bio::SeqIO->new(
 
@@ -600,7 +600,7 @@ use strict; use Bio::SeqIO;
 my $input_file = shift; my $output_file = shift;
 
 # we have to declare $seq_in and $seq_out before
-2.  the eval block as we want to use them afterwards
+  the eval block as we want to use them afterwards
 
 my $seq_in; my $seq_out;
 
