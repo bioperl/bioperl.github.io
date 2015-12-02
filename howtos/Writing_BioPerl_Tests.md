@@ -52,8 +52,8 @@ BEGIN {
               -requires_modules => [qw(IO::String XML::Parser)],
               -requires_networking => 1);
 
-   # at this point Test::More, Test::Exception and Test::Warn have been loaded for us,
-   # and if network tests have been enabled and IO::String
+   # at this point Test::More, Test::Exception and Test::Warn have been 
+   # loaded for us, and if network tests have been enabled and IO::String
    # and XML::Parser are installed, we will continue with our tests
 }
 ```
