@@ -131,29 +131,29 @@ Getting the Features
 The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features or annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the Feature table section, something like this:
 
 ```
- FEATURES            Location/Qualifiers
-     source          1..1846
-                     /organism="Homo sapiens"
-                     /db_xref="taxon:9606"
-                     /chromosome="X"
-                     /map="Xp11.4"
-     gene            1..1846
-                     /gene="NDP"
-                     /note="ND"
-                     /db_xref="LocusID:4693"
-                     /db_xref="MIM:310600"
-     CDS             409..810
-                     /gene="NDP"
-                     /note="Norrie disease (norrin)"
-                     /codon_start=1
-                     /product="Norrie disease protein"
-                     /protein_id="NP_000257.1"
-                     /db_xref="GI:4557789"
-                     /db_xref="LocusID:4693"
-                     /db_xref="MIM:310600"
-                     /translation="MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHY
-                     VDSISHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCCRPQTSK
-                     LKALRLRCSGGMRLTATYRYILSCHCEECNS"
+ FEATURES            Location/Qualifiers
+     source          1..1846
+                     /organism="Homo sapiens"
+                     /db_xref="taxon:9606"
+                     /chromosome="X"
+                     /map="Xp11.4"
+     gene            1..1846
+                     /gene="NDP"
+                     /note="ND"
+                     /db_xref="LocusID:4693"
+                     /db_xref="MIM:310600"
+     CDS             409..810
+                     /gene="NDP"
+                     /note="Norrie disease (norrin)"
+                     /codon_start=1
+                     /product="Norrie disease protein"
+                     /protein_id="NP_000257.1"
+                     /db_xref="GI:4557789"
+                     /db_xref="LocusID:4693"
+                     /db_xref="MIM:310600"
+                     /translation="MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHY
+                     VDSISHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCCRPQTSK
+                     LKALRLRCSGGMRLTATYRYILSCHCEECNS"
 ```
 
 Features in Bioperl are accessed using their tags, either a "primary tag" or a plain "tag". Examples of primary tags and tags in this Genbank entry are shown below. You can see that in this case the primary tag is a means to access the tags and it's the tags that are directly associated with the data from the file.
@@ -198,12 +198,12 @@ the features of a Seq object would look something like this:
 ```perl
 
 for my $feat_object ($seq_object->get_SeqFeatures) {
-    print "primary tag: ", $feat_object->primary_tag, "\n";
+    print "primary tag: ", $feat_object->primary_tag, "\n";
 
-    for my $tag ($feat_object->get_all_tags) {
-        print "  tag: ", $tag, "\n";
-        for my $value ($feat_object->get_tag_values($tag)) {
-            print "    value: ", $value, "\n";
+    for my $tag ($feat_object->get_all_tags) {
+        print "  tag: ", $tag, "\n";
+        for my $value ($feat_object->get_tag_values($tag)) {
+            print "    value: ", $value, "\n";
         }
     }
 }
@@ -213,35 +213,35 @@ for my $feat_object ($seq_object->get_SeqFeatures) {
 This bit would print out something like:
 
 ```
- primary tag: source
-   tag: chromosome
-     value: X
-   tag: db_xref
-     value: taxon:9606
-   tag: map
-     value: Xp11.4
-   tag: organism
-     value: Homo sapiens
- primary tag: gene
-   tag: gene
-     value: NDP
-   tag: note
-     value: ND
- primary tag: CDS
-   tag: codon_start
-     value: 1
-   tag: db_xref
-     value: GI:4557789
-     value: LocusID:4693
-     value: MIM:310600
-   tag: product
-     value: Norrie disease protein
-   tag: protein_id
-     value: NP_000257.1
-   tag: translation
-     value: MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHYVDSI
-            SHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCC
-            RPQTSKLKALRLRCSGGMRLTATYRYILSCHCEECNS
+ primary tag: source
+   tag: chromosome
+     value: X
+   tag: db_xref
+     value: taxon:9606
+   tag: map
+     value: Xp11.4
+   tag: organism
+     value: Homo sapiens
+ primary tag: gene
+   tag: gene
+     value: NDP
+   tag: note
+     value: ND
+ primary tag: CDS
+   tag: codon_start
+     value: 1
+   tag: db_xref
+     value: GI:4557789
+     value: LocusID:4693
+     value: MIM:310600
+   tag: product
+     value: Norrie disease protein
+   tag: protein_id
+     value: NP_000257.1
+   tag: translation
+     value: MRKHVLAASFSMLSLLVIMGDTDSKTDSSFIMDSDPRRCMRHHYVDSI
+            SHPLYKCSSKMVLLARCEGHCSQASRSEPLVSFSTVLKQPFRSSCHCC
+            RPQTSKLKALRLRCSGGMRLTATYRYILSCHCEECNS
 ```
 
 So to retrieve specific values, like all the database identifiers, you could do:
@@ -249,7 +249,7 @@ So to retrieve specific values, like all the database identifiers, you could do:
 ```perl
 
 for my $feat_object ($seq_object->get_SeqFeatures) {
-    push @ids, $feat_object->get_tag_values("db_xref") if ($feat_object->has_tag("db_xref"));
+    push @ids, $feat_object->get_tag_values("db_xref") if ($feat_object->has_tag("db_xref"));
 }
 
 ```
@@ -307,20 +307,20 @@ step:
 
 ```perl
 
-my $sequence_string = $feat_object->entire_seq->seq;
+my $sequence_string = $feat_object->entire_seq->seq;
 
 ```
 
 There are 2 other useful methods, `seq()` and `spliced_seq()`. Consider the following Genbank example:
 
 ```
- FEATURES             Location/Qualifiers
-      source          1..177
-                      /organism="Mus musculus"
-                      /mol_type="genomic DNA"
-                      /db_xref="taxon:10090"
-      tRNA            join(103..111,121..157)
-                      /gene="Phe-tRNA"
+ FEATURES             Location/Qualifiers
+      source          1..177
+                      /organism="Mus musculus"
+                      /mol_type="genomic DNA"
+                      /db_xref="taxon:10090"
+      tRNA            join(103..111,121..157)
+                      /gene="Phe-tRNA"
 ```
 
 To get the sequence string from the start to the end of the tRNA feature use
@@ -349,15 +349,15 @@ my $seqio_object = Bio::SeqIO->new(-file => $gb_file);
 my $seq_object = $seqio_object->next_seq;
 
 for my $feat_object ($seq_object->get_SeqFeatures) {
-    if ($feat_object->primary_tag eq "CDS") {
-        print $feat_object->spliced_seq->seq,"\n";
-        # e.g. 'ATTATTTTCGCTCGCTTCTCGCGCTTTTTGAGATAAGGTCGCGT...'
+    if ($feat_object->primary_tag eq "CDS") {
+        print $feat_object->spliced_seq->seq,"\n";
+        # e.g. 'ATTATTTTCGCTCGCTTCTCGCGCTTTTTGAGATAAGGTCGCGT...'
         
-        if ($feat_object->has_tag('gene')) {
-            for my $val ($feat_object->get_tag_values('gene')) {
-                print "gene: ",$val,"\n";
-                # e.g. 'NDP', from a line like '/gene="NDP"'
-            }
+        if ($feat_object->has_tag('gene')) {
+            for my $val ($feat_object->get_tag_values('gene')) {
+                print "gene: ",$val,"\n";
+                # e.g. 'NDP', from a line like '/gene="NDP"'
+            }
         }
     }
 }
@@ -373,7 +373,7 @@ following is more compact code that gets all the features with a primary tag of
 
 ```perl
 
-my @cds_features = grep { $_->primary_tag eq 'CDS' } Bio::SeqIO->new(-file => $gb_file)->next_seq->get_SeqFeatures;
+my @cds_features = grep { $_->primary_tag eq 'CDS' } Bio::SeqIO->new(-file => $gb_file)->next_seq->get_SeqFeatures;
 
 ```
 
@@ -381,25 +381,25 @@ With this array of SeqFeatures you could do all sorts of useful things, such as 
 
 ```perl
 
-my %gene_sequences = map {$_->get_tag_values('gene'), $_->spliced_seq->seq } @cds_features;
+my %gene_sequences = map {$_->get_tag_values('gene'), $_->spliced_seq->seq } @cds_features;
 
 ```
 
 Because you're asking for a specific primary tag and tag, 'CDS' and 'gene' respectively, this code would only work when there are features that looked something like this:
 
 ```
-     CDS             735..182
-                     /gene="MG001
-                     /codon_start=
-                     /product="DNA polymerase III, subunit beta (dnaN)
-                     /protein_id="AAC71217.1
-                     /translation="MNNVIISNNKIKPHHSYFLIEAKEKEINFYANNEYFSVKCNLN
-                     NIDILEQGSLIVKGKIFNDLINGIKEEIITIQEKDQTLLVKTKKTSINLNTINVNEF
-                     RIRFNEKNDLSEFNQFKINYSLLVKGIKKIFHSVSNNREISSKFNGVNFNGSNGKEI
-                     LEASDTYKLSVFEIKQETEPFDFILESNLLSFINSFNPEEDKSIVFYYRKDNKDSFS
-                     EMLISMDNFMISYTSVNEKFPEVNYFFEFEPETKIVVQKNELKDALQRIQTLAQNER
-                     FLCDMQINSSELKIRAIVNNIGNSLEEISCLKFEGYKLNISFNPSSLLDHIESFESN
-                     INFDFQGNSKYFLITSKSEPELKQILVPSR
+     CDS             735..182
+                     /gene="MG001
+                     /codon_start=
+                     /product="DNA polymerase III, subunit beta (dnaN)
+                     /protein_id="AAC71217.1
+                     /translation="MNNVIISNNKIKPHHSYFLIEAKEKEINFYANNEYFSVKCNLN
+                     NIDILEQGSLIVKGKIFNDLINGIKEEIITIQEKDQTLLVKTKKTSINLNTINVNEF
+                     RIRFNEKNDLSEFNQFKINYSLLVKGIKKIFHSVSNNREISSKFNGVNFNGSNGKEI
+                     LEASDTYKLSVFEIKQETEPFDFILESNLLSFINSFNPEEDKSIVFYYRKDNKDSFS
+                     EMLISMDNFMISYTSVNEKFPEVNYFFEFEPETKIVVQKNELKDALQRIQTLAQNER
+                     FLCDMQINSSELKIRAIVNNIGNSLEEISCLKFEGYKLNISFNPSSLLDHIESFESN
+                     INFDFQGNSKYFLITSKSEPELKQILVPSR
 ```
 
 Location Objects
@@ -444,10 +444,10 @@ In their simplest form the Location and Range objects are used to get or set
 start and end positions, getting the positions could look like this:
 
 ```
-       # polyA_signal    1811..1815 
-       #                 /gene="NDP"
-       my $start = $feat_object->location->start;
-       my $end = $feat_object->location->end;
+       # polyA_signal    1811..1815 
+       #                 /gene="NDP"
+       my $start = $feat_object->location->start;
+       my $end = $feat_object->location->end;
 ```
 
 By now you've figured out that the `location()` method returns a Location object - this object has `end()` and `start()` methods.
@@ -462,11 +462,11 @@ container for Location objects:
 
 for my $feature ($seqobj->top_SeqFeatures){
 
-    if ( $feature->location->isa('Bio::Location::SplitLocationI')
-         && $feature->primary_tag eq 'CDS' )  {
+    if ( $feature->location->isa('Bio::Location::SplitLocationI')
+         && $feature->primary_tag eq 'CDS' )  {
          
-        for my $location ( $feature->location->sub_Location ) {
-            print $location->start . ".." . $location->end . "\n";
+        for my $location ( $feature->location->sub_Location ) {
+            print $location->start . ".." . $location->end . "\n";
         }
 
     }
@@ -488,10 +488,10 @@ get more information from the object. The taxonomic information for sequence
 looks like this in GenBank format:
 
 ```
- SOURCE      human.
-   ORGANISM  Homo sapiens
-             Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
-             Mammalia; Eutheria; Primates; Catarrhini; Hominidae; Homo.
+ SOURCE      human.
+   ORGANISM  Homo sapiens
+             Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+             Mammalia; Eutheria; Primates; Catarrhini; Hominidae; Homo.
 ```
 
 To access this data you'll need to get a Species object from the Sequence object, and then use its methods:
@@ -545,13 +545,13 @@ Annotation objects can be retrieved in arrays:
 
 for my $key ( $anno_collection->get_all_annotation_keys ) {
 
-    my @annotations = $anno_collection->get_Annotations($key);
+    my @annotations = $anno_collection->get_Annotations($key);
       
-    for my $value ( @annotations ) {
-        print "tagname : ", $value->tagname, "\n";
+    for my $value ( @annotations ) {
+        print "tagname : ", $value->tagname, "\n";
         
-        # $value is an Bio::Annotation, and also has an "as_text" method
-        print "  annotation value: ", $value->display_text, "\n";
+        # $value is an Bio::Annotation, and also has an "as_text" method
+        print "  annotation value: ", $value->display_text, "\n";
     }
 }
 
@@ -572,7 +572,7 @@ If you only wanted a specific annotation, like COMMENT, you can use the tagname 
 
 ```perl
 
-my @annotations = $anno_collection->get_Annotations('comment');
+my @annotations = $anno_collection->get_Annotations('comment');
 
 ```
 
@@ -580,7 +580,7 @@ And if you'd simply like all of the Annotations, regardless of key, you can do t
 
 ```perl
 
-my @annotations = $anno_collection->get_Annotations();
+my @annotations = $anno_collection->get_Annotations();
 
 ```
 
@@ -609,10 +609,10 @@ reference, whereas the keys of the hash from `hash_tree()` will be "title",
 ```perl
 
 if ($value->tagname eq "Reference") {
-    my $hash_ref = $value->hash_tree;
-    for my $key (keys %{$hash_ref}) {
-         print $key,": ",$hash_ref->{$key},"\n";
-    }
+    my $hash_ref = $value->hash_tree;
+    for my $key (keys %{$hash_ref}) {
+         print $key,": ",$hash_ref->{$key},"\n";
+    }
 }
 
 ```
@@ -620,13 +620,13 @@ if ($value->tagname eq "Reference") {
 Which yields:
 
 ```
- authors: Meitinger,T., Meindl,A., Bork,P., Rost,B., Sander,C., Haasemann,M. and Murken,J.
- location: Nat. Genet. 5 (4), 376-380 (1993) 
- medline: 94129616
- title: Molecular modelling of the Norrie disease protein predicts a cystine knot
- growth factor tertiary structure
- end: 1846
- start: 1
+ authors: Meitinger,T., Meindl,A., Bork,P., Rost,B., Sander,C., Haasemann,M. and Murken,J.
+ location: Nat. Genet. 5 (4), 376-380 (1993) 
+ medline: 94129616
+ title: Molecular modelling of the Norrie disease protein predicts a cystine knot
+ growth factor tertiary structure
+ end: 1846
+ start: 1
 ```
 
 Other Annotation objects, like SimpleValue, also have a `hash_tree()` method but
@@ -640,7 +640,7 @@ example:
 ```perl
 
 if ($value->tagname eq "reference") {
-    print "author: ",$value->authors(), "\n";
+    print "author: ",$value->authors(), "\n";
 }
 
 ```
@@ -699,32 +699,32 @@ you'll need to do some investigation yourself. Let's use an approach we used
 earlier to dissect a Locuslink entry in a file, "148.ll". Here's the file:
 
 ```
- LOCUSID: 148
- LOCUS_CONFIRMED: yes
- LOCUS_TYPE: gene with protein product, function known or inferred 
- ORGANISM: Homo sapiens
- STATUS: REVIEWED 
- NM: NM_000680|4501960|na
- NP: NP_000671|4501961
- PROT: AAA93114|409029
- ACCNUM: M11313|177869|na|na|na
- TYPE: p
- PROT: P35348|1168246
- OFFICIAL_SYMBOL: ADRA1A
- OFFICIAL_GENE_NAME: adrenergic, alpha-1A-, receptor
- ALIAS_SYMBOL: ADRA1C
- SUMMARY: Summary: Alpha-1-ARs are members of the GPCR superfamily.
- CHR: 8
- STS: SGC35557|8|8124|na|seq_map|epcr 
- COMP: 10090|Adra1a|14|14  cM|11549|8|ADRA1A|ncbi_mgd
- ALIAS_PROT: adrenergic, alpha-1C-, receptor
- BUTTON: unigene.gif
- LINK: http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=Hs&CID=52931
- UNIGENE: Hs.52931
- OMIM: 104221
- MAP: 8p21-p11.2|RefSeq|C|
- MAPLINK: default_human_gene|ADRA1A
- GO: cellular component|integral to plasma membrane|P|`[`GO:0005887|Proteome|8396931`](GO:0005887%7CProteome%7C8396931)
+ LOCUSID: 148
+ LOCUS_CONFIRMED: yes
+ LOCUS_TYPE: gene with protein product, function known or inferred 
+ ORGANISM: Homo sapiens
+ STATUS: REVIEWED 
+ NM: NM_000680|4501960|na
+ NP: NP_000671|4501961
+ PROT: AAA93114|409029
+ ACCNUM: M11313|177869|na|na|na
+ TYPE: p
+ PROT: P35348|1168246
+ OFFICIAL_SYMBOL: ADRA1A
+ OFFICIAL_GENE_NAME: adrenergic, alpha-1A-, receptor
+ ALIAS_SYMBOL: ADRA1C
+ SUMMARY: Summary: Alpha-1-ARs are members of the GPCR superfamily.
+ CHR: 8
+ STS: SGC35557|8|8124|na|seq_map|epcr 
+ COMP: 10090|Adra1a|14|14  cM|11549|8|ADRA1A|ncbi_mgd
+ ALIAS_PROT: adrenergic, alpha-1C-, receptor
+ BUTTON: unigene.gif
+ LINK: http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=Hs&CID=52931
+ UNIGENE: Hs.52931
+ OMIM: 104221
+ MAP: 8p21-p11.2|RefSeq|C|
+ MAPLINK: default_human_gene|ADRA1A
+ GO: cellular component|integral to plasma membrane|P|`[`GO:0005887|Proteome|8396931`](GO:0005887%7CProteome%7C8396931)
 ```
 
 First collect all the annotations:
@@ -741,7 +741,7 @@ And from this array of Annotations let's extract a hash containing the `as_text`
 
 ```perl
 
-    my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } @annotations;
+    my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } @annotations;
 
 ```
 
@@ -782,7 +782,7 @@ it efficently with something like this:
 
 ```perl
 
-@ontology_terms = map { $_->isa("Bio::Ontology::TermI"); } $seq_object->get_Annotations();
+@ontology_terms = map { $_->isa("Bio::Ontology::TermI"); } $seq_object->get_Annotations();
 
 ```
 
@@ -811,11 +811,11 @@ use Bio::SeqFeature::Generic;
 
 my $feat = new Bio::SeqFeature::Generic(-start => 10,
 
-                                        -end         => 22,
-                                        -strand      => 1,
-                                        -primary_tag => 'TATA_signal',
-                                        -tag => {evidence => 'predicted',
-                                                 note     => 'TATA box' } );
+                                        -end         => 22,
+                                        -strand      => 1,
+                                        -primary_tag => 'TATA_signal',
+                                        -tag => {evidence => 'predicted',
+                                                 note     => 'TATA box' } );
 
 ```
 
@@ -836,9 +836,9 @@ $feat->add_tag_value("match2","PF002534 e-3.1");
 my @tags = $feat->get_all_tags;
 
 for my $tag (@tags) {
-    for my $val ( $feat->get_tag_values($tag) ) {
-       print $tag,":",$val,"\n";
-    }
+    for my $val ( $feat->get_tag_values($tag) ) {
+       print $tag,":",$val,"\n";
+    }
 }
 
 ```
@@ -846,10 +846,10 @@ for my $tag (@tags) {
 This prints out:
 
 ```
-  evidence:predicted
-  match1:PF000123 e-7.2
-  match2:PF002534 e-3.1
-  note:TATA box
+  evidence:predicted
+  match1:PF000123 e-7.2
+  match2:PF002534 e-3.1
+  note:TATA box
 ```
 
 NOTE: If you need to add a tag that don't have any value when printed (like
@@ -871,7 +871,7 @@ use Bio::Seq;
 # create a simple Sequence object
 
 my $seq_obj = Bio::Seq->new(-seq => "attcccccttataaaattttttttttgaggggtggg",
-                            -display_id => "BIO52" );
+                            -display_id => "BIO52" );
 
 # then add the feature we've created to the sequence
 
@@ -913,19 +913,19 @@ $io->write_seq($seq_obj);
 `test.gb` now reads:
 
 ```
- LOCUS       BIO52                    36 bp    dna     linear   UNK
- ACCESSION   unknown
- COMMENT     This looks like a good TATA box
- FEATURES             Location/Qualifiers
-      TATA_signal     10..22
-                      /match2="PF002534 e-3.1"
-                      /match1="PF000123 e-7.2"
-                      /evidence=predicted
-                      /note="TATA box"
-                      /pseudo
- ORIGIN
-         1 attccccctt ataaaatttt ttttttgagg ggtggg
- //
+ LOCUS       BIO52                    36 bp    dna     linear   UNK
+ ACCESSION   unknown
+ COMMENT     This looks like a good TATA box
+ FEATURES             Location/Qualifiers
+      TATA_signal     10..22
+                      /match2="PF002534 e-3.1"
+                      /match1="PF000123 e-7.2"
+                      /evidence=predicted
+                      /note="TATA box"
+                      /pseudo
+ ORIGIN
+         1 attccccctt ataaaatttt ttttttgagg ggtggg
+ //
 ```
 
 Customizing Sequence Object Construction
@@ -944,7 +944,7 @@ $builder->add_unwanted_slot('seq','features','annotation');
 
 while(my $seq = $seqin->next_seq()) {
 
-    # do something
+    # do something
 
 }
 

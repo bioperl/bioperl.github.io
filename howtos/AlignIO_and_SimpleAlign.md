@@ -19,7 +19,7 @@ Data files storing multiple sequence alignments appear in varied formats and is 
 
 use Bio::AlignIO; my $io = Bio::AlignIO->new(-file => "receptors.aln",
 
-                         -format => "clustalw" );
+                         -format => "clustalw" );
 
 ```
 
@@ -70,10 +70,10 @@ Another significant difference between and is that handles IO for only a single 
 use Bio::AlignIO;
 
 $in = Bio::AlignIO->new(-file => "inputfilename" ,
-                       -format => 'fasta');
+                       -format => 'fasta');
 
 $out = Bio::AlignIO->new(-file => ">outputfilename",
-                       -format => 'pfam');
+                       -format => 'pfam');
 
 while ( my $aln = $in->next_aln ) {
     $out->write_aln($aln);
@@ -127,7 +127,7 @@ $bl2seq_report = $factory->bl2seq($seq1, $seq2);
 
 # Use AlignIO.pm to create a SimpleAlign object from the bl2seq report
 $str = Bio::AlignIO->new(-file => 'bl2seq.out',
-                        -format => 'bl2seq');
+                        -format => 'bl2seq');
 $aln = $str->next_aln();
 ```
 
@@ -170,9 +170,9 @@ The Bioperl Cluster and modules are available for handling sequence clusters. Co
 my $stream = Bio::ClusterIO->new(-file => "Hs.data", -format => "unigene");
 
 while ( my $in = $stream->next_cluster ) {
-    print $in->unigene_id() . "\n";
-    while ( my $sequence = $in->next_seq ) {
-        print $sequence->accession_number . "\n";
+    print $in->unigene_id() . "\n";
+    while ( my $sequence = $in->next_seq ) {
+        print $sequence->accession_number . "\n";
     }
 }
 ```

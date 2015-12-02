@@ -61,7 +61,7 @@ Here are a few things you might want to look at if you want to learn more about 
 
 - Perl's own documentation. Do `perldoc perl` from the command-line for an introduction. Perldoc can give you documentation of any module that is installed on your system: do `perldoc <modulename>` to view documentation of some module. For instance (assuming Bioperl has been installed) try:
 
-`>perldoc Bio::SeqIO`
+`>perldoc Bio::SeqIO`
 
 ### Writing a script
 
@@ -69,29 +69,29 @@ Sometimes the trickiest part is this step, writing something and getting it to r
 
 In Unix when you're ready to work you're usually in the command-line or "shell" environment. First find out Perl's version by typing this command:
 
-`perl -v`
+`perl -v`
 
 You will see something like:
 
 ```
-This is perl, v5.10.0 built for cygwin-thread-multi-64int
-Copyright 1987-2007, Larry Wall`
-Perl may be copied only under the terms of either the Artistic License or the
-GNU General Public License, which may be found in the Perl 5 source kit.
+This is perl, v5.10.0 built for cygwin-thread-multi-64int
+Copyright 1987-2007, Larry Wall`
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5 source kit.
 
-Complete documentation for Perl, including FAQ lists, should be found on
-this system using "man perl" or "perldoc perl".  If you have access to the
-Internet, point your browser at http://www.perl.org/],
-the Perl Home Page.
+Complete documentation for Perl, including FAQ lists, should be found on
+this system using "man perl" or "perldoc perl".  If you have access to the
+Internet, point your browser at http://www.perl.org/],
+the Perl Home Page.
 ```
 
 Hopefully you're using Perl version 5.8 or higher, earlier versions may be troublesome. Now let's find out where the Perl program is located:
 
-`which perl`
+`which perl`
 
 or:
 
-`where perl`
+`where perl`
 
 (Windows)
 
@@ -101,7 +101,7 @@ This will give you something like:
 
 Now that we know where Perl is located we're ready to write a script, and line 1 of the script will specify this location. You might be using some Unix word processor, emacs or vi, for example (or nano, very easy to use, but not found on all Unix machines unfortunately). If you're on Windows then Wordpad will work. Start to write your script by entering something like:
 
-`emacs seqio.pl`
+`emacs seqio.pl`
 
 And make this the first line of the script:
 
@@ -164,7 +164,7 @@ use Bio::Seq;
 
 $seq_obj = Bio::Seq->new(-seq        => "aaaatgggggggggggccccgtt",
                          -display_id => "#12345",
-                         -desc       => "example 1",
+                         -desc       => "example 1",
                          -alphabet   => "dna" );
 
 print $seq_obj->seq();
@@ -194,7 +194,7 @@ use Bio::Seq; use Bio::SeqIO;
 
 $seq_obj = Bio::Seq->new(-seq=>"aaaatgggggggggggccccgtt",
                          -display_id => "#12345",
-                         -desc => "example 1",
+                         -desc => "example 1",
                          -alphabet => "dna" );
 
 $seqio_obj = Bio::SeqIO->new(-file => '>sequence.fasta', 
@@ -205,24 +205,24 @@ $seqio_obj->write_seq($seq_obj);
 
 Let's consider that last `write_seq` line where you see two objects since this is where some neophytes start to get a bit nervous. What's going on there? In that line we handed or passed the Sequence object to the object as an argument to its `write_seq` method. Another way to think about this is that we hand the Sequence object to the object since understands how to take information from the Sequence object and write to a file using that information, in this case in fasta format. If you run this script like this:
 
-`>perl seqio.pl`
+`>perl seqio.pl`
 
 You should create a file called *sequence.fasta* that looks like this:
 
 ```
->#12345 example 1
+>#12345 example 1
 aaaatgggggggggggccccgtt
 ```
 
 Let's demonstrate the intelligence of the [Bio::SeqIO](http://search.cpan.org/search?query= Bio::SeqIO) - the example below shows what is created when the argument to `-format` is set to *genbank* instead of *fasta*:
 
 ```
-LOCUS       #12345                    23 bp    dna     linear   UNK
-DEFINITION  example 1
-ACCESSION   unknown
-FEATURES             Location/Qualifiers
-BASE COUNT        4 a      4 c     12 g      3 t
-ORIGIN       1 aaaatggggg ggggggcccc gtt
+LOCUS       #12345                    23 bp    dna     linear   UNK
+DEFINITION  example 1
+ACCESSION   unknown
+FEATURES             Location/Qualifiers
+BASE COUNT        4 a      4 c     12 g      3 t
+ORIGIN       1 aaaatggggg ggggggcccc gtt
 //
 ```
 
@@ -260,7 +260,7 @@ If there were multiple sequences in the input file you could just continue to ca
 
 ```perl
 while ( $seq_obj = $seqio_obj->next_seq ) {
-    # print the sequence
+    # print the sequence
     print $seq_obj->seq,"\n";
 }
 ```
@@ -315,7 +315,7 @@ Here's another query example, this one will retrieve all *Trypanosoma brucei* ES
 
 ```perl
 $query_obj = Bio::DB::Query::GenBank->new(
-    -query => 'gbdiv est[prop] AND Trypanosoma brucei [organism]',
+    -query => 'gbdiv est[prop] AND Trypanosoma brucei [organism]',
     -db => 'nucleotide' );
 ```
 
@@ -336,7 +336,7 @@ $gb_obj = Bio::DB::GenBank->new;
 $stream_obj = $gb_obj->get_Stream_by_query($query_obj);
 
 while ($seq_obj = $stream_obj->next_seq) {
-    # do something with the sequence object    
+    # do something with the sequence object    
     print $seq_obj->display_id, "\t", $seq_obj->length, "\n";
 }
 ```
@@ -426,67 +426,67 @@ $seq_obj = $seqio_obj->next_seq;
 What the Genbank file looks like:
 
 ```
-LOCUS       ECORHO                  1880 bp    DNA     linear   BCT 26-APR-1993
-DEFINITION  E.coli rho gene coding for transcription termination factor.
-ACCESSION   J01673 J01674
-VERSION     J01673.1  GI:147605
-KEYWORDS    attenuator; leader peptide; rho gene; transcription terminator.
-SOURCE      Escherichia coli 
-ORGANISM    Escherichia coli;Bacteria; Proteobacteria; Gammaproteobacteria;
-            Enterobacteriales;Enterobacteriaceae; Escherichia.
-REFERENCE   1  (bases 1 to 1880) 
-AUTHORS     Brown,S., Albrechtsen,B., Pedersen,S. and Klemm,P. 
-TITLE       Localization and regulation of the structural gene for           
-            transcription-termination factor rho of Escherichia coli 
-JOURNAL     J. Mol. Biol. 162 (2), 283-298 (1982) 
-MEDLINE     83138788  
-PUBMED      6219230
-REFERENCE   2  (bases 1 to 1880) AUTHORS   Pinkham,J.L. and Platt,T. 
-TITLE       The nucleotide sequence of the rho gene of E. coli K-12 
-JOURNAL     Nucleic Acids Res. 11 (11), 3531-3545 (1983) 
-MEDLINE     83220759  
-PUBMED      6304634
-COMMENT     Original source text: Escherichia coli (strain K-12) DNA.            A clean copy of the sequence for [2 was kindly provided by 
-            J.L.Pinkham and T.Platt.
-FEATURES       Location/Qualifiers
-     source    1..1880
-               /organism="Escherichia coli"
-               /mol_type="genomic DNA"
-               /strain="K-12"
-               /db_xref="taxon:562"
-     mRNA      212..>1880
-               /product="rho mRNA"
-     CDS       282..383
-               /note="rho operon leader peptide"
-               /codon_start=1
-               /transl_table=11
-               /protein_id="AAA24531.1"
-               /db_xref="GI:147606"
-               /translation="MRSEQISGSSLNPSCRFSSAYSPVTRQRKDMSR"
-     gene      468..1727
-               /gene="rho"
-     CDS       468..1727
-               /gene="rho"
-               /note="transcription termination factor"
-               /codon_start=1
-               /transl_table=11
-               /protein_id="AAA24532.1"
-               /db_xref="GI:147607"
-               /translation="MNLTELKNTPVSELITLGENMGLENLARMRKQDIIFAILKQHAK
-               SGEDIFGDGVLEILQDGFGFLRSADSSYLAGPDDIYVSPSQIRRFNLRTGDTISGKIR
-               PPKEGERYFALLKVNEVNFDKPENARNKILFENLTPLHANSRLRMERGNGSTEDLTAR
-               VLDLASPIGRGQRGLIVAPPKAGKTMLLQNIAQSIAYNHPDCVLMVLLIDERPEEVTE
-               MQRLVKGEVVASTFDEPASRHVQVAEMVIEKAKRLVEHKKDVIILLDSITRLARAYNT
-               VVPASGKVLTGGVDANALHRPKRFFGAARNVEEGGSLTIIATALIDTGSKMDEVIYEE
-               FKGTGNMELHLSRKIAEKRVFPAIDYNRSGTRKEELLTTQEELQKMWILRKIIHPMGE
-               IDAMEFLINKLAMTKTNDDFFEMMKRS"
+LOCUS       ECORHO                  1880 bp    DNA     linear   BCT 26-APR-1993
+DEFINITION  E.coli rho gene coding for transcription termination factor.
+ACCESSION   J01673 J01674
+VERSION     J01673.1  GI:147605
+KEYWORDS    attenuator; leader peptide; rho gene; transcription terminator.
+SOURCE      Escherichia coli 
+ORGANISM    Escherichia coli;Bacteria; Proteobacteria; Gammaproteobacteria;
+            Enterobacteriales;Enterobacteriaceae; Escherichia.
+REFERENCE   1  (bases 1 to 1880) 
+AUTHORS     Brown,S., Albrechtsen,B., Pedersen,S. and Klemm,P. 
+TITLE       Localization and regulation of the structural gene for           
+            transcription-termination factor rho of Escherichia coli 
+JOURNAL     J. Mol. Biol. 162 (2), 283-298 (1982) 
+MEDLINE     83138788  
+PUBMED      6219230
+REFERENCE   2  (bases 1 to 1880) AUTHORS   Pinkham,J.L. and Platt,T. 
+TITLE       The nucleotide sequence of the rho gene of E. coli K-12 
+JOURNAL     Nucleic Acids Res. 11 (11), 3531-3545 (1983) 
+MEDLINE     83220759  
+PUBMED      6304634
+COMMENT     Original source text: Escherichia coli (strain K-12) DNA.            A clean copy of the sequence for [2 was kindly provided by 
+            J.L.Pinkham and T.Platt.
+FEATURES       Location/Qualifiers
+     source    1..1880
+               /organism="Escherichia coli"
+               /mol_type="genomic DNA"
+               /strain="K-12"
+               /db_xref="taxon:562"
+     mRNA      212..>1880
+               /product="rho mRNA"
+     CDS       282..383
+               /note="rho operon leader peptide"
+               /codon_start=1
+               /transl_table=11
+               /protein_id="AAA24531.1"
+               /db_xref="GI:147606"
+               /translation="MRSEQISGSSLNPSCRFSSAYSPVTRQRKDMSR"
+     gene      468..1727
+               /gene="rho"
+     CDS       468..1727
+               /gene="rho"
+               /note="transcription termination factor"
+               /codon_start=1
+               /transl_table=11
+               /protein_id="AAA24532.1"
+               /db_xref="GI:147607"
+               /translation="MNLTELKNTPVSELITLGENMGLENLARMRKQDIIFAILKQHAK
+               SGEDIFGDGVLEILQDGFGFLRSADSSYLAGPDDIYVSPSQIRRFNLRTGDTISGKIR
+               PPKEGERYFALLKVNEVNFDKPENARNKILFENLTPLHANSRLRMERGNGSTEDLTAR
+               VLDLASPIGRGQRGLIVAPPKAGKTMLLQNIAQSIAYNHPDCVLMVLLIDERPEEVTE
+               MQRLVKGEVVASTFDEPASRHVQVAEMVIEKAKRLVEHKKDVIILLDSITRLARAYNT
+               VVPASGKVLTGGVDANALHRPKRFFGAARNVEEGGSLTIIATALIDTGSKMDEVIYEE
+               FKGTGNMELHLSRKIAEKRVFPAIDYNRSGTRKEELLTTQEELQKMWILRKIIHPMGE
+               IDAMEFLINKLAMTKTNDDFFEMMKRS"
 
-ORIGIN  1 aaccctagca ctgcgccgaa atatggcatc cgtggtatcc cgactctgct gctgttcaaa
-        61 aacggtgaag tggcggcaac caaagtgggt gcactgtcta aaggtcagtt gaaagagttc
-                                  ...deleted...  
-        1801 tgggcatgtt aggaaaattc ctggaatttg ctggcatgtt atgcaatttg catatcaaat
-        1861 ggttaatttt tgcacaggac
-//      
+ORIGIN  1 aaccctagca ctgcgccgaa atatggcatc cgtggtatcc cgactctgct gctgttcaaa
+        61 aacggtgaag tggcggcaac caaagtgggt gcactgtcta aaggtcagtt gaaagagttc
+                                  ...deleted...  
+        1801 tgggcatgtt aggaaaattc ctggaatttg ctggcatgtt atgcaatttg catatcaaat
+        1861 ggttaatttt tgcacaggac
+//      
 ```
 
 Either way, the values returned by various methods are shown below.
@@ -516,10 +516,10 @@ There's a few comments that need to be made. First, you noticed that there's an 
 Next let's take a look at the values returned by the methods used by the Sequence object when a Fasta file is used as input. The Fasta file entry looks like this, clearly much simpler than the corresponding Genbank entry:
 
 ```
->gi|147605|gb|J01673.1|ECORHO E. coli rho gene coding for transcription termination factor
+>gi|147605|gb|J01673.1|ECORHO E. coli rho gene coding for transcription termination factor
 AACCCTAGCACTGCGCCGAAATATGGCATCCGTGGTATCCCGACTCTGCTGCTGTTCAAAAACGGTGAAG
 TGGCGGCAACCAAAGTGGGTGCACTGTCTAAAGGTCAGTTGAAAGAGTTCCTCGACGCTAACCTGGCGTG
-                        ...deleted...
+                        ...deleted...
 ACGTGTTTACGTGGCGTTTTGCTTTTATATCTGTAATCTTAATGCCGCGCTGGGCATGTTAGGAAAATTC
 CTGGAATTTGCTGGCATGTTATGCAATTTGCATATCAAATGGTTAATTTTTGCACAGGAC
 ```
@@ -549,80 +549,80 @@ Yes, Bioperl could follow the conventions of a single organization like Genbank 
 Let's use a Swissprot file as our last example. The input entry looks like this:
 
 ```
-ID   A2S3_RAT       STANDARD;      PRT;   913 AA.
-AC   Q8R2H7; Q8R2H6; Q8R4G3;
-DT   28-FEB-2003 (Rel. 41, Created)
-DE   Amyotrophic lateral sclerosis 2 chromosomal region candidate gene
-DE   protein 3 homolog (GABA-A receptor interacting factor-1) (GRIF-1) (O-
-DE   GlcNAc transferase-interacting protein of 98 kDa).
-GN   ALS2CR3 OR GRIF1 OR OIP98.
-OS   Rattus norvegicus (Rat).
-OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
-OC   Mammalia; Eutheria; Rodentia; Sciurognathi; Muridae; Murinae; Rattus.
-OX   NCBI_TaxID=10116;
-RN   [1]
-RP   SEQUENCE FROM N.A. (ISOFORMS 1 AND 2), SUBCELLULAR LOCATION, AND
-RP   INTERACTION WITH GABA-A RECEPTOR.
-RC   TISSUE=Brain;
-RX   MEDLINE=22162448; PubMed=12034717;
-RA   Beck M., Brickley K., Wilkinson H.L., Sharma S., Smith M.,
-RA   Chazot P.L., Pollard S., Stephenson F.A.;
-RT   "Identification, molecular cloning, and characterization of a novel
-RT   GABAA receptor-associated protein, GRIF-1.";
-RL   J. Biol. Chem. 277:30079-30090(2002).
-RN   [2]
-RP   REVISIONS TO 579 AND 595-596, AND VARIANTS VAL-609 AND PRO-820.
-RA   Stephenson F.A.;
-RL   Submitted (FEB-2003) to the EMBL/GenBank/DDBJ databases.
-RN   [3]
-RP   SEQUENCE FROM N.A. (ISOFORM 3), INTERACTION WITH O-GLCNAC TRANSFERASE,
-RP   AND O-GLYCOSYLATION.
-RC   STRAIN=Sprague-Dawley; TISSUE=Brain;
-RX   MEDLINE=22464403; PubMed=12435728;
-RA   Iyer S.P.N., Akimoto Y., Hart G.W.;
-RT   "Identification and cloning of a novel family of coiled-coil domain
-RT   proteins that interact with O-GlcNAc transferase.";
-RL   J. Biol. Chem. 278:5399-5409(2003).
-CC   -!- SUBUNIT: Interacts with GABA-A receptor and O-GlcNac transferase.
-CC   -!- SUBCELLULAR LOCATION: Cytoplasmic.
-CC   -!- ALTERNATIVE PRODUCTS:
-CC       Event=Alternative splicing; Named isoforms=3;
-CC       Name=1; Synonyms=GRIF-1a;
-CC         IsoId=Q8R2H7-1; Sequence=Displayed;
-CC       Name=2; Synonyms=GRIF-1b;
-CC         IsoId=Q8R2H7-2; Sequence=VSP_003786, VSP_003787;
-CC       Name=3;
-CC         IsoId=Q8R2H7-3; Sequence=VSP_003788;
-CC   -!- PTM: O-glycosylated.
-CC   -!- SIMILARITY: TO HUMAN OIP106.
-DR   EMBL; AJ288898; CAC81785.2; -.
-DR   EMBL; AJ288898; CAC81786.2; -.
-DR   EMBL; AF474163; AAL84588.1; -.
-DR   GO; [GO:0005737](GO:0005737); C:cytoplasm; IEP.
-DR   GO; [GO:0005634](GO:0005634); C:nucleus; IDA.
-DR   GO; [GO:0005886](GO:0005886); C:plasma membrane; IEP.
-DR   GO; [GO:0006357](GO:0006357); P:regulation of transcription from Pol II pro...; IDA.
-DR   InterPro; IPR006933; HAP1_N.
-DR   Pfam; PF04849; HAP1_N; 1.
-KW   Coiled coil; Alternative splicing; Polymorphism.
-FT   DOMAIN      134    355       COILED COIL (POTENTIAL).
-FT   VARSPLIC    653    672       VATSNPGKCLSFTNSTFTFT -> ALVSHHCPVEAVRAVHP
-FT                                TRL (in isoform 2).
-FT                                /FTId=VSP_003786.
-FT   VARSPLIC    673    913       Missing (in isoform 2).
-FT                                /FTId=VSP_003787.
-FT   VARSPLIC    620    687       VQQPLQLEQKPAPPPPVTGIFLPPMTSAGGPVSVATSNPGK
-FT                                CLSFTNSTFTFTTCRILHPSDITQVTP -> GSAASSTGAE
-FT                                ACTTPASNGYLPAAHDLSRGTSL (in isoform 3).
-FT                                /FTId=VSP_003788.
-FT   VARIANT     609    609       E -> V.
-FT   VARIANT     820    820       S -> P.
-SQ   SEQUENCE   913 AA;  101638 MW;  D0E135DBEC30C28C CRC64;    
-     MSLSQNAIFK SQTGEENLMS SNHRDSESIT DVCSNEDLPE VELVNLLEEQ LPQYKLRVDS      
-     LFLYENQDWS QSSHQQQDAS ETLSPVLAEE TFRYMILGTD RVEQMTKTYN DIDMVTHLLA
-                             ...deleted...
-     GIARVVKTPV PRENGKSREA EMGLQKPDSA VYLNSGGSLL GGLRRNQSLP VMMGSFGAPV    
-     CTTSPKMGIL KED
+ID   A2S3_RAT       STANDARD;      PRT;   913 AA.
+AC   Q8R2H7; Q8R2H6; Q8R4G3;
+DT   28-FEB-2003 (Rel. 41, Created)
+DE   Amyotrophic lateral sclerosis 2 chromosomal region candidate gene
+DE   protein 3 homolog (GABA-A receptor interacting factor-1) (GRIF-1) (O-
+DE   GlcNAc transferase-interacting protein of 98 kDa).
+GN   ALS2CR3 OR GRIF1 OR OIP98.
+OS   Rattus norvegicus (Rat).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Rodentia; Sciurognathi; Muridae; Murinae; Rattus.
+OX   NCBI_TaxID=10116;
+RN   [1]
+RP   SEQUENCE FROM N.A. (ISOFORMS 1 AND 2), SUBCELLULAR LOCATION, AND
+RP   INTERACTION WITH GABA-A RECEPTOR.
+RC   TISSUE=Brain;
+RX   MEDLINE=22162448; PubMed=12034717;
+RA   Beck M., Brickley K., Wilkinson H.L., Sharma S., Smith M.,
+RA   Chazot P.L., Pollard S., Stephenson F.A.;
+RT   "Identification, molecular cloning, and characterization of a novel
+RT   GABAA receptor-associated protein, GRIF-1.";
+RL   J. Biol. Chem. 277:30079-30090(2002).
+RN   [2]
+RP   REVISIONS TO 579 AND 595-596, AND VARIANTS VAL-609 AND PRO-820.
+RA   Stephenson F.A.;
+RL   Submitted (FEB-2003) to the EMBL/GenBank/DDBJ databases.
+RN   [3]
+RP   SEQUENCE FROM N.A. (ISOFORM 3), INTERACTION WITH O-GLCNAC TRANSFERASE,
+RP   AND O-GLYCOSYLATION.
+RC   STRAIN=Sprague-Dawley; TISSUE=Brain;
+RX   MEDLINE=22464403; PubMed=12435728;
+RA   Iyer S.P.N., Akimoto Y., Hart G.W.;
+RT   "Identification and cloning of a novel family of coiled-coil domain
+RT   proteins that interact with O-GlcNAc transferase.";
+RL   J. Biol. Chem. 278:5399-5409(2003).
+CC   -!- SUBUNIT: Interacts with GABA-A receptor and O-GlcNac transferase.
+CC   -!- SUBCELLULAR LOCATION: Cytoplasmic.
+CC   -!- ALTERNATIVE PRODUCTS:
+CC       Event=Alternative splicing; Named isoforms=3;
+CC       Name=1; Synonyms=GRIF-1a;
+CC         IsoId=Q8R2H7-1; Sequence=Displayed;
+CC       Name=2; Synonyms=GRIF-1b;
+CC         IsoId=Q8R2H7-2; Sequence=VSP_003786, VSP_003787;
+CC       Name=3;
+CC         IsoId=Q8R2H7-3; Sequence=VSP_003788;
+CC   -!- PTM: O-glycosylated.
+CC   -!- SIMILARITY: TO HUMAN OIP106.
+DR   EMBL; AJ288898; CAC81785.2; -.
+DR   EMBL; AJ288898; CAC81786.2; -.
+DR   EMBL; AF474163; AAL84588.1; -.
+DR   GO; [GO:0005737](GO:0005737); C:cytoplasm; IEP.
+DR   GO; [GO:0005634](GO:0005634); C:nucleus; IDA.
+DR   GO; [GO:0005886](GO:0005886); C:plasma membrane; IEP.
+DR   GO; [GO:0006357](GO:0006357); P:regulation of transcription from Pol II pro...; IDA.
+DR   InterPro; IPR006933; HAP1_N.
+DR   Pfam; PF04849; HAP1_N; 1.
+KW   Coiled coil; Alternative splicing; Polymorphism.
+FT   DOMAIN      134    355       COILED COIL (POTENTIAL).
+FT   VARSPLIC    653    672       VATSNPGKCLSFTNSTFTFT -> ALVSHHCPVEAVRAVHP
+FT                                TRL (in isoform 2).
+FT                                /FTId=VSP_003786.
+FT   VARSPLIC    673    913       Missing (in isoform 2).
+FT                                /FTId=VSP_003787.
+FT   VARSPLIC    620    687       VQQPLQLEQKPAPPPPVTGIFLPPMTSAGGPVSVATSNPGK
+FT                                CLSFTNSTFTFTTCRILHPSDITQVTP -> GSAASSTGAE
+FT                                ACTTPASNGYLPAAHDLSRGTSL (in isoform 3).
+FT                                /FTId=VSP_003788.
+FT   VARIANT     609    609       E -> V.
+FT   VARIANT     820    820       S -> P.
+SQ   SEQUENCE   913 AA;  101638 MW;  D0E135DBEC30C28C CRC64;    
+     MSLSQNAIFK SQTGEENLMS SNHRDSESIT DVCSNEDLPE VELVNLLEEQ LPQYKLRVDS      
+     LFLYENQDWS QSSHQQQDAS ETLSPVLAEE TFRYMILGTD RVEQMTKTYN DIDMVTHLLA
+                             ...deleted...
+     GIARVVKTPV PRENGKSREA EMGLQKPDSA VYLNSGGSLL GGLRRNQSLP VMMGSFGAPV    
+     CTTSPKMGIL KED
 //
 ```
 
@@ -822,11 +822,11 @@ $ENV{BIOPERL_INDEX_TYPE} = "SDBM_File";
 
 The lines above show that you can set environmental variables from within Perl and they are stored in Perl's own `%ENV` hash. This is essentially the same thing as the following in tcsh or csh:
 
-`>setenv BIOPERL_INDEX_TYPE SDBM_File`
+`>setenv BIOPERL_INDEX_TYPE SDBM_File`
 
 Or the following in the bash shell:
 
-`>export BIOPERL_INDEX_TYPE=SDBM_File`
+`>export BIOPERL_INDEX_TYPE=SDBM_File`
 
 The `BIOPERL_INDEX_TYPE` variable refers to the indexing scheme, and `SDBM_File` is the scheme that comes with Perl. `BIOPERL_INDEX` stipulates the location of the index file, and this way you could have more than one index file per sequence file if you wanted, by designating multiple locations (and the utility of more than 1 index will become apparent).
 
@@ -851,7 +851,7 @@ $seq_obj = $inx->fetch($id)
 
 By default the fasta indexing code will use the string following the `>` character as a key, meaning that fasta header line should look something like this if you want to fetch using the value *48882*:
 
-`>48882 pdb|1CRA`
+`>48882 pdb|1CRA`
 
 However, what if you wanted to retrieve using some other key, like *1CRA* in the example above? You can customize the index by using [Bio::Index::Fasta](http://search.cpan.org/search?query= Bio::Index::Fasta)'s `id_parser` method, which accepts the name of a function as an argument where that function tells the indexing object what key to use. For example:
 
@@ -937,7 +937,7 @@ $seqio = new Bio::SeqIO(-format => 'fasta',
                         -file => 'seq1.fa');
 
 $seq = $seqio->next_seq; while( $feat = $parser->next_feature ) {
-    # add EPCR annotation to a sequence
+    # add EPCR annotation to a sequence
     $seq->add_SeqFeature($feat);
 }
 ```
@@ -1017,15 +1017,15 @@ Perhaps this article has gotten you interested in learning a bit more about Biop
 
 The documentation for Perl is available using a system known as [POD](http://perldoc.perl.org/perlpod.html), which stands for Plain Old Documentation. You can access this built-in documentation by using the `perldoc` command. To view information on how to use `perldoc`, type the following at the command line:
 
-`>perldoc perldoc`
+`>perldoc perldoc`
 
 Perldoc is a very useful and versatile tool, shown below are some more examples on how to use perldoc. Read about Perl's built-in `print` function:
 
-`>perldoc -f print`
+`>perldoc -f print`
 
 Read about any module, including any of the Bioperl modules:
 
-`>perldoc Bio::SeqIO`
+`>perldoc Bio::SeqIO`
 
 ### The Basics of Perl Objects
 
