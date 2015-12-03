@@ -10,8 +10,6 @@ A detailed description of the [Bio::Search::Tiling](https://metacpan.org/pod/Bio
 
 [Quick Link](#tiling-your-searches-with-biosearchtilingmaptiling) to user tips.
 
- TOC
-
 Why Tile?
 ---------
 

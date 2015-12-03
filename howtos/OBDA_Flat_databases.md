@@ -11,9 +11,9 @@ The Open Biological Database Access ([OBDA](http://obda.open-bio.org)) standard 
 Authors
 -------
 
--   Lincoln Stein [mailto:lstein-at-cshl.org stein at cshl.org]
--   Brian Osborne [mailto:briano@bioteam.net briano at bioteam.net]
--   Heikki Lehvxc3xa4slaiho [mailto:heikki-at-ebi.co.uk heikki at ebi.co.uk]
+-   Lincoln Stein lstein-at-cshl.org stein at cshl.org
+-   Brian Osborne briano@bioteam.net briano at bioteam.net
+-   Heikki Lehvaslaiho heikki-at-ebi.co.uk heikki at ebi.co.uk
 
 Copyright
 ---------
@@ -26,7 +26,8 @@ This document is copyright Lincoln Stein, 2002. For reproduction other than pers
 | Revision 1.1 2003-10-17 BIO              |                                |
 | Revision 1.2 2003-10-17 HL               | from txt reformatted into SGML |
 | Revision 1.3 2004-05-20 BIO              | Add section on custom indexes  |
-| Revision 1.4 BIO 22:38, 20 December 2005 | Migrated to wiki               |
+| Revision 1.4 BIO 2005-12-20 BIO| Migrated to wiki               |
+| Revision 1.5 BIO 2015-12-09  BIO| Migrated to GitHub Pages               |
 Table 1. Revision History
 
 Creating OBDA-Compliant Indexed Sequence Files
@@ -39,14 +40,11 @@ There are four steps to creating a database:
 1. Select a Root Directory  
 Select a directory in which the flat file indexes will be stored. This directory should be writable by you, and readable by everyone who will be running applications that access the sequence data.
 
-
 2. Move the Flat Files Into a Good Location  
 The indexer records the path to the source files (e.g. FASTA, or local copies of GenBank, EMBL or SwissProt). This means that you must not change the location or name of the source files after running the indexer. Pick a good stable location for the source files and move them there.
 
-
 3. Choose a Symbolic Name for the Database  
 Choose a good symbolic name for the database. For example, if you are mirroring GenBank, `genbank` might be a good choice. The indexer will create files in a subdirectory by this name located underneath the root directory.
-
 
 4. Run the `bioflat_index.pl` Script  
 The final step is to run the `bioflat_index.PLS` script. This script is located in the BioPerl distribution, under `scripts/DB`. For convenience, you are offered the option to copy it to `/usr/bin` or another system-wide directory on `make install` (and its name will be changed to `bioflat_index.pl`).
@@ -87,12 +85,12 @@ To update an existing index run `bioflat_index.pl` without the -c option and lis
 
 For your convenience, `bioflat_index.pl` will also take values from the following environment variables:
 
-| Variable       | Description                                       | Command line tag |
-|----------------|---------------------------------------------------|------------------|
-| OBDA_FORMAT   | Format of sequence file                           | -f               |
+| Variable       | Description   | Corresponding option |
+|----------------|----------|------------------|
+| OBDA_FORMAT   | Format of sequence file        | -f               |
 | OBDA_LOCATION | Path to directory in which index files are stored | -l               |
-| OBDA_DBNAME   | name of database                                  | -d               |
-| OBDA_INDEX    | Type of index to create                           | -i               |
+| OBDA_DBNAME   | name of database     | -d               |
+| OBDA_INDEX    | Type of index to create    | -i               |
 Table 3. Environment Variables
 
 Moving Database Files
@@ -144,11 +142,10 @@ What if you wanted to use some other part of the entry as a key, like the GI num
 use strict;
 use Bio::DB::Flat::BinarySearch;
 
-# use single quotes so you don\'t have to write
-# regular expressions like "gi|(d+)"
 my $primary_pattern = \^>(S+)\;
-# one or more patterns stored in a hash:
-my $secondary_patterns = {GI => 'gi|(d+)'};
+# One or more patterns stored in a hash:
+my $secondary_patterns = { GI => 'gi|(d+)' };
+
 my $db = Bio::DB::Flat::BinarySearch->new(
   -directory          => "/home/bio",
   -dbname             => "ppp",
@@ -158,6 +155,7 @@ my $db = Bio::DB::Flat::BinarySearch->new(
   -secondary_patterns => $secondary_patterns,
   -verbose            => 1,
   -format             => 'fasta'  );
+
 $db->build_index("ppp.fa");
 ```
 
