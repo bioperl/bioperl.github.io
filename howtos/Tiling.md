@@ -121,7 +121,8 @@ my $blio = Bio::SearchIO->new( -format => 'blast',
  
 my $result = $blio->next_result;
  
-my ($best_tiling, $best_context, $max_ident, $max_frac_cons) = get_the_best($result);
+my ($best_tiling, $best_context, $max_ident, $max_frac_cons) = 
+    get_the_best($result);
 
  while (my @tiled_hsps = $best_tiling->next_tiling('subject', $best_context)) {
     # do stuff with my array of tiled HSP objects
@@ -287,7 +288,8 @@ The context `all` indicates that, for the given sequence type, all HSPs in the h
 ```perl
 sub lone_context {
   my $tiling = shift;
-  return ($tiling->contexts($type))[0] if scalar ($tiling->contexts($type)) == 1;
+  return ($tiling->contexts($type))[0] if 
+    scalar ($tiling->contexts($type)) == 1;
   return;
 }
 ```
@@ -297,7 +299,8 @@ The first character of a strand/frame context represents the strand: `m` for min
 For the user that prefers to specify `-strand` and `-frame` arguments, there is the `_context()` method, which converts strand and frame parameters specified in constructor format to context strings. Example:
 
 ```perl
-$tiling->conserved('query', 'fast', $tiling->_context(-type=>'query', -strand=>-1, -frame=>-2))
+$tiling->conserved('query', 'fast', 
+    $tiling->_context(-type=>'query', -strand=>-1, -frame=>-2))
 # same as...
 $tiling->conserved('query', 'fast', 'm2')
 ```
