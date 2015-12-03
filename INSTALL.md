@@ -12,8 +12,8 @@ found in [INSTALL.WIN](INSTALL.WIN.html).
 
 SYSTEM REQUIREMENTS
 
- * `Perl 5.6.1 or later` version 5.8 and greater are highly
-   recommended. Modules are generally tested against version 5.8 and
+ * `Perl 5.6.1 or higher` Version 5.8 or higher is highly
+   recommended. Modules are tested against version 5.8 and
    above.
  * `make` For Mac OS X, this requires installing the Xcode Developer 
    Tools.
@@ -155,7 +155,7 @@ INSTALLING BIOPERL SCRIPTS
 
 BioPerl comes with a set of production-quality scripts that are
 kept in the scripts/ directory. You can install these scripts if you'd
-like, simply answer the questions during 'perl Build.PL'.
+like, simply answer the questions during `perl Build.PL`.
 The installation directory can be specified by:
 
 ```
@@ -163,13 +163,13 @@ perl Build.PL
 ./Build install --install_path script=/foo/scripts
 ```
 
-By default they install to /usr/bin or similar, depending on platform.
+By default they install to */usr/bin* or similar, depending on platform.
 
 
 THE TEST SYSTEM
 
-The BioPerl test system is located in the t/ directory and is
-automatically run whenever you execute the './Build test' command.
+The BioPerl test system is located in the *t/* directory and is
+automatically run whenever you execute the `./Build test` command.
 
 The tests have been organized into groups
 based upon the specific task or class the module being tested belongs
@@ -180,11 +180,10 @@ the Seq test you would type:
 ./Build test --test_files t/Seq/Seq.t --verbose
 ```
 
-The --test_files argument can be used multiple times to try a set of test 
-scripts in one go. The --verbose arguement outputs the detailed test results, 
-instead of just the summary you see during './Build test'.
+The `--test_files` argument can be used multiple times to try a set of test 
+scripts in one go. The `--verbose` arguement outputs the detailed test results, instead of just the summary you see during `./Build test`.
 
-The '--test-files' argument can also work as a glob. For instance, to
+The `--test-files` argument can also work as a glob. For instance, to
 run tests on all SearchIO modules, use the following:
 
 ```
@@ -194,7 +193,7 @@ run tests on all SearchIO modules, use the following:
 If you are trying to learn how to use a module, often the test suite
 is a good place to look. All good extreme programmers try and write a
 test BEFORE they write the module to insure that their module behaves
-the way they expect. You'll notice some 'ok' and 'skip' commands in a
+the way they expect. You'll notice some `ok` and `skip` commands in a
 test, this is part of the Perl test suite that signifies a passed test
 with an 'ok N', where N is the test number. Alternatively you can tell
 Perl to skip tests. This is useful when, for example, your test
