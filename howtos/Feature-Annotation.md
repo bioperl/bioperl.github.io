@@ -6,20 +6,13 @@ layout: default
 Authors
 -------
 
-Brian Osborne
+Brian Osborne [briano at bioteam.net](mailto:briano-at-bioteam.net)
 
-  
-[briano at bioteam.net](mailto:briano-at-bioteam.net)
-
-Steve Chervitz
-
-  
-[sac at bioperl.org](mailto:sac-at-bioperl.org)
+Steve Chervitz [sac at bioperl.org](mailto:sac-at-bioperl.org)
 
 ### Copyright
 
-This document is copyright Brian Osborne. It can be copied and distributed under
-the terms of the [Perl Artistic License](http://www.perl.com/pub/language/misc/Artistic.html).
+This document is copyright Brian Osborne. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.perl.com/pub/language/misc/Artistic.html).
 
 Abstract
 --------
@@ -30,7 +23,7 @@ Introduction
 ------------
 
 There's no more central notion in bioinformatics than the idea that portions of
-protein or nucleotide sequence have specific characteristics (or [features]). A
+protein or nucleotide sequence have specific characteristics (or features). A
 given stretch of DNA may have been found to be essential for the proper
 transcriptional regulation of a gene, or a particular amino acid sequence may
 bind a particular ion, for example. This simple idea turns out to be a bit more
@@ -42,33 +35,25 @@ maps, a sequence may have a sub-sequence which itself possesses some
 characteristic, an experimental observation may be associated with a literature
 reference, and so on.
 
-This HOWTO describes aspects of Bioperl's approach. The problem is how to create
-software that accepts, analyzes, and displays any and all of this sequence
-annotation with the required attention to detail yet remains flexible and easy
-to use. The general names for the modules or objects that serve these purposes
-in Bioperl are and .
+This HOWTO describes aspects of Bioperl's approach. The problem is how to create software that accepts, analyzes, and displays any and all of this sequence annotation with the required attention to detail yet remains flexible and easy to use. The general names for the modules or objects that serve these purposes in Bioperl are [Bio::SeqFeature](http://search.cpan.org/search?query= Bio::SeqFeature) and [Bio::Annotation](http://search.cpan.org/search?query= Bio::Annotation).
 
 The HOWTO will discuss these objects and the differences between them. There's
 also discussion of how to get useful data from these objects and the basics of
-how to create your own sequence [annotations] using the objects.
+how to create your own sequences using the objects.
 
 The Basics
 ----------
 
-Some BioPerl [neophytes] may also be new to [object-oriented programming and
+Some BioPerl neophytes may also be new to object-oriented programming (OOP) and
 this notion of an object. OOP is not the subject of this HOWTO but there should
 be some discussion of how objects are used in BioPerl. In the BioPerl world
-parsing a [GenBank file] doesn't give you data, it gives you an object and you
+parsing a GenBank file doesn't give you data, it gives you an object and you
 can ask the object, a kind of variable, for data. While annotating you don't
-create a file or database entry directly. You might create a "sequence object"
-and an "annotation object", then put these two together to create an "annotated
-sequence object". You could then tell this object to make a version of itself as
-a file, or pass this object to a "database object" in order to enter some data
-into the database. This is a very flexible and logical way to design a complex
-piece of software like BioPerl, since each part of the system can be created and
-evaluated separately.
+create a file or database entry directly. You might create a *sequence object*
+and an *annotation object*, then put these two together to create an *annotated
+sequence object*. You could then tell this object to make a version of itself as a file, or pass this object to a *database object* in order to enter some data into the database. This is a very flexible and logical way to design a complex piece of software like BioPerl, since each part of the system can be created and evaluated separately.
 
-A central idea in OOP is [inheritance], which means that a child object can
+A central idea in OOP is inheritance, which means that a child object can
 derive some of its capabilities or functionality from a parent object. The OOP
 approach also allows new modules to modify or add functionality, distinct from
 the parent. Practically speaking this means that there's not one definitive
@@ -76,58 +61,39 @@ SeqFeature or Annotation object but many, each a variation on a theme. The
 details of the these varieties will be discussed in other sections, but for now
 we could use some broad definitions that apply to all the variations.
 
-A [SeqFeature object] : is designed to be associated with a sequence, and can
-have a location on that sequence - it's a way of describing the characteristics
-of a specific part of a sequence. SeqFeature objects can also have features
-themselves, which you could call sub-features but which, in fact, are complete
-SeqFeature objects. SeqFeature objects can also have one or more Annotations
-associated with them (see [Features_vs._Annotations] for an in-depth discussion
-of that). 
+### Features
 
+A [Bio::SeqFeature](http://search.cpan.org/search?query=Bio::SeqFeature) object is designed to be associated with a sequence, and can have a location on that sequence - it's a way of describing the characteristics of a specific part of a sequence. SeqFeature objects can also have features themselves, which you could call sub-features but which, in fact, are complete SeqFeature objects. SeqFeature objects can also have one or more Annotations associated with them. 
 
-An Annotation object : is also associated with a sequence as you'd expect but it
-does not have a location on the sequence, it's associated with an entire
-sequence. This is one of the important differences between a SeqFeature and an
-Annotation. Annotations also can't have SeqFeatures, which makes sense since
-SeqFeature objects typically have locations. The relative simplicity of the
-Annotation has made it amenable to the creation of a useful set of Annotation
-objects, each devoted to a particular kind of fact or observation.
+### Annotations
+
+An [Bio::Annotation](http://search.cpan.org/search?query=Bio::Annotation) object is also associated with a sequence as you'd expect but it does not have a location on the sequence, it's associated with an entire sequence. This is one of the important differences between a SeqFeature and an Annotation. Annotations also can't have SeqFeatures, which makes sense since SeqFeature objects must have locations. The relative simplicity of the Annotation has made it amenable to the creation of a useful set of Annotation objects, each devoted to a particular kind of fact or observation.
 
 Locations were discussed, above. Describing locations can be complicated in
-certain situations, say when some feature is located on different sequences with
-varying degrees of precision. One location could also be shared between
-disparate objects, such as two different kinds of SeqFeatures. You may also want
-to describe a feature with many locations, like a repeated sequence motif in a
-protein. Because of these sorts of complexities and because one may want to
-create different types of locations the BioPerl authors elected to keep location
-functionality inside dedicated '''Location objects'''.
+certain situations, say when some feature is located on different sequences with varying degrees of precision. One location could also be shared between
+disparate objects, such as two different kinds of SeqFeatures. You may also want to describe a feature with many locations, like a repeated sequence motif in a protein. Because of these sorts of complexities and because one may want to create different types of locations the BioPerl authors elected to keep location functionality inside dedicated [Bio::Location](http://search.cpan.org/search?query=Bio::Location) objects.
 
 SeqFeatures and Annotations will make the most sense if you're already somewhat
-familiar with [BioPerl] and its central and objects. The reader is referred to
-the ,, and the for more information on these topics. Here's a bit of code, to
-summarize:
+familiar with BioPerl and its objects. The reader is referred to
+the [Beginners HOWTO](Beginners.html), [SeqIO HOWTO](SeqIO.html), and the [SearchIO HOWTO](SearchIO.html) for more information on these topics. Here's a bit of code, to summarize:
 
 ```perl
-
 # BAB55667.gb is a Genbank file, and Bioperl knows that it
 # is a Genbank file because of the '.gb' file suffix
-
 use Bio::SeqIO;
 my $seqio_object = Bio::SeqIO->new(-file => "BAB55667.gb" );
 my $seq_object = $seqio_object->next_seq;
-
 ```
 
-''Note'': `$seq_object` is a object. A object, such as would be returned from a
-fasta file, does not have associated feature or annotation objects (see [Table 6
-below]).
+*Note* `$seq_object` is an object. A object, such as would be returned from a
+fasta file, does not have associated feature or annotation objects (see Table 6 below).
 
 Now that we have a sequence object in hand we can examine its features and annotations.
 
 Getting the Features
 --------------------
 
-The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features or annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the Feature table section, something like this:
+The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features and annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the Feature table section, something like this:
 
 ```
  FEATURES            Location/Qualifiers
@@ -155,7 +121,7 @@ The focus of this HOWTO is mostly on Genbank format but bear in mind that all of
                      LKALRLRCSGGMRLTATYRYILSCHCEECNS"
 ```
 
-Features in Bioperl are accessed using their tags, either a "primary tag" or a plain "tag". Examples of primary tags and tags in this Genbank entry are shown below. You can see that in this case the primary tag is a means to access the tags and it's the tags that are directly associated with the data from the file.
+Features in Bioperl are accessed using their tags, either a *primary tag* or a plain *tag*. Examples of primary tags and tags in this Genbank entry are shown below. You can see that in this case the primary tag is a means to access the tags and it's the tags that are directly associated with the data from the file.
 
 | Tag name    | Tag type    | Tag value        |
 |-------------|-------------|------------------|
@@ -167,35 +133,28 @@ Features in Bioperl are accessed using their tags, either a "primary tag" or a p
 | protein_id | tag         | NP_000257.1     |
 | translation | tag         | MRKHVL...HCEECNS |
 | db_xref    | tag         | MIM:310600       |
-||
+Table 1. Tag examples
 
 When a Genbank file like the one above is parsed the feature data is converted
-into objects, specifically objects. How many? In this case 3, one for each of
-the primary tags.
+into objects, specifically [Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic) objects. How many? In this case 3, one for each of
+the *primary tags*.
 
 In other parts of the Bioperl documentation one finds discussions of the
 "SeqFeature object", but there's more than one kind of these, as we'll see
 later, so what is this a reference to? More than likely it's referring to this
-same object. Think of it as the default SeqFeature object. Now, should you care
-what kind of object is being made? For the most part no, you can write lots of
-useful and powerful Bioperl code without ever knowing these specific details.
+same [Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic) object. Think of it as the default SeqFeature object. Now, should you care what kind of object is being made? For the most part no, you can write lots of useful and powerful Bioperl code without ever knowing these specific details.
 
-By the way, how does one know what kind of object one has in hand? Try something
-like:
+By the way, how does one know what kind of object one has in hand? Try something like:
 
 ```perl
-
 print ref($seq_object);
 # results in "Bio::Seq::RichSeq"
-
 ```
 
-The SeqFeature::Generic object uses tag/value pairs to store information, and
-the values are always returned as arrays. A simple way to access all the data in
-the features of a Seq object would look something like this:
+The [Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic) object uses tag/value pairs to store information, and
+the values are always returned as arrays. A simple way to access all the data in the features of a Seq object would look something like this:
 
 ```perl
-
 for my $feat_object ($seq_object->get_SeqFeatures) {
     print "primary tag: ", $feat_object->primary_tag, "\n";
 
@@ -206,7 +165,6 @@ for my $feat_object ($seq_object->get_SeqFeatures) {
         }
     }
 }
-
 ```
 
 This bit would print out something like:
@@ -246,31 +204,23 @@ This bit would print out something like:
 So to retrieve specific values, like all the database identifiers, you could do:
 
 ```perl
-
 for my $feat_object ($seq_object->get_SeqFeatures) {
-    push @ids, $feat_object->get_tag_values("db_xref") if ($feat_object->has_tag("db_xref"));
+    push @ids, $feat_object->get_tag_values("db_xref") 
+       if ($feat_object->has_tag("db_xref"));
 }
-
 ```
 
-Important: Make sure to include that `if ($feat_object->has_tag("..."))` part,
-otherwise you'll get errors when the feature does not have the tag you're
+**Important** Make sure to include that `if ($feat_object->has_tag("..."))` part, otherwise you'll get errors when the feature does not have the tag you're
 requesting.
 
 One last note on Genbank features. The Bioperl parsers for Genbank and EMBL are
 built to respect the specification for the feature tables agreed upon by
-Genbank, EMBL, and DDBJ (see the [Feature Table
-Definition](http://www.ncbi.nlm.nih.gov/projects/collab/FT) for the details).
-Check this page if you're interested in a complete listing and description of
-all the Genbank, EMBL, and DDBJ feature tags.
+Genbank, EMBL, and DDBJ (see the [Feature Table Definition](http://www.ncbi.nlm.nih.gov/projects/collab/FT) for the details). Check this page if you're interested in a complete listing and description of all the Genbank, EMBL, and DDBJ feature tags.
 
 Despite this specification some non-standard feature tags have crept into
-Genbank, like "bond". When the Bioperl Genbank parser encounters a non-standard
-feature like this it's going to throw a fatal exception. The work-around is to
-use `eval{}` so your script doesn't die, something like:
+Genbank, like *bond*. When the Bioperl [SeqIO](https://metacpan.org/pod/Bio::SeqIO) Genbank parser encounters a non-standard feature like this it's going to throw a fatal exception. The work-around is to use `eval{}` so your script doesn't die, something like:
 
 ```perl
-
 use Bio::SeqIO;
 
 my $seq_object;
@@ -280,34 +230,23 @@ my $seqio_object = Bio::SeqIO->new(-file => $gb_file,
 eval { $seq_object = $seqio_object->next_seq; };
 
 # if there's an error
-
 print "Problem in $gb_file. Bad feature perhaps?\n" if $@;
-
 ```
 
 Getting Sequences
 -----------------
 
 One commonly asked question is "How do I get the sequence of a SeqFeature?" The
-answer is "It depends on what you're looking for." If you'd like the sequence of
-the parent, the sequence object that the SeqFeature is associated with, then use
-`entire_seq()`:
+answer is "It depends on what you're looking for." If you'd like the sequence of the parent, the sequence object that the SeqFeature is associated with, then use `entire_seq()`:
 
 ```perl
-
 $seq_object = $feat_object->entire_seq;
-
 ```
 
-This doesn't return the parent's sequence directly but rather a object
-corresponding to the parent sequence. Now that you have this object you can call
-its `seq()` method to get the sequence string, or you could do this all in one
-step:
+This doesn't return the parent's sequence directly but rather a [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq) object corresponding to the parent sequence. Now that you have this object you can call its `seq()` method to get the sequence string, or you could do this all in one step:
 
 ```perl
-
 my $sequence_string = $feat_object->entire_seq->seq;
-
 ```
 
 There are 2 other useful methods, `seq()` and `spliced_seq()`. Consider the following Genbank example:
@@ -332,16 +271,15 @@ the corresponding example coordinates:
 | entire_seq()  | 1..177            |
 | seq()          | 103..157          |
 | spliced_seq() | 103..111,121..157 |
-||
+Table 2. Sequence retrieval methods
 
 It's not unusual for a Genbank file to have multiple CDS or gene features (and
-recall that 'CDS' and 'gene' are common primary tags in Genbank format), each
-with a number of tags, like 'note', 'protein_id', or 'product'. How can we get,
+recall that `CDS` and `gene` are common primary tags in Genbank format), each
+with a number of tags, like `note`, `protein_id`, or `product`. How can we get,
 say, the nucleotide sequences and gene names from all these CDS features? By
 putting all of this together we arrive at something like:
 
 ```perl
-
 use Bio::SeqIO;
 
 my $seqio_object = Bio::SeqIO->new(-file => $gb_file);
@@ -360,31 +298,28 @@ for my $feat_object ($seq_object->get_SeqFeatures) {
         }
     }
 }
-
- ``
+```
 
 Compact Code
 ------------
 
 Many people wouldn't write code in the rather deliberate style used above. The
 following is more compact code that gets all the features with a primary tag of
-'CDS', starting with a Genbank file:
+`CDS`, starting with a Genbank file:
 
 ```perl
-
-my @cds_features = grep { $_->primary_tag eq 'CDS' } Bio::SeqIO->new(-file => $gb_file)->next_seq->get_SeqFeatures;
-
+my @cds_features = grep { $_->primary_tag eq 'CDS' } 
+ Bio::SeqIO->new(-file => $gb_file)->next_seq->get_SeqFeatures;
 ```
 
-With this array of SeqFeatures you could do all sorts of useful things, such as find all the values for the 'gene' tags and their corresponding spliced nucleotide sequences and store them in a hash:
+With this array of SeqFeatures you could do all sorts of useful things, such as find all the values for the `gene` tags and their corresponding spliced nucleotide sequences and store them in a hash:
 
 ```perl
-
-my %gene_sequences = map {$_->get_tag_values('gene'), $_->spliced_seq->seq } @cds_features;
-
+my %gene_sequences = map {$_->get_tag_values('gene'), 
+    $_->spliced_seq->seq } @cds_features;
 ```
 
-Because you're asking for a specific primary tag and tag, 'CDS' and 'gene' respectively, this code would only work when there are features that looked something like this:
+Because you're asking for a specific primary tag and tag, `CDS` and `gene` respectively, this code would only work when there are features that looked something like this:
 
 ```
      CDS             735..182
@@ -407,13 +342,10 @@ Location Objects
 There's quite a bit to this idea of location, so much that it probably deserves
 its own HOWTO. Another way of saying this is that if this topic interests you
 should take a closer look at the modules that are concerned with both Location
-and Range such as , , and . The Range object is the simpler of the two, it holds
-the "start", "end", and "strand" (1, -1) information for a sequence that is
-located on some other sequence, typically a larger one. The Range object can
-only describe exact locations.
+and Range such as [Bio::Range](https://metacpan.org/pod/Bio::Range), [Bio::RangeI](https://metacpan.org/pod/Bio::RangeI), and [Bio::LocationI](https://metacpan.org/pod/Bio::LocationI). The Range object is the simpler of the two, it holds the `start`, `end`, and `strand` (1, -1) information for a sequence that is located on some other sequence, typically a larger one. The Range object can only describe exact locations.
 
 The Location object is a Range object but it has additional capabilities
-designed to handle inexact or "fuzzy" locations, where the "start" and "end" of
+designed to handle inexact or *fuzzy* locations, where the `start` and `end` of
 a particular sub-sequence themselves have start and end positions, or are not
 precisely defined.
 
@@ -429,20 +361,20 @@ meant to illustrate some of the modules' descriptive capabilities.
 | WITHIN    | ((5.10)..100) |
 | BETWEEN   | (99^100)      |
 | UNCERTAIN | (99.?100)     |
-||
+Table 3. Location examples
 
-One type that might not be self-explanatory is 'WITHIN'. The example means
-"starting somewhere between positions 5 and 10, inclusive, and ending at 100".
-'BETWEEN' is interesting - the example means "between 99 and 100, exclusive". A
+One type that might not be self-explanatory is `WITHIN`. The example means
+*starting somewhere between positions 5 and 10, inclusive, and ending at 100*.
+`BETWEEN` is interesting - the example means *between 99 and 100, exclusive*. A
 biological example of such a location would be a cleavage site, between two
 bases or residues, but not including them.
 
-The UNCERTAIN attribute means what it says, not known. This value is found occasionally in SwissProt features.
+The `UNCERTAIN` attribute means what it says, not known. This value is found occasionally in SwissProt features.
 
 In their simplest form the Location and Range objects are used to get or set
 start and end positions, getting the positions could look like this:
 
-```
+```perl
        # polyA_signal    1811..1815 
        #                 /gene="NDP"
        my $start = $feat_object->location->start;
@@ -452,13 +384,10 @@ start and end positions, getting the positions could look like this:
 By now you've figured out that the `location()` method returns a Location object - this object has `end()` and `start()` methods.
 
 Another way of describing a feature in Genbank involves multiple start and end
-positions. These could be called "split" locations, and a very common example is
-the join statement in the CDS feature found in Genbank entries (e.g.
-`join(45..122,233..267)`). This calls for a specialized object, , which is a
-container for Location objects:
+positions. These could be called `split` locations, and a very common example is the `join` statement in the CDS feature found in Genbank entries (e.g.
+`join(45..122,233..267)`). This calls for a specialized object, [Bio::Location::SplitLocationI](https://metacpan.org/pod/Bio::Location::SplitLocationI), which is a container for Location objects:
 
 ```perl
-
 for my $feature ($seqobj->top_SeqFeatures){
 
     if ( $feature->location->isa('Bio::Location::SplitLocationI')
@@ -470,20 +399,17 @@ for my $feature ($seqobj->top_SeqFeatures){
 
     }
 }
-
 ```
 
 The Species Object
 ------------------
 
-'''NOTE''' : Future use of beyond release 1.6 is deprecated. We will be
-switching to a new, more reliable system based on and anticipate updating these
-notes soon.
+*Note* Future use of [Bio::Species](https://metacpan.org/pod/Bio::Species) beyond release 1.6 is deprecated.
 
 Some data in a Genbank file is accessible both as a feature and through a
 specialized object. Taxonomic information on a sequence, below, can be accessed
 through a Species object as well as a value to the "organism" tag, and you'll
-get more information from the object. The taxonomic information for sequence
+get more information from the [Bio::Species](https://metacpan.org/pod/Bio::Species) object. The taxonomic information for sequence
 looks like this in GenBank format:
 
 ```
@@ -496,9 +422,7 @@ looks like this in GenBank format:
 To access this data you'll need to get a Species object from the Sequence object, and then use its methods:
 
 ```perl
-
 # legible and long
-
 my $species_object = $seq_object->species;
 my $species_string = $species_object->node_name;
 
@@ -515,33 +439,22 @@ my @classification = $seq_object->species->classification;
 
 ```
 
-The reason that ORGANISM isn't treated only as a plain tag is that there are a
-variety of things one would want to do with taxonomic information, so returning
-just an array wouldn't suffice. See the documentation on for more information on
-its methods.
+The reason that `ORGANISM` isn't treated only as a plain tag is that there are a variety of things one would want to do with taxonomic information, so returning just an array wouldn't suffice. See the documentation on for more information on its methods.
 
 Getting the Annotations
 -----------------------
 
 There's still quite a bit of data left in our Genbank files that's not in
-SeqFeature objects, and much of it is parsed into Annotation objects.
-Annotations, if you recall, are those values that are assigned to a sequence
-that have no specific location on that sequence. In order to get access to these
-objects we will get an AnnotationCollection object, which is exactly what it
-sounds like:
+SeqFeature objects, and much of it is parsed into [Bio::Annotation](http://search.cpan.org/search?query=Bio::Annotation) objects. Annotations, if you recall, are those values that are assigned to a sequence that have no specific location on that sequence. In order to get access to these objects we will get an [Bio::AnnotationCollection](https://metacpan.org/pod/Bio::AnnotationCollectionI) object, which is exactly what it sounds like:
 
 ```perl
-
 my $io = Bio::SeqIO->new(-file => $file, -format => "genbank" );
 my $seq_obj = $io->next_seq; my $anno_collection = $seq_obj->annotation;
-
 ```
 
-Now we can access each Annotation in the AnnotationCollection object. The
-Annotation objects can be retrieved in arrays:
+Now we can access each [Bio::Annotation](https://metacpan.org/pod/Bio::Annotation) in the [Bio::AnnotationCollection](https://metacpan.org/pod/Bio::AnnotationCollectionI) object. The Annotation objects can be retrieved in arrays:
 
 ```perl
-
 for my $key ( $anno_collection->get_all_annotation_keys ) {
 
     my @annotations = $anno_collection->get_Annotations($key);
@@ -553,8 +466,7 @@ for my $key ( $anno_collection->get_all_annotation_keys ) {
         print "  annotation value: ", $value->display_text, "\n";
     }
 }
-
- ``
+```
 
 It turns out the value of `$key`, above, and `$value->tagname` are the same. The code will print something like:
 
@@ -567,20 +479,16 @@ It turns out the value of `$key`, above, and `$value->tagname` are the same. The
       annotation value: Value: 31-OCT-2000
 ```
 
-If you only wanted a specific annotation, like COMMENT, you can use the tagname as an argument:
+If you only wanted a specific annotation, like `COMMENT`, you can use the *tag name* as an argument:
 
 ```perl
-
 my @annotations = $anno_collection->get_Annotations('comment');
-
 ```
 
 And if you'd simply like all of the Annotations, regardless of key, you can do this:
 
 ```perl
-
 my @annotations = $anno_collection->get_Annotations();
-
 ```
 
 The following is a table of some of the common Annotations, their keys in
@@ -596,24 +504,21 @@ Bioperl, and what they're derived from in Genbank files:
 | KEYWORDS     | keyword              | SimpleValue |                             |
 | ACCESSION    | secondary_accession | SimpleValue | 2nd of 2 accessions         |
 | DBSOURCE     | dblink               | DBLink      | Link to entry in a database |
-||
+Table 4. GenBank Annotation
 
 Some Annotation objects, like Reference, make use of a `hash_tree()` method,
 which returns a hash reference. This is a more thorough way to look at the
 actual values than the `display_text()` method used above. For example,
-`display_text()` for a Reference object is only going to return the title of the
-reference, whereas the keys of the hash from `hash_tree()` will be "title",
-"authors", "location", "medline", "start", and "end".
+`display_text()` for a Reference object is only going to return the title of the reference, whereas the keys of the hash from `hash_tree()` will be `title`,
+`authors`, `location`, `medline`, `start`, and `end`.
 
 ```perl
-
 if ($value->tagname eq "Reference") {
     my $hash_ref = $value->hash_tree;
     for my $key (keys %{$hash_ref}) {
          print $key,": ",$hash_ref->{$key},"\n";
     }
 }
-
 ```
 
 Which yields:
@@ -628,20 +533,14 @@ Which yields:
  start: 1
 ```
 
-Other Annotation objects, like SimpleValue, also have a `hash_tree()` method but
-the hash isn't populated with data and `display_text()` will suffice.
+Other Annotation objects, like [Bio::Annotation::SimpleValue](https://metacpan.org/pod/Bio::Annotation::SimpleValue), also have a `hash_tree()` method but the hash isn't populated with data and `display_text()` will suffice.
 
-The simplest bits of Genbank text, like KEYWORDS, end up in these objects, the
-COMMENT ends up in a object, and references are transformed into objects. Some
-of these specialized objects will have specialized methods. Take the object, for
-example:
+The simplest bits of Genbank text, like `KEYWORDS`, end up in these [Bio::Annotation::SimpleValue](https://metacpan.org/pod/Bio::Annotation::SimpleValue) objects, the `COMMENT` ends up in a [Bio::Annotation::Comment](https://metacpan.org/pod/Bio::Annotation::Comment) object, and references are transformed into [Bio::Annotation::Reference](https://metacpan.org/pod/Bio::Annotation::Reference) objects. Some of these specialized objects will have specialized methods. Take the [Bio::Annotation::Reference](https://metacpan.org/pod/Bio::Annotation::Reference) object, for example:
 
 ```perl
-
 if ($value->tagname eq "reference") {
     print "author: ",$value->authors(), "\n";
 }
-
 ```
 
 There's also `title()`, `publisher()`, `medline()`, `editors()`, `database()`,
@@ -650,11 +549,10 @@ There's also `title()`, `publisher()`, `medline()`, `editors()`, `database()`,
 Directly From the Sequence Object
 ---------------------------------
 
-This is just a reminder that some of the "annotation" data in your sequence
+This is just a reminder that some of the *annotation* data in your sequence
 files can be accessed directly, without looking at SeqFeatures or Annotations.
 
-For example, if the Sequence object in hand is a object then here are some
-useful methods:
+For example, if the Sequence object in hand is a [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) object then here are some useful methods:
 
 | Method                     | Returns |
 |----------------------------|---------|
@@ -664,12 +562,11 @@ useful methods:
 | seq_version               | string  |
 | pid                        | string  |
 | division                   | string  |
-||
+Table 5. [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) methods
 
-These objects are created automatically when you use to read from EMBL, GenBank,
-GAME, Chado XML, TIGR XML, Locuslink, BSML, KEGG, Entrez Gene, and SwissProt
+These objects are created automatically when you use to read from EMBL, GenBank,GAME, Chado XML, TIGR XML, Locuslink, BSML, KEGG, Entrez Gene, and SwissProt
 sequence files. However, it's not guaranteed that each of these formats will
-supply data for all of the methods above.
+supply data for all of the methods above. See the [SeqIO HOWTO](SeqIO.html) for more details on formats.
 
 Other Sequence File Formats
 ---------------------------
@@ -690,12 +587,12 @@ sequence formats using .
 | KEGG        | kegg       | yes        | yes        |
 | SwissProt   | swiss      | yes        | yes        |
 | Entrez Gene | entrezgene | no         | yes        |
-||
+Table 6. Formats, SeqFeature's, and Annotations
 
 How does one find out what data is in which object in these formats? In general
 the individual module documentation is not going to provide all the answers,
 you'll need to do some investigation yourself. Let's use an approach we used
-earlier to dissect a Locuslink entry in a file, "148.ll". Here's the file:
+earlier to dissect a Locuslink entry in a file, *148.ll*. Here's the file:
 
 ```
  LOCUSID: 148
@@ -729,19 +626,15 @@ earlier to dissect a Locuslink entry in a file, "148.ll". Here's the file:
 First collect all the annotations:
 
 ```perl
-
 use Bio::SeqIO;
 
 my @annotations = Bio::SeqIO->new(-file => "148.ll", -format => "locuslink")->next_seq->annotation->get_Annotations;
-
 ```
 
 And from this array of Annotations let's extract a hash containing the `as_text` strings as keys and the concatenated tagnames and object types as values:
 
 ```perl
-
-    my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } @annotations;
-
+my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } @annotations;
 ```
 
 The contents of the `%tagname_type` hash can be represented in table form, below.
@@ -768,59 +661,40 @@ The contents of the `%tagname_type` hash can be represented in table form, below
 | Direct database link to Hs.52931 in database UniGene                  | dblink               | Bio::Annotation::DBLink       |
 | Direct database link to M11313 in database GenBank                    | dblink               | Bio::Annotation::DBLink       |
 | Direct database link to P35348 in database GenBank                    | dblink               | Bio::Annotation::DBLink       |
-||
+Table 7. LocusLink Annotations
 
-The output from the script shows that Locuslink Annotations come in a variety of
-types, including DBLink, OntologyTerm, Comment, and SimpleValue. In order to
-extract the exact value you want, as opposed to the one returned by the
-`as_text` method, you'll need to find the desired method in the documentation
-for the Annotation in question.
+The output from the script shows that Locuslink Annotations come in a variety of types, including `DBLink`, `OntologyTerm`, `Comment`, and `SimpleValue`. In order to extract the exact value you want, as opposed to the one returned by the `as_text` method, you'll need to find the desired method in the documentation for the Annotation in question.
 
 If you were only interested in a certain type of Annotation you could retrieve
 it efficently with something like this:
 
 ```perl
-
 @ontology_terms = map { $_->isa("Bio::Ontology::TermI"); } $seq_object->get_Annotations();
-
 ```
 
-To completely parse these sequence formats you may also need to use methods that
-don't have anything to do with Features or Annotations ''per se''. For example,
-the `display_id` method returns the LOCUS name of a Genbank entry or the ID from
-a SwissProt file. The `desc()` method will return the DEFINITION line of a
-Genbank file or the DE field in a SwissProt file. Again, this is a situation
-where you may have to examine a module, probably a SeqIO::\* module, to find out
-more of the details.
+To completely parse these sequence formats you may also need to use methods that don't have anything to do with Features or Annotations *per se*. For example, the `display_id` method returns the LOCUS name of a Genbank entry or the ID from a SwissProt file. The `desc()` method will return the DEFINITION line of a Genbank file or the DE field in a SwissProt file. Again, this is a situation where you may have to examine a module, probably a [SeqIO](http://search.cpan.org/search?query=Bio::SeqIO) module, to find out more of the details.
 
 Building Your Own Sequences
 ---------------------------
 
 We've taken a look at getting data from SeqFeature and Annotation objects, but
-what about creating these objects when you already have the data? The object is
-probably the best SeqFeature object for this purpose, in part because of its
-flexibility. Let's assume we have a sequence that has an interesting
-sub-sequence, going from position 10 to 22 on the + or 1 or [sense] strand.
+what about creating these objects when you already have the data? The [Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic) object is probably the best SeqFeature object for this purpose, in part because of its flexibility. Let's assume we have a sequence that has an interesting sub-sequence, going from position 10 to 22 on the + or 1 or *sense* strand.
 
 ```perl
-
 use Bio::SeqFeature::Generic;
 
 # create the feature with some data, evidence and a note
-
 my $feat = new Bio::SeqFeature::Generic(-start => 10,
-
                                         -end         => 22,
                                         -strand      => 1,
                                         -primary_tag => 'TATA_signal',
                                         -tag => {evidence => 'predicted',
                                                  note     => 'TATA box' } );
-
 ```
 
-The SeqFeature::Generic object offers the user a "tag system" for addition of
-data that's not explicitly accounted for by its methods, that's what the "-tag"
-is for, above. Since the value passed to "-tag" could be any kind of scalar,
+The SeqFeature::Generic object offers the user a *tag system* for addition of
+data that's not explicitly accounted for by its methods, that's what the `-tag`
+is for, above. Since the value passed to `-tag` could be any kind of scalar,
 like a reference, it's clear that this approach should be able to handle just
 about any sort of data.
 
@@ -828,7 +702,6 @@ You can build on the Feature as well. Here we'll add some Annotations to the
 newly-created Feature:
 
 ```perl
-
 $feat->add_tag_value("match1","PF000123 e-7.2");
 $feat->add_tag_value("match2","PF002534 e-3.1");
 
@@ -839,7 +712,6 @@ for my $tag (@tags) {
        print $tag,":",$val,"\n";
     }
 }
-
 ```
 
 This prints out:
@@ -851,31 +723,24 @@ This prints out:
   note:TATA box
 ```
 
-NOTE: If you need to add a tag that don't have any value when printed (like
-/pseudo, /trans_splicing, or /environmental_sample), you can use the special
-value '_no_value' to make BioPerl print the tag without any associated value:
+*Note* If you need to add a tag that don't have any value when printed (like
+`/pseudo`, `/trans_splicing`, or `/environmental_sample`), you can use the special value `_no_value` to make BioPerl print the tag without any associated value:
 
 ```perl
-
 $feat->add_tag_value("pseudo","_no_value");
-
 ```
 
 Once the feature and its annotations are created it can be associated with a sequence:
 
 ```perl
-
 use Bio::Seq;
 
 # create a simple Sequence object
-
 my $seq_obj = Bio::Seq->new(-seq => "attcccccttataaaattttttttttgaggggtggg",
                             -display_id => "BIO52" );
 
 # then add the feature we've created to the sequence
-
 $seq_obj->add_SeqFeature($feat);
-
 ```
 
 The `add_SeqFeature()` method will also accept an array of SeqFeature objects.
@@ -883,7 +748,6 @@ The `add_SeqFeature()` method will also accept an array of SeqFeature objects.
 What if you wanted to add an Annotation to a sequence? You'll create the Annotation object, add data to it, create an object, add the Annotation to the AnnotationCollection along with a tag, and then add the AnnotationCollection to the sequence object:
 
 ```perl
-
 use Bio::Annotation::Collection;
 use Bio::Annotation::Comment;
 
@@ -892,24 +756,19 @@ $comment->text("This looks like a good TATA box");
 my $coll = new Bio::Annotation::Collection;
 $coll->add_Annotation('comment',$comment);
 $seq_obj->annotation($coll);
-
 ```
 
-Now let's examine what we've created by writing the contents of `$seq_obj` to a Genbank file called "test.gb". We should see a sequence, an Annotation associated with the sequence, a sequence Feature, and Annotations associated with the Feature:
+Now let's examine what we've created by writing the contents of `$seq_obj` to a Genbank file called *test.gb*. We should see a sequence, an Annotation associated with the sequence, a sequence Feature, and tag/value pairs associated with the Feature:
 
 ```perl
-
 use Bio::SeqIO;
 my $io = Bio::SeqIO->new(-format => "genbank",
                             -file => ">test.gb" );
                             
 $io->write_seq($seq_obj);
-
 ```
 
-''Voila!''
-
-`test.gb` now reads:
+**Voila!** `test.gb` now reads:
 
 ```
  LOCUS       BIO52                    36 bp    dna     linear   UNK
@@ -933,60 +792,34 @@ Customizing Sequence Object Construction
 When you don't need access to the complete set of annotations in a set of potentially rich sequence database entries, it is possible to configure the SeqIO parser to ignore certain sections of the sequence record. For example, let's say you need to crunch through all of Genbank, collecting stats about the number of molecule types per species. In this case, you don't care about the sequence or features contained in each entry. Here's how to tell the parser to ignore these things:
 
 ```perl
-
 my $seqin = Bio::SeqIO->new( -fh=> \*STDIN, -format=> 'genbank' );
 my $builder = $seqin->sequence_builder();
 $builder->want_all(1);
 $builder->add_unwanted_slot('seq','features','annotation');
 
 # Then go and use the SeqIO object as normal
-
-while(my $seq = $seqin->next_seq()) {
-
+while (my $seq = $seqin->next_seq() ) {
     # do something
-
 }
-
 ```
 
 This also skips annotations, which includes things like comments, references,
 and dblinks. This can speed up parsing by a factor of two or better, depending
 on the complexity of the sequence records.
 
-As of version 1.5.1 this ability to customize your Sequence objects is only
-available for .
+As of version 1.5.1 this ability to customize your Sequence objects is only available for [Bio::SeqIO::genbank](https://metacpan.org/pod/Bio::SeqIO::genbank).
 
-See [Bio::Seq::SeqBuilder] and [HOWTO:SeqIO] for more documentation on this.
+See [Bio::Seq::SeqBuilder](https://metacpan.org/pod/Bio::Seq::SeqBuilder) and the [SeqIO HOWTO](SeqIO.html) for more documentation on this.
 
 Additional Information
 ----------------------
 
 If you would like to learn about representing sequences and features in
-graphical form take a look at the [Graphics HOWTO]. The documentation for each
-of the individual SeqFeature, Range, Location and Annotation modules is also
-very useful, here's a list of them. If you have questions or comments that
-aren't addressed herein then write the Bioperl community at
-[bioperl-l@bioperl.org](http://bioperl.open-bio.org/wiki/Mailing_lists).
-
-'''SeqFeature Modules'''
-
--   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   
-
-'''Annotation Modules'''
-
--   -   -   -   -   -   -   -   -   -   -   -   
-
-'''Location Modules'''
-
--   -   -   -   -   -   -   -   -   -   -   -   
-
-'''Range Modules'''
-
--   -   
+graphical form take a look at the [Graphics HOWTO](Graphics.html). If you have questions or comments that aren't addressed herein then write the Bioperl community at bioperl-l@bioperl.org.
 
 Acknowledgements
 ----------------
 
-Thanks to Steven Lembark for comments and neat code discussions.'
+Thanks to Steven Lembark for comments and neat code discussions.
 
 

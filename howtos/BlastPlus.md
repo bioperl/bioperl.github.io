@@ -10,8 +10,6 @@ Using BioPerl to create, manage, and query [BLAST](http://en.wikipedia.org/wiki/
 
 Quicklink to [Synopsis](#Synopsis).
 
-__TOC__
-
 Author
 ------
 
