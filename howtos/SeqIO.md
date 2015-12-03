@@ -20,7 +20,7 @@ This document is copyright Ewan Birney. It can be copied and distributed under t
 The basics
 ----------
 
-This section assumes you've never seen BioPerl before, perhaps you're a biologist trying to get some information about some sequences or you're some kind of IT expert interested in learning something about this hot topic, "bioinformatics". Your first script may want to get some information from a file containing one or more sequences.
+This section assumes you've never seen BioPerl before, perhaps you're a biologist trying to get some information about some sequences or you're some kind of IT expert interested in learning something about this hot topic, *bioinformatics*. Your first script may want to get some information from a file containing one or more sequences.
 
 A piece of advice: always use the module! Here's what the first lines of your script might look like:
 
@@ -57,50 +57,50 @@ Formats
 
 BioPerl's SeqIO system understands lot of formats and can interconvert all of them. Here is a current listing of formats, as of version 1.6.
 
-| Name                                                              | Description                                                    | File extension              | Module |
-|-------------------------------------------------------------------|----------------------------------------------------------------|-----------------------------|--------|
-| abi                                                               | ABI tracefile                | ab[i1]                 |        |
-| ace                                                               | Ace database               | ace                         |        |
-| agave                                                             | AGAVE XML                  |                             |        |
-| alf                                                               | ALF tracefile                | alf                         |        |
-| asciitree                 | write-only, to visualize features                              |                             |        |
-| bsml                                                              | BSML using                 | bsm|bsml                    |        |
-| bsml_sax                                                         | BSML, using                 |                             |        |
-| chadoxml                                                          | CHADO sequence format     |                             |        |
-| chaos                                                             | CHAOS sequence format      |                             |        |
-| chaosxml                                                          | Chaos XML                                                      |                             |        |
-| ctf                                                               | CTF tracefile               | ctf                         |        |
-| embl                                                              | EMBL database              | embl|ebl|emb|dat            |        |
-| entrezgene                                                        | Entrez Gene ASN1      |                             |        |
-| excel                                                             | Excel                      |                             |        |
-| exp                                                               | Staden EXP format            | exp                         |        |
-| fasta                                                             | FASTA                      | fasta|fast|seq|fa|fsa|nt|aa |        |
-| fastq                         | quality score data in FASTA-like format    | fastq                       |        |
-| flybase_chadoxml | variant of Chado XML                                           |                             |        |
-| game                                                              | GAME XML                   |                             |        |
-| gcg                                                               | GCG                          | gcg                         |        |
-| genbank                                                           | GenBank                  | gb|gbank|genbank            |        |
-| interpro                                                          | InterProScan XML                                               |                             |        |
-| kegg                                                              | KEGG                        |                             |        |
-| largefasta                                                        | Large files, fasta format                                      |                             |        |
-| lasergene                                                         | Lasergene format                                               |                             |        |
-| locuslink                | LocusLink                                              |                             |        |
-| metafasta                                                         |                                                                |                             |        |
-| phd                                                               | Phred                        | phd|phred                   |        |
-| pir                             | PIR database                                                   | pir                         |        |
-| pln                            | PLN tracefile                                                  | pln                         |        |
-| qual                           | Phred                                                          |                             |        |
-| raw                             | plain text                                                     | txt                         |        |
-| scf                                                               | Standard Chromatogram Format | scf                         |        |
-| seqxml                                                            | [SeqXML sequence format](http://seqxml.org)          | xml                         |        |
-| strider                                                           | DNA Strider format                                             |                             |        |
-| swiss                                                             | SwissProt              | swiss|sp                    |        |
-| tab                             | tab-delimited                                                  |                             |        |
-| table                                                             | Table                      |                             |        |
-| tigr                                                              | TIGR XML                                                       |                             |        |
-| tigrxml                       | TIGR Coordset XML                                              |                             |        |
-| tinyseq                     | NCBI TinySeq XML                                               |                             |        |
-| ztr                                                               | ZTR tracefile                | ztr                         |        |
+| Name      | Description    | File extension |
+|-----|----------|------------------------|
+[abi](https://metacpan.org/pod/Bio::SeqIO::abi)                                                               | ABI tracefile                | ab[i1]    |
+[ace](https://metacpan.org/pod/Bio::SeqIO::ace)                                                               | Ace database               | ace    |
+[agave](https://metacpan.org/pod/Bio::SeqIO::agave)                                                             | AGAVE XML                  |               |
+[alf](https://metacpan.org/pod/Bio::SeqIO::alf)                                                               | ALF tracefile                | alf          |
+[asciitree](https://metacpan.org/pod/Bio::SeqIO::asciitree)                 | write-only, to visualize features                              |      |
+[bsml](https://metacpan.org/pod/Bio::SeqIO::bsml)                                                              | BSML using                 | bsm,bsml                |
+[bsml_sax](https://metacpan.org/pod/Bio::SeqIO::bsml_sax)                                                         | BSML, using                 |                      |
+[chadoxml](https://metacpan.org/pod/Bio::SeqIO::chadoxml)                                                          | CHADO sequence format     |                         |
+[chaos](https://metacpan.org/pod/Bio::SeqIO::chaos)                                                             | CHAOS sequence format      |                              |
+[chaosxml](https://metacpan.org/pod/Bio::SeqIO::chaosxml)                                                          | Chaos XML                                                      |                         |
+[ctf](https://metacpan.org/pod/Bio::SeqIO::ctf)                                                               | CTF tracefile               | ctf                      |
+[embl](https://metacpan.org/pod/Bio::SeqIO::embl)                                                              | EMBL database              | embl,ebl,emb,dat           |
+[entrezgene](https://metacpan.org/pod/Bio::SeqIO::entrezgene)                                                        | Entrez Gene ASN1      |                       |
+[excel](https://metacpan.org/pod/Bio::SeqIO::excel)                                                             | Excel                      |                   |
+[exp](https://metacpan.org/pod/Bio::SeqIO::exp)                                                               | Staden EXP format            | exp                      |
+[fasta](https://metacpan.org/pod/Bio::SeqIO::fasta)                                                             | FASTA                      | fasta,fast,seq,fa,fsa,nt,aa     |
+[fastq](https://metacpan.org/pod/Bio::SeqIO::fastq)                         | quality score data in FASTA-like format    | fastq                              |
+[flybase_chadoxml](https://metacpan.org/pod/Bio::SeqIO::flybase_chadoxml) | variant of Chado XML                                           |                         |
+[game](https://metacpan.org/pod/Bio::SeqIO::game)                                                              | GAME XML                   |                               |
+[gcg](https://metacpan.org/pod/Bio::SeqIO::gcg)                                                               | GCG                          | gcg                   |
+[genbank](https://metacpan.org/pod/Bio::SeqIO::genbank)                                                           | GenBank                  | gb|gbank|genbank              |
+[interpro](https://metacpan.org/pod/Bio::SeqIO::interpro)           | InterProScan XML                                               |                             |        |
+[kegg](https://metacpan.org/pod/Bio::SeqIO::kegg)                                                              | KEGG                        |                             |        |
+[largefasta](https://metacpan.org/pod/Bio::SeqIO::largefasta)                                                        | Large files, fasta format                                      |                             |        |
+[lasergene](https://metacpan.org/pod/Bio::SeqIO::lasergene)                                                         | Lasergene format                                               |                                   |
+[locuslink](https://metacpan.org/pod/Bio::SeqIO::locuslink)                | LocusLink                                              |                                     |
+[metafasta](https://metacpan.org/pod/Bio::SeqIO::metafasta)                                                         |                                                                |                                    |
+[phd](https://metacpan.org/pod/Bio::SeqIO::phd)                                                               | Phred                        | phd,phred                         |
+[pir](https://metacpan.org/pod/Bio::SeqIO::pir)                             | PIR database                                                   | pir                                |
+[pln](https://metacpan.org/pod/Bio::SeqIO::pln)                            | PLN tracefile                                                  | pln                         |        |
+[qual](https://metacpan.org/pod/Bio::SeqIO::qual)                           | Phred                                                          |                             |        |
+[raw](https://metacpan.org/pod/Bio::SeqIO::raw)                             | plain text                                                     | txt                         |        |
+[scf](https://metacpan.org/pod/Bio::SeqIO::scf)                                                               | Standard Chromatogram Format | scf                         |        |
+[seqxml](https://metacpan.org/pod/Bio::SeqIO::seqxml)                                                            | [SeqXML sequence format](http://seqxml.org)          | xml                         |        |
+[strider](https://metacpan.org/pod/Bio::SeqIO::strider)                                                           | DNA Strider format                                             |                             |        |
+[swiss](https://metacpan.org/pod/Bio::SeqIO::swiss)                                                             | SwissProt              | swiss,sp                           |
+[tab](https://metacpan.org/pod/Bio::SeqIO::tab)                             | tab-delimited                                                  |                                   |
+[table](https://metacpan.org/pod/Bio::SeqIO::table)                                                             | Table                      |                                |
+[tigr](https://metacpan.org/pod/Bio::SeqIO::tigr)                                                              | TIGR XML                                                       |                                   |
+[tigrxml](https://metacpan.org/pod/Bio::SeqIO::tigrxml)                       | TIGR Coordset XML                                              |                                    |
+[tinyseq](https://metacpan.org/pod/Bio::SeqIO::tinyseq)                     | NCBI TinySeq XML                                               |                                    |
+[ztr](https://metacpan.org/pod/Bio::SeqIO::ztr)                                                               | ZTR tracefile                | ztr                               |
 
 Table 1. SeqIO formats.
 
@@ -118,7 +118,7 @@ For some one of the initial perplexities of BioPerl is the variety of different 
 | ace     | [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq) |
 | bsml    | [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) |
 | swiss   | [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) |
-
+Table 2. Formats and the objects they create.
 
 Working Examples
 ----------------

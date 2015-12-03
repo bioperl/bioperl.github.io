@@ -1,3 +1,8 @@
+---
+title: "HOWTO:EUtilities Cookbook"
+layout: default
+---
+
 The API described here for refers to the version currently found in as a separate release on CPAN. It is not compatible with the experimental API used in older BioPerl releases.
 
 Also see the [EUtilities Web Service HOWTO].
