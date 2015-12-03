@@ -40,11 +40,11 @@ Overview
 
 The [Bio::Tools::Run::StandAloneBlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::StandAloneBlastPlus) object is a "factory" or harness that directs the execution of the various `blast+` programs. The basic mantra is to (1) create a `StandAloneBlastPlus` factory using the `new()` constructor, and (2) perform BLAST analyses by calling the desired BLAST program by name off the factory object. The database can be pre-existing, or can be created directly using a [FASTA](http://en.wikipedia.org/wiki/FASTA) file or a BioPerl sequence collection object. Low-complexity or other masking can also be applied as the database is constructed.
 
-The BLAST database itself and any masking data are attached to the factory object ([step 1](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Database_construction)). Query sequences and any parameters associated with particular programs are provided to the blast method call ([step 2](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Blast_method_execution)), and are run against the attached database. (We present step 2 first, since it's what people will do many times after creating their database once.)
+The BLAST database itself and any masking data are attached to the factory object ([step 1](#Database_construction)). Query sequences and any parameters associated with particular programs are provided to the blast method call ([step 2](#Blast_method_execution)), and are run against the attached database. (We present step 2 first, since it's what people will do many times after creating their database once.)
 
-`blast+` also provides facilities for blasting sequences against NCBI databases over the network. See [Remote BLAST](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Remote_BLAST) for details.
+`blast+` also provides facilities for blasting sequences against NCBI databases over the network. See [Remote BLAST](#Remote_BLAST) for details.
 
-BLAST method execution
+BLAST method execution<a name="Blast_method_execution"></a>
 ----------------------
 
 Given a `StandAloneBlastPlus` factory, such as
@@ -94,7 +94,7 @@ $result = $fac->blastn( -query => 'query_seqs.fas',
 ```perl
 $result = $fac->blastn( -query => 'query_seqs.fas',
                         -outfile => 'query.bls',
-                        -outformat => 5); # 5=XML output
+                        -outformat => 5); # 5=XML output
 ```
 
 -   Additional arguments to the method can be specified:
@@ -134,7 +134,7 @@ Other parameters ( `-method_args`, `-outfile`, and `-outformat` ) are valid.
 
 The return value is always a [Bio::Search::Result::BlastResult](http://www.bioperl.org/wiki/Module:Bio::Search::Result::BlastResult) object on success, `undef` on failure.
 
-Database construction
+Database construction<a name="Database_construction"></a>
 ---------------------
 ### Factory construction and initialization<a name="Factory_construction_and_initialization"></a>
 
@@ -146,7 +146,7 @@ To specify a pre-existing BLAST database, use `-db_name` alone:
 
 ```perl
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-     -db_name => 'mydb'
+     -db_name => 'mydb'
 );
 ```
 
@@ -154,13 +154,13 @@ The directory can be specified along with the basename, or separately with `-db_
 
 ```perl
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-    -db_name => '~/home/blast/mydb'
+    -db_name => '~/home/blast/mydb'
 );
 
 # same as
 
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-   -db_name => 'mydb', -db_dir => '~/home/blast'
+   -db_name => 'mydb', -db_dir => '~/home/blast'
 );
 ```
 
@@ -170,7 +170,7 @@ If you wish to apply pre-existing mask data (i.e., the final ASN1 output from on
 
 ```perl
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-   -db_name => 'mydb', -mask_file => 'mymaskdata.asn'
+   -db_name => 'mydb', -mask_file => 'mymaskdata.asn'
 );
 ```
 
@@ -192,9 +192,9 @@ With a FASTA file:
 
 ```perl
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
- -db_name => 'mydb',
- -db_data => 'myseqs.fas',
- -create => 1
+ -db_name => 'mydb',
+ -db_data => 'myseqs.fas',
+ -create => 1
 );
 
 ```
@@ -202,27 +202,28 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 With another BioPerl object collection:
 
 ```perl
-$alnio = Bio::AlignIO->new( -file => 'alignment.msf' ); $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
- -db_name => 'mydb',
- -db_data => $alnio,
- -create => 1
+$alnio = Bio::AlignIO->new( -file => 'alignment.msf' );
+$fac = Bio::Tools::Run::StandAloneBlastPlus->new(
+ -db_name => 'mydb',
+ -db_data => $alnio,
+ -create => 1
 );
 @seqs = $alnio->next_aln->each_seq;
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
- -db_name => 'mydb',
- -db_data => @seqs,
- -create => 1
+ -db_name => 'mydb',
+ -db_data => @seqs,
+ -create => 1
 );
 ```
 
-Other collections (e.g., [Bio::SeqIO](http://www.bioperl.org/wiki/Module:Bio::SeqIO)) are valid. If a certain type does not work, please submit an [enhancement request](http://bugzilla.bioperl.org).
+Other collections (e.g., [Bio::SeqIO](http://www.bioperl.org/wiki/Module:Bio::SeqIO)) are valid. If a certain type does not work, please open a new [issue](https://github.com/bioperl/bioperl-live/issues).
 
 To create temporary databases, leave out the `-db_name`, e.g.
 
 ```perl
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
- -db_data => 'myseqs.fas',
- -create => 1
+ -db_data => 'myseqs.fas',
+ -create => 1
 );
 ```
 
@@ -238,7 +239,7 @@ After the factory has been created, you can use the explict attribute setters:
 
 ```perl
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
- -create => 1
+ -create => 1
 );
 
 $fac->set_db_data('myseqs.fas');
@@ -249,17 +250,17 @@ and so on.
 
 ### Creating and using mask data
 
-The blast+ mask utilities `windowmasker`, `segmasker`, and `dustmasker` are available. Masking can be rolled into database creation, or can be executed later. If your mask data is already created and in ASN1 format, set the `-mask_file` attribute on construction (see [Factory construction/initialization](http://www.bioperl.org/wiki/HOWTO:BlastPlus#Factory_construction.2Finitialization)).
+The blast+ mask utilities `windowmasker`, `segmasker`, and `dustmasker` are available. Masking can be rolled into database creation, or can be executed later. If your mask data is already created and in ASN1 format, set the `-mask_file` attribute on construction (see [Factory construction/initialization](#Factory_construction_and_initialization)).
 
 To create a mask from raw data or an existing database and apply the mask upon database creation, construct the factory like so:
 
 ```perl
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
- -db_name => 'my_masked_db',
- -db_data => 'myseqs.fas',
- -masker => 'dustmasker',
- -mask_data => 'maskseqs.fas',
- -create => 1
+ -db_name => 'my_masked_db',
+ -db_data => 'myseqs.fas',
+ -masker => 'dustmasker',
+ -mask_data => 'maskseqs.fas',
+ -create => 1
 );
 ```
 
@@ -271,15 +272,15 @@ To create a mask ASN1 file that can be used in the `-mask_file` parameter separa
 
 ```perl
 $mask_file = $fac->make_mask(-data => 'maskseqs.fas',
-                            -masker => 'dustmasker');
+                            -masker => 'dustmasker');
 # segmasker can use a blastdb as input
 $mask_file = $fac->make_mask(-mask_db => 'mydb',
-                            -masker => 'segmasker')
+                            -masker => 'segmasker')
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
- -db_name => 'my_masked_db',
- -db_data => 'myseqs.fas',
- -mask_file => $mask_file
- -create => 1
+ -db_name => 'my_masked_db',
+ -db_data => 'myseqs.fas',
+ -mask_file => $mask_file
+ -create => 1
 );
 ```
 
@@ -304,7 +305,7 @@ $num_seqs = $fac->db_num_sequences;
 
 ### Accessing the Bio::Tools::Run::BlastPlus factory
 
-The `blast+` programs are actually executed by a wrapper instance. This instance is available for peeking and poking in the `StandAloneBlastPlus` `factory()` attribute. For convenience, `BlastPlus` methods can be run directly from the `StandAloneBlastPlus` object, and are delegated to the `factory()` attribute.
+The `blast+` programs are actually executed by a [Bio::Tools::Run::BlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::BlastPlus) wrapper instance. This instance is available for peeking and poking in the `StandAloneBlastPlus` `factory()` attribute. For convenience, `BlastPlus` methods can be run directly from the `StandAloneBlastPlus` object, and are delegated to the `factory()` attribute.
 
 For example, to get the blast+ program to be executed, examine either
 
@@ -316,11 +317,11 @@ or
 
 Similarly, the currently set parameters for the `BlastPlus` factory are
 
-`@parameters = $fac->get_parameters`
+`@parameters = $fac->get_parameters`
 
 To get a list of what parameters you can set for the current `blast+` operation, do:
 
-`@available = $fac->available_parameters('all');`
+`@available = $fac->available_parameters('all');`
 
 ### Cleaning up temp files
 
@@ -331,33 +332,25 @@ Temporary analysis files produced under a single factory instances can be unlink
 Tempfiles are generally not removed unless this method is explicitly called. Note that `cleanup()` only unlinks "registered" files and databases. All temporary files are automatically registered; in particular, "anonymous" databases (such as
 
 ```perl
-
 $fac->Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_data => 'myseqs.fas', 
- -create => 1
-
+ -db_data => 'myseqs.fas',
+ -create => 1
 );
-
 ```
 
 without a `-db_name` specification) are registered for cleanup. Any file or database can be registered with an internal method:
 
 `$fac->_register_temp_for_cleanup('testdb');`
 
-### Remote BLAST
+### Remote BLAST<a name="Remote_BLAST"></a>
 
 `StandAloneBlastPlus` can access NCBI databases remotely. Just create a factory with the desired database and `-remote => 1`:
 
 ```perl
-
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_name => 'nr',
- -remote => 1
-
+ -db_name => 'nr',
+ -remote => 1
 );
-
 ```
 
 and call BLAST methods from the factory as usual. Note that the database info methods are unavailable for remote databases. Available remote databases are listed [here](http://www.ncbi.nlm.nih.gov/BLAST/blastcgihelp.shtml#Databases).
@@ -366,145 +359,109 @@ and call BLAST methods from the factory as usual. Note that the database info me
 
 -   You can check whether a given basename points to a properly formatted BLAST database by doing
 
-`$is_good = $fac->check_db('putative_db');`
+`$is_good = $fac->check_db('putative_db');`
 
 -   User parameters can be passed to the underlying `blast+` programs (if you know what you're doing) with `db_make_args` and `mask_make_args`:
 
 ```perl
-
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_name => 'customdb',
- -db_data => 'myseqs.fas', 
- -db_make_args => [ '-taxid_map' => 'seq_to_taxa.txt' ],
- -masker => 'windowmasker',
- -mask_data => 'myseqs.fas',
- -mask_make_args => [ '-dust' => 'T' ],
- -create => 1
-
+ -db_name => 'customdb',
+ -db_data => 'myseqs.fas',
+ -db_make_args => [ '-taxid_map' => 'seq_to_taxa.txt' ],
+ -masker => 'windowmasker',
+ -mask_data => 'myseqs.fas',
+ -mask_make_args => [ '-dust' => 'T' ],
+ -create => 1
 );
-
 ```
 
 -   You can prevent exceptions from being thrown by failed `blast+` program executions by setting `no_throw_on_crash()`. Examine the error with `stderr()`:
 
 ```perl
-
-$fac->no_throw_on_crash(1); $fac->make_db; if ($fac->stderr =~ /Error:/) {
-
-  #handle error
-  ...
-
+$fac->no_throw_on_crash(1);
+$fac->make_db;
+if ($fac->stderr =~ /Error:/) {
+  #handle error
+  ...
 }
-
 ```
 
 Synopsis<a name="Synopsis"></a>
 --------
 
 ```perl
-
 # existing blastdb:
-
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_name => 'mydb'
-
+ -db_name => 'mydb'
 );
 
 # create blastdb from fasta file and attach
-
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_name => 'mydb',
- -db_data => 'myseqs.fas',
- -create => 1
-
+ -db_name => 'mydb',
+ -db_data => 'myseqs.fas',
+ -create => 1
 );
 
 # create blastdb from BioPerl sequence collection objects
-
-$alnio = Bio::AlignIO->new( -file => 'alignment.msf' ); $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_name => 'mydb',
- -db_data => $alnio,
- -create => 1
-
+$alnio = Bio::AlignIO->new( -file => 'alignment.msf' );
+$fac = Bio::Tools::Run::StandAloneBlastPlus->new(
+ -db_name => 'mydb',
+ -db_data => $alnio,
+ -create => 1
 );
 
 # blast against the remote NCBI db
-
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_name => 'nr',
- -remote => 1
-
+ -db_name => 'nr',
+ -remote => 1
 );
 
-@seqs = $alnio->next_aln->each_seq; $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
- -db_name => 'mydb',
- -db_data => @seqs,
- -create => 1
-
+@seqs = $alnio->next_aln->each_seq;
+$fac = Bio::Tools::Run::StandAloneBlastPlus->new(
+ -db_name => 'mydb',
+ -db_data => @seqs,
+ -create => 1
 );
 
 # create database with masks
-
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
--db_name => 'my_masked_db',
--db_data => 'myseqs.fas',
--masker => 'dustmasker',
--mask_data => 'maskseqs.fas',
--create => 1
-
+-db_name => 'my_masked_db',
+-db_data => 'myseqs.fas',
+-masker => 'dustmasker',
+-mask_data => 'maskseqs.fas',
+-create => 1
 );
 
 # create a mask datafile separately
-
 $mask_file = $fac->make_mask(
-
- -data => 'maskseqs.fas',
- -masker => 'dustmasker'
-
+ -data => 'maskseqs.fas',
+ -masker => 'dustmasker'
 );
 
 # query database for metadata
-
-$info_hash = $fac->db_info; $num_seq = $fac->db_num_sequences; @mask_metadata = @{ $fac->db_filter_algorithms };
+$info_hash = $fac->db_info;
+$num_seq = $fac->db_num_sequences;
+@mask_metadata = @{ $fac->db_filter_algorithms };
 
 # perform blast methods
-
 $result = $fac->tblastn( -query => $seqio );
 
 # create a factory:
-
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
-
-  -db_name => 'testdb'
-
+  -db_name => 'testdb'
 );
 
 # get your results
-
 $result = $fac->blastn( -query => 'query_seqs.fas',
-
-                       -outfile => 'query.bls',
-                       -method_args => [ '-num_alignments' => 10 ] );
+                       -outfile => 'query.bls',
+                       -method_args => [ '-num_alignments' => 10 ] );
 
 $result = $fac->tblastx( -query => $an_alignment_object,
-
-                        -outfile => 'query.bls',
-                        -outformat => 7 );
+                        -outfile => 'query.bls',
+                        -outformat => 7 );
 
 # do a bl2seq
-
 $fac->bl2seq( -method => 'blastp',
-
-             -query => $seq_object_1,
-             -subject => $seq_object_2 );
-
+             -query => $seq_object_1,
+             -subject => $seq_object_2 );
 ```
-
-'

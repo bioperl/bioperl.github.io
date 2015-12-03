@@ -1,7 +1,7 @@
 # Site settings
 title: BioPerl
 email: bioperl-l@mailman.open-bio.org
-description: The Bioperl Project is an international association of developers of open source Perl tools for bioinformatics, genomics and life science
+description: "The Bioperl Project is an international association of developers of open source Perl tools for bioinformatics, genomics and life science"
 baseurl: ""
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 #twitter_username: jekyllrb
@@ -9,6 +9,6 @@ url: "http://yourdomain.com" # the base hostname & protocol for your site
 encoding: UTF-8
 # Build settings
 markdown: redcarpet
-markdown_ext:  markdown,mkdown,mkdn,mkd,mkd,md
+markdown_ext: markdown,mkdown,mkdn,mkd,mkd,md
 redcarpet:
-  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]
+  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks", ":no_intra_emphasis", "quote"]

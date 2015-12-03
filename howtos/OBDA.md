@@ -11,16 +11,16 @@ This is a HOWTO that explains how to set up and use the [Open Biological Databas
 Authors
 -------
 
--   [Aaron Mackey] - [amackey at virginia.edu](mailto:amackey-at-virginia.edu)
--   [Brian Osborne] - [briano at bioteam.net](mailto:briano@bioteam.net)
+-   Aaron Mackey - [amackey at virginia.edu](mailto:amackey-at-virginia.edu)
+-   Brian Osborne - [briano at bioteam.net](mailto:briano@bioteam.net)
 -   Peter Schattner - [schattner at alum.mit.edu](mailto:schattner-at-alum.mit.edu)
--   [Heikki Lehvaslaiho] - [heikki at bioperl.org](mailto:heikki-at-bioperl-dot-org)
--   [Lincoln Stein] - [lstein at cshl.org](mailto:lstein-at-cshl.org)
+-   Heikki Lehvaslaiho - [heikki at bioperl.org](mailto:heikki-at-bioperl-dot-org)
+-   Lincoln Stein - [lstein at cshl.org](mailto:lstein-at-cshl.org)
 
 Copyright
 ---------
 
-This document is copyright [Lincoln Stein], 2002. For reproduction other than personal use please contact lstein at cshl.org
+This document is copyright Lincoln Stein, 2002. For reproduction other than personal use please contact lstein at cshl.org
 
 Introduction
 ------------
@@ -78,18 +78,18 @@ The registry file is a simple text file, as shown in the following example:
 
 The first line is the registry format version number in the format `VERSION=X.XX`. The current version is 1.00. The rest of the file is composed of simple sections, formatted as:
 
-`[database-name] `
-`tag=value `
+`[database-name] `
+`tag=value `
 `tag=value`
-`[database-name] `
-`tag=value `
+`[database-name] `
+`tag=value `
 `tag=value`
 
 Each section starts with a symbolic database name enclosed in square brackets. Database names are case-insensitive but should not contain spaces. The remainder of the section is followed by a series of tag=value pairs that configure access to the service.
 
 Database name sections can be repeated, in which case the client should try each service in turn from top to bottom. The options under each section must have two non-optional tag=value lines:
 
-`protocol="protocol-type" `
+`protocol="protocol-type" `
 `location="location-string"`
 
 The Protocol Tag
@@ -100,12 +100,10 @@ The protocol tag specifies what access mode to use. Currently it can be one of:
 flat  
 used to fetch sequences from local flat files that have been indexed using [BerkeleyDB] or binary search indexing.
 
-<!-- -->
 
 biofetch  
 used to fetch sequences from web-based databses. Due to restrictions on the use of these databases, this is recommended only for lightweight applications.
 
-<!-- -->
 
 biosql  
 fetches sequences from [BioSQL] databases. To use this module you will need to have an instantiated relational database conforming to the [BioSQL] schema, and install the [bioperl-db] distribution.
@@ -146,7 +144,6 @@ If you are using the biofetch protocol, you're all set. You can start reading se
 
 -   flat protocol: [Flat Databases HOWTO]
 
-<!-- -->
 
 -   biosql protocol: [BioSQL] INSTALL (from the [BioSQL] package, available at <http://obda.open-bio.org/> . Download the [BioSQL] tar file to view all the documentation.
 
@@ -154,10 +151,10 @@ If you are using the biofetch protocol, you're all set. You can start reading se
 
 Once the flat database is created you can configure your seqdatabase.ini file. Let's say that you have used the `bioflat_index.pl` script to create the flat database and a new directory called `ppp` has been created in your `/home/sally/bioinf/` directory (and the `ppp/` directory contains the `config.dat` file). Your `sequence.ini` entry should contain these lines:
 
-` [ppp]`
-` protocol=flat       `
-` location=/home/sally/bioinf       `
-` dbname=ppp`
+ [ppp]`
+ protocol=flat       `
+ location=/home/sally/bioinf       `
+ dbname=ppp`
 
 The database name, in brackets, can be any useful name, it does not have to refer to existing files or directories, but the "dbname" should be the name of the newly created directory.
 
@@ -168,11 +165,11 @@ Once you've set up the [OBDA] registry file, accessing sequence data from within
 
 To use the registry from a Perl script, use something like the following:
 
-` use Bio::DB::Registry;   `
-` $registry = Bio::DB::Registry->new;   `
-` $db = $registry->get_database(\'embl\');   `
-` $seq = $db->get_Seq_by_acc("J02231");   `
-` print $seq->seq,"\`
+ use Bio::DB::Registry;   `
+ $registry = Bio::DB::Registry->new;   `
+ $db = $registry->get_database(\'embl\');   `
+ $seq = $db->get_Seq_by_acc("J02231");   `
+ print $seq->seq,"\`
 
 ";
 
@@ -191,7 +188,7 @@ Using biogetseq.pl to Access Registry Databases
 
 As a convenience, the BioPerl distribution includes the script `biogetseq.PLS` that enables one to have OBDA access to sequence data from the command line. It's located in the `scripts/DB` directory of the [BioPerl] distribution (it may also have been installed in your system if you asked for a script installation during the `make install` step). Move or add it into your path to run it. You can get this help text by running it with no arguments:
 
-` Usage: biogetseq.pl --dbname embl --format embl --namespace acc id [ id ... ]*      `
+ Usage: biogetseq.pl --dbname embl --format embl --namespace acc id [ id ... ]*      `
 
 The following are the script's defaults:
 
@@ -203,10 +200,10 @@ The rest of the arguments is a list of ids in the given namespace
 
 If you have a set of ids you want to fetch from [EMBL] database, you just give them as space-separated parameters:
 
-` >biogetseq.pl J02231 A21530 A10516`
+ >biogetseq.pl J02231 A21530 A10516`
 
 The output is directed to `STDOUT`, so it can be redirected to a file. The options can be given in the long "double hyphen" format or abbreviated to one-letter format (`--fasta` or `-f`):
 
-` >biogetseq.pl -f fasta -n acc J02231 A21530 A10516 > filed.seq'`
+ >biogetseq.pl -f fasta -n acc J02231 A21530 A10516 > filed.seq'`
 
 

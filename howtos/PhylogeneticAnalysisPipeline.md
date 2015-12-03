@@ -45,21 +45,21 @@ Practically if BLAST is used, this means running BLAST on a database of sequence
 
 to generate
 
-`formatdb -i db.fa -p T`
-`blastall -p blastp -i db.fa -d db.fa -m 8 -e 1e-3 -o db-vs-db.BLASTP`
+`formatdb -i db.fa -p T`
+`blastall -p blastp -i db.fa -d db.fa -m 8 -e 1e-3 -o db-vs-db.BLASTP`
 
 ### All pairwise
 
 This approach is only appropriate for whole genome comparisons where there is a single dataset for each species. All pairs of species combinations are enumerated and the a series of searches are performed. For example if there are three species A, B, C then all pairs are computed as follows.
 
-`SEARCH A A > A-vs-A.search`
-`SEARCH B B > B-vs-B.search`
-`SEARCH C C > C-vs-C.search`
-`SEARCH A B > A-vs-B.search`
-`SEARCH B A > B-vs-A.search`
-`SEARCH C A > C-vs-A.search`
-`SEARCH C B > C-vs-B.search`
-`SEARCH B C > B-vs-C.search`
+`SEARCH A A > A-vs-A.search`
+`SEARCH B B > B-vs-B.search`
+`SEARCH C C > C-vs-C.search`
+`SEARCH A B > A-vs-B.search`
+`SEARCH B A > B-vs-A.search`
+`SEARCH C A > C-vs-A.search`
+`SEARCH C B > C-vs-B.search`
+`SEARCH B C > B-vs-C.search`
 
 This results in a matrix of results
 

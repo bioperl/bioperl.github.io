@@ -5,9 +5,9 @@ layout: default
 
 ### Authors
 
-[Brian Osborne]
+Brian Osborne
 
-[Chris Fields]
+Chris Fields
 
 ### Copyright
 
@@ -19,7 +19,7 @@ This is a HOWTO that talks about using Bioperl and tools related to Bioperl to g
 
 ### Using local Genbank and Entrez Gene files
 
-You can download chromosomal, nucleotide files in [FASTA format] from NCBI (ftp://ftp.ncbi.nih.gov/genomes/) and get gene position data from [Entrez Gene](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene) (see [Using Bio::DB::EntrezGene to get genomic coordinates]), then create indices of the fasta files using . There is an example script, [extract_genes.pl], that shows how this could be done. The query terms are limited to Gene id's in this example since the positional data is taken from Entrez Gene's gene2accession file.
+You can download chromosomal, nucleotide files in [FASTA format] from NCBI (ftp://ftp.ncbi.nih.gov/genomes/) and get gene position data from Entrez Gene(http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene) (see [Using Bio::DB::EntrezGene to get genomic coordinates]), then create indices of the fasta files using . There is an example script, [extract_genes.pl], that shows how this could be done. The query terms are limited to Gene id's in this example since the positional data is taken from Entrez Gene's gene2accession file.
 
 Requirement: BioPerl.
 
@@ -38,9 +38,8 @@ Example script:
 use strict; use Bio::EnsEMBL::Registry; use Getopt::Long; use Bio::SeqIO;
 
 # old style (deprecated) use the Bio::EnsEMBL::Registry
-2.  use Bio::EnsEMBL::DBSQL::DBAdaptor;
+  use Bio::EnsEMBL::DBSQL::DBAdaptor;
 
-<!-- -->
 
 # initialize some defaults
 
@@ -50,20 +49,20 @@ my $species = 'homo_sapiens'; my $source = 'core'; \# core or vega
 
 my $identifier = shift; GetOptions(
 
-`          "n|gene_symbol=s" => $identifier,`
-`          "species=s"       => $species,`
-`          "source=s"         => $source,`
-`         );`
+          "n|gene_symbol=s" => $identifier,`
+          "species=s"       => $species,`
+          "source=s"         => $source,`
+         );`
 
 my $out_seq = Bio::SeqIO->new(
 
-`                             -fg => *STDOUT,`
-`                             -format => \'fasta\',`
-`                            );`
+                             -fg => *STDOUT,`
+                             -format => \'fasta\',`
+                            );`
 
 # The current way for accesing ensemble is using the registry
-2.  it matches your API with its corresponding ensembl database version
-3.  Also takes care of the mysql port (now is in a non standard port 5306)
+  it matches your API with its corresponding ensembl database version
+  Also takes care of the mysql port (now is in a non standard port 5306)
 
 my $reg = 'Bio::EnsEMBL::Registry';
 
@@ -73,21 +72,21 @@ my $gene_adaptor = $reg->get_adaptor($species, $source, 'Gene' );
 
 foreach my $gene (@{$gene_adaptor->fetch_all_by_external_name($identifier)}) {
 
-`   # the seq method in gene returns the nucleotide sequence`
-`   # [warning] in transcript and exon objects, the seq method returns a biperl Bio::Seq object`
-`   print "gene sequence for " . $identifier.":\`
+   # the seq method in gene returns the nucleotide sequence`
+   # [warning] in transcript and exon objects, the seq method returns a biperl Bio::Seq object`
+   print "gene sequence for " . $identifier.":\`
 
 ". $gene->seq() . " ";
 
-`   foreach my $trans (@{$gene->get_all_Transcripts}) {`
+   foreach my $trans (@{$gene->get_all_Transcripts}) {`
 
-`       # print the spliced sequence in fasta (you can print the raw seq with $trans->seq->seq())`
-`       print "ttranscript " . $trans->stable_id() . ":\`
+       # print the spliced sequence in fasta (you can print the raw seq with $trans->seq->seq())`
+       print "ttranscript " . $trans->stable_id() . ":\`
 
 ";
 
-`       $out_seq->write_seq($trans->seq);`
-`   }`
+       $out_seq->write_seq($trans->seq);`
+   }`
 
 }
 
@@ -99,15 +98,12 @@ You also have the option of using raw [SQL] when using the ENSEMBL API, the resu
 
 -   This bit of code has <b>not been extensively tested</b>.
 
-<!-- -->
 
 -   The `fetch_all_by_external_name` method does not accept a namespace or database name as an argument, so it lacks some precision. Be careful that your query returns just one sequence. Alternatively use a more precise SQL statement rather than `fetch_all_by_external_name`.
 
-<!-- -->
 
 -   To get a listing of available databases using mysql:
 
-<!-- -->
 
        $ mysql -u anonymous -h ensembldb.ensembl.org
        Welcome to the MySQL monitor. ...
@@ -137,51 +133,51 @@ my $query = '"gallus gallus"\[ORGANISM\] AND H4-VII\[GENE\]';
 
 my $factory = Bio::DB::EUtilities -> new (-eutil => 'esearch',
 
-`                                           -db      => \'gene\',`
-`                                           -term    => $query,`
-`                                           -tool    => \'bioperl\',`
-`                                           -retmax  => $limit`
-`                                           );`
+                                           -db      => \'gene\',`
+                                           -term    => $query,`
+                                           -tool    => \'bioperl\',`
+                                           -retmax  => $limit`
+                                           );`
 
 my $n_results = $factory->get_count; my @ids = $factory->get_ids;
 
 my $summaries = Bio::DB::EUtilities -> new (-eutil => 'esummary',
 
-`                                           -db     => \'gene\',`
-`                                           -id     => @ids);`
+                                           -db     => \'gene\',`
+                                           -id     => @ids);`
 
 while (my $docsum = $summaries->next_DocSum) {
 
-` ## some items in DocSum are also named ChrStart so we pick the genomic`
-` ## information item and get the coordinates from it`
-` my ($genomic_info)  = $docsum->get_Items_by_name(\'GenomicInfoType\');`
+ ## some items in DocSum are also named ChrStart so we pick the genomic`
+ ## information item and get the coordinates from it`
+ my ($genomic_info)  = $docsum->get_Items_by_name(\'GenomicInfoType\');`
 
-` ## some entries may have no data on genomic coordinates. This condition filters then out`
-` if (!$genomic_info) {`
-`   ## found no genomic coordinates data`
-`   next;`
-` }`
+ ## some entries may have no data on genomic coordinates. This condition filters then out`
+ if (!$genomic_info) {`
+   ## found no genomic coordinates data`
+   next;`
+ }`
 
-` ## get coordinates of sequence`
-` ## get_contents_by_name always returns a list`
-` my ($chr_acc_ver)   = $genomic_info->get_contents_by_name("ChrAccVer");`
-` my ($chr_start)     = $genomic_info->get_contents_by_name("ChrStart");`
-` my ($chr_stop)      = $genomic_info->get_contents_by_name("ChrStop");`
-` my $strand;`
+ ## get coordinates of sequence`
+ ## get_contents_by_name always returns a list`
+ my ($chr_acc_ver)   = $genomic_info->get_contents_by_name("ChrAccVer");`
+ my ($chr_start)     = $genomic_info->get_contents_by_name("ChrStart");`
+ my ($chr_stop)      = $genomic_info->get_contents_by_name("ChrStop");`
+ my $strand;`
 
-` if ($chr_start `< $chr_stop) {
+ if ($chr_start `< $chr_stop) {
     $strand     = 1;
     $chr_start  = $chr_start +1 - $bp5_extra;
     $chr_stop   = $chr_stop  +1 + $bp5_extra;
-  } elseif ($chr_start >` $chr_stop) {`
-`   $strand     = 2;`
-`   $chr_start  = $chr_start +1 - (-$bp5_extra);`
-`   $chr_stop   = $chr_stop  +1 + (-$bp5_extra);`
-` } else {`
-`   ## error, found equal values for start and stop coordinates?`
-` }`
+  } elseif ($chr_start >` $chr_stop) {`
+   $strand     = 2;`
+   $chr_start  = $chr_start +1 - (-$bp5_extra);`
+   $chr_stop   = $chr_stop  +1 + (-$bp5_extra);`
+ } else {`
+   ## error, found equal values for start and stop coordinates?`
+ }`
 
-` ## Do something with coordinates and accession version number`
+ ## Do something with coordinates and accession version number`
 
 }
 
@@ -209,7 +205,7 @@ my $ac = $seq->annotation;
 
 for my $ann ($ac->get_Annotations('dblink')) { tif ($ann->database eq "Evidence Viewer") {
 
-`               # get the sequence identifier, the start, and the stop`
+               # get the sequence identifier, the start, and the stop`
 
 ttmy ($contig,$from,$to) = $ann->url =~ tt /contig=(\[^&\]+).+from=(d+)&to=(d+)/; ttprint "$contigt$fromt$to "; t} }
 
@@ -229,10 +225,10 @@ This is a simple example that creates a Seq object in the end.
 
 my $gb = Bio::DB::GenBank->new(-format => 'genbank',
 
-`                               -seq_start  => $chr_start,`
-`                               -seq_stop   => $chr_stop,`
-`                               -strand     => $strand`
-`                               );`
+                               -seq_start  => $chr_start,`
+                               -seq_stop   => $chr_stop,`
+                               -strand     => $strand`
+                               );`
 
 my $obj = $gb->get_Seq_by_acc($chr_acc_ver);
 
@@ -252,15 +248,15 @@ use strict; use Bio::Tools::RNAMotif; \# or anything that gives start, end, stra
 
 my $factory = Bio::Tools::RNAMotif->new(-file=>'clean_RNAMotif.txt',
 
-`                                       -motiftag => \'protein_binding\',`
-`                                       -desctag => \'pyrR_BL\'`
-`                                       );`
+                                       -motiftag => \'protein_binding\',`
+                                       -desctag => \'pyrR_BL\'`
+                                       );`
 
 # array of Bio::SeqFeature::Generic objects generated by Bio::Tools::RNAMotif factory
 
 my @motifs = (); while(my $motif = $factory->next_prediction) {
 
-`   push @motifs, $motif;`
+   push @motifs, $motif;`
 
 }
 
@@ -268,25 +264,25 @@ my @motifs = (); while(my $motif = $factory->next_prediction) {
 
 my $outfile = Bio::SeqIO->new(-file => '> temp.txt',
 
-`                          -format => \'genbank\');`
+                          -format => \'genbank\');`
 
 my @seqs = (); foreach my $motif (@motifs) {
 
-`   my $strand = ($sf->strand == 1) ? 1 : 2;`
-`   my $seqstart = $sf->start - 500;`
-`   my $seqend = $sf->end + 500;    `
-`   # Below is from Bio::DB::GenBank POD, with some modifications`
-`   my $factory = Bio::DB::GenBank->new(-format => \'genbank\',`
-`                                  -seq_start => $seqstart,    # 500 bp upstream`
-`                                  -seq_stop => $$seqend,     # 500 bp downstream`
-`                                  -strand => $strand,     # 1=plus, 2=minus`
-`                                 );`
-`   my $seqin = $factory->get_Seq_by_acc($motif->seq_id);`
-`   # store away files`
-`   $outfile->write_seq($seqin);`
-`   # may take lots of memory if you have many seqfeatures`
-`   push @seqs, $seqin; `
-`   sleep 3;  # don\'t irritate NCBI`
+   my $strand = ($sf->strand == 1) ? 1 : 2;`
+   my $seqstart = $sf->start - 500;`
+   my $seqend = $sf->end + 500;    `
+   # Below is from Bio::DB::GenBank POD, with some modifications`
+   my $factory = Bio::DB::GenBank->new(-format => \'genbank\',`
+                                  -seq_start => $seqstart,    # 500 bp upstream`
+                                  -seq_stop => $$seqend,     # 500 bp downstream`
+                                  -strand => $strand,     # 1=plus, 2=minus`
+                                 );`
+   my $seqin = $factory->get_Seq_by_acc($motif->seq_id);`
+   # store away files`
+   $outfile->write_seq($seqin);`
+   # may take lots of memory if you have many seqfeatures`
+   push @seqs, $seqin; `
+   sleep 3;  # don\'t irritate NCBI`
 
 }
 
@@ -294,30 +290,30 @@ my @seqs = (); foreach my $motif (@motifs) {
 
 foreach my $seq (@seqs) {
 
-`   print $seq->accession_number,"t",`
-`          $seq->length,"\`
+   print $seq->accession_number,"t",`
+          $seq->length,"\`
 
 ";
 
-`   for my $feat_object ($seq->get_SeqFeatures) {`
-`       next unless $feat_object->primary_tag eq "CDS";`
-`       print "primary tag: ", $feat_object->primary_tag, "\`
+   for my $feat_object ($seq->get_SeqFeatures) {`
+       next unless $feat_object->primary_tag eq "CDS";`
+       print "primary tag: ", $feat_object->primary_tag, "\`
 
 ";
 
-`           for my $tag ($feat_object->get_all_tags) {             `
-`           print "  tag: ", $tag, "\`
+           for my $tag ($feat_object->get_all_tags) {             `
+           print "  tag: ", $tag, "\`
 
 ";
 
-`               for my $value ($feat_object->get_tag_values($tag)) {                `
-`               print "    value: ", $value, "\`
+               for my $value ($feat_object->get_tag_values($tag)) {                `
+               print "    value: ", $value, "\`
 
 ";
 
-`           }          `
-`       }       `
-`   }`
+           }          `
+       }       `
+   }`
 
 }
 

@@ -52,7 +52,7 @@ Bio::Graphics is dependent on , a Perl module for generating bitmapped graphics 
 
 If you are on a [Linux] system, you might already have GD installed. To verify, run the following command:
 
-`% perl -MGD -e \'print $GD::VERSION, "\`
+`% perl -MGD -e \'print $GD::VERSION, "\`
 
 "';
 
@@ -80,15 +80,15 @@ Our first example will be rendering a table of [BLAST] hits on a sequence that i
 
 '''Table 1. Simple blast hit file (data1.txt)'''
 
-`# hit           score   start   end`
-`hsHOX3          381     2       200`
-`scHOX3          210     2       210`
-`xlHOX3          800     2       200`
-`hsHOX2          1000    380     921`
-`scHOX2          812     402     972`
-`xlHOX2          1200    400     970`
-`BUM             400     300     620`
-`PRES1           127     310     700`
+`# hit           score   start   end`
+`hsHOX3          381     2       200`
+`scHOX3          210     2       210`
+`xlHOX3          800     2       200`
+`hsHOX2          1000    380     921`
+`scHOX2          812     402     972`
+`xlHOX2          1200    400     970`
+`BUM             400     300     620`
+`PRES1           127     310     700`
 
 (Hint: when copy-pasting this into your own text, make sure that there are tabstopps between the different columns. You can use your favorite text editor to replace the spaces to tabs (in vim, type `:%s/[ ]+/t/g`) or use the unix command `tr` to translate to tabs: `cat data1.xt | tr -s \' \' | tr \' \' \'t\'`. The first `tr` will sequeeze many spaces into one space and the second `tr` will then translate a space into a tabstop.)
 
@@ -100,7 +100,6 @@ Our first attempt to parse and render this file looks like this:
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 1 in the Graphics-HOWTO
 
@@ -108,28 +107,28 @@ use strict; use Bio::Graphics; use Bio::SeqFeature::Generic;
 
 my $panel = Bio::Graphics::Panel->new(
 
-`                                     -length => 1000,`
-`                                     -width  => 800`
-`                                    );`
+                                     -length => 1000,`
+                                     -width  => 800`
+                                    );`
 
 my $track = $panel->add_track(
 
-`                             -glyph => \'generic\',`
-`                             -label => 1`
-`                            );`
+                             -glyph => \'generic\',`
+                             -label => 1`
+                            );`
 
 while (<>) { \# read blast file
 
-` chomp;`
-` next if /^#/;  # ignore comments`
-` my($name,$score,$start,$end) = split /t+/;`
-` my $feature = Bio::SeqFeature::Generic->new(`
-`                                             -display_name => $name,`
-`                                             -score        => $score,`
-`                                             -start        => $start,`
-`                                             -end          => $end`
-`                                            );`
-` $track->add_feature($feature);`
+ chomp;`
+ next if /^#/;  # ignore comments`
+ my($name,$score,$start,$end) = split /t+/;`
+ my $feature = Bio::SeqFeature::Generic->new(`
+                                             -display_name => $name,`
+                                             -score        => $score,`
+                                             -start        => $start,`
+                                             -end          => $end`
+                                            );`
+ $track->add_feature($feature);`
 
 }
 
@@ -145,19 +144,19 @@ After creating the feature object, we add it to the track by calling the track's
 
 After processing all the hits, we call the panel's `png()` method to render them and convert it into a [Portable Network Graphics  file, the contents of which are printed to standard output. We can now view the result by piping it to our favorite image display program. Users of operating systems that don't support pipes can simply redirect the output to a file and view it in their favorite image program.
 
-`% perl render_blast1.pl data1.txt | display -`
+`% perl render_blast1.pl data1.txt | display -`
 
 '''Figure 1. Rendering BLAST hits''' ![](Howto-graphics-fig1.png "fig:Howto-graphics-fig1.png")
 
-> `  \'\'\'Important!\'\'\'`
+> `  \'\'\'Important!\'\'\'`
 >
-> `  If you are on a Windows platform, you need to put STDOUT into binary`
-> `  mode so that the PNG file does not go through `[`Window\'s`]` carriage`
-> `  return/linefeed transformations. Before the final ``print`` statement, put`
-> `  the statement ``binmode(STDOUT)``.`
+> `  If you are on a Windows platform, you need to put STDOUT into binary`
+> `  mode so that the PNG file does not go through `[`Window\'s`]` carriage`
+> `  return/linefeed transformations. Before the final ``print`` statement, put`
+> `  the statement ``binmode(STDOUT)``.`
 >
-> `  This advice also applies to certain older versions of `[`RedHat`](http://www.redhat.com)`, which ship`
-> `  with a patched (and possibly broken) version of Perl.`
+> `  This advice also applies to certain older versions of `[`RedHat`](http://www.redhat.com)`, which ship`
+> `  with a patched (and possibly broken) version of Perl.`
 
 Adding a Scale to the Image
 ---------------------------
@@ -175,7 +174,6 @@ Example 2 fixes these problems.
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 2 in the Graphics-HOWTO
 
@@ -183,47 +181,47 @@ use strict; use lib '/home/lstein/projects/bioperl-live'; use Bio::Graphics; use
 
 my $panel = Bio::Graphics::Panel->new(
 
-`                                     -length    => 1000,`
-`                                     -width     => 800,`
-`                                     -pad_left  => 10,`
-`                                     -pad_right => 10,`
-`                                    );`
+                                     -length    => 1000,`
+                                     -width     => 800,`
+                                     -pad_left  => 10,`
+                                     -pad_right => 10,`
+                                    );`
 
 my $full_length = Bio::SeqFeature::Generic->new(
 
-`                                               -start => 1,`
-`                                               -end   => 1000,`
-`                                              );`
+                                               -start => 1,`
+                                               -end   => 1000,`
+                                              );`
 
 $panel->add_track($full_length,
 
-`                 -glyph   => \'arrow\',`
-`                 -tick    => 2,`
-`                 -fgcolor => \'black\',`
-`                 -double  => 1,`
-`                );`
+                 -glyph   => \'arrow\',`
+                 -tick    => 2,`
+                 -fgcolor => \'black\',`
+                 -double  => 1,`
+                );`
 
 my $track = $panel->add_track(
 
-`                             -glyph     => \'graded_segments\',`
-`                             -label     => 1,`
-`                             -bgcolor   => \'blue\',`
-`                             -min_score => 0,`
-`                             -max_score => 1000,`
-`                            );`
+                             -glyph     => \'graded_segments\',`
+                             -label     => 1,`
+                             -bgcolor   => \'blue\',`
+                             -min_score => 0,`
+                             -max_score => 1000,`
+                            );`
 
 while (<>) { \# read blast file
 
-` chomp;`
-` next if /^#/;  # ignore comments`
-` my($name,$score,$start,$end) = split /t+/;`
-` my $feature = Bio::SeqFeature::Generic->new(`
-`                                             -display_name => $name,`
-`                                             -score        => $score,`
-`                                             -start        => $start,`
-`                                             -end          => $end`
-`                                            );`
-` $track->add_feature($feature);`
+ chomp;`
+ next if /^#/;  # ignore comments`
+ my($name,$score,$start,$end) = split /t+/;`
+ my $feature = Bio::SeqFeature::Generic->new(`
+                                             -display_name => $name,`
+                                             -score        => $score,`
+                                             -start        => $start,`
+                                             -end          => $end`
+                                            );`
+ $track->add_feature($feature);`
 
 }
 
@@ -241,11 +239,11 @@ When we run the modified script, we get this image:
 
 '''Figure 2. The improved image.''' ![](Howto-graphics-fig2.png "fig:Howto-graphics-fig2.png")
 
-> `  \'\'\'Important!\'\'\'`
-> `  Remember that if you are on a Windows platform, you need to put STDOUT`
-> `  into binary mode so that the `[`PNG`]` file does not go through Window\'s`
-> `  carriage return/linefeed transformations. Before the final print`
-> `  statement, write ``binmode(STDOUT)``.`
+> `  \'\'\'Important!\'\'\'`
+> `  Remember that if you are on a Windows platform, you need to put STDOUT`
+> `  into binary mode so that the `[`PNG`]` file does not go through Window\'s`
+> `  carriage return/linefeed transformations. Before the final print`
+> `  statement, write ``binmode(STDOUT)``.`
 
 Improving the Image
 -------------------
@@ -258,7 +256,6 @@ Before we move into displaying gapped alignments, let's tweak the image slightly
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 3 in the Graphics-HOWTO
 
@@ -266,54 +263,54 @@ use strict; use lib '/home/lstein/projects/bioperl-live'; use Bio::Graphics; use
 
 my $panel = Bio::Graphics::Panel->new(
 
-`                                     -length    => 1000,`
-`                                     -width     => 800,`
-`                                     -pad_left  => 10,`
-`                                     -pad_right => 10,`
-`                                    );`
+                                     -length    => 1000,`
+                                     -width     => 800,`
+                                     -pad_left  => 10,`
+                                     -pad_right => 10,`
+                                    );`
 
 my $full_length = Bio::SeqFeature::Generic->new(
 
-`                                               -start => 1,`
-`                                               -end   => 1000,`
-`                                              );`
+                                               -start => 1,`
+                                               -end   => 1000,`
+                                              );`
 
 $panel->add_track($full_length,
 
-`                 -glyph   => \'arrow\',`
-`                 -tick    => 2,`
-`                 -fgcolor => \'black\',`
-`                 -double  => 1,`
-`                );`
+                 -glyph   => \'arrow\',`
+                 -tick    => 2,`
+                 -fgcolor => \'black\',`
+                 -double  => 1,`
+                );`
 
 my $track = $panel->add_track(
 
-`                             -glyph       => \'graded_segments\',`
-`                             -label       => 1,`
-`                             -bgcolor     => \'blue\',`
-`                             -min_score   => 0,`
-`                             -max_score   => 1000,`
-`                             -font2color  => \'red\',`
-`                             -sort_order  => \'high_score\',`
-`                             -description => sub {`
-`                               my $feature = shift;`
-`                               my $score   = $feature->score;`
-`                               return "score=$score";`
-`                              },`
-`                            );`
+                             -glyph       => \'graded_segments\',`
+                             -label       => 1,`
+                             -bgcolor     => \'blue\',`
+                             -min_score   => 0,`
+                             -max_score   => 1000,`
+                             -font2color  => \'red\',`
+                             -sort_order  => \'high_score\',`
+                             -description => sub {`
+                               my $feature = shift;`
+                               my $score   = $feature->score;`
+                               return "score=$score";`
+                              },`
+                            );`
 
 while (<>) { \# read blast file
 
-` chomp;`
-` next if /^#/;  # ignore comments`
-` my($name,$score,$start,$end) = split /t+/;`
-` my $feature = Bio::SeqFeature::Generic->new(`
-`                                             -score        => $score,`
-`                                             -display_name => $name,`
-`                                             -start        => $start,`
-`                                             -end          => $end,`
-`                                            );`
-` $track->add_feature($feature);`
+ chomp;`
+ next if /^#/;  # ignore comments`
+ my($name,$score,$start,$end) = split /t+/;`
+ my $feature = Bio::SeqFeature::Generic->new(`
+                                             -score        => $score,`
+                                             -display_name => $name,`
+                                             -start        => $start,`
+                                             -end          => $end,`
+                                            );`
+ $track->add_feature($feature);`
 
 }
 
@@ -325,10 +322,10 @@ There are two changes to look at. The first appears in line 24, where we pass th
 
 The second change is more complicated, and involves the -description option that appears in the `add_track()` call on lines 25-28. The value of `-description` will be printed beneath each feature. We could pass `-description` a constant string, but that would simply print the same string under each feature. Instead we pass `-description` a code reference to a subroutine that will be invoked while the picture is being rendered. This subroutine will be passed the current feature, and must return the string to use as the value of the description. In our code, we simply fetch out the [BLAST] hit's score using its `score()` method, and incorporate that into the description string.
 
-> `  \'\'\'`[`Tip:\'\'\`](Tip:\'\'\)`'`
-> `  The ability to use a code reference as a configuration option isn\'t`
-> `  unique to ``-description``. In fact, you can use a code reference for any`
-> `  of the options passed to ``add_track()``.`
+> `  \'\'\'`[`Tip:\'\'\`](Tip:\'\'\)`'`
+> `  The ability to use a code reference as a configuration option isn\'t`
+> `  unique to ``-description``. In fact, you can use a code reference for any`
+> `  of the options passed to ``add_track()``.`
 
 Another minor change is the use of `-font2color` in line 23. This simply sets the color used for the description strings. Figure 3 shows the effect of these changes.
 
@@ -345,7 +342,6 @@ From here it's just a small step to writing a general purpose utility that will 
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 4 in the Graphics-HOWTO
 
@@ -353,66 +349,66 @@ use strict; use lib "$ENV{HOME}/projects/bioperl-live"; use Bio::Graphics; use B
 
 my $searchio = Bio::SearchIO->new(-file => $file,
 
-`                                 -format => \'blast\') or die "parse failed";`
+                                 -format => \'blast\') or die "parse failed";`
 
 my $result = $searchio->next_result() or die "no result";
 
 my $panel = Bio::Graphics::Panel->new(
 
-`                                     -length    => $result->query_length,`
-`                                     -width     => 800,`
-`                                     -pad_left  => 10,`
-`                                     -pad_right => 10,`
-`                                    );`
+                                     -length    => $result->query_length,`
+                                     -width     => 800,`
+                                     -pad_left  => 10,`
+                                     -pad_right => 10,`
+                                    );`
 
 my $full_length = Bio::SeqFeature::Generic->new(
 
-`                                               -start        => 1,`
-`                                               -end          => $result->query_length,`
-`                                               -display_name => $result->query_name,`
-`                                              );`
+                                               -start        => 1,`
+                                               -end          => $result->query_length,`
+                                               -display_name => $result->query_name,`
+                                              );`
 
 $panel->add_track($full_length,
 
-`                 -glyph   => \'arrow\',`
-`                 -tick    => 2,`
-`                 -fgcolor => \'black\',`
-`                 -double  => 1,`
-`                 -label   => 1,`
-`                );`
+                 -glyph   => \'arrow\',`
+                 -tick    => 2,`
+                 -fgcolor => \'black\',`
+                 -double  => 1,`
+                 -label   => 1,`
+                );`
 
 my $track = $panel->add_track(
 
-`                             -glyph       => \'graded_segments\',`
-`                             -label       => 1,`
-`                             -connector   => \'dashed\',`
-`                             -bgcolor     => \'blue\',`
-`                             -font2color  => \'red\',`
-`                             -sort_order  => \'high_score\',`
-`                             -description => sub {`
-`                               my $feature = shift;`
-`                               return unless $feature->has_tag(\'description\');`
-`                               my ($description) = $feature->each_tag_value(\'description\');`
-`                               my $score = $feature->score;`
-`                               "$description, score=$score";`
-`                              },`
-`                            );`
+                             -glyph       => \'graded_segments\',`
+                             -label       => 1,`
+                             -connector   => \'dashed\',`
+                             -bgcolor     => \'blue\',`
+                             -font2color  => \'red\',`
+                             -sort_order  => \'high_score\',`
+                             -description => sub {`
+                               my $feature = shift;`
+                               return unless $feature->has_tag(\'description\');`
+                               my ($description) = $feature->each_tag_value(\'description\');`
+                               my $score = $feature->score;`
+                               "$description, score=$score";`
+                              },`
+                            );`
 
 while( my $hit = $result->next_hit ) {
 
-` next unless $hit->significance `< 1E-20;
+ next unless $hit->significance `< 1E-20;
   my $feature = Bio::SeqFeature::Generic->`new(`
-`                                             -score        => $hit->raw_score,`
-`                                             -display_name => $hit->name,`
-`                                             -tag          => {`
-`                                                               description => $hit->description`
-`                                                              },`
-`                                            );`
-` while( my $hsp = $hit->next_hsp ) {`
-`   $feature->add_sub_SeqFeature($hsp,\'EXPAND\');`
-` }`
+                                             -score        => $hit->raw_score,`
+                                             -display_name => $hit->name,`
+                                             -tag          => {`
+                                                               description => $hit->description`
+                                                              },`
+                                            );`
+ while( my $hsp = $hit->next_hsp ) {`
+   $feature->add_sub_SeqFeature($hsp,\'EXPAND\');`
+ }`
 
-` $track->add_feature($feature);`
+ $track->add_feature($feature);`
 
 }
 
@@ -436,12 +432,12 @@ Figure 4 shows the output from a sample [BLAST] hit file.
 
 The next section will demonstrate how to parse and display [feature tables] from [GenBank] and [EMBL].
 
-> `  \'\'\'Important!\'\'\'`
+> `  \'\'\'Important!\'\'\'`
 >
-> `  Remember that if you are on a Windows platform, you need to put STDOUT`
-> `  into binary mode so that the PNG file does not go through Window\'s`
-> `  carriage return/linefeed transformations. Before the final print`
-> `  statement, write binmode(STDOUT).`
+> `  Remember that if you are on a Windows platform, you need to put STDOUT`
+> `  into binary mode so that the PNG file does not go through Window\'s`
+> `  carriage return/linefeed transformations. Before the final print`
+> `  statement, write binmode(STDOUT).`
 
 Rendering Features from a GenBank or EMBL File
 ----------------------------------------------
@@ -454,20 +450,19 @@ With you can render the feature table of a [GenBank] or [EMBL] file quite easily
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # file: embl2picture.pl
-2.  This is code example 5 in the Graphics-HOWTO
-3.  Author: Lincoln Stein
+  This is code example 5 in the Graphics-HOWTO
+  Author: Lincoln Stein
 
 use strict; use lib "$ENV{HOME}/projects/bioperl-live"; use Bio::Graphics; use Bio::SeqIO; use Bio::SeqFeature::Generic;
 
 my $file = shift or die "provide a sequence file as the argument"; my $io = Bio::SeqIO->new(-file=>$file) or die "couldn't create Bio::SeqIO"; my $seq = $io->next_seq or die "couldn't find a sequence in the file"; my $wholeseq = Bio::SeqFeature::Generic->new(
 
-`                                            -start        => 1,`
-`                                            -end          => $seq->length,`
-`                                            -display_name => $seq->display_name`
-`                                           );`
+                                            -start        => 1,`
+                                            -end          => $seq->length,`
+                                            -display_name => $seq->display_name`
+                                           );`
 
 my @features = $seq->all_SeqFeatures;
 
@@ -475,50 +470,50 @@ my @features = $seq->all_SeqFeatures;
 
 my %sorted_features; for my $f (@features) {
 
-` my $tag = $f->primary_tag;`
-` push @{$sorted_features{$tag}},$f;`
+ my $tag = $f->primary_tag;`
+ push @{$sorted_features{$tag}},$f;`
 
 }
 
 my $panel = Bio::Graphics::Panel->new(
 
-`                                     -length    => $seq->length,`
-`                                     -key_style => \'between\',`
-`                                     -width     => 800,`
-`                                     -pad_left  => 10,`
-`                                     -pad_right => 10,`
-`                                    );`
+                                     -length    => $seq->length,`
+                                     -key_style => \'between\',`
+                                     -width     => 800,`
+                                     -pad_left  => 10,`
+                                     -pad_right => 10,`
+                                    );`
 
 $panel->add_track($wholeseq,
 
-`                 -glyph  => \'arrow\',`
-`                 -bump   => 0,`
-`                 -double => 1,`
-`                 -tick   => 2);`
+                 -glyph  => \'arrow\',`
+                 -bump   => 0,`
+                 -double => 1,`
+                 -tick   => 2);`
 
 $panel->add_track($wholeseq,
 
-`                 -glyph   => \'generic\',`
-`                 -bgcolor => \'blue\',`
-`                 -label   => 1,`
-`                );`
+                 -glyph   => \'generic\',`
+                 -bgcolor => \'blue\',`
+                 -label   => 1,`
+                );`
 
 # general case
 
 my @colors = qw(cyan orange blue purple green chartreuse magenta yellow aqua); my $idx = 0; for my $tag (sort keys %sorted_features) {
 
-` my $features = $sorted_features{$tag};`
-` $panel->add_track($features,`
-`                   -glyph       =>  \'generic\',`
-`                   -bgcolor     =>  $colors[$idx++ % @colors],`
-`                   -fgcolor     => \'black\',`
-`                   -font2color  => \'red\',`
-`                   -key         => "${tag}s",`
-`                   -bump        => +1,`
-`                   -height      => 8,`
-`                   -label       => 1,`
-`                   -description => 1,`
-`                  );`
+ my $features = $sorted_features{$tag};`
+ $panel->add_track($features,`
+                   -glyph       =>  \'generic\',`
+                   -bgcolor     =>  $colors[$idx++ % @colors],`
+                   -fgcolor     => \'black\',`
+                   -font2color  => \'red\',`
+                   -key         => "${tag}s",`
+                   -bump        => +1,`
+                   -height      => 8,`
+                   -label       => 1,`
+                   -description => 1,`
+                  );`
 
 }
 
@@ -555,35 +550,34 @@ However, it's quite easy to customize the display, making the script into a gene
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # file: embl2picture.pl
-2.  This is code example 6 in the Graphics-HOWTO
-3.  Author: Lincoln Stein
+  This is code example 6 in the Graphics-HOWTO
+  Author: Lincoln Stein
 
 use strict; use lib "$ENV{HOME}/projects/bioperl-live"; use Bio::Graphics; use Bio::SeqIO; use Bio::SeqFeature::Generic;
 
 use constant USAGE =><<END;
 Usage: $0 <file>
 
-`  Render a GenBank/EMBL entry into drawable form.`
-`  Return as a GIF or PNG image on standard output.`
-`  File must be in embl, genbank, or another SeqIO-`
-`  recognized format.  Only the first entry will be`
-`  rendered.`
+  Render a GenBank/EMBL entry into drawable form.`
+  Return as a GIF or PNG image on standard output.`
+  File must be in embl, genbank, or another SeqIO-`
+  recognized format.  Only the first entry will be`
+  rendered.`
 
 Example to try:
 
-`  embl2picture.pl factor7.embl | display -`
+  embl2picture.pl factor7.embl | display -`
 
 END
 
 my $file = shift or die USAGE; my $io = Bio::SeqIO->new(-file=>$file) or die USAGE; my $seq = $io->next_seq or die USAGE; my $wholeseq = Bio::SeqFeature::Generic->new(
 
-`                                            -start        => 1,`
-`                                            -end          => $seq->length,`
-`                                            -display_name => $seq->display_name`
-`                                           );`
+                                            -start        => 1,`
+                                            -end          => $seq->length,`
+                                            -display_name => $seq->display_name`
+                                           );`
 
 my @features = $seq->all_SeqFeatures;
 
@@ -591,67 +585,67 @@ my @features = $seq->all_SeqFeatures;
 
 my %sorted_features; for my $f (@features) {
 
-` my $tag = $f->primary_tag;`
-` push @{$sorted_features{$tag}},$f;`
+ my $tag = $f->primary_tag;`
+ push @{$sorted_features{$tag}},$f;`
 
 }
 
 my $panel = Bio::Graphics::Panel->new(
 
-`                                     -length    => $seq->length,`
-`                                     -key_style => \'between\',`
-`                                     -width     => 800,`
-`                                     -pad_left  => 10,`
-`                                     -pad_right => 10,`
-`                                    );`
+                                     -length    => $seq->length,`
+                                     -key_style => \'between\',`
+                                     -width     => 800,`
+                                     -pad_left  => 10,`
+                                     -pad_right => 10,`
+                                    );`
 
 $panel->add_track($wholeseq,
 
-`                 -glyph  => \'arrow\',`
-`                 -bump   => 0,`
-`                 -double => 1,`
-`                 -tick   => 2,`
-`                );`
+                 -glyph  => \'arrow\',`
+                 -bump   => 0,`
+                 -double => 1,`
+                 -tick   => 2,`
+                );`
 
 $panel->add_track($wholeseq,
 
-`                 -glyph   => \'generic\',`
-`                 -bgcolor => \'blue\',`
-`                 -label   => 1,`
-`                );`
+                 -glyph   => \'generic\',`
+                 -bgcolor => \'blue\',`
+                 -label   => 1,`
+                );`
 
 # special cases
 
 if ($sorted_features{CDS}) {
 
-` $panel->add_track($sorted_features{CDS},`
-`                   -glyph       => \'transcript2\',`
-`                   -bgcolor     => \'orange\',`
-`                   -fgcolor     => \'black\',`
-`                   -font2color  => \'red\',`
-`                   -key         => \'CDS\',`
-`                   -bump        =>  +1,`
-`                   -height      =>  12,`
-`                   -label       => &gene_label,`
-`                   -description => &gene_description,`
-`                  );`
-` delete $sorted_features{\'CDS\'};`
+ $panel->add_track($sorted_features{CDS},`
+                   -glyph       => \'transcript2\',`
+                   -bgcolor     => \'orange\',`
+                   -fgcolor     => \'black\',`
+                   -font2color  => \'red\',`
+                   -key         => \'CDS\',`
+                   -bump        =>  +1,`
+                   -height      =>  12,`
+                   -label       => &gene_label,`
+                   -description => &gene_description,`
+                  );`
+ delete $sorted_features{\'CDS\'};`
 
 }
 
 if ($sorted_features{tRNA}) {
 
-` $panel->add_track($sorted_features{tRNA},`
-`                   -glyph      =>  \'transcript2\',`
-`                   -bgcolor    =>  \'red\',`
-`                   -fgcolor    =>  \'black\',`
-`                   -font2color => \'red\',`
-`                   -key        => \'tRNAs\',`
-`                   -bump       =>  +1,`
-`                   -height     =>  12,`
-`                   -label      => &gene_label,`
-`                  );`
-` delete $sorted_features{tRNA};`
+ $panel->add_track($sorted_features{tRNA},`
+                   -glyph      =>  \'transcript2\',`
+                   -bgcolor    =>  \'red\',`
+                   -fgcolor    =>  \'black\',`
+                   -font2color => \'red\',`
+                   -key        => \'tRNAs\',`
+                   -bump       =>  +1,`
+                   -height     =>  12,`
+                   -label      => &gene_label,`
+                  );`
+ delete $sorted_features{tRNA};`
 
 }
 
@@ -659,17 +653,17 @@ if ($sorted_features{tRNA}) {
 
 my @colors = qw(cyan orange blue purple green chartreuse magenta yellow aqua); my $idx = 0; for my $tag (sort keys %sorted_features) {
 
-` my $features = $sorted_features{$tag};`
-` $panel->add_track($features,`
-`                   -glyph       =>  \'generic\',`
-`                   -bgcolor     =>  $colors[$idx++ % @colors],`
-`                   -fgcolor     => \'black\',`
-`                   -font2color  => \'red\',`
-`                   -key         => "${tag}s",`
-`                   -bump        => +1,`
-`                   -height      => 8,`
-`                   -description => &generic_description,`
-`                  );`
+ my $features = $sorted_features{$tag};`
+ $panel->add_track($features,`
+                   -glyph       =>  \'generic\',`
+                   -bgcolor     =>  $colors[$idx++ % @colors],`
+                   -fgcolor     => \'black\',`
+                   -font2color  => \'red\',`
+                   -key         => "${tag}s",`
+                   -bump        => +1,`
+                   -height      => 8,`
+                   -description => &generic_description,`
+                  );`
 
 }
 
@@ -677,40 +671,40 @@ print $panel->png; exit 0;
 
 sub gene_label {
 
-` my $feature = shift;`
-` my @notes;`
-` foreach (qw(product gene)) {`
-`   @notes = eval {$feature->get_tag_values($_)};`
-`   last;`
-` }`
-` $notes[0];`
+ my $feature = shift;`
+ my @notes;`
+ foreach (qw(product gene)) {`
+   @notes = eval {$feature->get_tag_values($_)};`
+   last;`
+ }`
+ $notes[0];`
 
 }
 
 sub gene_description {
 
-` my $feature = shift;`
-` my @notes;`
-` foreach (qw(note)) {`
-`   @notes = eval{$feature->get_tag_values($_)};`
-`   last;`
-` }`
-` return unless @notes;`
-` substr($notes[0],30) = \'...\' if length $notes[0] > 30;`
-` $notes[0];`
+ my $feature = shift;`
+ my @notes;`
+ foreach (qw(note)) {`
+   @notes = eval{$feature->get_tag_values($_)};`
+   last;`
+ }`
+ return unless @notes;`
+ substr($notes[0],30) = \'...\' if length $notes[0] > 30;`
+ $notes[0];`
 
 }
 
 sub generic_description {
 
-` my $feature = shift;`
-` my $description;`
-` foreach ($feature->get_all_tags) {`
-`   my @values = $feature->get_tag_values($_);`
-`  $description .= $_ eq \'note\' ? "@values" : "$_=@values; ";`
-` }`
-` $description =~ s/; $//; # get rid of last`
-` $description;`
+ my $feature = shift;`
+ my $description;`
+ foreach ($feature->get_all_tags) {`
+   my @values = $feature->get_tag_values($_);`
+  $description .= $_ eq \'note\' ? "@values" : "$_=@values; ";`
+ }`
+ $description =~ s/; $//; # get rid of last`
+ $description;`
 
 }
 
@@ -728,10 +722,10 @@ The `gene_label()` (lines 93-102) and gene_description() (lines 103-114) subrout
 
 The `generic_description()` (lines 115-124) is invoked to generate descriptions of all non-gene features. We simply concatenate together the names and values of tags. For example the entry:
 
-`  source          1..12850`
-`                  /db_xref="taxon:9606"`
-`                  /organism="Homo sapiens"`
-`                  /map="13q34"`
+  source          1..12850`
+                  /db_xref="taxon:9606"`
+                  /organism="Homo sapiens"`
+                  /map="13q34"`
 
 will be turned into the description string `"db_xref=taxon:9606; organism=Homo Sapiens; map=13q34"`
 
@@ -756,6 +750,6 @@ Finally, if you find yourself constantly tweaking the graphic options, you might
 
 Obtain the list of glyphs by running perldoc on . You can also obtain a description of the glyph options by running perldoc on individual glyphs, for example, for :
 
-`% perldoc Bio::Graphics::Glyph::arrow'`
+`% perldoc Bio::Graphics::Glyph::arrow'`
 
 

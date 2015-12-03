@@ -8,12 +8,10 @@ Abstract
 
 A detailed description of , a wrapper for creating short-read assemblies with the [Maq](http://maq.sourceforge.net/maq-man.shtml) assembler.
 
-__TOC__
-
 Author
 ------
 
-[Mark A. Jensen]
+Mark A. Jensen
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -24,22 +22,22 @@ Synopsis
 
 ```perl
 
-`# create an assembly`
-` $maq_fac = Bio::Tools::Run::Maq->new();`
-` $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\' );`
-` # paired-end `
-` $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
-` # be more strict`
-` $maq_fac->set_parameters( -c2q_min_map_quality => 60 );`
-` $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
+`# create an assembly`
+ $maq_fac = Bio::Tools::Run::Maq->new();`
+ $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\' );`
+ # paired-end `
+ $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
+ # be more strict`
+ $maq_fac->set_parameters( -c2q_min_map_quality => 60 );`
+ $maq_assy = $maq_fac->run( \'reads.fastq\', \'refseq.fas\', \'paired-reads.fastq\');`
 
-` # run maq commands separately`
-` $maq_fac = Bio::Tools::Run::Maq->new(`
-`    -command => \'pileup\',`
-`    -single_end_quality => 1 );`
-` $maq_fac->run_maq( -bfa => \'refseq.bfa\',`
-`                    -map => \'maq_assy.map\',`
-`                    -txt => \'maq_assy.pup.txt\' );`
+ # run maq commands separately`
+ $maq_fac = Bio::Tools::Run::Maq->new(`
+    -command => \'pileup\',`
+    -single_end_quality => 1 );`
+ $maq_fac->run_maq( -bfa => \'refseq.bfa\',`
+                    -map => \'maq_assy.map\',`
+                    -txt => \'maq_assy.pup.txt\' );`
 
 ```
 
@@ -77,7 +75,7 @@ The second mode is direct access to `maq` commands. To run a command, construct 
 
 ```perl
 
-`$maqfac->Bio::Tools::Run::Maq->new( -command => \'fasta2bfa\' );`
+`$maqfac->Bio::Tools::Run::Maq->new( -command => \'fasta2bfa\' );`
 
 ```
 
@@ -85,7 +83,7 @@ To execute, use the `run_maq` methods. Input and output files are specified in t
 
 ```perl
 
-`$maqfac->run_maq( -fas => "myref.fas", -bfa => "myref.bfa" );`
+`$maqfac->run_maq( -fas => "myref.fas", -bfa => "myref.bfa" );`
 
 ```
 
@@ -95,14 +93,14 @@ To execute, use the `run_maq` methods. Input and output files are specified in t
 
 ```perl
 
-`$maqfac = Bio::Tools::Run::Maq->new( -command => \'assemble\' );`
-`# all maq commands`
-`@all_commands = $maqfac->available_parameters(\'commands\'); `
-`@all_commands = $maqfac->available_commands; # alias`
-`# just for assemble`
-`@assemble_params = $maqfac->available_parameters(\'params\');`
-`@assemble_switches = $maqfac->available_parameters(\'switches\');`
-`@assemble_all_options = $maqfac->available_parameters();`
+`$maqfac = Bio::Tools::Run::Maq->new( -command => \'assemble\' );`
+`# all maq commands`
+`@all_commands = $maqfac->available_parameters(\'commands\'); `
+`@all_commands = $maqfac->available_commands; # alias`
+`# just for assemble`
+`@assemble_params = $maqfac->available_parameters(\'params\');`
+`@assemble_switches = $maqfac->available_parameters(\'switches\');`
+`@assemble_all_options = $maqfac->available_parameters();`
 
 ```
 
@@ -112,20 +110,20 @@ Options can be directed to the `map`, `assemble` and `cns2fq` components of the 
 
 ```perl
 
-`@map_params = Bio::Tools::Run::Maq->new(-command => \'map\' )->available_parameters();`
-`# returns:`
-`# adaptor_file`
-`# first_read_length`
-`# max_hits`
-`# max_mismatches`
-`# max_outer_distance`
-`# max_outer_distance_rf`
-`# mismatch_dump`
-`# mismatch_posn_dump`
-`# mismatch_thr`
-`# mutation_rate`
-`# second_read_length`
-`# unmapped_dump`
+`@map_params = Bio::Tools::Run::Maq->new(-command => \'map\' )->available_parameters();`
+`# returns:`
+`# adaptor_file`
+`# first_read_length`
+`# max_hits`
+`# max_mismatches`
+`# max_outer_distance`
+`# max_outer_distance_rf`
+`# mismatch_dump`
+`# mismatch_posn_dump`
+`# mismatch_thr`
+`# mutation_rate`
+`# second_read_length`
+`# unmapped_dump`
 
 ```
 
@@ -133,8 +131,8 @@ then in the factory construction, specify the desired parameters prefixed by `ma
 
 ```perl
 
-`$maqfac = Bio::Tools::Run::Maq->new( -map_max_mismatches => 1 );`
-`$assy = $maqfac->run( "read1.fastq", "refseq.fas" );`
+`$maqfac = Bio::Tools::Run::Maq->new( -map_max_mismatches => 1 );`
+`$assy = $maqfac->run( "read1.fastq", "refseq.fas" );`
 
 ```
 
@@ -153,9 +151,9 @@ $maqfac = Bio::Tools::Run::Maq->new( -command => 'map' ); @filespec = $maqfac->f
 This example returns the following array:
 
 `map`
-`bfa `
-`bfq1 `
-`#bfq2 `
+`bfa `
+`bfq1 `
+`#bfq2 `
 `2>#log`
 
 This indicates that map (`maq` binary mapfile), bfa (`maq` binary fasta), and bfq (`maq` binary fastq) files '''must''' be specified, another bfq file '''may''' be specified, and a log file receiving STDERR also '''may''' be specified. Use these in the `run_maq` call like so:
@@ -164,7 +162,7 @@ This indicates that map (`maq` binary mapfile), bfa (`maq` binary fasta), and bf
 
 $maqfac->run_maq( -map => 'my.map', -bfa => 'myrefseq.bfa',
 
-`                 -bfq1 => \'reads1.bfq\', -bfq2 => \'reads2.bfq\' );`
+                 -bfq1 => \'reads1.bfq\', -bfq2 => \'reads2.bfq\' );`
 
 ```
 

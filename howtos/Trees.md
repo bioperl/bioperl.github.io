@@ -48,7 +48,7 @@ The main module for reading and writing trees is the factory module which has se
 
 A newly added capability (after [1.5.2]) allows you to specify that the internal nodes id encode bootstrap values instead of IDs. Provide the ```perl -internal_node_id => 'bootstrap' ```
 
-`to `` and it will automatically move the ids over to the bootstrap slot.  This is only valid for the `[`Nexus`]` and `[`Newick` `tree` `formats`]`.  `
+`to `` and it will automatically move the ids over to the bootstrap slot.  This is only valid for the `[`Nexus`]` and `[`Newick` `tree` `formats`]`.  `
 
 An additional function was written to do this work in called `move_id_to_bootstrap` which will do this work for you as well. Call it on a object.
 
@@ -79,7 +79,7 @@ use Bio::TreeIO;
 
 my $input = new Bio::TreeIO(-file => "tree.tre",
 
-`                           -format => "newick");`
+                           -format => "newick");`
 
 my $tree = $input->next_tree;
 
@@ -95,8 +95,8 @@ use Bio::TreeIO;
 
 my $treeio = Bio::TreeIO->new(-format => 'newick', ttt -fh => \*DATA); while( my $tree = $treeio->next_tree ) {
 
-`for my $node ( $tree->get_nodes ) {`
-` printf "id: %s bootstrap: %s\`
+`for my $node ( $tree->get_nodes ) {`
+ printf "id: %s bootstrap: %s\`
 
 ", $node->id || '', $node->bootstrap || '', " ";
 
@@ -116,8 +116,8 @@ my $treeio = Bio::TreeIO->new(-format => 'newick', ttt -fh => \*DATA, ttt -inter
 
 while( $tree = $treeio->next_tree ) {
 
-`for my $node ( $tree->get_nodes ) {`
-` printf "id: %s bootstrap: %s\`
+`for my $node ( $tree->get_nodes ) {`
+ printf "id: %s bootstrap: %s\`
 
 ", $node->id || '', $node->bootstrap || '', " ";
 
@@ -136,8 +136,8 @@ use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'newick', ttt -fh => \*DATA); while( $tree = $treeio->next_tree ) {
 
 `$tree->move_id_to_bootstrap;`
-`for my $node ( $tree->get_nodes ) {`
-` printf "id: %s bootstrap: %s\`
+`for my $node ( $tree->get_nodes ) {`
+ printf "id: %s bootstrap: %s\`
 
 ", $node->id || '', $node->bootstrap || '', " ";
 
@@ -155,12 +155,12 @@ use warnings; use strict; use Bio::TreeIO; use IO::String;
 
 my $string = "(A,(B,C));"; my $io = IO::String->new($string); my $treeio = Bio::TreeIO->new(-fh => $io,
 
-`                             -format => \'newick\');`
+                             -format => \'newick\');`
 
 while( my $tree = $treeio->next_tree ) {
 
-`# get a tree`
-`print "node count is ", scalar $tree->get_nodes, "\`
+`# get a tree`
+`print "node count is ", scalar $tree->get_nodes, "\`
 
 "; }
 
@@ -209,7 +209,7 @@ If you would like to do more sophisticated searches, like "find all the nodes wi
 
 ```perl
 
-` my @nodes = grep { $_->bootstrap > 70 } $tree->get_nodes;`
+ my @nodes = grep { $_->bootstrap > 70 } $tree->get_nodes;`
 
 ```
 
@@ -236,7 +236,7 @@ To preserve the branch lengths between the children and ancestor of the removed 
 $tree->splice(-remove_id => $node->id, -preserve_lengths => 1);
 
 # or specify the Names of nodes to keep and/or remove
-2.  this will remove all nodes with an id() of '1'.
+  this will remove all nodes with an id() of '1'.
 
 $tree->splice(-remove_id => \[1, 2\], -keep_id => \[2\])
 
@@ -264,11 +264,11 @@ Perform a test of [monophyly] for a set of nodes and a given outgroup node. This
 
 if( $tree->is_monophyletic(-nodes => @internal_nodes,
 
-`                          -outgroup => $outgroup) ) {`
+                          -outgroup => $outgroup) ) {`
 
 print "these nodes are monophyletic: ",
 
-`      join(",",map { $_->id } @internal_nodes ), "\`
+      join(",",map { $_->id } @internal_nodes ), "\`
 
 "; }
 
@@ -280,9 +280,9 @@ Perform a test of [paraphyly] for a set of nodes and a given outgroup node. This
 
 if( $tree->is_paraphyletic(-nodes => @internal_nodes,
 
-`                          -outgroup => $outgroup) > 0 ) {`
-` print "these nodes are monophyletic: ",`
-`       join(",",map { $_->id } @internal_nodes ), "\`
+                          -outgroup => $outgroup) > 0 ) {`
+ print "these nodes are monophyletic: ",`
+       join(",",map { $_->id } @internal_nodes ), "\`
 
 "; }
 
@@ -293,9 +293,9 @@ Re-root a tree, specifying a different node as the root (and a different node as
 ```perl
 
 # node can either be a Leaf node in which case it becomes the
-2.  outgroup and its ancestor is the new root of the tree
-3.  or it can be an internal node which will become the new
-4.  root of the Tree
+  outgroup and its ancestor is the new root of the tree
+  or it can be an internal node which will become the new
+  root of the Tree
 
 $tree->reroot($node);
 
@@ -324,23 +324,23 @@ use Bio::TreeIO;
 
 my $treeio = Bio::TreeIO->new(-format => 'newick', ttt -fh => \*DATA); if( my $tree = $treeio->next_tree ) {
 
-`my $node = $tree->find_node(-id => \'x\');`
-`print $node->id, " each_Descendent\`
+`my $node = $tree->find_node(-id => \'x\');`
+`print $node->id, " each_Descendent\`
 
 ";
 
-`for my $child ( $node->each_Descendent ) {`
-` print $child->id, "\`
+`for my $child ( $node->each_Descendent ) {`
+ print $child->id, "\`
 
 ";
 
 `}`
-`print $node->id, " get_all_Descendents\`
+`print $node->id, " get_all_Descendents\`
 
 ";
 
-`for my $child ( $node->get_all_Descendents ) {`
-` print $child->id, "\`
+`for my $child ( $node->get_all_Descendents ) {`
+ print $child->id, "\`
 
 ";
 
@@ -366,15 +366,15 @@ use Bio::TreeIO;
 
 my $in = new Bio::TreeIO(-file => 'input',
 
-`                        -format => \'newick\');`
+                        -format => \'newick\');`
 
 my $out = new Bio::TreeIO(-file => '>mytree.svg',
 
-`                         -format => \'svggraph\');`
+                         -format => \'svggraph\');`
 
 while( my $tree = $in->next_tree ) {
 
-`   $out->write_tree($tree);`
+   $out->write_tree($tree);`
 
 }
 
@@ -394,17 +394,17 @@ my $dir = shift || '.';
 
 opendir(DIR, $dir) || die $!; for my $file ( readdir(DIR) ) {
 
-`   next unless $file =~ /(S+).tre$/;`
-`   my $stem = $1;`
-`   my $treeio = Bio::TreeIO->new(\'-format\' => \'newick\',`
-`                                 \'-file\'   => "$dir/$file");`
+   next unless $file =~ /(S+).tre$/;`
+   my $stem = $1;`
+   my $treeio = Bio::TreeIO->new(\'-format\' => \'newick\',`
+                                 \'-file\'   => "$dir/$file");`
 
-`   if( my $t1 = $treeio->next_tree ) {`
-`       my $obj1 = Bio::Tree::Draw::Cladogram->new(-bootstrap => 1,`
-`                                                  -tree    => $t1,`
-`                                                  -compact => 0);`
-`       $obj1->print(-file => "$dir/$stem.eps");`
-`   }`
+   if( my $t1 = $treeio->next_tree ) {`
+       my $obj1 = Bio::Tree::Draw::Cladogram->new(-bootstrap => 1,`
+                                                  -tree    => $t1,`
+                                                  -compact => 0);`
+       $obj1->print(-file => "$dir/$stem.eps");`
+   }`
 
 }
 
@@ -431,9 +431,9 @@ my $alnio = Bio::AlignIO->new(-file => 'filename', -format=>'clustalw'); my $dfa
 
 while( my $aln = $alnio->next_aln ) {
 
-`my $mat = $stats->distance(-method => \'Kimura\',`
-`                           -align  => $aln);`
-`my $tree = $dfactory->make_tree($mat);`
+`my $mat = $stats->distance(-method => \'Kimura\',`
+                           -align  => $aln);`
+`my $tree = $dfactory->make_tree($mat);`
 `$treeout->write_tree($tree);`
 
 }
@@ -450,10 +450,10 @@ my $alnio = Bio::AlignIO->new(-file => 'filename', -format=>'clustalw'); my $dfa
 
 while( my $aln = $alnio->next_aln ) {
 
-`my $parser = Bio::Matrix::IO->new(-format => \'phylip\',`
-`                                  -file   => \'filename.dist\');`
-`my $mat  = $parser->next_matrix;`
-`my $tree = $dfactory->make_tree($mat);`
+`my $parser = Bio::Matrix::IO->new(-format => \'phylip\',`
+                                  -file   => \'filename.dist\');`
+`my $mat  = $parser->next_matrix;`
+`my $tree = $dfactory->make_tree($mat);`
 `$treeout->write_tree($tree);`
 
 }
@@ -495,7 +495,7 @@ use Bio::TreeIO; use Bio::Tree::RandomFactory;
 
 my $out = Bio::TreeIO->new(-format => 'newick',
 
-`                          -file   => ">randomtrees.tre");`
+                          -file   => ">randomtrees.tre");`
 
 my @listoftaxa = qw(A B C D E F G H); my $factory = new Bio::Tree::RandomFactory(-taxa => @listoftaxa);
 
@@ -505,18 +505,18 @@ for( my $i = 0; $i < 10; $i++ ) {
      $out->write_tree($factory->next_tree); }
 
 # One can also just request a total number of taxa (8 here) and
-2.  not provide labels for them
-3.  In addition one can specify the total number of trees
-4.  the object should return so we can call this in a while
+  not provide labels for them
+  In addition one can specify the total number of trees
+  the object should return so we can call this in a while
 5.  loop
 
 $factory = new Bio::Tree::RandomFactory(-num_taxa => 8
 
-`                                       -max_count=> 10);`
+                                       -max_count=> 10);`
 
 while( my $tree = $factory->next_tree) {
 
-` $out->write_tree($tree);`
+ $out->write_tree($tree);`
 
 }
 
@@ -530,9 +530,9 @@ References and More Reading
 For more reading and some references for the techniques above see these titles. <biblio>
 
 # felsenstein J. Felsenstein, "Infering Phylogenies" 2003. Sinuar and Associates. D. Swoffrod, Olsen, Waddell and D. Hillis, "Phylogenetic Inference" 1996. in Mol. Systematics, 2nd ed, 1996, Ch 11.
-2.  bsa Eddy SR, Durbin R, Krogh A, Mitchison G, "Biological Sequence Analysis" 1998. Cambridge Univ Press, Cambridge, UK.
-3.  RIO pmid=12028595
-4.  SDI pmid=11590098
+  bsa Eddy SR, Durbin R, Krogh A, Mitchison G, "Biological Sequence Analysis" 1998. Cambridge Univ Press, Cambridge, UK.
+  RIO pmid=12028595
+  SDI pmid=11590098
 5.  ATV pmid=11301314
 6.  Tamura92 pmid=1630306
 7.  Kimura80 pmid=7463489

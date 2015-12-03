@@ -5,7 +5,7 @@ layout: default
 
 ### Authors
 
-[Brian Osborne], [Peter Schattner].
+Brian Osborne, Peter Schattner.
 
 ### Abstract
 
@@ -19,7 +19,7 @@ Data files storing multiple sequence alignments appear in varied formats and is 
 
 use Bio::AlignIO; my $io = Bio::AlignIO->new(-file => "receptors.aln",
 
-`                          -format => "clustalw" );`
+                         -format => "clustalw" );
 
 ```
 
@@ -48,6 +48,7 @@ If the "-format" argument isn't used then Bioperl will try and determine the for
 | XMFA      | `xmfa`                        |             |
 | arp       | `arp`                         | Arlequin    |
 
+
 The emboss format refers to the output of the water, needle, matcher, stretcher, merger, and supermatcher applications. See <http://emboss.sourceforge.net>.
 
 Unlike SeqIO cannot create output files in every format. AlignIO currently supports output in these formats:
@@ -66,23 +67,17 @@ Unlike SeqIO cannot create output files in every format. AlignIO currently suppo
 Another significant difference between and is that handles IO for only a single alignment at a time but handles IO for multiple sequences in a single stream. Syntax for AlignIO is similar to that of SeqIO:
 
 ```perl
-
 use Bio::AlignIO;
 
 $in = Bio::AlignIO->new(-file => "inputfilename" ,
-
-`                        -format => \'fasta\');`
+                       -format => 'fasta');
 
 $out = Bio::AlignIO->new(-file => ">outputfilename",
-
-`                        -format => \'pfam\');`
+                       -format => 'pfam');
 
 while ( my $aln = $in->next_aln ) {
-
-` $out->write_aln($aln); `
-
+    $out->write_aln($aln);
 }
-
 ```
 
 The returned object, `$aln`, is to a object rather than to a object.
@@ -127,16 +122,13 @@ As an alternative to Smith-Waterman, two sequences can also be aligned in Bioper
 
 ```perl
 
-$factory = Bio::Tools::Run::StandAloneBlast->new(-outfile => 'bl2seq.out'); $bl2seq_report = $factory->bl2seq($seq1, $seq2);
+$factory = Bio::Tools::Run::StandAloneBlast->new(-outfile => 'bl2seq.out');
+$bl2seq_report = $factory->bl2seq($seq1, $seq2);
 
 # Use AlignIO.pm to create a SimpleAlign object from the bl2seq report
-
 $str = Bio::AlignIO->new(-file => 'bl2seq.out',
-
-`                        -format => \'bl2seq\');`
-
+                        -format => 'bl2seq');
 $aln = $str->next_aln();
-
 ```
 
 ### Aligning multiple sequences with Clustalw.pm and TCoffee.pm
@@ -155,14 +147,14 @@ Once the factory has been created and the appropriate parameters set, one can ca
 
 use Bio::Tools::Run::Alignment::Clustalw;
 
-$factory = Bio::Tools::Run::Alignment::Clustalw->new(-matrix => 'BLOSUM'); $ktuple = 3; $factory->ktuple($ktuple); \# change the parameter before executing
+$factory = Bio::Tools::Run::Alignment::Clustalw->new(-matrix => 'BLOSUM'); 
+$ktuple = 3; 
+$factory->ktuple($ktuple);
 
 # @seq_array is an array of Bio::Seq objects
-
 $seq_array_ref = @seq_array;
 
 $aln = $factory->align($seq_array_ref);
-
 ```
 
 Clustalw.pm/TCoffee.pm can also align two (sub)alignments to each other or add a sequence to a previously created alignment by using the `profile_align()` method. For further details on the required syntax and options for the profile_align() method, the user is referred to and . The user is also encouraged to examine the script clustalw.pl in the examples/align directory.
@@ -178,22 +170,13 @@ The Bioperl Cluster and modules are available for handling sequence clusters. Co
 my $stream = Bio::ClusterIO->new(-file => "Hs.data", -format => "unigene");
 
 while ( my $in = $stream->next_cluster ) {
-
-`  print $in->unigene_id() . "\`
-
-";
-
-`  while ( my $sequence = $in->next_seq ) {`
-`     print $sequence->accession_number . "\`
-
-";
-
-`  }`
-
+    print $in->unigene_id() . "\n";
+    while ( my $sequence = $in->next_seq ) {
+        print $sequence->accession_number . "\n";
+    }
 }
-
 ```
 
-See for more details.'
+See for more details.
 
 

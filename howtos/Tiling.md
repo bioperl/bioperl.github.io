@@ -32,11 +32,13 @@ This is just the file read by [Bio::SearchIO](https://metacpan.org/pod/Bio::Sear
 
 ## Sequence _type_ ##
 
+
 An HSP involves two sequences, aligned to each other: the _query_ and the _hit_ (or _subject_). The query is often the sequence entered by the user, who is looking for matches among the subject sequences in a database. When a subject sequence matches (a portion of) the query well enough, it is reported as a hit, and the HSP describing the alignment is written to the search report. A sequence in an HSP is defined by its _type_: _query_ or _hit_ (_subject_).
 
 ## Sequence _length_ ##
 
 There are two lengths associated with each of the sequences in a given HSP: the ''aligned'' length, which is the length of the sequence (query or hit) actually involved in the HSP alignment, and the ''total'' length, which is the length of the entire sequence input by the user as a query, or the entire length of the hit sequence in the database. The distinction becomes important when calculating the fraction of a sequence successfully aligned over multiple HSPs in a search report.
+
 
 ## Coordinate _mapping_ and _conversion_ ##
 
@@ -90,6 +92,7 @@ my $result = $blio->next_result;
 
 while ($hit = $result->next_hit) {
   last if $hit->name =~ /Xenopus/;
+
 }
 
 my $tiling = Bio::Search::Tiling::MapTiling->new($hit);
@@ -166,6 +169,7 @@ sub get_the_best {
  
 # return the objects and the values
     return ($best_tiling, $best_context, $max_ident, $max_frac);
+
 }
 
 ```

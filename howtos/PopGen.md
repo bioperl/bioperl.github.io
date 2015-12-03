@@ -50,43 +50,43 @@ Although a typical user will want to obtain data for analysis from files or dire
 
 A genotype is a triple of a marker name (string), an individual id (string or int), and set of alleles (array of string). The `individual_id` field is optional as it is explicitly set when a genotype is added to and individual. We can instantiate a Genotype object by using the following code.
 
-` use Bio::PopGen::Genotype;`
-` my $genotype = Bio::PopGen::Genotype->new(-marker_name   => \'D7S123\',`
-`                                           -individual_id => \'1001\',`
-`                                           -alleles       => [\'104\',\'107\'] );`
+ use Bio::PopGen::Genotype;`
+ my $genotype = Bio::PopGen::Genotype->new(-marker_name   => \'D7S123\',`
+                                           -individual_id => \'1001\',`
+                                           -alleles       => [\'104\',\'107\'] );`
 
 To get the alleles back out from a Genotype object the `get_Alleles` method can be used. To replace alleles one must call the `reset_Alleles` and then `add_Allele` with a list of alleles to add for the genotype.
 
 This genotype object can be added to an individual object with the following code which also builds an individual with an id of '1001'.
 
-` use Bio::PopGen::Individual;`
-` my $ind = Bio::PopGen::Individual->new(-unique_id  => \'1001\',`
-`                                        -genotypes  => [$genotype] );`
+ use Bio::PopGen::Individual;`
+ my $ind = Bio::PopGen::Individual->new(-unique_id  => \'1001\',`
+                                        -genotypes  => [$genotype] );`
 
 There is no restriction on the names of markers nor is there any attempted validation that a genotype's individual_id is equal to the id of the Individual it has been associated with.
 
 Additional genotypes can be added to an individual with the `add_Genotype` method as the following code illustrates.
 
-` $ind->add_Genotype(`
-`   Bio::PopGen::Genotype->new(-alleles     => [\'102\', \'123\'],`
-`                              -marker_name => \'D17S111\')`
-` );`
+ $ind->add_Genotype(`
+   Bio::PopGen::Genotype->new(-alleles     => [\'102\', \'123\'],`
+                              -marker_name => \'D17S111\')`
+ );`
 
 A population is a collecion of individuals and can be instantiated with all the individuals at once or individuals can be added to the object after it has been created.
 
-` use Bio::PopGen::Population;`
-` my $pop = Bio::PopGen::Population->new(-name        => \'pop name\',`
-`                                        -description => \'description\',`
-`                                        -individuals => [$ind] );`
-` # add another individual later on`
-` $pop->add_Inidividual($ind2);`
+ use Bio::PopGen::Population;`
+ my $pop = Bio::PopGen::Population->new(-name        => \'pop name\',`
+                                        -description => \'description\',`
+                                        -individuals => [$ind] );`
+ # add another individual later on`
+ $pop->add_Inidividual($ind2);`
 
 Using these basic operations one can create a Population of individuals. objects are intended to provide summary of information about the markers stored for all the individuals.
 
 Typically it is expected that all individuals will have a genotype associated for all the possible markers in the population. For cases where no genotype information is available for an individual empty or blank alleles can be stored. This is necessary for consistency when running some tests on the population but these blank alleles do not get counted when evaluating the number of alleles, etc. Blank alleles can be coded as a dash ('-'), as a blank or empty (' ', or ''), or as missing '?'. The 'N' allele is also considered a blank allele. The regexp used to test if an allele is blank is stored in the as the package variable `$BlankAlleles`. The following code resets the blank allele pattern to additionally match '.' as a blank allele. This code should go '''before''' any code that calls the `get_Alleles` method in .
 
-`   use Bio::PopGen::Genotype;`
-`   $Bio::PopGen::Genotype::BlankAlleles = \'[s-N?.]\';`
+   use Bio::PopGen::Genotype;`
+   $Bio::PopGen::Genotype::BlankAlleles = \'[s-N?.]\';`
 
 is a simple object to represent polymorphism regions of the genome.
 
@@ -99,9 +99,9 @@ Typically one wants to get population data from a datafile.
 
 The [CSV] format is a comma delimited format where each row is for an individual. The first column gives the individual or sample id and the rest of the columns are the alleles for the individual for each marker. The names of the markers in these rows are listed in the header or which is the very first line of the file.
 
-`    SAMPLE,D17S1111,D7S123`
-`    1001,102 123,104 107`
-`    1002,105 123,104 111`
+    SAMPLE,D17S1111,D7S123`
+    1001,102 123,104 107`
+    1002,105 123,104 111`
 
 To read in this CSV we use the object and specify the `csv` format. We can call `next_individual` repeated times to get back a list of the individuals (one is returned after each time the iterator is called). Additionally the next_population is a convience method which will read in all the individuals at once and create a new object containing all of thse individuals. The CSV format assumes that ',' is the delimiter between columns while 's+' is the delimiter between alleles. One can override these settings by providing the `-field_delimiter` and `-allele_delimited` argument to when instantiating. Additionally a flag called `-no_header` can be supplied which specifies there is no header line in the report and that the object should assign arbitrary marker names in the form 'Marker1', 'Marker2' ... etc.
 
@@ -120,23 +120,23 @@ Often one doesn't already have data in [SNP] format but want to determine the po
 
 The modules to parse alignments are part of the system. To parse a [Clustalw] or clustalw-like output one uses the following code to get an alignment which is a object.
 
-` use Bio::AlignIO;`
-` my $in = Bio::AlignIO->new(-format => \'clustalw\', -file => \'file.aln\');`
-` my $aln;`
-` if( $aln = $in->next_aln ) { # we use the while( $aln = $in->next_aln ) {}`
-`                              # code to process multi-aln files`
-`         # $aln is-a Bio::SimpleAlign object`
-` }`
+ use Bio::AlignIO;`
+ my $in = Bio::AlignIO->new(-format => \'clustalw\', -file => \'file.aln\');`
+ my $aln;`
+ if( $aln = $in->next_aln ) { # we use the while( $aln = $in->next_aln ) {}`
+                              # code to process multi-aln files`
+         # $aln is-a Bio::SimpleAlign object`
+ }`
 
 The object has methods for turning a Bio::SimpleAlign object into a object. Each polymorphic column is considered a Marker and as assigned a number from left to right. By default only sites which are polymorphic are returned but it is possible to also get the monomorphic sites by specifying `-include_monomorphic => 1` as an argument to the function. The method is called as follows.
 
-` use Bio::PopGen::Utilities;`
-` # get a population object from an alignment`
-` my $pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln);`
-` # to include monomorphic sites (so every site in the alignment basically)`
-` my $pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln,`
-`                                                     -include_monomorphic =>1);`
-` `
+ use Bio::PopGen::Utilities;`
+ # get a population object from an alignment`
+ my $pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln);`
+ # to include monomorphic sites (so every site in the alignment basically)`
+ my $pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln,`
+                                                     -include_monomorphic =>1);`
+ `
 
 In the future it will be possible to just ask for the sites which are [synonymous and non-synonymous] if one can assume the first sequence is the reference sequence and that the sequence only contains coding sequences.
 
@@ -243,12 +243,12 @@ Population Statistics using Bio::PopGen::PopStats
 
 Wright's F\[st\] can be calculated for populations using the Fst method in :
 
-` use Bio::PopGen::PopStats;`
-` #`
-` #  @populations - the sets of Bio::PopGen::Population objects`
-` #  @markernames - set of Marker names to use in this analysis`
-` #`
-` my $fst = $stats->Fst(@populations,@markernames);`
+ use Bio::PopGen::PopStats;`
+ #`
+ #  @populations - the sets of Bio::PopGen::Population objects`
+ #  @markernames - set of Marker names to use in this analysis`
+ #`
+ my $fst = $stats->Fst(@populations,@markernames);`
 
 Coalescent Simulations
 ----------------------
@@ -307,9 +307,9 @@ Bibliography
 <biblio>
 
 # perlymorphism pmid=15356276
-2.  hahn2004 pmid=15238535
-3.  rockman2003 pmid=14654003
-4.  hahn2002_HeterogeneityTest pmid=12019219
+  hahn2004 pmid=15238535
+  rockman2003 pmid=14654003
+  hahn2002_HeterogeneityTest pmid=12019219
 5.  paml pmid=9367129
 
 </biblio>'

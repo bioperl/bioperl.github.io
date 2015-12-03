@@ -5,7 +5,7 @@ layout: default
 
 ### Authors
 
-[Peter Schattner], [Jason Stajich], [Heikki Lehvaslaiho], [Brian Osborne], [Hilmar Lapp], [Chris Dagdigian], [Elia Stupka], [Ewan Birney].
+Peter Schattner, Jason Stajich, Heikki Lehvaslaiho, Brian Osborne, Hilmar Lapp, Chris Dagdigian, Elia Stupka, Ewan Birney.
 
 ### Abstract
 
@@ -35,11 +35,11 @@ my $six_cutter_collection = $all_collection->cutters(6);
 
 for my $enz ($six_cutter_collection->each_enzyme() ) {
 
-`  print $enz->name,"t",$enz->site,"t",$enz->overhang_seq,"\`
+  print $enz->name,"t",$enz->site,"t",$enz->overhang_seq,"\`
 
 ";
 
-`  # prints name, recognition site, overhang`
+  # prints name, recognition site, overhang`
 
 }
 
@@ -61,9 +61,9 @@ my $ecori_enzyme = $all_collection->get_enzyme('EcoRI');
 
 my $seq = Bio::PrimarySeq->new
 
-`     (-seq =>\'AGCTTAATTCATTAGCTCTGACTGCAACGGGCAATATGTCTC\',`
-`      -primary_id => \'synopsis\',`
-`      -molecule => \'dna\');`
+     (-seq =>\'AGCTTAATTCATTAGCTCTGACTGCAACGGGCAATATGTCTC\',`
+      -primary_id => \'synopsis\',`
+      -molecule => \'dna\');`
 
 my $ra = Bio::Restriction::Analysis->new(-seq=>$seq);
 
@@ -77,7 +77,7 @@ my $all_cutters = $ra->cutters;
 
 foreach my $enz ( $all_cutters->each_enzyme ) {
 
-`     @fragments = $ra->fragments($enz);`
+     @fragments = $ra->fragments($enz);`
 
 }
 
@@ -93,7 +93,7 @@ use Bio::Restriction::IO;
 
 my $re_io = Bio::Restriction::IO->new(-file => $file,
 
-`                                     -format=> \'withrefm\');`
+                                     -format=> \'withrefm\');`
 
 my $rebase_collection = $re_io->read;
 
@@ -109,7 +109,7 @@ You can also create your own enzymes, like this:
 
 my $re = new Bio::Restriction::Enzyme(-enzyme => 'BioRI',
 
-`                                     -seq => \'GG^AATTCC\');`
+                                     -seq => \'GG^AATTCC\');`
 
 ```
 

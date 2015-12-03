@@ -6,7 +6,7 @@ layout: default
 Author
 ------
 
-[Richard Adams] <[mailto:radams-at-staffmail.ed.ac.uk radams-at-staffmail.ed.ac.uk]>
+Richard Adams <[mailto:radams-at-staffmail.ed.ac.uk radams-at-staffmail.ed.ac.uk]>
 
 Dept. Medical Genetics, University of Edinburgh.
 
@@ -70,9 +70,9 @@ The script below runs multiple analyses on a single sequence and parses the resu
 
 The above script runs several analyses using default parameters. All analyses have such defaults and in general only a sequence of the appropriate type is needed for the analysis to be submitted. A sequence can be added either in the constructor, as shown above, or by the `seq()` method.
 
-`    my $primary_seq = new Bio::PrimarySeq(-seq=>$seq_as_string);`
-`    my $tool =  new Bio::Tools::Analysis::Protein::NetPhos();`
-`    $tool->seq($primary_seq);`
+    my $primary_seq = new Bio::PrimarySeq(-seq=>$seq_as_string);`
+    my $tool =  new Bio::Tools::Analysis::Protein::NetPhos();`
+    $tool->seq($primary_seq);`
 
 Note that the only valid sequence format is a object. This is in order to support multiple methods of retrieving the results. If you initially have a object or object (e.g., from a [GenBank sequence format]) you can call its `primary_seq()` method to obtain a object.
 
@@ -81,18 +81,18 @@ Retrieving results
 
 If the `run()` method executes successfully, the raw output (stripped of [HTML]) is now stored in the Analysis object. All modules should return the raw report by a call to `result()` with no parameters. e.g.,
 
-`    my $raw_report = $tool->result();`
+    my $raw_report = $tool->result();`
 
 A second way is to retrieve a ready-parsed data structure:
 
-`    my $parsed_report = $tool->result(\'parsed\');`
+    my $parsed_report = $tool->result(\'parsed\');`
 
 The data structure returned is described in the `$RESULT_SPEC->{\'raw\'}` hash reference and should always be a native Perl data structure.
 
 A third way is to retrieve an array of sequence features:
 
-`    my @fts = $tool->result(\'Bio::SeqFeatureI\');`
-`    $seq->add_SeqFeature(@fts); # add features to sequence.`
+    my @fts = $tool->result(\'Bio::SeqFeatureI\');`
+    $seq->add_SeqFeature(@fts); # add features to sequence.`
 
 These are features. Sometimes a module might use some code to judge the significance of a result prior to listing it as a feature, for example in the secondary structure prediction modules. The rules governing this are described in individual modules. For example, I have put in a rule that only runs of a minimum of 4 consecutive residues predicted to be [beta sheet] or [alpha helix] can be annotated as features - it makes no sense for a single isolated residue to be annotated as being in a helix. However you might want to filter the raw results yourself, in which case retrieving the results as type objects might be better.
 
@@ -101,15 +101,15 @@ Metasequences
 
 Many analyses produce a list of scores, one for each residue in a sequence. For example, the protein [secondary structure] prediction program Sopma returns a list of probabilities for each residue being in helix, sheet, turn or coil. These modules make this data available in the form of meta sequences. These are sequence objects derived from that have arrays of sequence associated data contained in the object. The meta sequence names should be listed in the individual module documentation. To retrieve results like this supply the string `\'meta\'` as a parameter to the `result()` method. Meta sequence objects can access all the object methods for accessing and manipulating the protein/DNA sequence and also have specific methods for accessing the result data.
 
-`    $meta_seq = $analysis->result(\'meta\');`
+    $meta_seq = $analysis->result(\'meta\');`
 
 This returns a sequence object with the raw analysis data accessible through methods e.g.,
 
-`    my @scores1_20 = $meta_seq->named_sub_meta(\'Sopma_turn\', 1,20);`
+    my @scores1_20 = $meta_seq->named_sub_meta(\'Sopma_turn\', 1,20);`
 
 returns an array of scores for the first 20 [amino acids].
 
-`    my @allscores = $meta_seq->named_meta(\'Sopma_turn\');`
+    my @allscores = $meta_seq->named_meta(\'Sopma_turn\');`
 
 returns an array of scores for the whole sequence. The names of individual meta sequence names are listed in the module documentation.
 
@@ -120,8 +120,8 @@ How to run the same analysis with varying parameters
 
 You might want to run some analyses with varying parameters in order to determine the effect on the prediction. At present only the Sopma module takes alternative parameters i.e. arguments other than just the sequence. Any parameter that is settable on the web form should have a method of the same name to get/set its values, or alternatively it can be set in the constructor.
 
-`    my $sopma = Bio::Tools::Analysis::Protein::Sopma->new();`
-`    $sopma->seq(seqobj->primary_seq);`
+    my $sopma = Bio::Tools::Analysis::Protein::Sopma->new();`
+    $sopma->seq(seqobj->primary_seq);`
 
 So, let's suppose we want to investigate how varying the window_width parameter affects the secondary structure prediction for a sequence. We can do this inthe following manner:
 
@@ -174,8 +174,8 @@ Most of the hard work is done by and . Any module must inherit from this latter 
 For a minimal prediction server which takes just sequence as a parameter (e.g., [Domcut](http://www.bork.embl-heidelberg.de/~suyama/domcut/)), only three methods need to be explicitly written:
 
 # `_run()` which mimics the web form, submits the sequence and extracts the raw text data of the result from the HTML.
-2.  `result()` which parses the raw data into whatever useful format you wish. Usually these include SeqFeature objects, standard Perl data structures and meta sequences if there is a result for each residue in the sequence.
-3.  `_init()` which imports the analysis specifications into the Analysis object
+  `result()` which parses the raw data into whatever useful format you wish. Usually these include SeqFeature objects, standard Perl data structures and meta sequences if there is a result for each residue in the sequence.
+  `_init()` which imports the analysis specifications into the Analysis object
 
 As well as these methods, various file scoped lexical hashes need to be defined which hold constant data about the analysis, and the analysis result. These are useful for reference and are incorporated into the analysis objects.
 
@@ -186,6 +186,6 @@ Alternatively, mail me with your suggestion and I'll try to put one together. It
 Acknowledgments
 ---------------
 
-These modules depend on several recently developed modules and wouldn't work at all without them: modules by [Chad Matsalla], [Aaron Mackey] and [Heikki Lehvxc3xa4slaiho], by [Heikki Lehvxc3xa4slaiho], and Bio::SimpleAnalysisI by [Martin Senger].'
+These modules depend on several recently developed modules and wouldn't work at all without them: modules by Chad Matsalla, Aaron Mackey and [Heikki Lehvxc3xa4slaiho], by [Heikki Lehvxc3xa4slaiho], and Bio::SimpleAnalysisI by Martin Senger.'
 
 
