@@ -6,7 +6,7 @@ layout: default
 Author
 ------
 
-[Torsten Seemann] <[mailto:torsten.seemann-at-infotech-monash-edu-au torsten.seemann-at-infotech-monash-edu-au]>
+Torsten Seemann [mailto:torsten.seemann-at-infotech-monash-edu-au torsten.seemann-at-infotech-monash-edu-au]
 
 [Victorian Bioinformatics Consortium](http://www.vicbioinformatics.com), [Monash University](http://www.monash.edu.au/), Australia.
 

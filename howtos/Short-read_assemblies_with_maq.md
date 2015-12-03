@@ -8,12 +8,10 @@ Abstract
 
 A detailed description of , a wrapper for creating short-read assemblies with the [Maq](http://maq.sourceforge.net/maq-man.shtml) assembler.
 
-__TOC__
-
 Author
 ------
 
-[Mark A. Jensen]
+Mark A. Jensen
 
 [Fortinbras Research](http://fortinbras.us)
 

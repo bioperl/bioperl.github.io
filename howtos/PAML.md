@@ -9,8 +9,8 @@ About this Document
 Authors
 -------
 
--   [Aaron Mackey], [University of Virginia](http://www.virginia.edu), <amackey-at-virginia.edu> (present address [University of Pennsylvania](http://www.upenn.edu))
--   [Jason Stajich], [Duke University](http://www.duke.edu), <jason-at-bioperl.org>
+-   Aaron Mackey, [University of Virginia](http://www.virginia.edu), <amackey-at-virginia.edu> (present address [University of Pennsylvania](http://www.upenn.edu))
+-   Jason Stajich, Duke University(http://www.duke.edu), <jason-at-bioperl.org>
 
 Copyright
 ---------

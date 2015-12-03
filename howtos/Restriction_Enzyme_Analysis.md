@@ -5,7 +5,7 @@ layout: default
 
 ### Authors
 
-[Peter Schattner], [Jason Stajich], [Heikki Lehvaslaiho], [Brian Osborne], [Hilmar Lapp], [Chris Dagdigian], [Elia Stupka], [Ewan Birney].
+Peter Schattner, Jason Stajich, Heikki Lehvaslaiho, Brian Osborne, Hilmar Lapp, Chris Dagdigian, Elia Stupka, Ewan Birney.
 
 ### Abstract
 

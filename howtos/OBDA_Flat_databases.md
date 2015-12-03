@@ -11,8 +11,8 @@ The Open Biological Database Access ([OBDA](http://obda.open-bio.org)) standard 
 Authors
 -------
 
--   [Lincoln Stein] <[mailto:lstein-at-cshl.org stein at cshl.org]>
--   [Brian Osborne] <[mailto:briano@bioteam.net briano at bioteam.net]>
+-   Lincoln Stein <[mailto:lstein-at-cshl.org stein at cshl.org]>
+-   Brian Osborne <[mailto:briano@bioteam.net briano at bioteam.net]>
 -   [Heikki Lehvxc3xa4slaiho] <[mailto:heikki-at-ebi.co.uk heikki at ebi.co.uk]>
 
 Copyright
@@ -42,17 +42,14 @@ There are four steps to creating a database:
 1. Select a Root Directory  
 Select a directory in which the flat file indexes will be stored. This directory should be writable by you, and readable by everyone who will be running applications that access the sequence data.
 
-<!-- -->
 
 2. Move the Flat Files Into a Good Location  
 The indexer records the path to the source files (e.g. [FASTA], or local copies of [GenBank], [EMBL] or [SwissProt]). This means that you must not change the location or name of the source files after running the indexer. Pick a good stable location for the source files and move them there.
 
-<!-- -->
 
 3. Choose a Symbolic Name for the Database  
 Choose a good symbolic name for the database. For example, if you are mirroring GenBank, "`genbank`" might be a good choice. The indexer will create files in a subdirectory by this name located underneath the root directory.
 
-<!-- -->
 
 4. Run the `bioflat_index.pl` Script  
 The final step is to run the `bioflat_index.PLS` script. This script is located in the [BioPerl] distribution, under `scripts/DB`. For convenience, you are offered the option to copy it to `/usr/bin` or another system-wide directory on "`make install`" (and its name will be changed to `bioflat_index.pl`).
@@ -79,21 +76,17 @@ The following command line options are required:
 
 -   The '''-c''' option must be present to create the database. If the database already exists, -c will reinitialize the index, wiping out its current contents.
 
-<!-- -->
 
 -   The '''-l''' option specifies the root directory for the database indexes.
 
-<!-- -->
 
 -   The '''-d''' option chooses the symbolic name for the new database. If the -c option is specified, this will cause a new directory to be created underneath the root directory.
 
-<!-- -->
 
 -   The '''-i''' option selects the indexing scheme. Currently there are two indexing schemes supported: "bdb" and "flat".
     -   "'''bdb'''" selects an index based on the Berkeley DB library. It is generally the faster of the two, but it requires that the Berkeley DB library (from Linux RPM or from [Oracle](http://www.oracle.com), version 2 or higher) and the Perl module be installed on your system. '''The Perl module will not work'''!
     -   "'''flat'''" is a sorted text-based index that uses a binary search algorithm to rapidly search for entries. Although not as fast as bdb, the flat indexing system has good performance for even large databases, and it has no requirements beyond [Perl] itself. The disadvantage of "flat" is that the indexing of large databases will be slower and more memory-intensive than the indexing using "bdb". Once an indexing scheme has been selected there is no way to change it other than recreating the index from scratch using the -c option.
 
-<!-- -->
 
 -   The '''-f''' option specifies the format of the source database files. It must be one of the many formats that BioPerl supports, including "genbank", "swiss", "embl" or "fasta". Consult the documentation for the complete list. All files placed in the index must share the same format.
 

@@ -11,16 +11,16 @@ This is a HOWTO that explains how to set up and use the [Open Biological Databas
 Authors
 -------
 
--   [Aaron Mackey] - [amackey at virginia.edu](mailto:amackey-at-virginia.edu)
--   [Brian Osborne] - [briano at bioteam.net](mailto:briano@bioteam.net)
+-   Aaron Mackey - [amackey at virginia.edu](mailto:amackey-at-virginia.edu)
+-   Brian Osborne - [briano at bioteam.net](mailto:briano@bioteam.net)
 -   Peter Schattner - [schattner at alum.mit.edu](mailto:schattner-at-alum.mit.edu)
--   [Heikki Lehvaslaiho] - [heikki at bioperl.org](mailto:heikki-at-bioperl-dot-org)
--   [Lincoln Stein] - [lstein at cshl.org](mailto:lstein-at-cshl.org)
+-   Heikki Lehvaslaiho - [heikki at bioperl.org](mailto:heikki-at-bioperl-dot-org)
+-   Lincoln Stein - [lstein at cshl.org](mailto:lstein-at-cshl.org)
 
 Copyright
 ---------
 
-This document is copyright [Lincoln Stein], 2002. For reproduction other than personal use please contact lstein at cshl.org
+This document is copyright Lincoln Stein, 2002. For reproduction other than personal use please contact lstein at cshl.org
 
 Introduction
 ------------
@@ -100,12 +100,10 @@ The protocol tag specifies what access mode to use. Currently it can be one of:
 flat  
 used to fetch sequences from local flat files that have been indexed using [BerkeleyDB] or binary search indexing.
 
-<!-- -->
 
 biofetch  
 used to fetch sequences from web-based databses. Due to restrictions on the use of these databases, this is recommended only for lightweight applications.
 
-<!-- -->
 
 biosql  
 fetches sequences from [BioSQL] databases. To use this module you will need to have an instantiated relational database conforming to the [BioSQL] schema, and install the [bioperl-db] distribution.
@@ -146,7 +144,6 @@ If you are using the biofetch protocol, you're all set. You can start reading se
 
 -   flat protocol: [Flat Databases HOWTO]
 
-<!-- -->
 
 -   biosql protocol: [BioSQL] INSTALL (from the [BioSQL] package, available at <http://obda.open-bio.org/> . Download the [BioSQL] tar file to view all the documentation.
 

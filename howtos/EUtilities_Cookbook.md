@@ -10,9 +10,9 @@ Also see the [EUtilities Web Service HOWTO].
 Authors
 =======
 
-[Chris Fields]
+Chris Fields
 
-[Brian Osborne]
+Brian Osborne
 
 Simple examples
 ===============

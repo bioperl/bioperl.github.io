@@ -10,7 +10,6 @@ A detailed description of the namespace, including how-tos for the application o
 
 [Quick Link] to user tips.
 
-__TOC__
 
 Why Tile?
 ---------
@@ -28,33 +27,26 @@ Key Organizing Concepts
 
 ''Search report'' : This is just the file read by , which can come in many flavors. The flavor is the ''algorithm'', and '''not''' the ''format'' specified to `Bio::SearchIO::new()`. ''Algorithms'' are, e.g., BLASTX, BLASTN, TBLASTX, and so on.  
 
-<!-- -->
 
 Sequence ''type'' : An HSP involves two sequences, aligned to each other: the ''query'' and the ''hit'' (or ''subject''). The query is often the sequence entered by the user, who is looking for matches among the subject sequences in a database. When a subject sequence matches (a portion of) the query well enough, it is reported as a hit, and the HSP describing the alignment is written to the search report. A sequence in an HSP is defined by its ''type'': ''query'' or ''hit'' (''subject'').  
 
-<!-- -->
 
 Sequence ''length'' : There are two lengths associated with each of the sequences in a given HSP: the ''aligned'' length, which is the length of the sequence (query or hit) actually involved in the HSP alignment, and the ''total'' length, which is the length of the entire sequence input by the user as a query, or the entire length of the hit sequence in the database. The distinction becomes important when calculating the fraction of a sequence successfully aligned over multiple HSPs in a search report.  
 
-<!-- -->
 
 Coordinate ''mapping'' and ''conversion'' : These are concepts to help handle what has been the hardest part to get right in tiling. When aligning amino acid queries to amino acid subjects, or nucleotide queries to nucleotide subjects, there's no problem. The difficulties crop up when nucleotides are translated into amino acids, which are then aligned to protein (amino acid) or translated nucleotide databases.  
 
-<!-- -->
 
   
 There is a convention in BLAST search reports; the trick is to work it out, and code within it as transparently as possible. There is one more concept to get us through, that of ''reported'' vs. ''enumerated'' coordinates. ''Coordinates'' are just the numbers that represent the position of a residue in a sequence fragment. The reported coordinate of a residue, then, is a number ''given or deduced from the coordinate or length numbers contained in a search report''. An enumerated coordinate is a number calculated by ''measuring a string of symbols in a sequence'' parsed from a search report. The convention is: when a sequence is given as translated nucleotides (query sequences in BLASTX, subject sequences in TBLASTN, and both in TBLASTX), the reported coordinates count nucleotides, but the sequence symbols represent amino acids, so that 1 enumerated residue = 3 reported residues, for the translated sequence type, in a given search report.
 
-<!-- -->
 
   
 The ''mapping coefficient'' or ''mapping'' of a sequence type for a given report is either 1 for raw amino acids or untranslated nucleotides, or 3 for translated nucleotides. We don't hard code 3s everywhere, however, but attempt to make the mapping idea as general as possible. Because, who knows?
 
-<!-- -->
 
 The ''context'' of a sequence type in an HSP : Either the plus or the minus strand of a nucleotide sequence can be involved in an alignment. When translated nucleotides are involved, then the translation frame must also be specified. Several algorithms automatically attempt to match both strands and all translations frames of query and/or subject sequences, so that search reports will contain HSPs involving different strand/frame ''contexts'' for the query and/or hit. Tiling HSPs onto a sequence type makes sense only if the HSPs share the same context for that type. `MapTiling` therefore provides methods for convenient context bookkeeping, and insists on the specification of strand/frame context when operating on search reports that require it.  
 
-<!-- -->
 
 The ''action'' of a method : There are several ways to assess the global "goodness" of a search: for example, the maximum number of identities over all tilings, or the average fraction identical over all HSPs in a given context. The ''action'' of a `MapTiling` stats method is just the descriptive string that selects the algorithm used to calculate the desired statistic. I used "action" in order to avoid using "method", which I like to reserve for its coding connotation.   
 
@@ -164,7 +156,6 @@ tmy $tiling = Bio::Search::Tiling::MapTiling->new($hit); tmy $ident = $tiling->i
 # now, have the hit providing the most identities against the query
   search the contexts in the \*subject\* sequences
 
-<!-- -->
 
 # initialize
 
@@ -281,7 +272,6 @@ The global statistics are calculated by summing quantities over the disjoint com
 
 -   '''''exact''''' counts characters in the appropriate segment of HSPs "homology string" (that's the one between the subject and query with the symbols)
 
-<!-- -->
 
 -   '''''est''''' will estimate the statistics by multiplying the fraction of the HSP overlapped by the tiling components by the BLAST-reported identities/postives (this may be convenient for BLAST summary report formats)
 
@@ -289,7 +279,6 @@ The global statistics are calculated by summing quantities over the disjoint com
 
 -   '''''max''''' uses the exact method to calculate the statistics, but returns only the maximum identites/positives over overlapping HSPs for the component interval. No averaging is involved here.
 
-<!-- -->
 
 -   '''''fast''''' doesn't involve tiling at all and uses only reported values, and so does not require sequence data. It calculates an average of reported identities, conserved sites, and lengths, over unmodified hsps in the hit, weighted by the length of the hsps.
 

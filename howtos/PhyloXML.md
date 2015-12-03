@@ -6,7 +6,7 @@ layout: default
 Author
 ------
 
-[Mira Han], [Indiana University](http://informatics.indiana.edu). <mirhan-at-indiana.edu>
+Mira Han, Indiana University(http://informatics.indiana.edu). <mirhan-at-indiana.edu>
 
 Abstract
 --------

@@ -15,7 +15,7 @@ Cold Spring Harbor Laboratory
 Copyright
 ---------
 
-This document is copyright [Lincoln Stein], 2007. It can be copied and distributed under the terms of the [Perl Artistic License].
+This document is copyright Lincoln Stein, 2007. It can be copied and distributed under the terms of the [Perl Artistic License].
 
 Revision History
 ----------------
@@ -23,7 +23,7 @@ Revision History
 |                                                                   |                  |
 |-------------------------------------------------------------------|------------------|
 | 2007-01-15                                                        | Revision History |
-| Revision 0.1 [Lincoln Stein] 2007-05-15 | Created document |
+| Revision 0.1 Lincoln Stein 2007-05-15 | Created document |
 
 Abstract
 --------
@@ -232,97 +232,78 @@ Here are the most common methods that can be called by glyphs to get information
 $feature = $self->feature  
 Get the feature associated with this glyph. For nested glyphs (subglyphs within a complex multipart feature), this returns the corresponding subfeature.
 
-<!-- -->
 
 $value = $self->option('option_name')  
 Get the value associated with '''-option_name'''. This is the main way of retrieving options passed to add_track().
 
-<!-- -->
 
 $color = $self->bgcolor  
 Return the background color of the glyph as a GD color index.
 
-<!-- -->
 
 $color = $self->fgcolor  
 Return the foreground color of the glyph as a GD color index.
 
-<!-- -->
 
 $color = $self->color('option_name')  
 Transform the value of option ''option_name'' into a GD color index.
 
-<!-- -->
 
 ($left,$top,$right,$bottom) = $self->bounds($dx,$dy)  
 Return the bounding box of the glyph.
 
-<!-- -->
 
 $height = $self->height  
 Return the height of the glyph contents
 
-<!-- -->
 
 $width = $self->width  
 Return the width of the glyph contents
 
-<!-- -->
 
 $font = $self->font  
 Return the requested font for the glyph in a form that can be passed to GD string-drawing routines.
 
-<!-- -->
 
 $scale = $self->scale  
 Return the scale for the glyph, in pixels per base pair
 
-<!-- -->
 
 $label = $self->label  
 Return the label for the glyph as a string. (method added by ''generic'')
 
-<!-- -->
 
 $description = $self->description  
 Return the description for the glyph as a string. (method added by ''generic'')
 
-<!-- -->
 
 $self->filled_box($gd,$left,$top,$right,$bottom \[,$fg,$bg,$width\])  
 Draw a filled rectangle at the indicated coordinates. The foreground,background and line widths are all calculated from standard options, but you can override them if you provide values.
 
-<!-- -->
 
 $self->unfilled_box($gd,$left,$top,$right,$bottom \[,$fg,$bg,$width\])  
 Draw a unfilled (hollow) rectangle at the indicated coordinates. The foreground,background and line widths are all calculated from standard options, but you can override them if you provide values.
 
-<!-- -->
 
 $self->filled_oval($gd,$left,$top,$right,$bottom \[,$fg,$bg,$width\])  
 Draw a filled oval inscribed by the indicated rectangle. The foreground,background and line widths are all calculated from standard options, but you can override them if you provide values.
 
-<!-- -->
 
 $self->unfilled_oval($gd,$left,$top,$right,$bottom \[,$fg,$bg,$width\])  
 Draw a unfilled (hollow) oval inscribed by the indicated rectangle. The foreground,background and line widths are all calculated from standard options, but you can override them if you provide values.
 
-<!-- -->
 
 $self->filled_arrow($gd,$left,$top,$right,$bottom \[,$fg,$bg\])  
 Draw a rectangle tapering to an arrow. The arrow direction depends on the strandedness of the underlying feature.
 
-<!-- -->
 
 $self->arrow($gd,$x1,$x2,$y)  
 Draw a simple (line) arrow extending from horizontal position $x1 to position $x2 along vertical position $y. If $x2>$x1 then it draws a right-pointing arrow, otherwise a left-pointing arrow. (method added by ''generic'').
 
-<!-- -->
 
 @parts = $self->parts  
 For glyphs that contain complex features, each subfeature is represented as a subglyph. parts() returns the subglyphs. You can invoke this method when you need to find out how many parts the glyph has.
 
-<!-- -->
 
 $level = $self->level  
 When a glyph has subparts, it is important to distinguish the top level glyph from its subparts. level() allows you to do this. It returns 0 for the top level glyph, 1 for it subparts, 2 for the subparts of the subparts, and so forth.
@@ -334,17 +315,14 @@ Here are the methods most commonly redefined by glyph subclasses.
 $self->draw_component($gd,$dx,$dy,$partno,$total_parts)  
 Draw part of a glyph. For simple glyphs descended from Bio::Graphics::Glyph::box, this method will be called only once. For multipart glyphs descended from Bio::Graphics::Glyph::segments or Bio::Graphics::Glyph::generic, this method will be called once for each subpart of the glyph. $gd is the GD object, and ($dx,$dy) are offsets from the topleft corner of the track. Ordinarily you will pass ($dx,$dy) to `$self->bounds()` to get the bounds box of the content. For multipart glyphs, $partno and $total_parts indicate which number part this is (counting from the left, starting with part number 0) and how many parts total there are. Usually you can ignore this information.
 
-<!-- -->
 
 $self->pad_left, $self->pad_right, $self->pad_top,$self->pad_bottom  
 Some glyphs will want to draw decoration outside the bounds box. If they do so, they will need to let Bio::Graphics know how much extra padding they need so that glyphs do not collide.
 
-<!-- -->
 
 $self->maxdepth  
 The maxdepth() method provides Bio::Graphics with information about how deeply to step into subfeatures. Returning 0 tells Bio::Graphics that this glyph doesn't want to step into subfeatures. Returning 1 tells Bio::Graphics to step into one level of glyphs and so forth. This is a big performance win. generic steps into 1 level of subparts, box steps into 0 level of subparts, and segments steps into multiple levels. Each of these base classes respects the -maxdepth option, and lets it overrides their default.
 
-<!-- -->
 
 $self->draw($gd,$dx,$dy)  
 When Bio::Graphics invokes a glyph to draw itself, it actually calls Bio::Graphics::Glyph's `draw()` method. `draw()` invokes `draw_component()` on each subglyph, and then draws extra stuff, such as the label, description, and lines connecting the parts. You can override this method if you wish to change this process in some fundamental way.

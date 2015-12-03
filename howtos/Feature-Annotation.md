@@ -6,7 +6,7 @@ layout: default
 Authors
 -------
 
-[Brian Osborne]
+Brian Osborne
 
   
 [briano at bioteam.net](mailto:briano-at-bioteam.net)
@@ -84,7 +84,6 @@ SeqFeature objects. SeqFeature objects can also have one or more Annotations
 associated with them (see [Features_vs._Annotations] for an in-depth discussion
 of that). 
 
-<!-- -->
 
 An Annotation object : is also associated with a sequence as you'd expect but it
 does not have a location on the sequence, it's associated with an entire

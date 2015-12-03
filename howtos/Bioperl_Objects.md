@@ -1,6 +1,6 @@
 ### Authors
 
-[Peter Schattner](Peter_Schattner "wikilink")
+Peter Schattner(Peter_Schattner "wikilink")
 
 ### Abstract
 

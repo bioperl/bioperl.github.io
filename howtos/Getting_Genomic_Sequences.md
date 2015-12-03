@@ -5,9 +5,9 @@ layout: default
 
 ### Authors
 
-[Brian Osborne]
+Brian Osborne
 
-[Chris Fields]
+Chris Fields
 
 ### Copyright
 
@@ -19,7 +19,7 @@ This is a HOWTO that talks about using Bioperl and tools related to Bioperl to g
 
 ### Using local Genbank and Entrez Gene files
 
-You can download chromosomal, nucleotide files in [FASTA format] from NCBI (ftp://ftp.ncbi.nih.gov/genomes/) and get gene position data from [Entrez Gene](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene) (see [Using Bio::DB::EntrezGene to get genomic coordinates]), then create indices of the fasta files using . There is an example script, [extract_genes.pl], that shows how this could be done. The query terms are limited to Gene id's in this example since the positional data is taken from Entrez Gene's gene2accession file.
+You can download chromosomal, nucleotide files in [FASTA format] from NCBI (ftp://ftp.ncbi.nih.gov/genomes/) and get gene position data from Entrez Gene(http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene) (see [Using Bio::DB::EntrezGene to get genomic coordinates]), then create indices of the fasta files using . There is an example script, [extract_genes.pl], that shows how this could be done. The query terms are limited to Gene id's in this example since the positional data is taken from Entrez Gene's gene2accession file.
 
 Requirement: BioPerl.
 
@@ -40,7 +40,6 @@ use strict; use Bio::EnsEMBL::Registry; use Getopt::Long; use Bio::SeqIO;
 # old style (deprecated) use the Bio::EnsEMBL::Registry
   use Bio::EnsEMBL::DBSQL::DBAdaptor;
 
-<!-- -->
 
 # initialize some defaults
 
@@ -99,15 +98,12 @@ You also have the option of using raw [SQL] when using the ENSEMBL API, the resu
 
 -   This bit of code has <b>not been extensively tested</b>.
 
-<!-- -->
 
 -   The `fetch_all_by_external_name` method does not accept a namespace or database name as an argument, so it lacks some precision. Be careful that your query returns just one sequence. Alternatively use a more precise SQL statement rather than `fetch_all_by_external_name`.
 
-<!-- -->
 
 -   To get a listing of available databases using mysql:
 
-<!-- -->
 
        $ mysql -u anonymous -h ensembldb.ensembl.org
        Welcome to the MySQL monitor. ...

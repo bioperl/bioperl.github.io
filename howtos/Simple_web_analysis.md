@@ -6,7 +6,7 @@ layout: default
 Author
 ------
 
-[Richard Adams] <[mailto:radams-at-staffmail.ed.ac.uk radams-at-staffmail.ed.ac.uk]>
+Richard Adams <[mailto:radams-at-staffmail.ed.ac.uk radams-at-staffmail.ed.ac.uk]>
 
 Dept. Medical Genetics, University of Edinburgh.
 
@@ -186,6 +186,6 @@ Alternatively, mail me with your suggestion and I'll try to put one together. It
 Acknowledgments
 ---------------
 
-These modules depend on several recently developed modules and wouldn't work at all without them: modules by [Chad Matsalla], [Aaron Mackey] and [Heikki Lehvxc3xa4slaiho], by [Heikki Lehvxc3xa4slaiho], and Bio::SimpleAnalysisI by [Martin Senger].'
+These modules depend on several recently developed modules and wouldn't work at all without them: modules by Chad Matsalla, Aaron Mackey and [Heikki Lehvxc3xa4slaiho], by [Heikki Lehvxc3xa4slaiho], and Bio::SimpleAnalysisI by Martin Senger.'
 
 

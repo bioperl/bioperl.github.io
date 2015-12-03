@@ -11,7 +11,7 @@ This is a HOWTO about the module, and how to use it to read and write complete N
 Author
 ------
 
-[Chase Miller]
+Chase Miller
 
 Introduction
 ------------

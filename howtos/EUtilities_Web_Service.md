@@ -474,7 +474,6 @@ my $fac = Bio::DB::SoapEUtilities->new()
 
 # executing a utility call
 
-<!-- -->
 
 # get an iteratable adaptor
 

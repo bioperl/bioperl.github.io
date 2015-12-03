@@ -8,12 +8,10 @@ Abstract
 
 Using BioPerl to create and manipulate short-read assemblies with the [`bwa`](http://bio-bwa.sourceforge.net/) and [`samtools`](http://samtools.sourceforge.net/) suites. [Quicklink] to synopsis.
 
-__TOC__
-
 Author
 ------
 
-[Mark A. Jensen]
+Mark A. Jensen
 
 [Fortinbras Research](http://fortinbras.us)
 

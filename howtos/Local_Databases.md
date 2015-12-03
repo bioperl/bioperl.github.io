@@ -5,7 +5,7 @@ layout: default
 
 ### Authors
 
-[Brian Osborne], [Peter Schattner].
+Brian Osborne, Peter Schattner.
 
 ### Abstract
 

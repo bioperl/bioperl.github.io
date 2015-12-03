@@ -100,7 +100,6 @@ Our first attempt to parse and render this file looks like this:
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 1 in the Graphics-HOWTO
 
@@ -175,7 +174,6 @@ Example 2 fixes these problems.
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 2 in the Graphics-HOWTO
 
@@ -258,7 +256,6 @@ Before we move into displaying gapped alignments, let's tweak the image slightly
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 3 in the Graphics-HOWTO
 
@@ -345,7 +342,6 @@ From here it's just a small step to writing a general purpose utility that will 
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # This is code example 4 in the Graphics-HOWTO
 
@@ -454,7 +450,6 @@ With you can render the feature table of a [GenBank] or [EMBL] file quite easily
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # file: embl2picture.pl
   This is code example 5 in the Graphics-HOWTO
@@ -555,7 +550,6 @@ However, it's quite easy to customize the display, making the script into a gene
 
 #!/usr/bin/perl
 
-<!-- -->
 
 # file: embl2picture.pl
   This is code example 6 in the Graphics-HOWTO

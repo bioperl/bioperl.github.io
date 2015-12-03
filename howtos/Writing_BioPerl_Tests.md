@@ -11,11 +11,11 @@ This is a quick HOWTO on writing tests for old and new BioPerl code.
 Authors
 =======
 
-[Christopher Fields](http://www.bioperl.org/wiki/Christopher_Fields)
+Christopher Fields(http://www.bioperl.org/wiki/Christopher_Fields)
 
-[Spiros Denaxas](http://www.bioperl.org/wiki/Spiros_Denaxas)
+Spiros Denaxas(http://www.bioperl.org/wiki/Spiros_Denaxas)
 
-[Sendu Bala](http://www.bioperl.org/wiki/Sendu_Bala)
+Sendu Bala(http://www.bioperl.org/wiki/Sendu_Bala)
 
 Introduction
 ============
