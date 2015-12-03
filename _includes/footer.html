@@ -10,6 +10,7 @@
           <!-- <li>{{ site.title }}</li> -->
           <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
         </ul>
+        <p class="rss-subscribe">Subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
       </div>
 
       <div class="footer-col  footer-col-2">
@@ -23,7 +24,7 @@
                 </svg>
               </span>
 
-             <<span class="username">{{ site.github_username }}</span>
+             <span class="username">{{ site.github_username }}</span>
             </a>
           </li>
           {% endif %}
