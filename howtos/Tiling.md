@@ -59,7 +59,7 @@ Tiling Your Searches with [Bio::Search::Tiling::MapTiling](https://metacpan.org/
 
 ## Overview ##
 
-Searches parsed with [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) are organized as follows _(see [SearchIO HOWTO](../howtos/SearchIO.md) for much more detail)_:
+Searches parsed with [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) are organized as follows _(see [SearchIO HOWTO](../howtos/SearchIO.html) for much more detail)_:
 
 *  the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) object contains
    * [Results](https://metacpan.org/pod/Bio::Search::Result::ResultI), which contain
@@ -258,7 +258,7 @@ foreach my $feat ($hseq->get_SeqFeatures) {
 
 ```
 
-Read more about features at [the Feature-annotation HOWTO]().
+Read more about features at [the Feature-Annotation HOWTO](Feature-Annotation.html).
 
 ## Statistics Method "Actions" ##
 
