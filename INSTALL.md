@@ -51,7 +51,7 @@ You can use the CPAN shell to install BioPerl. For example:
 perl -MCPAN -e shell
 ```
 
-Or you might have the cpan alias installed:
+Or you might have the `cpan` alias installed:
 
 ```
 cpan
@@ -139,8 +139,8 @@ INSTALLING BIOPERL USING local::lib
 
 If you lack permission to install Perl modules into the standard
 system directories you can install them in your home directory
-using local::lib. The instructions for first installing
-local::lib are found here:
+using `local::lib`. The instructions for first installing
+`local::lib` are found here:
 
 http://search.cpan.org/search?query=local%3A%3Alib
 
@@ -171,7 +171,7 @@ THE TEST SYSTEM
 The BioPerl test system is located in the t/ directory and is
 automatically run whenever you execute the './Build test' command.
 
-For the 1.6 release and beyond, tests have been organized into groups
+The tests have been organized into groups
 based upon the specific task or class the module being tested belongs
 to. If you want to investigate the behavior of a specific test such as
 the Seq test you would type:

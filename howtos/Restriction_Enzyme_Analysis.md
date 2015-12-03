@@ -113,6 +113,6 @@ my $re = new Bio::Restriction::Enzyme(-enzyme => 'BioRI',
 
 ```
 
-For more informatation see , , , and .'
+For more informatation see Bio::Restriction::Enzyme, Bio::Restriction::EnzymeCollection, Bio::Restriction::Analysis, and Bio::Restriction::IO.
 
 
