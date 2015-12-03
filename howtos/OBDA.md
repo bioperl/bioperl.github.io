@@ -6,7 +6,7 @@ layout: default
 Abstract
 --------
 
-This is a HOWTO that explains how to set up and use the [Open Biological Database Access] system.
+This is a HOWTO that explains how to set up and use the [Open Biological Database Access](http://obda.open-bio.org) system.
 
 Authors
 -------
