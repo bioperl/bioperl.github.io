@@ -85,7 +85,7 @@ Command-line options can be directed to the `aln` and `samse/sampe` steps using 
 Running separate bwa components
 -------------------------------
 
-A second mode for [Bio::Tools::Run::BWA](https://metacpan.org/pod/Bio::Tools::Run::BWA) allows direct access to `bwa` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#specifying-options):
+A second mode for [Bio::Tools::Run::BWA](https://metacpan.org/pod/Bio::Tools::Run::BWA) allows direct access to `bwa` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#specifying-options)):
 
 ```perl
 $bwa = Bio::Tools::Run::BWA->new( -command => 'view' );
