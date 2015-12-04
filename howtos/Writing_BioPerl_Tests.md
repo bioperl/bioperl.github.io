@@ -52,7 +52,7 @@ BEGIN {
               -requires_modules => [qw(IO::String XML::Parser)],
               -requires_networking => 1);
 
-   # at this point Test::More, Test::Exception and Test::Warn have been 
+   # at this point Test::More, Test::Exception and Test::Warn have been
    # loaded for us, and if network tests have been enabled and IO::String
    # and XML::Parser are installed, we will continue with our tests
 }
@@ -109,7 +109,7 @@ ok -s $output_file;
 # once you're done, don't try and delete $output_file yourself
 ```
 
-Using [Test::More](https://metacpan.org/pod/Test::More&mode=all) with BioPerl via [Bio::Root::Test](http://www.bioperl.org/wiki/Module:Bio::Root::Test)
+Using [Test::More](https://metacpan.org/pod/Test::More&mode=all) with BioPerl via [Bio::Root::Test](https://metacpan.org/pod/Bio::Root::Test)
 =======================
 
 This is a general guideline on how to use [Test::More](https://metacpan.org/pod/Test::More&mode=all) with BioPerl. You are not bound to using this format and may very well find a more suitable (possibly much better) style for writing your own tests. If so, please add it here. However, note that currently Bio::Root::Test only supports [Test::More](https://metacpan.org/pod/Test::More&mode=all).
