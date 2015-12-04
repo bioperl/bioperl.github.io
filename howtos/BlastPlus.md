@@ -27,7 +27,7 @@ Introduction
 Dependencies and Installation
 -----------------------------
 
-[Bio::Tools::Run::StandAloneBlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::StandAloneBlastPlus) (r16783) and  [Bio::Tools::Run::StandAloneBlastPlus::BlastMethods](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::StandAloneBlastPlus::BlastMethods) (r16834) can be found in the [master](http://github.com/bioperl/bioperl-run/tree/master/lib/Bio/Tools/Run) of [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run). These depend on a lower-level wrapper, [Bio::Tools::Run::BlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::BlastPlus) and [Bio::Tools::Run::BlastPlus::Config](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::BlastPlus::Config) (@ r16472 in [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run)), and extensions to [Bio::Tools::Run::WrapperBase](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::WrapperBase), [Bio::Tools::Run::WrapperBase::CommandExts](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::WrapperBase::CommandExts) (@ r16780), in the [master](http://github.com/bioperl/bioperl-live/tree/master/Bio/Tools/Run) of [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live).
+[Bio::Tools::Run::StandAloneBlastPlus](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlastPlus) (r16783) and  [Bio::Tools::Run::StandAloneBlastPlus::BlastMethods](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlastPlus::BlastMethods) (r16834) can be found in the [master](http://github.com/bioperl/bioperl-run/tree/master/lib/Bio/Tools/Run) of [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run). These depend on a lower-level wrapper, [Bio::Tools::Run::BlastPlus](https://metacpan.org/pod/Bio::Tools::Run::BlastPlus) and [Bio::Tools::Run::BlastPlus::Config](https://metacpan.org/pod/Bio::Tools::Run::BlastPlus::Config) (@ r16472 in [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run)), and extensions to [Bio::Tools::Run::WrapperBase](https://metacpan.org/pod/Bio::Tools::Run::WrapperBase), [Bio::Tools::Run::WrapperBase::CommandExts](https://metacpan.org/pod/Bio::Tools::Run::WrapperBase::CommandExts) (@ r16780), in the [master](http://github.com/bioperl/bioperl-live/tree/master/Bio/Tools/Run) of [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live).
 
 To download and install BioPerl core and packages from github see [Using Git](http://www.bioperl.org/wiki/Using_Git).
 
@@ -36,7 +36,7 @@ Like all run wrappers, these modules need the underlying programs to work. Get `
 Overview
 --------
 
-The [Bio::Tools::Run::StandAloneBlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::StandAloneBlastPlus) object is a "factory" or harness that directs the execution of the various `blast+` programs. The basic mantra is to (1) create a `StandAloneBlastPlus` factory using the `new()` constructor, and (2) perform BLAST analyses by calling the desired BLAST program by name off the factory object. The database can be pre-existing, or can be created directly using a [FASTA](http://en.wikipedia.org/wiki/FASTA) file or a BioPerl sequence collection object. Low-complexity or other masking can also be applied as the database is constructed.
+The [Bio::Tools::Run::StandAloneBlastPlus](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlastPlus) object is a "factory" or harness that directs the execution of the various `blast+` programs. The basic mantra is to (1) create a `StandAloneBlastPlus` factory using the `new()` constructor, and (2) perform BLAST analyses by calling the desired BLAST program by name off the factory object. The database can be pre-existing, or can be created directly using a [FASTA](http://en.wikipedia.org/wiki/FASTA) file or a BioPerl sequence collection object. Low-complexity or other masking can also be applied as the database is constructed.
 
 The BLAST database itself and any masking data are attached to the factory object ([step 1](#Database_construction)). Query sequences and any parameters associated with particular programs are provided to the blast method call ([step 2](#Blast_method_execution)), and are run against the attached database. (We present step 2 first, since it's what people will do many times after creating their database once.)
 
@@ -59,7 +59,7 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 $result = $fac->blastn( -query => 'query_seqs.fas' );
 ```
 
-Here, `$result` is a [Bio::Search::Result::BlastResult](http://www.bioperl.org/wiki/Module:Bio::Search::Result::BlastResult) object. To obtain further results, use `next_result`:
+Here, `$result` is a [Bio::Search::Result::BlastResult](https://metacpan.org/pod/Bio::Search::Result::BlastResult) object. To obtain further results, use `next_result`:
 
 ```perl
 while ($result = $fac->next_result) {
@@ -130,7 +130,7 @@ Other parameters ( `-method_args`, `-outfile`, and `-outformat` ) are valid.
 
 ### Return values
 
-The return value is always a [Bio::Search::Result::BlastResult](http://www.bioperl.org/wiki/Module:Bio::Search::Result::BlastResult) object on success, `undef` on failure.
+The return value is always a [Bio::Search::Result::BlastResult](https://metacpan.org/pod/Bio::Search::Result::BlastResult) object on success, `undef` on failure.
 
 Database construction<a name="Database_construction"></a>
 ---------------------
@@ -214,7 +214,7 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 );
 ```
 
-Other collections (e.g., [Bio::SeqIO](http://www.bioperl.org/wiki/Module:Bio::SeqIO)) are valid. If a certain type does not work, please open a new [issue](https://github.com/bioperl/bioperl-live/issues).
+Other collections (e.g., [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO)) are valid. If a certain type does not work, please open a new [issue](https://github.com/bioperl/bioperl-live/issues).
 
 To create temporary databases, leave out the `-db_name`, e.g.
 
@@ -303,7 +303,7 @@ $num_seqs = $fac->db_num_sequences;
 
 ### Accessing the Bio::Tools::Run::BlastPlus factory
 
-The `blast+` programs are actually executed by a [Bio::Tools::Run::BlastPlus](http://www.bioperl.org/wiki/Module:Bio::Tools::Run::BlastPlus) wrapper instance. This instance is available for peeking and poking in the `StandAloneBlastPlus` `factory()` attribute. For convenience, `BlastPlus` methods can be run directly from the `StandAloneBlastPlus` object, and are delegated to the `factory()` attribute.
+The `blast+` programs are actually executed by a [Bio::Tools::Run::BlastPlus](https://metacpan.org/pod/Bio::Tools::Run::BlastPlus) wrapper instance. This instance is available for peeking and poking in the `StandAloneBlastPlus` `factory()` attribute. For convenience, `BlastPlus` methods can be run directly from the `StandAloneBlastPlus` object, and are delegated to the `factory()` attribute.
 
 For example, to get the blast+ program to be executed, examine either
 
