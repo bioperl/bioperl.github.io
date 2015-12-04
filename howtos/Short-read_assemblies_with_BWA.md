@@ -6,7 +6,7 @@ layout: default
 Abstract
 --------
 
-Using BioPerl to create and manipulate short-read assemblies with the [`bwa`](http://bio-bwa.sourceforge.net/) and [`samtools`](http://www.htslib.org/) suites.
+Using BioPerl to create and manipulate short-read assemblies with the [`bwa`](http://bio-bwa.sourceforge.net/) and [`samtools`](http://samtools.sourceforge.net/) suites.
 
 [Quicklink](#synopsis) to synopsis.
 
@@ -22,7 +22,7 @@ Mark A. Jensen
 Introduction
 ------------
 
-[`bwa`](http://bio-bwa.sourceforge.net/) is a suite of C programs that perform efficient alignments (based in part on the [Burrows-Wheeler transform](http://en.wikipedia.org/wiki/Burrows-Wheeler_transform)) of short (20-100bp) sequence reads, guided by a set of reference sequences provided in FASTA format. `bwa` input and output complies with the Sequence/Alignment Map ([SAM](http://www.htslib.org/doc/sam.html)) binary (`.bam`) and test (`.sam`) formats. Alignment files in SAM formats can be converted, indexed, sliced and diced by the [`samtools`](http://www.htslib.org/) suite.
+[`bwa`](http://bio-bwa.sourceforge.net/) is a suite of C programs that perform efficient alignments (based in part on the [Burrows-Wheeler transform]) of short (20-100bp) sequence reads, guided by a set of reference sequences provided in FASTA format. `bwa` input and output complies with the Sequence/Alignment Map ([SAM](http://samtools.sourceforge.net/SAM1.pdf)) binary (`.bam`) and test (`.sam`) formats. Alignment files in SAM formats can be converted, indexed, sliced and diced by the [`samtools`](http://samtools.sourceforge.net/) suite.
 
 These tools are comprehensive and allow the user to tweak many different parameters, and outputs can be directed to inputs to create highly application-specific workflows. The BioPerl run wrappers [Bio::Tools::Run::BWA](https://metacpan.org/pod/Bio::Tools::Run::BWA) and [Bio::Tools::Run::Samtools](https://metacpan.org/pod/Bio::Tools::Run::Samtools)
 are designed to help automate and manage such workflows, and help reduce the number of cryptic command-line options and file order inconsistencies the user must remember. [Bio::Tools::Run::BWA](https://metacpan.org/pod/Bio::Tools::Run::BWA)
@@ -33,7 +33,7 @@ Dependencies and Installation
 
 [Bio::Tools::Run::BWA](https://metacpan.org/pod/Bio::Tools::Run::BWA) and additional dependencies in the Bio::Tools::Run namespace can be found in the [bioperl-run](https://github.com/bioperl/bioperl-run) repository. 
 
-Like all run wrappers, these modules need the underlying programs to work; visit the links above to acquire them.
+Like all run wrappers, these modules need the underlying programs to work. Get `bwa` and `samtools` at their Sourceforge sites: [1](http://bio-bwa.sourceforge.net/) [2](http://samtools.sourceforge.net/).
 
 Also, the [Bio::DB::Sam](https://metacpan.org/pod/Bio::DB::Sam)
 modules must be installed on your system. These are _not_ BioPerl modules. (They were written by a core developer, though, so they're all right.) You can get them on [CPAN](http://metacpan.org).
@@ -85,7 +85,7 @@ Command-line options can be directed to the `aln` and `samse/sampe` steps using 
 Running separate bwa components
 -------------------------------
 
-A second mode for [Bio::Tools::Run::BWA](https://metacpan.org/pod/Bio::Tools::Run::BWA) allows direct access to `bwa` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#specifying-options)):
+A second mode for [Bio::Tools::Run::BWA](https://metacpan.org/pod/Bio::Tools::Run::BWA) allows direct access to `bwa` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#specifying-options):
 
 ```perl
 $bwa = Bio::Tools::Run::BWA->new( -command => 'view' );
