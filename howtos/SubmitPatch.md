@@ -23,7 +23,7 @@ Revisions
 Introduction
 ------------
 
-This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into [BioPerl], from checking out the latest CVS to creating a diff file and submitting it to Bugzilla.
+This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into BioPerl, from checking out the latest version to creating a diff file and submitting it to Bugzilla.
 
 Step by Step
 ------------
@@ -32,9 +32,10 @@ Step by Step
 
 You should ensure you are using the latest developer version of BioPerl - this means checking out [bioperl-live] (or the appropriate repository) from Subversion. Here are [instructions on how to do this]. This is important because the change you want to make may have already been made!
 
- mkdir -p ~/src/bioperl`
- cd ~/src/bioperl `
- svn co `[`svn://code.open-bio.org/bioperl/bioperl-live/trunk`](svn://code.open-bio.org/bioperl/bioperl-live/trunk)` bioperl-live`
+
+mkdir -p ~/src/bioperl
+cd ~/src/bioperl `
+svn co `[`svn://code.open-bio.org/bioperl/bioperl-live/trunk`](svn://code.open-bio.org/bioperl/bioperl-live/trunk)` bioperl-live`
 
 ### Back up the original file
 
@@ -119,5 +120,3 @@ Further reading
 -   [Becoming a developer]
 -   [Using Subversion]
 -   [Mailing lists]'
-
- <Category:TODO>
