@@ -475,21 +475,20 @@ There are more sophisticated operations that you may wish to pursue with these o
 References and More Reading
 ---------------------------
 
-For more reading and some references for the techniques above see these titles. <biblio>
+For more reading and some references for the techniques above, see these titles.
 
-# felsenstein J. Felsenstein, "Infering Phylogenies" 2003. Sinuar and Associates. D. Swoffrod, Olsen, Waddell and D. Hillis, "Phylogenetic Inference" 1996. in Mol. Systematics, 2nd ed, 1996, Ch 11.
-  bsa Eddy SR, Durbin R, Krogh A, Mitchison G, "Biological Sequence Analysis" 1998. Cambridge Univ Press, Cambridge, UK.
-  RIO pmid=12028595
-  SDI pmid=11590098
-5.  ATV pmid=11301314
-6.  Tamura92 pmid=1630306
-7.  Kimura80 pmid=7463489
-8.  JinNei90 pmid=2299983
-9.  TajimaNei84 pmid=6599968
-10. JukesCantor69 Jukes TH and Cantor CR. "Evolution of Protein Molecules", in Mammalian Prot. Metab., III, 1969, pp. 21-132.
-11. Kimura93 Kimura, M. "The Neutral Theory of Molecular Evolution." Cambridge University Press, Cambridge, UK. 1993.
-
-</biblio>
+# J. Felsenstein, "Infering Phylogenies" 2003. Sinauer and Associates.
+# D. Swofford, Olsen, Waddell and D. Hillis, "Phylogenetic Inference" 1996. in Mol. Systematics, 2nd ed, 1996, Ch 11.
+# Eddy SR, Durbin R, Krogh A, Mitchison G, "Biological Sequence Analysis" 1998. Cambridge Univ Press, Cambridge, UK.
+# RIO pmid=12028595
+# SDI pmid=11590098
+# ATV pmid=11301314
+# Tamura92 pmid=1630306
+# Kimura80 pmid=7463489
+# JinNei90 pmid=2299983
+# TajimaNei84 pmid=6599968
+# JukesCantor69 Jukes TH and Cantor CR. "Evolution of Protein Molecules", in Mammalian Prot. Metab., III, 1969, pp. 21-132.
+# Kimura93 Kimura, M. "The Neutral Theory of Molecular Evolution." Cambridge University Press, Cambridge, UK. 1993.
 
 Related Modules
 ---------------
