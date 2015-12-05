@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Short Read assemblies using maq"
-layout: default
+layout: howto
 ---
 
 Abstract

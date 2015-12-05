@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Submit Patch"
-layout: default
+layout: howto
 ---
 
 Author

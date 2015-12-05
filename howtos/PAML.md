@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:PAML"
-layout: default
+layout: howto
 ---
 
 About this Document

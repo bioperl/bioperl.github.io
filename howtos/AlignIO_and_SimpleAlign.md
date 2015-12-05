@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:AlignIO and SimpleAlign"
-layout: default
+layout: howto
 ---
 
 ### Authors

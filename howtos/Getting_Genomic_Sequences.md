@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Getting Genomic Sequences"
-layout: default
+layout: howto
 ---
 
 ### Authors

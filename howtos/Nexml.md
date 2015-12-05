@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:NeXML"
-layout: default
+layout: howto
 ---
 
 Abstract

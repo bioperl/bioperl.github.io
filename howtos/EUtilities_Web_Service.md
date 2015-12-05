@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:EUtilities Web Service"
-layout: default
+layout: howto
 ---
 
 Abstract

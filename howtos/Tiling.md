@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Tiling"
-layout: default
+layout: howto
 ---
 
 Abstract

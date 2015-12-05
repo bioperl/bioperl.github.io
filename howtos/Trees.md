@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Trees"
-layout: default
+layout: howto
 ---
 
 Author

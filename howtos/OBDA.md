@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:OBDA"
-layout: default
+layout: howto
 ---
 
 Abstract

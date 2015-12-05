@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:SearchIO"
-layout: default
+layout: howto
 ---
 
 Abstract

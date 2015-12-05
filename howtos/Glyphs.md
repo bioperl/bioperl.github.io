@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Glyphs"
-layout: default
+layout: howto
 ---
 
 Note, this is a '''Work in Progress'''  

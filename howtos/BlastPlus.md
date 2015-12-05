@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:BlastPlus"
-layout: default
+layout: howto
 ---
 
 Abstract

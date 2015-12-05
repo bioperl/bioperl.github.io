@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Population Genetics"
-layout: default
+layout: howto
 ---
 
 Author
