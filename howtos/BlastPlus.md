@@ -27,9 +27,7 @@ Introduction
 Dependencies and Installation
 -----------------------------
 
-[Bio::Tools::Run::StandAloneBlastPlus](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlastPlus) (r16783) and  [Bio::Tools::Run::StandAloneBlastPlus::BlastMethods](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlastPlus::BlastMethods) (r16834) can be found in the [master](http://github.com/bioperl/bioperl-run/tree/master/lib/Bio/Tools/Run) of [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run). These depend on a lower-level wrapper, [Bio::Tools::Run::BlastPlus](https://metacpan.org/pod/Bio::Tools::Run::BlastPlus) and [Bio::Tools::Run::BlastPlus::Config](https://metacpan.org/pod/Bio::Tools::Run::BlastPlus::Config) (@ r16472 in [bioperl-run](http://www.bioperl.org/wiki/Bioperl-run)), and extensions to [Bio::Tools::Run::WrapperBase](https://metacpan.org/pod/Bio::Tools::Run::WrapperBase), [Bio::Tools::Run::WrapperBase::CommandExts](https://metacpan.org/pod/Bio::Tools::Run::WrapperBase::CommandExts) (@ r16780), in the [master](http://github.com/bioperl/bioperl-live/tree/master/Bio/Tools/Run) of [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live).
-
-To download and install BioPerl core and packages from github see [Using Git](http://www.bioperl.org/wiki/Using_Git).
+The module and dependencies are available in the [bioperl/bioperl-run git](https://github.com/bioperl/bioperl-run) repository. To download and install BioPerl core and packages from github see [Using Git](http://www.bioperl.org/wiki/Using_Git).
 
 Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site] (http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](http://www.ncbi.nlm.nih.gov/books/NBK279690/) is very helpful.
 
