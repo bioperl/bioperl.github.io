@@ -25,10 +25,12 @@ Synopsis
   $maq_fac = Bio::Tools::Run::Maq->new();
   $maq_assy = $maq_fac->run( 'reads.fastq', 'refseq.fas' );
   # paired-end 
-  $maq_assy = $maq_fac->run( 'reads.fastq', 'refseq.fas', 'paired-reads.fastq');
+  $maq_assy = $maq_fac->run( 'reads.fastq', 'refseq.fas', 
+                             'paired-reads.fastq');
   # be more strict
   $maq_fac->set_parameters( -c2q_min_map_quality => 60 );
-  $maq_assy = $maq_fac->run( 'reads.fastq', 'refseq.fas', 'paired-reads.fastq');
+  $maq_assy = $maq_fac->run( 'reads.fastq', 'refseq.fas', 
+                             'paired-reads.fastq');
  
   # run maq commands separately
   $maq_fac = Bio::Tools::Run::Maq->new(
@@ -61,16 +63,16 @@ The first is a simple pipeline through the `maq` commands, taking your read data
 | map sequence reads to reference seq   | `map`                  |
 | assemble, creating consensus          | `assemble`             |
 | convert map & cns files to plaintext  | `mapview, cns2fq`      |
-||
+Table 1. `maq` commands
 
-Command-line options can be directed to the `map`, `assemble`, and `cns2fq` steps. See [Specifying Options].
+Command-line options can be directed to the `map`, `assemble`, and `cns2fq` steps. See Specifying Options.
 
 ## Running `maq` components
 
 The second mode is direct access to `maq` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#specifying-options)):
 
 ```perl
-$maqfac->Bio::Tools::Run::Maq->new( -command => \'fasta2bfa\' );
+$maqfac->Bio::Tools::Run::Maq->new( -command => 'fasta2bfa' );
 ```
 
 To execute, use the `run_maq` methods. Input and output files are specified in the arguments of `run_maq` (see [Specifying Files](#specifying-files)):
@@ -84,13 +86,13 @@ $maqfac->run_maq( -fas => "myref.fas", -bfa => "myref.bfa" );
 `maq` is complex, with many subprograms (commands) and command-line options and file specs for each. This module attempts to provide commands and options comprehensively. You can browse the choices like so:
 
 ```perl
-$maqfac = Bio::Tools::Run::Maq->new( -command => \'assemble\' );
+$maqfac = Bio::Tools::Run::Maq->new( -command => 'assemble' );
 # all maq commands
-@all_commands = $maqfac->available_parameters(\'commands\');
+@all_commands = $maqfac->available_parameters('commands');
 @all_commands = $maqfac->available_commands; # alias
 # just for assemble
-@assemble_params = $maqfac->available_parameters(\'params\');
-@assemble_switches = $maqfac->available_parameters(\'switches\');
+@assemble_params = $maqfac->available_parameters('params');
+@assemble_switches = $maqfac->available_parameters('switches');
 @assemble_all_options = $maqfac->available_parameters();
 ```
 
@@ -99,7 +101,8 @@ Reasonably mnemonic names have been assigned to the single-letter command line o
 Options can be directed to the `map`, `assemble` and `cns2fq` components of the assembly pipeline implemented by the `run()` method. Identify the desired options, for example
 
 ```perl
- @map_params = Bio::Tools::Run::Maq->new(-command => 'map' )->available_parameters();
+ @map_params = Bio::Tools::Run::Maq->new(-command => 'map' )->
+        available_parameters();
  
  # returns:
  # adaptor_file
@@ -126,7 +129,7 @@ See the [`maq` manpage](http://maq.sourceforge.net/maq-manpage.shtml) for many g
 
 ### Specifying files
 
-When a command requires filenames, these are provided to the `run_maq` method, not the constructor (`new()`). To see the set of files required by a command, use `available_parameters(\'filespec\')` or the alias `filespec()`.
+When a command requires filenames, these are provided to the `run_maq` method, not the constructor (`new()`). To see the set of files required by a command, use `available_parameters('filespec')` or the alias `filespec()`.
 
 ```perl
 $maqfac = Bio::Tools::Run::Maq->new( -command => 'map' );
@@ -143,11 +146,11 @@ bfq1
 2>#log
 ```
 
-This indicates that map (`maq` binary mapfile), bfa (`maq` binary fasta), and bfq (`maq` binary fastq) files '''must''' be specified, another bfq file *may* be specified, and a log file receiving STDERR also *may* be specified. Use these in the `run_maq` call like so:
+This indicates that map (`maq` binary mapfile), bfa (`maq` binary fasta), and bfq (`maq` binary fastq) files **must** be specified, another bfq file *may* be specified, and a log file receiving STDERR also *may* be specified. Use these in the `run_maq` call like so:
 
 ```perl
 $maqfac->run_maq( -map => 'my.map', -bfa => 'myrefseq.bfa',
-                  -bfq1 => \'reads1.bfq\', -bfq2 => \'reads2.bfq\' );
+                  -bfq1 => 'reads1.bfq', -bfq2 => 'reads2.bfq' );
 ```
 
 Here, the `-log` parameter was unspecified. Therefore, the object will store the programs STDERR output for you in the `stderr()` attribute:
@@ -210,12 +213,12 @@ The sequence IDs within the contigs are obtained as :
 @contig_seqids = $contig->get_seq_ids;
 ```
 
-To get the individual `maq` features, need to drill down:
+To get the individual `maq` features, you need to drill down:
 
 ```perl
-$seq = $contig->get_seq_by_name( ($contig->get_seq_ids)\[0\] );
+$seq = $contig->get_seq_by_name( ($contig->get_seq_ids)[0] );
 $feat = $contig->get_seq_feat_by_tag($seq, "_aligned_coord:".$seq->id);
-$maq_feat = ($feat->sub_SeqFeature)\[0\];
+$maq_feat = ($feat->sub_SeqFeature)[0];
 print join(" ", $maq_feat->get_all_tags);
 ```
 
