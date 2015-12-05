@@ -20,7 +20,9 @@ This document is copyright [Jason Stajich](http://lab.stajich.org/home/people/ja
 
 Revision History
 ----------------
-|---------------------------|
+
+| | |
+|---|---|
 | Revision 0.1 2003-12-01 JES | First version |
 | Revision 0.2 2004-11-05 BIO | Add SVG section and links |
 | Revision 0.3 2005-07-11 JES | Explore Node objects more |
@@ -30,7 +32,7 @@ Revision History
 Abstract
 --------
 
-This [HOWTO](http://bioperl.github.io/howtos/) intends to show how to use the [BioPerl Tree]([Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree)
+This [HOWTO](http://bioperl.github.io/howtos/) intends to show how to use the [BioPerl Tree](https://metacpan.org/pod/Bio::Tree::Tree)
 objects to manipulate phylogenetic trees. It shows how to read and write trees, query them for information about specific nodes or overall statistics, and create pictures of trees. Advanced topics include discussion of generating random trees and extensions of the basic structure for integration with other modules in [BioPerl](https://bioperl.github.io).
 
 Introduction
@@ -221,7 +223,7 @@ $tree->remove_Node($node);
 $tree->remove_Node('Node12');
 ```
 
-To preserve the branch lengths between the children and ancestor of the removed Node, you can use [splice](https:://metacpan.org/pod/Bio::Tree::TreeFunctionsI#splic) with `-preserve_lengths=>1`.
+To preserve the branch lengths between the children and ancestor of the removed Node, you can use [splice](https://metacpan.org/pod/Bio::Tree::TreeFunctionsI#splice) with `-preserve_lengths=>1`.
 
 ```perl
 # provide the node objects to remove from the Tree
