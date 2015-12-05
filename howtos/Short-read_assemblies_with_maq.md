@@ -6,7 +6,7 @@ layout: default
 Abstract
 --------
 
-A detailed description of , a wrapper for creating short-read assemblies with the [Maq](http://maq.sourceforge.net/maq-man.shtml) assembler.
+A detailed description of [Bio::Tools::Run::Maq](https://metacpan.org/pod/Bio::Tools::Run::Maq), a wrapper for creating short-read assemblies with the [Maq](http://maq.sourceforge.net/maq-man.shtml) assembler.
 
 Author
 ------
@@ -47,7 +47,7 @@ Dependencies and installation
 Module description
 ------------------
 
-This module provides a wrapper interface for [Heng Li](@lh3)'s reference-directed short read assembly suite `maq`. The module won't work unless you download and install the `maq` software; see [the Sourceforge site](http://maq.sourceforge.net).
+This module provides a wrapper interface for [Heng Li](https://github.com/lh3)'s reference-directed short read assembly suite `maq`. The module won't work unless you download and install the `maq` software; see [the Sourceforge site](http://maq.sourceforge.net).
 
 There are two modes of action.
 
@@ -67,13 +67,13 @@ Command-line options can be directed to the `map`, `assemble`, and `cns2fq` step
 
 ## Running `maq` components
 
-The second mode is direct access to `maq` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#specifying-options):
+The second mode is direct access to `maq` commands. To run a command, construct a run factory, specifying the desired command using the `-command` argument in the factory constructor, along with options specific to that command (see [Specifying Options](#specifying-options)):
 
 ```perl
 $maqfac->Bio::Tools::Run::Maq->new( -command => \'fasta2bfa\' );
 ```
 
-To execute, use the `run_maq` methods. Input and output files are specified in the arguments of `run_maq` (see [Specifying Files](#specifying-files):
+To execute, use the `run_maq` methods. Input and output files are specified in the arguments of `run_maq` (see [Specifying Files](#specifying-files)):
 
 ```perl
 $maqfac->run_maq( -fas => "myref.fas", -bfa => "myref.bfa" );
