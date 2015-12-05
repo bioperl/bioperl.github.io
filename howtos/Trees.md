@@ -82,7 +82,8 @@ object.
 | pag      | Pagel |                |        |
 | phyloxml | PhyloXML | xml            |        |
 | svggraph | converts a Tree object to an SVG output | svg            |        |
-| tabtree  | format which displays a tree as an ASCII drawing |                |        |
+| tabtree  | format which displays a tree as an ASCII drawing |                
+Table 1. [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) formats
 
 ## Example Code
 
@@ -109,9 +110,12 @@ use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'newick',
 			      -fh => \*DATA);
 while( my $tree = $treeio->next_tree ) {
- for my $node ( $tree->get_nodes ) {
-  printf "id: %s bootstrap: %s\n", $node->id || '', $node->bootstrap || '', "\n";
- }
+  for my $node ( $tree->get_nodes ) {
+  printf "id: %s bootstrap: %s\n", 
+         $node->id || '', 
+         $node->bootstrap || '', 
+         "\n";
+  }
 }
 __DATA__
 (((A:5,B:5)90:2,C:4)25:3,D:10);
@@ -126,10 +130,13 @@ my $treeio = Bio::TreeIO->new(-format => 'newick',
 			      -fh => \*DATA,
 			      -internal_node_id => 'bootstrap');
  
-while( $tree = $treeio->next_tree ) {
- for my $node ( $tree->get_nodes ) {
-  printf "id: %s bootstrap: %s\n", $node->id || '', $node->bootstrap || '', "\n";
- }
+while ( $tree = $treeio->next_tree ) {
+  for my $node ( $tree->get_nodes ) {
+    printf "id: %s bootstrap: %s\n", 
+            $node->id || '', 
+            $node->bootstrap || '', 
+            "\n";
+    }
 }
 __DATA__
 (((A:5,B:5)90:2,C:4)25:3,D:10);
@@ -141,12 +148,15 @@ One can also explictly invoke this by calling just calling the `move_id_to_boots
 use Bio::TreeIO;
  
 my $treeio = Bio::TreeIO->new(-format => 'newick',
-			      -fh => \*DATA);
-while( $tree = $treeio->next_tree ) {
- $tree->move_id_to_bootstrap;
- for my $node ( $tree->get_nodes ) {
-  printf "id: %s bootstrap: %s\n", $node->id || '', $node->bootstrap || '', "\n";
- }
+			                        -fh => \*DATA);
+while ( $tree = $treeio->next_tree ) {
+  $tree->move_id_to_bootstrap;
+    for my $node ( $tree->get_nodes ) {
+      printf "id: %s bootstrap: %s\n", 
+              $node->id || '', 
+              $node->bootstrap || '', 
+              "\n";
+    }
 }
 __DATA__
 (((A:5,B:5)90:2,C:4)25:3,D:10);
@@ -164,9 +174,9 @@ my $string = "(A,(B,C));";
 my $io = IO::String->new($string);
 my $treeio = Bio::TreeIO->new(-fh => $io,
                               -format => 'newick');
-while( my $tree = $treeio->next_tree ) {
- # get a tree
- print "node count is ", scalar $tree->get_nodes, "\n";
+while ( my $tree = $treeio->next_tree ) {
+  # get a tree
+  print "node count is ", scalar $tree->get_nodes, "\n";
 }
 ```
 
@@ -245,7 +255,7 @@ The above works for 2 or more nodes.
 Get the distance between two nodes by adding up the branch lengths of all the connecting edges between two nodes.
 
 ```perl
-my $distances = $tree->distance(-nodes => \[$node1,$node2\]);
+my $distances = $tree->distance(-nodes => [$node1, $node2]);
 ```
 
 Perform a test of [monophyly](http://en.wikipedia.org/wiki/monophyly) for a set of nodes and a given outgroup node. This means the common ancestor for the members of the internal_nodes group is more recent than the common ancestor that any of them share with the outgroup node. Please notice that a test of [monophyly](http://en.wikipedia.org/wiki/monophyly) is applicable for rooted trees only.
@@ -299,18 +309,17 @@ Operations on Nodes
 use Bio::TreeIO;
  
 my $treeio = Bio::TreeIO->new(-format => 'newick',
-			      -fh => \*DATA);
-if( my $tree = $treeio->next_tree ) {
- my $node = $tree->find_node(-id => 'x');
- print $node->id, " each_Descendent\n";
- for my $child ( $node->each_Descendent ) {
-  print $child->id, "\n";
- }
- print $node->id, " get_all_Descendents\n";
- for my $child ( $node->get_all_Descendents ) {
-  print $child->id, "\n";
- }
- 
+                              -fh => \*DATA);
+if ( my $tree = $treeio->next_tree ) {
+  my $node = $tree->find_node(-id => 'x');
+  print $node->id, " each_Descendent\n";
+  for my $child ( $node->each_Descendent ) {
+    print $child->id, "\n";
+  }
+  print $node->id, " get_all_Descendents\n";
+  for my $child ( $node->get_all_Descendents ) {
+    print $child->id, "\n";
+  }
 }
 __DATA__
 (((A:5,B:5)z:2,(C:4,D:4)y:1)x:3,D:10);
@@ -355,8 +364,8 @@ opendir(DIR, $dir) || die $!;
 for my $file ( readdir(DIR) ) {
     next unless $file =~ /(\S+)\.tre$/;
     my $stem = $1;
-    my $treeio = Bio::TreeIO->new('-format' => 'newick',
-                                  '-file'   => "$dir/$file");
+    my $treeio = Bio::TreeIO->new(-format => 'newick',
+                                  -file   => "$dir/$file");
  
     if( my $t1 = $treeio->next_tree ) {
         my $obj1 = Bio::Tree::Draw::Cladogram->new(-bootstrap => 1,
@@ -373,7 +382,7 @@ Constructing Trees
 There are many applications available to build phylogenetic trees. You can also build a tree using [Bioperl](https://bioperl.github.io) alone.
 
 Pairwise distances for all sequences in an alignment can be computed with [Bio::Align::DNAStatistics](https://metacpan.org/pod/Bio::Align::DNAStatistics)
-and [Bio::Align::ProteinStatistics](https://metacpan.org/pod/Bio::Align::ProteinStatistics). There are several different methods implemented. For [DNA] alignments, Jukes-Cantor <cite>JukesCantor69</cite>, Jukes-Cantor uncorrected, Kimura 2-parameter <cite>Kimura80</cite>, Felsenstein <cite>felsenstein81</cite>, Tajima-Nei <cite>TajimaNei84</cite>, JinNei <cite>JinNei90</cite>, and Tamura <cite>Tamura92</cite> are currently implemented. In addition, for coding sequences, synonymous and non-synonymous counts can be computed with the [bp_pairwise_kaks.pl](https://github.com/bioperl/bioperl-live/blob/master/scripts/utilities/bp_pairwise_kaks.pl). For Protein sequences alignments only Kimura <cite>Kimura93</cite> is currently supported.
+and [Bio::Align::ProteinStatistics](https://metacpan.org/pod/Bio::Align::ProteinStatistics). There are several different methods implemented. For DNA alignments, Jukes-Cantor <cite>JukesCantor69</cite>, Jukes-Cantor uncorrected, Kimura 2-parameter <cite>Kimura80</cite>, Felsenstein <cite>felsenstein81</cite>, Tajima-Nei <cite>TajimaNei84</cite>, JinNei <cite>JinNei90</cite>, and Tamura <cite>Tamura92</cite> are currently implemented. In addition, for coding sequences, synonymous and non-synonymous counts can be computed with the [bp_pairwise_kaks.pl](https://github.com/bioperl/bioperl-live/blob/master/scripts/utilities/bp_pairwise_kaks.pl). For Protein sequences alignments only Kimura <cite>Kimura93</cite> is currently supported.
 
 To use these methods simply initialize a statistics module, and pass in an alignment object ([Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign)
 ) and the type of distance method to use and the module will return a [Bio::Matrix::PhylipDist](https://metacpan.org/pod/Bio::Matrix::PhylipDist)
@@ -397,10 +406,10 @@ my $stats = Bio::Align::DNAStatistics->new;
 my $treeout = Bio::TreeIO->new(-format => 'newick');
  
 while( my $aln = $alnio->next_aln ) {
- my $mat = $stats->distance(-method => 'Kimura',
-                            -align  => $aln);
- my $tree = $dfactory->make_tree($mat);
- $treeout->write_tree($tree);
+  my $mat = $stats->distance(-method => 'Kimura',
+                             -align  => $aln);
+  my $tree = $dfactory->make_tree($mat);
+  $treeout->write_tree($tree);
 }
 ```
 Or you could read in a distance matrix created by an external program, such as [Phylip](http://evolution.genetics.washington.edu/phylip.html)
@@ -418,11 +427,11 @@ my $stats = Bio::Align::DNAStatistics->new;
 my $treeout = Bio::TreeIO->new(-format => 'newick');
  
 while( my $aln = $alnio->next_aln ) {
- my $parser = Bio::Matrix::IO->new(-format => 'phylip',
-                                   -file   => 'filename.dist');
- my $mat  = $parser->next_matrix;
- my $tree = $dfactory->make_tree($mat);
- $treeout->write_tree($tree);
+  my $parser = Bio::Matrix::IO->new(-format => 'phylip',
+                                    -file   => 'filename.dist');
+  my $mat  = $parser->next_matrix;
+  my $tree = $dfactory->make_tree($mat);
+  $treeout->write_tree($tree);
 }
 ```
 
@@ -461,8 +470,7 @@ for( my $i = 0; $i < 10; $i++ ) {
 # One can also just request a total number of taxa (8 here) and
 # not provide labels for them
 # In addition one can specify the total number of trees
-# the object should return so we can call this in a while
-# loop
+# the object should return so we can call this in a while loop
 $factory = new Bio::Tree::RandomFactory(-num_taxa => 8
                                         -max_count=> 10);
 while( my $tree = $factory->next_tree) {
@@ -480,13 +488,13 @@ For more reading and some references for the techniques above, see these titles.
 * J. Felsenstein, "Infering Phylogenies" 2003. Sinauer and Associates.
 * D. Swofford, Olsen, Waddell and D. Hillis, "Phylogenetic Inference" 1996. in Mol. Systematics, 2nd ed, 1996, Ch 11.
 * Eddy SR, Durbin R, Krogh A, Mitchison G, "Biological Sequence Analysis" 1998. Cambridge Univ Press, Cambridge, UK.
-* RIO pmid=12028595
-* SDI pmid=11590098
-* ATV pmid=11301314
-* Tamura92 pmid=1630306
-* Kimura80 pmid=7463489
-* JinNei90 pmid=2299983
-* TajimaNei84 pmid=6599968
+* RIO http://www.ncbi.nlm.nih.gov/pubmed/12028595
+* SDI http://www.ncbi.nlm.nih.gov/pubmed/11590098
+* ATV http://www.ncbi.nlm.nih.gov/pubmed/11301314
+* Tamura92 http://www.ncbi.nlm.nih.gov/pubmed/1630306
+* Kimura80 http://www.ncbi.nlm.nih.gov/pubmed/7463489
+* JinNei90 http://www.ncbi.nlm.nih.gov/pubmed/2299983
+* TajimaNei84 http://www.ncbi.nlm.nih.gov/pubmed/6599968
 * JukesCantor69 Jukes TH and Cantor CR. "Evolution of Protein Molecules", in Mammalian Prot. Metab., III, 1969, pp. 21-132.
 * Kimura93 Kimura, M. "The Neutral Theory of Molecular Evolution." Cambridge University Press, Cambridge, UK. 1993.
 
