@@ -42,7 +42,7 @@ Synopsis
 Dependencies and installation
 -----------------------------
 
-[Bio::Tools::Run::Maq](https://metacpan.org/pod/Bio::Tools::Run::Maq) and other Bioperl dependencies are found in the [bioperl/bioperl-run](https://github.com/bioperl/bioperl-run) repository. Other dependencies are found in [bioperl/bioperl-live](https://github.com/bioperl/bioperl-live)
+[Bio::Tools::Run::Maq](https://metacpan.org/pod/Bio::Tools::Run::Maq) and other Bioperl dependencies are found in the [bioperl/bioperl-run](https://github.com/bioperl/bioperl-run) repository. Other dependencies are found in [bioperl/bioperl-live](https://github.com/bioperl/bioperl-live).
 
 Module description
 ------------------
