@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Local Databases"
-layout: default
+layout: howto
 ---
 
 ### Authors

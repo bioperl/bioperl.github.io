@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:BioGraphics"
-layout: default
+layout: howto
 ---
 
 Author

@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Features and Annotations"
-layout: default
+layout: howto
 ---
 
 Authors

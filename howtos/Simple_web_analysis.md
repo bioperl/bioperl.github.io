@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Simple Web Analysis"
-layout: default
+layout: howto
 ---
 
 Author

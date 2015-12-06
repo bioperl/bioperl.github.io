@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Restriction Enzyme Analysis"
-layout: default
+layout: howto
 ---
 
 ### Authors

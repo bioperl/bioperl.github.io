@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Phylogenetic Analysis Pipeline"
-layout: default
+layout: howto
 ---
 
 Abstract

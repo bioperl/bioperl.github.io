@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:BioPerl Beginners"
-layout: default
+layout: howto
 ---
 
 ### Authors

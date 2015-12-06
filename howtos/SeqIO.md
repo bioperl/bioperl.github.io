@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:SeqIO"
-layout: default
+layout: howto
 ---
 
 This HOWTO will teach you about the system for reading and writing sequences of various formats

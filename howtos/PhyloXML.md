@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:PhyloXML"
-layout: default
+layout: howto
 ---
 
 Author

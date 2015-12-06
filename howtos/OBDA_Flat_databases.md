@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:OBDA Flat Databases"
-layout: default
+layout: howto
 ---
 
 Abstract

@@ -1,6 +1,6 @@
 ---
 title: "HOWTO:Writing BioPerl Tests"
-layout: default
+layout: howto
 ---
 
 Abstract
