@@ -6,7 +6,7 @@ layout: howto
 Author
 ------
 
-[Mira Han](http://www.bioperl.org/wiki/Mira_Han), [Indiana University](http://informatics.indiana.edu). `mirhan-at-indiana.edu`
+Mira Han, [Indiana University](http://informatics.indiana.edu). `mirhan-at-indiana.edu`
 
 Abstract
 --------
@@ -83,7 +83,8 @@ Writing phyloXML trees are similar to writing any other tree formats. Create a T
 
 ```perl
 my $newfile = "newfile.txt";
-my $newio = Bio::TreeIO->new (-format => 'phyloxml', -file=>">$newfile");
+my $newio = Bio::TreeIO->new (-format => 'phyloxml', 
+                              -file=>">$newfile");
 $newio->write_tree($tree);
 ```
 
@@ -102,7 +103,7 @@ Users can use the `annotation()` method of AnnotatableNode to get the Annotation
 ```perl
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-           -fh => \*DATA);
+                              -fh => \*DATA);
 my $tree = $treeio->next_tree;
 my ($A) = $tree->find_node('A');
 my ($ac) = $A->annotation();
@@ -229,7 +230,7 @@ __DATA__
 
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-   -fh => \*DATA);
+                              -fh => \*DATA);
 my $tree = $treeio->next_tree;
 my @nodes = $tree->get_nodes;
 foreach my $n (@nodes) {
@@ -244,7 +245,7 @@ foreach my $n (@nodes) {
    print $name->value, "\n";
 
    # or get annotation using path
-   my ($name2) = $treeio->read_annotation( -obj =>$seq, 
+   my ($name2) = $treeio->read_annotation( -obj => $seq, 
                                            -path => 'name');
    print $name2, "\n";
  }
@@ -264,7 +265,7 @@ phyloXML annotations can be added to nodes, trees, or sequences. Users can use t
 
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-           -fh => \*DATA);
+                              -fh => \*DATA);
 my $tree = $treeio->next_tree;
 my ($A) = $tree->find_node('A');
 $treeio->add_phyloXML_annotation(
@@ -289,7 +290,7 @@ We can also simply add attributes to an existing object or an annotation using t
 ```perl
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-           -fh => \*DATA);
+                              -fh => \*DATA);
 my $tree = $treeio->next_tree;
 my ($z) = $tree->find_node('Z');
 my $z_seq = $z->sequence->[0];
@@ -311,7 +312,7 @@ Relation type annotations should be added to the tree object.
 
 ```perl
 $treeio->add_phyloXML_annotation(
-         -obj=>$tree,
+         -obj =>$tree,
          -xml => '<sequence_relation id_ref_0="Zseq" id_ref_1="Yseq" type="orthology" >
          <confidence type="rio">value</confidence>
          </sequence_relation>'
