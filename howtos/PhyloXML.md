@@ -11,7 +11,7 @@ Mira Han, [Indiana University](http://informatics.indiana.edu). `mirhan-at-india
 Abstract
 --------
 
-This [HOWTO](http://www.bioperl.org/wiki/HOWTO) intends to show how to use the [BioPerl](http://www.bioperl.org/wiki/BioPerl)  [Bio::TreeIO::phyloxml](https://metacpan.org/pod/Bio::TreeIO::phyloxml) driver to parse and write the [phyloxml tree format].
+This HOWTO intends to show how to use the BioPerl [Bio::TreeIO::phyloxml](https://metacpan.org/pod/Bio::TreeIO::phyloxml) driver to parse and write the [phyloxml tree format].
 
 Introduction
 ------------
