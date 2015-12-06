@@ -13,7 +13,7 @@ Quicklink to [Synopsis](#Synopsis).
 Author
 ------
 
-[Mark A. Jensen](http://www.bioperl.org/wiki/User:Majensen)
+Mark A. Jensen
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -22,12 +22,12 @@ Author
 Introduction
 ------------
 
-[blast+](http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from [NCBI](http://www.ncbi.nlm.nih.gov/)</span> that creates, manipulates, manages and queries [BLAST](http://en.wikipedia.org/wiki/BLAST) sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
+[blast+](http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/) is a suite of programs from [NCBI](http://www.ncbi.nlm.nih.gov/) that creates, manipulates, manages and queries [BLAST](http://en.wikipedia.org/wiki/BLAST) sequence databases. The package attempts to integrate the many `blast+` programs into a wrapper providing a unified programmatic interface to these programs, with BioPerl objects as input and output if desired.
 
 Dependencies and Installation
 -----------------------------
 
-The module and dependencies are available in the [bioperl/bioperl-run git](https://github.com/bioperl/bioperl-run) repository. To download and install BioPerl core and packages from github see [Using Git](http://www.bioperl.org/wiki/Using_Git).
+The module and dependencies are available in the [bioperl/bioperl-run git](https://github.com/bioperl/bioperl-run) repository. To download and install BioPerl core and packages from github see [INSTALL](INSTALL.html).
 
 Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site] (http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](http://www.ncbi.nlm.nih.gov/books/NBK279690/) is very helpful.
 

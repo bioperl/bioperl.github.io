@@ -27,7 +27,7 @@ Some guidelines
 
 1. Use Bio::Root::Test and its methods wherever possible.
 2. Tests that require internet access should be skipped unless network tests have been enabled by the user. Use Bio::Root::Test's `test_skip()` method to handle this.
-3. BioPerl has a long list of [dependencies](http://www.bioperl.org/wiki/BioPerl_Dependencies) which are optionally installed. If a set of tests require some of those dependencies, use Bio::Root::Test's `test_skip()` method to skip them if the dependencies aren't present.
+3. BioPerl has a long list of dependencies which are optionally installed. If a set of tests require some of those dependencies, use Bio::Root::Test's `test_skip()` method to skip them if the dependencies aren't present.
 
 Using Bio::Root::Test
 =====================
@@ -365,6 +365,3 @@ Some resources you might find useful:
 -   [Ian Langworth's amazing Perl testing reference card](http://langworth.com/pages/perltestref)
 -   [The Perl Quality Assurance Projects website](http://qa.perl.org/)
 -   [chromatic's Perl testing tutorial](http://www.wgz.org/chromatic/perl/IntroTestMore.pdf)
-
-
-[Category](http://www.bioperl.org/wiki/Special:Categories): [Developer resources](http://www.bioperl.org/wiki/Category:Developer_resources)

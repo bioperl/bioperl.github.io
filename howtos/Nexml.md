@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:NeXML"
+title: HOWTO:NeXML
 layout: howto
 ---
 
