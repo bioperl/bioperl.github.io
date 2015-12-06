@@ -708,9 +708,12 @@ my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=
 
 $test_feature->add_SeqFeature($bsg->new(-start=>100,-end=>400)); $test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600)); $test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
 
-my $test2_feature = $bsg->new(-start=>680,-end=>800, ttt -display_name=>'Test Feature 2', ttt -source_tag => 'Single top-level feature');
+my $test2_feature = $bsg->new(-start=>680,-end=>800, 
+-display_name=>'Test Feature 2', 
+-source_tag => 'Single top-level feature');
 
-my $test3_feature = $bsg->new(-display_name => 'Test Feature 3', ttt -source_tag => 'Feature with split location'); my $location = Bio::Location::Split->new(); $location->add_sub_Location($bls->new(-start=>200,-end=>300)); $location->add_sub_Location($bls->new(-start=>400,-end=>450)); $location->add_sub_Location($bls->new(-start=>480,-end=>500)); $test3_feature->location($location);
+my $test3_feature = $bsg->new(-display_name => 'Test Feature 3', 
+-source_tag => 'Feature with split location'); my $location = Bio::Location::Split->new(); $location->add_sub_Location($bls->new(-start=>200,-end=>300)); $location->add_sub_Location($bls->new(-start=>400,-end=>450)); $location->add_sub_Location($bls->new(-start=>480,-end=>500)); $test3_feature->location($location);
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
@@ -727,7 +730,8 @@ $panel->add_track(\[$test_feature,$test2_feature,$test3_feature\],
                  -label   => 1,`
                  -description => 1,`
 
-tt );
+
+);
 
 print $panel->png;
 
@@ -819,7 +823,8 @@ sub draw {
    my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);`
    $gd->filledRectangle($left,$top,$right,$bottom,`
 
-ttt $self->translate_color('lightgrey'));
+
+$self->translate_color('lightgrey'));
 
  }`
 
