@@ -16,14 +16,14 @@ This [HOWTO](http://www.bioperl.org/wiki/HOWTO) intends to show how to use the [
 Introduction
 ------------
 
-[phyloXML](http://www.phyloxml.org/) is an XML language for the analysis, exchange, and storage of phylogenetic trees (or networks) and associated data. The format is supported in BioPerl through the [Bio::TreeIO::phyloxml](https://metacpan.org/pod/Bio::TreeIO::phyloxml) driver. The phyloxml driver can fully parse all the elements defined in the phyloXML XSD and write a valid phyloXML document.
+[phyloXML](http://www.phyloxml.org/) is an XML language for the analysis, exchange, and storage of phylogenetic trees (or networks) and associated data. The format is supported in BioPerl through the [Bio::TreeIO::phyloxml](https://metacpan.org/pod/Bio::TreeIO::phyloxml) driver. The phyloXML driver can fully parse all the elements defined in the phyloXML XSD and write a valid phyloXML document.
 
 Reading and Writing Trees
 -------------------------
 
 ### Example Code
 
-Here is some code which will read in a Tree from a file called "phyloxml_examples.xml" and produce a [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree) object which is stored in the variable `$tree`.
+Here is some code which will read in a Tree from a file called *phyloxml_examples.xml* and produce a [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree) object which is stored in the variable `$tree`.
 
 Like most modules which do input/output you can also specify the argument `-fh` in place of `-file` to provide a glob or filehandle in place of the filename.
 
@@ -41,11 +41,14 @@ Once you have a Tree object you can do a number of things with it. You can use t
 ```perl
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-           -fh => \*DATA);
+                              -fh => \*DATA);
 
 while( my $tree = $treeio->next_tree ) {
   for my $node ( $tree->get_nodes ) {
-    printf "id: %s bootstrap: %s\n", $node->id || '', $node->branch_length || '', "\n";
+    printf "id: %s bootstrap: %s\n", 
+            $node->id || '', 
+            $node->branch_length || '', 
+            "\n";
   }
 }
 
@@ -53,7 +56,7 @@ __DATA__
 <?xml version="1.0" encoding="UTF-8"?>
 <phyloxml>
  <phylogeny rooted="true">
-     <name>example from Prof. Joe Felsenstein's book "Inferring Phylogenies"</name>
+     <name>example from Prof. Joe Felsensteins book "Inferring Phylogenies"</name>
      <description>phyloXML allows to use either a "branch_length" attribute or element to indicate branch lengths.</description>
      <clade>
         <clade>
@@ -88,13 +91,13 @@ $newio->write_tree($tree);
 Accessing Annotations on Nodes
 ------------------------------
 
-phyloXML provides a number of elements for describing the data associated with the nodes. Some examples are taxonomic information with scientific name, common name, and taxonomy code; sequence data with gene name, sequence accession, and annotation; distribution; branch lengths and support values; events such as duplications and speciations; control of tree appearance with colors and branch widths. Users can also define their own data fields through the element <property>. BioPerl has the [Bio::Tree::AnnotatableNode](https://metacpan.org/pod/Bio::Tree::AnnotatableNode) module to support annotations attached to Node object. Most of the phyloXML elements are attached to the AnnotatableNode as nested annotation collections. Only molecular sequence data are attached as a [Bio::SeqI](https://metacpan.org/pod/Bio::SeqI) object.
+phyloXML provides a number of elements for describing the data associated with the nodes. Some examples are taxonomic information with scientific name, common name, and taxonomy code; sequence data with gene name, sequence accession, and annotation; distribution; branch lengths and support values; events such as duplications and speciations; control of tree appearance with colors and branch widths. Users can also define their own data fields through the element `<property>`. BioPerl has the [Bio::Tree::AnnotatableNode](https://metacpan.org/pod/Bio::Tree::AnnotatableNode) module to support annotations attached to Node object. Most of the phyloXML elements are attached to the AnnotatableNode as nested annotation collections. Only molecular sequence data are attached as a [Bio::SeqI](https://metacpan.org/pod/Bio::SeqI) object.
 
 ### Retrieving Annotations
 
 Each phyloXML element has attributes, text values and nested elements. In order to preserve the structure, elements are stored in a nested [Bio::Annotation::Collection](https://metacpan.org/pod/Bio::Annotation::Collection) with tags `_text` and `_attr` for the text value and the attribute, and nested elements are stored as nested AnnotationCollections with corresponding element names as tag names.
 
-Users can use the annotation() method of AnnotatableNode to get the AnnotationCollection, and then traverse the nested AnnotationCollection structure.
+Users can use the `annotation()` method of AnnotatableNode to get the AnnotationCollection, and then traverse the nested AnnotationCollection structure.
 
 ```perl
 use Bio::TreeIO;
@@ -260,15 +263,17 @@ my $tree = $treeio->next_tree;
 my ($A) = $tree->find_node('A');
 $treeio->add_phyloXML_annotation(
        -obj => $A,
-       -xml => "<name>A</name>
-           <date unit=\"mya\">
-           <desc>my date</desc>
-           <value>600 million years</value>
-           </date>
-           "
+       -xml => '<name>A</name>
+                <date unit="mya">
+                  <desc>my date</desc>
+                  <value>600 million years</value>
+                </date>'
        );
-my ($dateunit) = $treeio->read_annotation('-obj'=>$A, '-path'=>'date/unit', '-attr'=>1);
-my ($datevalue) = $treeio->read_annotation('-obj'=>$A, '-path'=>'date/value');
+my ($dateunit) = $treeio->read_annotation(-obj=> $A, 
+                            -path => 'date/unit', 
+                            -attr => 1);
+my ($datevalue) = $treeio->read_annotation(-obj => $A, 
+                            -path => 'date/value');
 ```
 
 ### Adding phyloXML attributes
@@ -300,8 +305,8 @@ Relation type annotations should be added to the tree object.
 
 ```perl
 $treeio->add_phyloXML_annotation(
-         '-obj'=>$tree,
-         '-xml'=>'<sequence_relation id_ref_0="Zseq" id_ref_1="Yseq" type="orthology" ><confidence type="rio">value</confidence></sequence_relation>'
+         -obj=>$tree,
+         -xml => '<sequence_relation id_ref_0="Zseq" id_ref_1="Yseq" type="orthology" ><confidence type="rio">value</confidence></sequence_relation>'
          );
 ```
 
