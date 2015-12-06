@@ -32,7 +32,7 @@ use Bio::TreeIO;
 
 # parse in phyloxml format
 my $input = new Bio::TreeIO(-file => "t/data/phyloxml_examples.xml",
-                           -format => "phyloxml");
+                            -format => "phyloxml");
 my $tree = $input->next_tree;
 ```
 
@@ -153,11 +153,16 @@ for (@children) {
  push @leaves, $_ if $_->is_Leaf;
 }
 my ($D) = $leaves[0];
-my ($point) = $treeio->read_annotation('-obj'=>$D, '-path'=>'distribution/point/geodetic_datum', '-attr'=>1);
+my ($point) = $treeio->read_annotation(-obj => $D, 
+        -path =>'distribution/point/geodetic_datum', 
+        -attr =>1);
 print ("node distribution geodetic_datum is $point\n");
-my ($lat) = $treeio->read_annotation('-obj'=>$D, '-path'=>'distribution/point/lat');
-my ($long) = $treeio->read_annotation('-obj'=>$D, '-path'=>'distribution/point/long');
-my ($alt) = $treeio->read_annotation('-obj'=>$D, '-path'=>'distribution/point/alt');
+my ($lat) = $treeio->read_annotation(-obj => $D, 
+        -path =>'distribution/point/lat');
+my ($long) = $treeio->read_annotation(-obj => $D, 
+        -path => 'distribution/point/long');
+my ($alt) = $treeio->read_annotation(-obj => $D, 
+        -path => 'distribution/point/alt');
 print ("node distribution lat: $lat long: $long alt: $alt\n");
 
 __DATA__
@@ -239,7 +244,8 @@ foreach my $n (@nodes) {
    print $name->value, "\n";
 
    # or get annotation using path
-   my ($name2) = $treeio->read_annotation('-obj'=>$seq, '-path'=>'name');
+   my ($name2) = $treeio->read_annotation( -obj =>$seq, 
+                                           -path => 'name');
    print $name2, "\n";
  }
 }
@@ -290,8 +296,8 @@ my $z_seq = $z->sequence->[0];
 
 # add attribute id_source
 $treeio->add_attribute(
-       '-obj' => $z_seq,
-       '-attr' => "id_source = \"Zseq\""
+       -obj => $z_seq,
+       -attr => 'id_source = "Zseq"'
        );
 ```
 
@@ -306,7 +312,9 @@ Relation type annotations should be added to the tree object.
 ```perl
 $treeio->add_phyloXML_annotation(
          -obj=>$tree,
-         -xml => '<sequence_relation id_ref_0="Zseq" id_ref_1="Yseq" type="orthology" ><confidence type="rio">value</confidence></sequence_relation>'
+         -xml => '<sequence_relation id_ref_0="Zseq" id_ref_1="Yseq" type="orthology" >
+         <confidence type="rio">value</confidence>
+         </sequence_relation>'
          );
 ```
 
