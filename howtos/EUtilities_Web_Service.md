@@ -8,12 +8,10 @@ Abstract
 
 Using BioPerl to make and manage [NCBI](http://www.ncbi.nlm.nih.gov/) Entrez web service queries via the [EUtilities](http://www.ncbi.nlm.nih.gov/books/NBK25501/) [SOAP](https://en.wikipedia.org/wiki/SOAP) service.
 
-__TOC__
-
 Author
 ------
 
-[Mark A. Jensen]
+Mark A. Jensen
 
 [Fortinbras Research](http://fortinbras.us)
 
@@ -233,7 +231,7 @@ while ( my $seq = $seqio->next_seq ) {
 
 ### `elink`, the Link adaptor, and the `linkset` iterator
 
-The `LinkAdaptor` manages LinkSets. In `SoapEU`, an `elink` call *always* preserves the correspondence between submitted and retrieved ids. The mapping between these can be accessed from the adaptor object directly as `id_map()`
+The `LinkAdaptor` manages LinkSets. In `SoapEU`, an `elink` call *always* preserves the correspondence between submitted and retrieved ids. The mapping between these can be accessed from the adaptor object directly as `id_map()`:
 
 ```perl
 my $links = $fac->elink( -db => 'protein', 
