@@ -1,8 +1,11 @@
-\_\_TOC\_\_
+---
+title: "HOWTO:BioPerl Objects"
+layout: howto
+---
 
 ### Authors
 
-[Peter Schattner](Peter_Schattner "wikilink")
+Peter Schattner
 
 ### Abstract
 
@@ -10,13 +13,13 @@ This is a HOWTO that talks about many of the common and uncommon Bioperl objects
 
 ### Brief descriptions
 
-This section describes various Bioperl sequence objects. Many people using Bioperl will never know, or need to know, what kind of sequence object they are using. This is because the [SeqIO](http://metacpan.org/pod/SeqIO) module creates exactly the right type of object when given a file or a filehandle or a string.
+This section describes various Bioperl sequence objects. Many people using Bioperl will never know, or need to know, what kind of sequence object they are using. This is because the [Bio::SeqIO](http://metacpan.org/pod/Bio::SeqIO) module creates exactly the right type of object when given a file or a filehandle or a string.
 
 [Bio::Seq](http://metacpan.org/pod/Bio%3A%3ASeq) is the central sequence object in bioperl. When in doubt this is probably the object that you want to use to describe a DNA, RNA or protein sequence in bioperl. Most common sequence manipulations can be performed with Seq.
 
-Seq objects may be created for you automatically when you read in a file containing sequence data using the SeqIO object. In addition to storing its identification labels and the sequence itself, a Seq object can store multiple annotations and associated "sequence features", such as those contained in most Genbank and EMBL sequence files. This capability can be very useful - especially in development of automated genome annotation systems.
+Seq objects may be created for you automatically when you read in a file containing sequence data using the [Bio::SeqIO](http://metacpan.org/pod/Bio::SeqIO) object. In addition to storing its identification labels and the sequence itself, a Seq object can store multiple annotations and associated "sequence features", such as those contained in most Genbank and EMBL sequence files. This capability can be very useful - especially in development of automated genome annotation systems.
 
-On the other hand, if you need a script capable of simultaneously handling hundreds or thousands sequences at a time, then the overhead of adding annotations to each sequence can be significant. For such applications, you will want to use the PrimarySeq object. PrimarySeq is basically a stripped-down version of Seq. It contains just the sequence data itself and a few identifying labels (id, accession number, alphabet = dna, rna, or protein), and no features. For applications with hundreds or thousands or sequences, using PrimarySeq objects can significantly speed up program execution and decrease the amount of RAM the program requires. See [Bio::PrimarySeq](http://metacpan.org/pod/Bio%3A%3APrimarySeq) for more details.
+On the other hand, if you need a script capable of simultaneously handling hundreds or thousands sequences at a time, then the overhead of adding annotations to each sequence can be significant. For such applications, you will want to use the PrimarySeq object. PrimarySeq is basically a stripped-down version of Seq. It contains just the sequence data itself and a few identifying labels (`id, accession number, alphabet = dna, rna, or protein`), and no features. For applications with hundreds or thousands or sequences, using PrimarySeq objects can significantly speed up program execution and decrease the amount of RAM the program requires. See [Bio::PrimarySeq](http://metacpan.org/pod/Bio%3A%3APrimarySeq) for more details.
 
 [Bio::RichSeq](http://metacpan.org/pod/Bio%3A%3ARichSeq) objects store additional annotations beyond those used by standard Seq objects. RichSeq objects are created automatically when Genbank, EMBL, or Swissprot format files are read by SeqIO.
 
@@ -30,7 +33,7 @@ The [Bio::DB::GFF::RelSegment](http://metacpan.org/pod/Bio%3A%3ADB%3A%3AGFF%3A%3
 
 A [Bio::Seq::LargeSeq](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3ALargeSeq) object is a special type of Seq object used for handling very long sequences (e.g. &gt; 100 MB).
 
-A [Bio::LiveSeq::IO::BioPerl](http://metacpan.org/pod/Bio%3A%3ALiveSeq%3A%3AIO%3A%3ABioPerl) object is another specialized object for storing sequence data. LiveSeq addresses the problem of features whose location on a sequence changes over time. This can happen, for example, when sequence feature objects are used to store gene locations on newly sequenced genomes - locations which can change as higher quality sequencing data becomes available. Although a LiveSeq object is not implemented in the same way as a Seq object, LiveSeq does implement the SeqI interface (see below). Consequently, most methods available for Seq objects will work fine with LiveSeq objects. Section "III.7.4" and [Bio::LiveSeq](http://metacpan.org/pod/Bio%3A%3ALiveSeq) contain further discussion of LiveSeq objects.
+A [Bio::LiveSeq::IO::BioPerl](http://metacpan.org/pod/Bio%3A%3ALiveSeq%3A%3AIO%3A%3ABioPerl) object is another specialized object for storing sequence data. LiveSeq addresses the problem of features whose location on a sequence changes over time. This can happen, for example, when sequence feature objects are used to store gene locations on newly sequenced genomes - locations which can change as higher quality sequencing data becomes available. Although a LiveSeq object is not implemented in the same way as a Seq object, LiveSeq does implement the SeqI interface (see below). Consequently, most methods available for Seq objects will work fine with LiveSeq objects. [Bio::LiveSeq](http://search.cpan.org/search?query=Bio::LiveSeq) contain further discussion of LiveSeq objects.
 
 [Bio::SeqI](http://metacpan.org/pod/Bio%3A%3ASeqI) objects are Seq "interface objects". They are used to ensure bioperl's compatibility with other software packages. SeqI and other interface objects are not likely to be relevant to the casual Bioperl user.
 
@@ -58,7 +61,7 @@ See [Bio::Seq::LargeSeqI](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3ALargeSeqI) f
 
 ### LiveSeq
 
-Data files with sequences that are frequently being updated present special problems to automated sequence-annotation storage and retrieval projects. Bioperl's LiveSeq object is designed to address this situation.
+Data files with sequences that are frequently being updated present special problems to automated sequence-annotation storage and retrieval projects. Bioperl's [Bio::LiveSeq](http://search.cpan.org/search?query=Bio::LiveSeq) objects are designed to address this situation.
 
 The LiveSeq object addresses the need for a sequence object capable of handling sequence data that may be changing over time. In such a sequence, the precise locations of features along the sequence may change. LiveSeq deals with this issue by re-implementing the sequence object internally as a "double linked chain." Each element of the chain is connected to other two elements (the PREVious and the NEXT one). There is no absolute position like in an array, hence if positions are important, they need to be computed (methods are provided). Otherwise it's easy to keep track of the elements with their "LABELs". There is one LABEL (think of it as a pointer) to each ELEMENT. The labels won't change after insertions or deletions of the chain. So it's always possible to retrieve an element even if the chain has been modified by successive insertions or deletions.
 
@@ -78,7 +81,7 @@ See [Bio::LiveSeq::IO::BioPerl](http://metacpan.org/pod/Bio%3A%3ALiveSeq%3A%3AIO
 
 A Mutation object allows for a basic description of a sequence change in the DNA sequence of a gene. The Mutator object takes in mutations, applies them to a LiveSeq gene and returns a set of Bio::Variation objects describing the net effect of the mutation on the gene at the DNA, RNA and protein level.
 
-The objects in the Bio::Variation and Bio::LiveSeq directories were originally designed for the "Computational Mutation Expression Toolkit" project at European Bioinformatics Institute (EBI). The result of using them to mutate a gene is a holder object, 'SeqDiff', that can be printed out or queried for specific information. For example, to find out if restriction enzyme changes caused by a mutation are exactly the same in DNA and RNA sequences, we can write:
+The objects in [Bio::Variation](http://search.cpan.org/search?query=Bio::Variation) and [Bio::LiveSeq](http://search.cpan.org/search?query=Bio::LiveSeq) were originally designed for the "Computational Mutation Expression Toolkit" project at European Bioinformatics Institute (EBI). The result of using them to mutate a gene is a holder object, a "SeqDiff", that can be printed out or queried for specific information. For example, to find out if restriction enzyme changes caused by a mutation are exactly the same in DNA and RNA sequences, we can write:
 
 ``` perl
 use Bio::LiveSeq::IO::BioPerl;
@@ -102,7 +105,7 @@ For a complete working script, see the change\_gene.pl script in the examples/li
 
 ### SeqWithQuality
 
-SeqWithQuality objects are used to describe sequences with very specific annotations - that is, base quality annotations. Base quality information is important for documenting the reliability of base calls, typically made by sequencing machines. The quality data is contained within a [Bio::Seq::PrimaryQual](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3APrimaryQual) object.
+[Bio::Seq::SeqWithQuality](http://metacpan.org/pod/Bio::Seq::SeqWithQuality) objects are used to describe sequences with very specific annotations - that is, base quality annotations. Base quality information is important for documenting the reliability of base calls, typically made by sequencing machines. The quality data is contained within a [Bio::Seq::PrimaryQual](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3APrimaryQual) object.
 
 A SeqWithQuality object is created automatically when phred output, a \*phd file, is read by SeqIO, e.g.
 
@@ -155,7 +158,7 @@ $gffio->close();
 
 Further information can be found at [Bio::Tools::GFF](http://metacpan.org/pod/Bio%3A%3ATools%3A%3AGFF). Also see examples/tools/gff2ps.pl, examples/tools/gb\_to\_gff.pl, and the scripts in scripts/Bio-DB-GFF. Note: this module shouldn't be confused with the module [Bio::DB::GFF](http://metacpan.org/pod/Bio%3A%3ADB%3A%3AGFF) which is for implementing relational databases when using bioperl-db.
 
-### StructureI and Structure::IO
+### [Bio::Structure](http://search.cpan.org/search?query=Bio::Structure) and [Bio::Structure::IO](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AIO)
 
 A Structure object can be created from one or more 3D structures represented in Protein Data Bank, or pdb, format (see <http://www.pdb.org> for details).
 
@@ -192,21 +195,19 @@ for my $chain ($struc->get_chains) {
 }
 ```
 
-See [Bio::Structure::IO](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AIO), [Bio::Structure::Entry](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AEntry), [Bio::Structure::Model](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AModel), [Bio::Structure::Chain](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AChain), [Bio::Structure::Residue](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AResidue), [Bio::Structure::Atom](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AAtom) and the examples/structure directory for more information.
+See [Bio::Structure::IO](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AIO), [Bio::Structure::Entry](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AEntry), [Bio::Structure::Model](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AModel), [Bio::Structure::Chain](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AChain), [Bio::Structure::Residue](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AResidue), [Bio::Structure::Atom](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AAtom) and the *examples/structure* directory for more information.
 
-### Map::MapI and MapIO
+### [Bio::Map::MapI](http://metacpan.org/pod/Bio::Map::MapI) and [Bio::MapIO](http://metacpan.org/pod/Bio::MapIO)
 
 These are objects for manipulating genetic maps. Bioperl Map objects can be used to describe any type of biological map data including genetic maps, STS maps etc. Map I/O is performed with the MapIO object which works in a similar manner to the SeqIO, SearchIO and similar I/O objects described previously. In principle, Map I/O with various map data formats can be performed. However currently only mapmaker format is supported. Manipulation of genetic map data with Bioperl Map objects might look like this:
 
 ``` perl
 $mapio = new Bio::MapIO(-format => 'mapmaker', -file => $mapfile);
 $map = $mapio->next_map;  # get a map
-$maptype =  $map->type ;
+$maptype = $map->type ;
 for $marker ( $map->each_element ) {
   $marker_name = $marker->name ;  # get the name of each map marker
 }
 ```
 
 See [Bio::MapIO](http://metacpan.org/pod/Bio%3A%3AMapIO) and [Bio::Map::SimpleMap](http://metacpan.org/pod/Bio%3A%3AMap%3A%3ASimpleMap) for more information.
-
-<Category:HOWTOs>
