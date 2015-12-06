@@ -117,7 +117,8 @@ if( @prots < 2 ) {
     exit(0);
 }
 
-open(OUT, ">align_output.txt") || die("cannot open output align_output for writing");
+open(OUT, ">align_output.txt") || 
+  die("cannot open output align_output for writing");
 
 # Align the sequences with clustalw
 my $aa_aln = $aln_factory->align(\@prots);
@@ -150,7 +151,9 @@ my @pos = map {
    $c;
   } @otus;
 
-print OUT join("\t", qw(SEQ1 SEQ2 Ka Ks Ka/Ks PROT_PERCENTID CDNA_PERCENTID)),"\n";
+print OUT join("\t", 
+               qw(SEQ1 SEQ2 Ka Ks Ka/Ks PROT_PERCENTID CDNA_PERCENTID)),
+               "\n";
 foreach my $i ( 0 .. $#otus -1 ) {
  foreach my $j ( $i+1 .. $#otus ) {
    my $sub_aa_aln  = $aa_aln->select_noncont($pos[$i],$pos[$j]);
