@@ -44,7 +44,7 @@ Often the toolkit has a set of functionality that supports what the authors need
 
 These fall under the namespace since they are for sequence reading and writing. The convention is to be able to iterate through all the sequences in a file or data stream with the `next_seq()` method. If one wanted to write sequences the method `write_seq` accepts sequence objects and writes them out to the filehandle.
 
-Let's pretend the new format is called ''Jenny's Secret Format'', or ''jsf'' for short. [Choosing a module name](Choosing_a_module_name "wikilink") can be important but this three letter [acronym](wp:acronym "wikilink") should suffice. Like all format modules, the `jsf` module file should be located in a directory called `SeqIO` which itself is in a directory called `Bio` - so the file would be called `Bio/SeqIO/jsf.pm`. Let's pretend the format is very simple (although secret). Here is an example of the format we'll write a parser for:
+Let's pretend the new format is called ''Jenny's Secret Format'', or ''jsf'' for short. [Choosing a module name](Choosing_a_module_name "wikilink") can be important but this three letter [acronym](wp:acronym "wikilink") should suffice. Like all format modules, the `jsf` module file should be located in a directory called `SeqIO` which itself is in a directory called `Bio` - so the file would be called `Bio/SeqIO/jsf.pm`. Let's assume the format is simple. Here is an example of the format we'll write a parser for:
 
 `JSF: ID=N0001 DESC="Sampled from compost" SEQ=CCCCCGGGGGGTTTTTAAAAA `
 `JSF: ID=N0002 DESC="Sampled from humanure" SEQ=CCCGCCCCGGCAATTTAGTTT `
