@@ -24,7 +24,7 @@ efetch
 
 ### Retrieve raw data records from GenBank, save raw data to file, then parse via Bio::SeqIO
 
-This example uses a file intermediate between and . You could feasibly use a temp file in place of a file, or even a pipe as get_Response() also allows -compliant callbacks (method parameter '-cb') and stream size settings (parameter '-read_size_hint'). All passed args to get_Response() are merely passed onto the LWP::UserAgent::request() method. Note that piping data hasn't yet been extensively tested.
+This example uses a file intermediate between and . You could feasibly use a temp file in place of a file, or even a pipe as `get_Response()` also allows `-compliant` callbacks (method parameter `-cb`) and stream size settings (parameter `-read_size_hint`). All passed args to `get_Response()` are merely passed onto the LWP::UserAgent::request() method. Note that piping data hasn't yet been extensively tested.
 
 *Note* This retrieves the basic GenBank record for the IDs you pass in; this record could be a WGS record, a CONTIG record, etc. If you *always* want a full sequence record use: `-rettype => 'gbwithparts'`  (instead of `-rettype => 'gb'`).
 
@@ -198,7 +198,8 @@ print "available databases:  t", join("\t",
 or as a one-liner. The following:
 
 ```perl
-perl -MBio::DB::EUtilities -e "Bio::DB::EUtilities->new(-eutil => 'einfo')->print_all"
+perl -MBio::DB::EUtilities -e 
+  "Bio::DB::EUtilities->new(-eutil => 'einfo')->print_all"
 ```
 
 gets:
@@ -314,7 +315,8 @@ while (my $ds = $factory->next_DocSum) {
     # flattened mode, iterates through all Item objects
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
+        printf("%-20s:%s\n",$item->get_name,$item->get_content) 
+          if $item->get_content;
     }
 
     print "\n";
@@ -343,7 +345,8 @@ while (my $ds = $factory->next_DocSum) {
     # flattened mode
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
+        printf("%-20s:%s\n",$item->get_name,$item->get_content) 
+          if $item->get_content;
     }
 
     print "\n";
@@ -563,7 +566,8 @@ while ($retstart < $count) {
                              -retstart => $retstart);
 
     eval{
-        $factory->get_Response(-cb => sub {my ($data) = @_; print $out $data} );
+        $factory->get_Response(-cb => 
+            sub {my ($data) = @_; print $out $data} );
     };
     if ($@) {
         die "Server error: $@.  Try again later" if $retry == 5;
@@ -741,7 +745,8 @@ while (my $ds = $factory->next_DocSum) {
     # flattened mode
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
+        printf("%-20s:%s\n",$item->get_name,$item->get_content) 
+          if $item->get_content;
     }
     print "\n";
 }
@@ -811,7 +816,7 @@ for my $ds ( $factory->get_DocSums) {
 
 This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2009-July/030558.html) from the Bioperl mail list.
 
-There are several approaches to answering the above question, all based on whether or not you know the UID for the specific bioassay. The below script is a basic skeleton of what one can do if the UID is unknown but you know the name, thus using it as a search term. This approach uses esearch to find the BioAssay UIDs, elink to find all active compounds using the specific linkname `pcassay_pccompound_ active`, then dumps out esummary information via `print_all`  (to get active substances, use the linkname `pcassay_pcsubstance_` active  instead). The various summary information can be munged using the key names via the DocSum interface methods (see the code examples above for ways to do this).
+There are several approaches to answering the above question, all based on whether or not you know the UID for the specific bioassay. The below script is a basic skeleton of what one can do if the UID is unknown but you know the name, thus using it as a search term. This approach uses esearch to find the BioAssay UIDs, elink to find all active compounds using the specific linkname `pcassay_pccompound_ active`, then dumps out esummary information via `print_all`  (to get active substances, use the linkname `pcassay_pcsubstance_active`  instead). The various summary information can be munged using the key names via the DocSum interface methods (see the code examples above for ways to do this).
 
 ```perl
 
