@@ -6,7 +6,7 @@ layout: default
 Description
 -----------
 
-Ian Korf's **Z**oe **F**ile **F**ormat. It looks a lot like GFF but has a `&gt;` header which defines the name of the sequence and lacks the seq_id column accordingly.
+Ian Korf's **Z**oe **F**ile **F**ormat. It looks a lot like GFF but has a `&gt;` header which defines the name of the sequence and lacks the `seq_id` column accordingly.
 
 *The following is from the SNAP documenation about ZFF:*
 
