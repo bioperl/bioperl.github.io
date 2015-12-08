@@ -78,7 +78,7 @@ All the code examples, [BLAST] input files, and sequence files we'll use are ava
 
 Our first example will be rendering a table of [BLAST] hits on a sequence that is exactly 1000 residues long. For now, we're ignoring finicky little details like [HSPs], and assume that each hit is a single span from start to end. Also, we'll be using the [BLAST] score rather than P or E value. Later on, we'll switch to using real [BLAST] output parsed by the module, but for now, our table looks like this:
 
-'''Table 1. Simple blast hit file (data1.txt)'''
+*Table 1. Simple blast hit file (data1.txt)*
 
 `# hit           score   start   end`
 `hsHOX3          381     2       200`
@@ -94,7 +94,7 @@ Our first example will be rendering a table of [BLAST] hits on a sequence that i
 
 Our first attempt to parse and render this file looks like this:
 
-'''Example 1. Rendering the simple blast hit file (`render_blast1.pl`)'''
+*Example 1. Rendering the simple blast hit file (`render_blast1.pl`)*
 
 ```perl
 
@@ -146,7 +146,7 @@ After processing all the hits, we call the panel's `png()` method to render them
 
 `% perl render_blast1.pl data1.txt | display -`
 
-'''Figure 1. Rendering BLAST hits''' ![](Howto-graphics-fig1.png "fig:Howto-graphics-fig1.png")
+*Figure 1. Rendering BLAST hits* ![](Howto-graphics-fig1.png "fig:Howto-graphics-fig1.png")
 
 > `  \'\'\'Important!\'\'\'`
 >
@@ -168,7 +168,7 @@ This is all very nice, but it's missing two essential components:
 
 Example 2 fixes these problems.
 
-'''Example 2. Rendering the blast hit file with scores and scale'''
+*Example 2. Rendering the blast hit file with scores and scale*
 
 ```perl
 
@@ -237,7 +237,7 @@ In lines 18-22, we get a bit fancier with the blast hit track. Now, instead of c
 
 When we run the modified script, we get this image:
 
-'''Figure 2. The improved image.''' ![](Howto-graphics-fig2.png "fig:Howto-graphics-fig2.png")
+*Figure 2. The improved image.* ![](Howto-graphics-fig2.png "fig:Howto-graphics-fig2.png")
 
 > `  \'\'\'Important!\'\'\'`
 > `  Remember that if you are on a Windows platform, you need to put STDOUT`
@@ -250,7 +250,7 @@ Improving the Image
 
 Before we move into displaying gapped alignments, let's tweak the image slightly so that higher scoring hits appear at the top of the image, and the score itself is printed in red underneath each hit. The changes are shown in Example 3.
 
-'''Example 3. Rendering the blast hit file with scores and scale'''
+*Example 3. Rendering the blast hit file with scores and scale*
 
 ```perl
 
@@ -329,14 +329,14 @@ The second change is more complicated, and involves the -description option that
 
 Another minor change is the use of `-font2color` in line 23. This simply sets the color used for the description strings. Figure 3 shows the effect of these changes.
 
-'''Figure 3. The image with descriptions and sorted hits''' ![](Howto-graphics-fig3.png "fig:Howto-graphics-fig3.png")
+*Figure 3. The image with descriptions and sorted hits* ![](Howto-graphics-fig3.png "fig:Howto-graphics-fig3.png")
 
 Parsing Real [BLAST] Output
 ---------------------------------------------
 
 From here it's just a small step to writing a general purpose utility that will read a [BLAST] file, parse its output, and output a picture. The key is to use the infrastructure because it produces similarity hits that can be rendered directly by . Code example 4 shows the new utility.
 
-'''Example 4. Parsing and Rendering a Real BLAST File with Bio::SearchIO'''
+*Example 4. Parsing and Rendering a Real BLAST File with Bio::SearchIO*
 
 ```perl
 
@@ -428,7 +428,7 @@ Once all the [HSPs] are added to the feature, we insert the feature into the tra
 
 Figure 4 shows the output from a sample [BLAST] hit file.
 
-'''Figure 4. Output from the BLAST parsing and rendering script''' ![](Howto-graphics-fig4.png "fig:Howto-graphics-fig4.png")
+*Figure 4. Output from the BLAST parsing and rendering script* ![](Howto-graphics-fig4.png "fig:Howto-graphics-fig4.png")
 
 The next section will demonstrate how to parse and display [feature tables] from [GenBank] and [EMBL].
 
@@ -444,7 +444,7 @@ Rendering Features from a GenBank or EMBL File
 
 With you can render the feature table of a [GenBank] or [EMBL] file quite easily. The trick is to use to generate a set of objects, and to use those features to populate tracks (see the [Feature-Annotation HOWTO] for more information on features). The documentation for each of the individual. For simplicity's sake, we will sort each feature by its primary tag (such as "[exon]") and create a new track for each tag type. Code example 5 shows the code for rendering an [EMBL] or [GenBank] entry.
 
-'''Example 5. The embl2picture.pl script turns any [EMBL] or [GenBank] entry into a graphical rendering.'''
+*Example 5. The embl2picture.pl script turns any [EMBL] or [GenBank] entry into a graphical rendering.*
 
 ```perl
 
@@ -535,7 +535,7 @@ We are now ready to create a track for each feature type. In order to distinguis
 
 After adding all the feature types, we call the panel's png() method to generate a graphic file, which we print to STDOUT. If we are on a Windows platform, we would have to include binmode(STDOUT) prior to this statement in order to avoid Windows textmode carriage return/linefeed transformations. Figure 5 shows an example of the output of this script using an [EMBL sequence file] as input.
 
-'''Figure 5. Example output image.''' ![](Howto-graphics-fig5.png "fig:Howto-graphics-fig5.png")
+*Figure 5. Example output image.* ![](Howto-graphics-fig5.png "fig:Howto-graphics-fig5.png")
 
 A Better Version of the Feature Renderer
 ----------------------------------------
@@ -544,7 +544,7 @@ The previous example's rendering has numerous deficiencies. For one thing, there
 
 However, it's quite easy to customize the display, making the script into a generally useful utility. The revised code is shown in example 6.
 
-'''Example 6. The embl2picture.pl script turns any EMBL or GenBank entry into a graphical rendering'''
+*Example 6. The embl2picture.pl script turns any EMBL or GenBank entry into a graphical rendering*
 
 ```perl
 
@@ -731,7 +731,7 @@ will be turned into the description string `"db_xref=taxon:9606; organism=Homo S
 
 After adding all the feature types, we call the panel's png() method to generate a graphic file, which we print to STDOUT. Figure 6 shows an example of the output of this script.
 
-'''Figure 6. Example output with connected CDS.''' ![](Howto-graphics-fig6.png "fig:Howto-graphics-fig6.png")
+*Figure 6. Example output with connected CDS.* ![](Howto-graphics-fig6.png "fig:Howto-graphics-fig6.png")
 
 Summary
 -------
@@ -746,7 +746,7 @@ Another application you should investigate is the script. This script uses the B
 
 Finally, if you find yourself constantly tweaking the graphic options, you might be interested in , a utility module for interpreting and rendering a simple tab-delimited format for sequence features. is a Perl script built on top of this module, which you can find in the scripts/graphics directory in the [BioPerl] distribution.
 
-'''[Tip:''](Tip:\'\'\)'
+*[Tip:''](Tip:\'\'\)'
 
 Obtain the list of glyphs by running perldoc on . You can also obtain a description of the glyph options by running perldoc on individual glyphs, for example, for :
 

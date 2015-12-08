@@ -63,19 +63,19 @@ This approach is only appropriate for whole genome comparisons where there is a 
 
 This results in a matrix of results
 
-|                     | '''A''' | '''B''' | '''C''' |
+|                     | *A* | *B* | *C* |
 |---------------------|---------------------|---------------------|---------------------|
-| '''A''' | A-vs-A              | A-vs-B              | A-vs-C              |
-| '''B''' | B-vs-A              | B-vs-B              | B-vs-C              |
-| '''C''' | C-vs-A              | C-vs-B              | C-vs-C              |
+| *A* | A-vs-A              | A-vs-B              | A-vs-C              |
+| *B* | B-vs-A              | B-vs-B              | B-vs-C              |
+| *C* | C-vs-A              | C-vs-B              | C-vs-C              |
 
 To add a fourth species, one only needs to fill in the missing values in the added row and column of the matrix (''in italics'').
 
-|                     | '''A''' | '''B''' | '''C''' | ''D''      |
+|                     | *A* | *B* | *C* | ''D''      |
 |---------------------|---------------------|---------------------|---------------------|--------------------|
-| '''A''' | A-vs-A              | A-vs-B              | A-vs-C              | ''A-vs-D'' |
-| '''B''' | B-vs-A              | B-vs-B              | B-vs-C              | ''B-vs-D'' |
-| '''C''' | C-vs-A              | C-vs-B              | C-vs-C              | ''C-vs-D'' |
+| *A* | A-vs-A              | A-vs-B              | A-vs-C              | ''A-vs-D'' |
+| *B* | B-vs-A              | B-vs-B              | B-vs-C              | ''B-vs-D'' |
+| *C* | C-vs-A              | C-vs-B              | C-vs-C              | ''C-vs-D'' |
 | ''D''       | ''D-vs-A''  | ''D-vs-B''  | ''D-vs-C''  | ''D-vs-D'' |
 
 Ortholog identification

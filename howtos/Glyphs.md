@@ -3,7 +3,7 @@ title: "HOWTO:Glyphs"
 layout: howto
 ---
 
-Note, this is a '''Work in Progress'''  
+Note, this is a *Work in Progress*  
 
 Author
 ------
@@ -48,7 +48,7 @@ The Anatomy of a Glyph
 
 Before we begin, we need to go over some glyph jargon, starting with the anatomy of a glyph. Figure 1 shows the major parts of a glyph.
 
-'''Figure 1. Major parts of a glyph''' ![](Howto-glyphs-fig1.jpg "fig:Howto-glyphs-fig1.jpg")
+*Figure 1. Major parts of a glyph* ![](Howto-glyphs-fig1.jpg "fig:Howto-glyphs-fig1.jpg")
 
 A glyph consists of several parts:
 
@@ -57,19 +57,19 @@ A glyph consists of several parts:
 The main part, also called the body.
 
 <dd>
-The body starts at the nucleotide indicated by the start of the associated feature, and ends at the nucleotide indicated by the end of the associated feature. The body is ''width'' pixels wide and ''height'' pixels high. The width is ordinarily calculated automatically by . The height is set by the '''-height''' option. The ''bounds rectangle'' completely surrounds the body and does not include the label, description, or other parts. The body may consist of several subparts, and each of these may contain sub-subparts.
+The body starts at the nucleotide indicated by the start of the associated feature, and ends at the nucleotide indicated by the end of the associated feature. The body is ''width'' pixels wide and ''height'' pixels high. The width is ordinarily calculated automatically by . The height is set by the *-height* option. The ''bounds rectangle'' completely surrounds the body and does not include the label, description, or other parts. The body may consist of several subparts, and each of these may contain sub-subparts.
 
 <dt>
 The label
 
 <dd>
-This is an optional label containing the name of the feature and printed above the body. It is ordinarily set by the '''-label''' option.
+This is an optional label containing the name of the feature and printed above the body. It is ordinarily set by the *-label* option.
 
 <dt>
 The description
 
 <dd>
-This is an optional description printed below the body of the glyph. It is ordinarily set by the '''-description''' option.
+This is an optional description printed below the body of the glyph. It is ordinarily set by the *-description* option.
 
 </dl>
 Because the label and description occupy space outside the bounds rectangle, glyphs require extra space above and/or below. This extra space is called ''pad_top'' and ''pad_bottom.'' The glyph has to allocate this space explicitly. In addition, if the glyph wants to draw something beyond the left or right borders of the bounds rectangle, then it must allocate some ''pad_left'' and/or ''pad_right.''
@@ -116,7 +116,7 @@ A Simple Glyph
 
 To get an idea of how glyph writing works, we'll create a simple custom glyph. This glyph is an hourglass that is high at its left and right edges and tapers to zero at its midpoint. Figure 2 shows what it will look like.
 
-'''Figure 2. The example hourglass glyph''' ![](Howto-glyphs-fig2.jpg "fig:Howto-glyphs-fig2.jpg")
+*Figure 2. The example hourglass glyph* ![](Howto-glyphs-fig2.jpg "fig:Howto-glyphs-fig2.jpg")
 
 In preparation for creating the module for this glyph, you will need a private library directory in which to place Perl code. Please create the directory `~/lib/Bio/Graphics/Glyph` in your home directory (or another convenient place). On Linux systems, the following command will do the trick:
 
@@ -124,7 +124,7 @@ In preparation for creating the module for this glyph, you will need a private l
 
 Within this directory, create the file `hourglass.pm` with the following contents:
 
-'''Example 1. The hourglass glyph (first version)'''
+*Example 1. The hourglass glyph (first version)*
 
 ```perl
 
@@ -174,7 +174,7 @@ That's all there is to it! We end the module with `1;` so that Perl knows it com
 
 To view the glyph, we need to write a small script that exercises it. Example 2 shows a suitable one:
 
-'''Example 2. A script to exercise the hourglass glyph'''
+*Example 2. A script to exercise the hourglass glyph*
 
 ```perl
 
@@ -234,7 +234,7 @@ Get the feature associated with this glyph. For nested glyphs (subglyphs within 
 
 
 $value = $self->option('option_name')  
-Get the value associated with '''-option_name'''. This is the main way of retrieving options passed to add_track().
+Get the value associated with *-option_name*. This is the main way of retrieving options passed to add_track().
 
 
 $color = $self->bgcolor  
@@ -336,7 +336,7 @@ Some glyphs will want to add decoration to the region outside their bounds box. 
 
 Our first pass will add the arrow, but won't let Bio::Graphics know we need the additional space. This is intended to show why this is necessary. Create a file in `~/lib/Bio/Graphics/Glyph` named `hourglass_arrow.pm`. Its contents should be as follows:
 
-'''Example 3. The hourglass glyph (second version)'''
+*Example 3. The hourglass glyph (second version)*
 
 ```perl
 
@@ -369,7 +369,7 @@ We next proceed to draw the arrow. We calculate our bounds box using the bounds(
 
 To view the new glyph, save test_hourglass.pl under the filename test_hourglass_arrow.pl, and modify it to read as follows:
 
-'''Example 4. A script to exercise the hourglass_arrow glyph'''
+*Example 4. A script to exercise the hourglass_arrow glyph*
 
 ```perl
 
@@ -406,13 +406,13 @@ print $panel->png;
 
 After sending the output of this script to a suitable display program, you will get the following:
 
-'''Figure 3. The example hourglass_arrow glyph''' ![](Howto-glyphs-fig3.jpg "fig:Howto-glyphs-fig3.jpg")
+*Figure 3. The example hourglass_arrow glyph* ![](Howto-glyphs-fig3.jpg "fig:Howto-glyphs-fig3.jpg")
 
 ### Second Pass
 
 Everything looks fine, but there's something wrong with the glyph. To see the problem, look at what happens when we modify the testing script to draw two adjacent features:
 
-'''Example 5. A script that shows problems in the hourglass_arrow glyph'''
+*Example 5. A script that shows problems in the hourglass_arrow glyph*
 
 ```perl
 
@@ -453,11 +453,11 @@ print $panel->png;
 
 When we run this, we do not get what we expect:
 
-'''Figure 4. The hourglass_arrow glyph does not bump correctly''' ![](Howto-glyphs-fig4.jpg "fig:Howto-glyphs-fig4.jpg")
+*Figure 4. The hourglass_arrow glyph does not bump correctly* ![](Howto-glyphs-fig4.jpg "fig:Howto-glyphs-fig4.jpg")
 
 The issue is that the second feature overlaps the arrow of the first. This is because the hourglass_arrow didn't tell Bio::Graphics that the glyph needs extra padding on the right in order to draw the arrow. Fortunately, this is easy to do:
 
-'''Example 6. Revised hourglass_arrow Glyph'''
+*Example 6. Revised hourglass_arrow Glyph*
 
 ```perl
 
@@ -487,15 +487,15 @@ We add a pad_right() method that simply returns the constant value ARROW_LENGTH.
 
 When we rerun the test script, we get the desired output:
 
-'''Figure 5. The revised hourglass_arrow glyph''' ![](Howto-glyphs-fig5.jpg "fig:Howto-glyphs-fig5.jpg")
+*Figure 5. The revised hourglass_arrow glyph* ![](Howto-glyphs-fig5.jpg "fig:Howto-glyphs-fig5.jpg")
 
 We will see later how to add top and bottom padding.
 
 ### Third Pass
 
-What if we want to give the user the option of changing the length of the arrow? It is very easy to define new '''-option_name''' options for custom glyphs. In this case we want to add support for a runtime option named '''-arrow_length'''. Open up the current hourglass_arrow.pm and modify it to look like the following:
+What if we want to give the user the option of changing the length of the arrow? It is very easy to define new *-option_name* options for custom glyphs. In this case we want to add support for a runtime option named *-arrow_length*. Open up the current hourglass_arrow.pm and modify it to look like the following:
 
-'''Example 7. The hourglass_arrow Glyph Enhanced with Support for -arrow_length'''
+*Example 7. The hourglass_arrow Glyph Enhanced with Support for -arrow_length*
 
 ```perl
 
@@ -560,7 +560,7 @@ $panel->add_track(\[$test_feature,$test2_feature\],
 
 When we redraw, we get:
 
-'''Figure 6. The hourglass_arrow glyph with a long tail''' ![](Howto-glyphs-fig6.jpg "fig:Howto-glyphs-fig6.jpg")
+*Figure 6. The hourglass_arrow glyph with a long tail* ![](Howto-glyphs-fig6.jpg "fig:Howto-glyphs-fig6.jpg")
 
 The nice thing about this is that you can pass a callback (subroutine coderef) to -arrow_length, and it will work just like all the other callback options. To see this, modify add_track() once again so that -arrow_length corresponds to an anonymous subroutine that returns different arrow lengths depending on whether it was called for $test_feature or $test2_feature:
 
@@ -585,13 +585,13 @@ $panel->add_track(\[$test_feature,$test2_feature\],
 
 The result looks like this:
 
-'''Figure 7. The hourglass_arrow glyph with a callback-controlled tail''' ![](Howto-glyphs-fig7.jpg "fig:Howto-glyphs-fig7.jpg")
+*Figure 7. The hourglass_arrow glyph with a callback-controlled tail* ![](Howto-glyphs-fig7.jpg "fig:Howto-glyphs-fig7.jpg")
 
 ### Allocating Top and Bottom Padding
 
 Allocating top and bottom padding is slightly more difficult than left and right padding because our superclass, Bio::Graphics::Glyph::box, already uses some padding to draw the label and description. Fortunately it's not all that difficult to finesse this. You merely need to add the amount of padding your custom glyph needs to the padding needed by the parent. Example 8 illustrates this:
 
-'''Example 8: Adjusting top and bottom padding'''
+*Example 8: Adjusting top and bottom padding*
 
 ```perl
 
@@ -657,7 +657,7 @@ The superclass for all multipart glyphs is Bio::Graphics::Glyph::segments. To cr
 
 To see how this works, let's look at a version of the hourglass glyph that will accept multipart features:
 
-'''Example 9. The hourglass glyph with support for multipart features'''
+*Example 9. The hourglass glyph with support for multipart features*
 
 ```perl
 
@@ -687,11 +687,11 @@ sub draw_component {
 
 ```
 
-The new glyph is named "multihourglass". Its definition is '''exactly''' the same as the original hourglass glyph, with one critical change: Instead of inheriting from Bio::Graphics::Glyph::box, it inherits from Bio::Graphics::Glyph::segments.
+The new glyph is named "multihourglass". Its definition is *exactly* the same as the original hourglass glyph, with one critical change: Instead of inheriting from Bio::Graphics::Glyph::box, it inherits from Bio::Graphics::Glyph::segments.
 
 To exercise the new glyph, we can use the script shown in Example 10.
 
-'''Example 10. A script to exercise the multihourglass glyph'''
+*Example 10. A script to exercise the multihourglass glyph*
 
 ```perl
 
@@ -739,13 +739,13 @@ print $panel->png;
 
 This script creates three features:
 
-# '''Test feature 1''' is a complex feature containing three sub seqfeatures.
-  '''Test feature 2''', which is a simple feature with no subparts.
-  '''Test feature 3''', a simple feature with a three-part split location.
+# *Test feature 1* is a complex feature containing three sub seqfeatures.
+  *Test feature 2*, which is a simple feature with no subparts.
+  *Test feature 3*, a simple feature with a three-part split location.
 
 The result is shown in Figure 8. As you can see, the glyph handles all three cases in the way that you'd expect.
 
-'''Figure 8. The multihourglass glyph with a variety of features''' ![](Howto-glyphs-fig8.jpg "fig:Howto-glyphs-fig8.jpg").
+*Figure 8. The multihourglass glyph with a variety of features* ![](Howto-glyphs-fig8.jpg "fig:Howto-glyphs-fig8.jpg").
 
 ### Sub-subfeatures and the maxdepth() method
 
@@ -770,7 +770,7 @@ The feature now contains three subfeatures. The second and third subfeatures sti
 
 To fix this, we modify the multihourglass.pm module as follows:
 
-'''Example 10. The multihourglass glyph with support for two levels of subfeatures'''
+*Example 10. The multihourglass glyph with support for two levels of subfeatures*
 
 ```perl
 
@@ -792,7 +792,7 @@ sub draw_component {
 
 The ''maxdepth()'' method returns the numeric value 2 to tell Bio::Graphics to step into at most two levels of features. This has exactly the same effect as passing `-maxdepth=>2` to the ''add_track()'' method, except that it is now hard-coded into the glyph. Now when we run the modified test script, the first subfeature of the leftmost feature is broken into its two parts as we want (Figure 9).
 
-'''Figure 9. The multihourglass glyph with support for two levels of subfeature''' ![](Howto-glyphs-fig9.jpg "fig:Howto-glyphs-fig9.jpg").
+*Figure 9. The multihourglass glyph with support for two levels of subfeature* ![](Howto-glyphs-fig9.jpg "fig:Howto-glyphs-fig9.jpg").
 
 ### Drawing at different nesting levels
 
@@ -800,11 +800,11 @@ An unsatisfactory feature of the image produced at the end of the previous secti
 
 To fix this, we will make a small change to the ''draw()'' method. ''draw()'' is defined in Bio::Graphics::Glyph. It walks through each subglyph and calls its ''draw_component()'' method. It then draws a solid line to connect each of the subglyphs. We will change ''draw()'' so that there is a rectangle drawn around each level 1 subfeature if it contains subparts. The effect is shown in Figure 10.
 
-'''Figure 10: Multihourglass glyph modified to show grouping of sub-subfeatures''' ![](Howto-glyphs-fig10.jpg "fig:Howto-glyphs-fig10.jpg")
+*Figure 10: Multihourglass glyph modified to show grouping of sub-subfeatures* ![](Howto-glyphs-fig10.jpg "fig:Howto-glyphs-fig10.jpg")
 
 Example 10 shows the modifications to multihourglass.pm needed to achieve this effect.
 
-'''Example 10: The multihourglass.pm module with subfeature grouping'''
+*Example 10: The multihourglass.pm module with subfeature grouping*
 
 ```perl
 

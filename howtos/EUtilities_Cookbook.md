@@ -361,7 +361,7 @@ elink
 
 The originating database (`-dbfrom`) is 'y', and the destination database (`-db`) is 'x.' There are two ways to go about this; you can retrieve all the destination database IDs lumped together (where there is no one-to-one correspondence, the default), or you can set the  `correspondence` flag to retrieve the destination IDs in a way where they correspond with the query IDs. We'll demonstrate both. By the way, don't be surprised if you don't have a linked UID for every initial query UID; UIDs (in particular sequence records) are notoriously volatile, so you may be using an older UID which no longer links to a corresponding UID in the database of interest.
 
-'''No correspondence:''' Each print statement below will print all submitted IDs and linked-to IDs lumped together, as they were retrieved.
+*No correspondence:* Each print statement below will print all submitted IDs and linked-to IDs lumped together, as they were retrieved.
 
 ```perl
 
@@ -386,7 +386,7 @@ while (my $ds = $factory->next_LinkSet) {
 
 ```
 
-'''ID correspondence:''' To switch on ID correspondence, just use the 'correspondence' flag; each print statement below will only print one ID per linkset (one protein GI, one nucleotide GI).
+*ID correspondence:* To switch on ID correspondence, just use the 'correspondence' flag; each print statement below will only print one ID per linkset (one protein GI, one nucleotide GI).
 
 ```perl
 
@@ -415,7 +415,7 @@ while (my $ds = $factory->next_LinkSet) {
 
 Set `-dbfrom` to `-db`. This retrieves a list of neighbors based on a score (also accessible, see the example code). The `score` depends on the database queried. The curious can check [this link](http://eutils.ncbi.nlm.nih.gov/entrez/query/static/entrezlinks.html) for an updated list of link names; the link descriptions specify how the scores are calculated. For the example, IDs returned using the link name 'protein_protein' (where `dbfrom` = 'db' = 'protein') are based on a score calculated from precomputed BLASTP results.
 
-'''Note :''' You can also do this for a list of IDs (as each neighbor list per ID is preserved in a LinkSet); in cases where multiple IDs are submitted you should use `correspondence` to ensure that the returned IDs relate to each query ID. Also, each ID query may get thousands of neighboring IDs, something to remember when it comes to memory.
+*Note :* You can also do this for a list of IDs (as each neighbor list per ID is preserved in a LinkSet); in cases where multiple IDs are submitted you should use `correspondence` to ensure that the returned IDs relate to each query ID. Also, each ID query may get thousands of neighboring IDs, something to remember when it comes to memory.
 
 ```perl
 
@@ -757,7 +757,7 @@ esearch->elink->esummary
 
 ### How do I find all related structures to accession x?
 
-'''NOTE:''' This code requires a bug fix in bioperl-live that will appear in 1.6.1.
+*NOTE:* This code requires a bug fix in bioperl-live that will appear in 1.6.1.
 
 First, get the protein GI, then find the related sequences to that GI using elink. From that list find those present in the structure database using elink again, finally using esummary to print out all information. The following example does that using the NCBI history server to our advantage.
 
@@ -812,7 +812,7 @@ for my $ds ( $factory->get_DocSums) {
 
 ### How do I find all active compounds/substances for a particular bioassay?
 
-'''NOTE:''' This code requires a bug fix in bioperl-live that will appear in 1.6.1.
+*NOTE:* This code requires a bug fix in bioperl-live that will appear in 1.6.1.
 
 This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2009-July/030558.html) from the Bioperl mail list.
 

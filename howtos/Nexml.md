@@ -23,7 +23,7 @@ NeXML functionality in bioperl consists of four modules that allow the user to i
 Getting `Bio::Phylo`
 --------------------
 
-To use these modules, the `Bio::Phylo` package ('''not''' part of BioPerl) must be installed. To obtain it via CPAN, do
+To use these modules, the `Bio::Phylo` package (*not* part of BioPerl) must be installed. To obtain it via CPAN, do
 
 `$ cpan`
 `cpan[1]> install Bio::Phylo`

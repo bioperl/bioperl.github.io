@@ -118,7 +118,7 @@ Options can be directed to the `map`, `assemble` and `cns2fq` components of the 
  # second_read_length
  # unmapped_dump
 ```
-then in the factory construction, specify the desired parameters prefixed by `map_`, `asm_`, or `c2q_`, as appropriate (note, '''no''' `-command` parameter):
+then in the factory construction, specify the desired parameters prefixed by `map_`, `asm_`, or `c2q_`, as appropriate (note, *no* `-command` parameter):
 
 ```perl
 $maqfac = Bio::Tools::Run::Maq->new( -map_max_mismatches => 1 );
