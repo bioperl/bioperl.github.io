@@ -12,7 +12,6 @@ Author
 
 University of California at Riverside
 
-
 Copyright
 ---------
 
@@ -33,7 +32,7 @@ Abstract
 --------
 
 This [HOWTO](http://bioperl.github.io/howtos/) intends to show how to use the [BioPerl Tree](https://metacpan.org/pod/Bio::Tree::Tree)
-objects to manipulate phylogenetic trees. It shows how to read and write trees, query them for information about specific nodes or overall statistics, and create pictures of trees. Advanced topics include discussion of generating random trees and extensions of the basic structure for integration with other modules in [BioPerl](https://bioperl.github.io).
+objects to manipulate phylogenetic trees. It shows how to read and write trees, query them for information about specific nodes or overall statistics, and create pictures of trees. Advanced topics include discussion of generating random trees and extensions of the basic structure for integration with other modules in [BioPerl](https://bioperl.github.io). See the [list of tree formats](/formats/tree_formats/index.html) for details on each format.
 
 Introduction
 ------------
