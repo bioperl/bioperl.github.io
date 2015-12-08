@@ -26,10 +26,9 @@ Key Organizing Concepts
 
 ## Search report ##
 
-This is just the file read by [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO), which can come in many flavors. The flavor is the _algorithm_, and *not* the _format_ specified to `Bio::SearchIO::new()`. _Algorithms_ are, e.g., BLASTX, BLASTN, TBLASTX, and so on.
+This is just the file read by [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO), which can come in many flavors. The flavor is the _algorithm_, and *not* the _format_ specified to `Bio::SearchIO::new()`. Algorithms are, e.g., BLASTX, BLASTN, TBLASTX, and so on.
 
 ## Sequence _type_ ##
-
 
 An HSP involves two sequences, aligned to each other: the _query_ and the _hit_ (or _subject_). The query is often the sequence entered by the user, who is looking for matches among the subject sequences in a database. When a subject sequence matches (a portion of) the query well enough, it is reported as a hit, and the HSP describing the alignment is written to the search report. A sequence in an HSP is defined by its _type_: _query_ or _hit_ (_subject_).
 
