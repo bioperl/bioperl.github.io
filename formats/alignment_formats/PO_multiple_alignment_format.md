@@ -1,0 +1,82 @@
+---
+title: PO multiple alignment format
+layout: default
+---
+
+References
+----------
+
+http://www.ncbi.nlm.nih.gov/pubmed/11934745
+
+Example
+-------
+
+### Input
+
+    >Seq1 variant A
+    AGGCTTCGGATTATTATATTCTCCCCCTTAT
+    >Seq2 variant B
+    AGGCTTCGGTCGGATTATATTATTCTCTTAT
+    >Seq3 variant C
+    TTCTAGGCTTCATTACTTATATTCTCCCCCCTAT
+
+### Output
+
+    VERSION=LPO.0.1
+    NAME=Seq1
+    TITLE=variant A
+    LENGTH=44
+    SOURCECOUNT=3
+    SOURCENAME=Seq1
+    SOURCEINFO=31 0 1 -1 variant A
+    SOURCENAME=Seq2
+    SOURCEINFO=31 0 1 -1 variant B
+    SOURCENAME=Seq3
+    SOURCEINFO=34 0 1 -1 variant C
+    T:S2
+    T:L0S2
+    C:L1S2
+    T:L2S2
+    A:L3S0S1S2
+    G:L4S0S1S2
+    G:L5S0S1S2
+    C:L6S0S1S2
+    T:L7S0S1S2
+    T:L8S0S1S2
+    C:L9S0S1S2
+    G:L10S0S1
+    G:L11S0S1
+    T:L12S1A14
+    A:L12L10S0S2A13
+    C:L13S1A16
+    T:L14S0S2A15
+    G:L15S1A18
+    T:L16S0S2A17
+    G:L17S1
+    A:L18L19S0S1S2
+    C:L20S2
+    T:L20L21S0S1S2
+    T:L22S0S1S2
+    A:L23S0S1S2
+    T:L24S0S1S2
+    A:L25S0S1S2
+    T:L26S0S1S2
+    T:L27S0S1S2
+    A:L28S1A30
+    C:L28S0S2A29
+    T:L30L29S0S1S2
+    T:L31S1A33
+    C:L31S0S2A32
+    C:L33L32S0S1S2
+    T:L34S1A36
+    C:L34S0S2A35
+    C:L36L35S0S1S2
+    C:L37S0S2
+    C:L38S2A40
+    T:L38L37S0S1A39
+    T:L40L39S0S1S2
+    A:L41S0S1S2
+    T:L42S0S1S2
+
+
+ 
