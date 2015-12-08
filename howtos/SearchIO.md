@@ -141,8 +141,7 @@ A plaintext NCBI-BLAST report like that used in the example above probably remai
 | Result | hits               |        | List of all [Bio::Search::Hit::GenericHit](https://metacpan.org/pod/Bio::Search::Hit::GenericHit) objects for this Result       |
 | Result | rewind             |        | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits |
 
-
-Table 2.1: All the data returned by methods used by the Result objects when the report shown above is used as input. 
+Table 2.1: The data returned by the Result object methods when the report shown above is used as input. 
 
 Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
@@ -163,7 +162,7 @@ Note that many of the methods shown can be used to either get or set values, but
 | Hit    | rewind            |                  | Resets the internal counter for next_hsp() so that the iterator will begin at the beginning of the list |
 
 
-Table 2.2. All the data returned by methods used by the Hit objects when the report shown above is used as input.
+Table 2.2. The data returned by Hit object methods when the report shown above is used as input.
 
 Many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
@@ -210,7 +209,7 @@ Many of the methods shown can be used to either get or set values, but we're jus
 | HSPt | hsp_group   | *Not available in this report* | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
 | HSP    | links   | *Not available in this report* | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
 
-Table 2.3. All the data returned by methods used by the HSP objects when the report shown above is used as input. 
+Table 2.3. The data returned by HSP object methods when the report shown above is used as input. 
 
 Many of the methods shown can be used to either get or set values, but we're just showing what they get. Also note that `frac_conserved` is only useful for protein alignments, if used with nucleotide alignments it will be same as `frac_identical`.
 
@@ -228,7 +227,7 @@ use Bio::AlignIO;
 # $aln will be a Bio::SimpleAlign object
 my $aln = $hsp->get_aln; 
 my $alnIO = Bio::AlignIO->new(-format => "msf", 
- -file => ">hsp.msf"); 
+                              -file => ">hsp.msf"); 
 $alnIO->write_aln($aln);
 ```
 
@@ -426,7 +425,8 @@ my $writerhtml = new Bio::SearchIO::Writer::HTMLResultWriter();
 my $outhtml = new Bio::SearchIO(-writer => $writerhtml,
    -file   => ">searchio.html");
 
-# Loop through all the results, successively adding each one to the bottom of # the HTML report
+# Loop through all the results, successively adding each one to 
+# the bottom of the HTML report
 while ( $result = $searchio->next_result() ) {  
     $outhtml->write_report($result);
 }

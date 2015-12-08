@@ -5,7 +5,7 @@ layout: howto
 
 The API described here for refers to the version currently found in as a separate release on CPAN. It is not compatible with the experimental API used in older BioPerl releases.
 
-Also see the [EUtilities Web Service HOWTO].
+Also see the [EUtilities Web Service HOWTO](EUtilities_Web_Service.html).
 
 Authors
 =======
@@ -26,7 +26,7 @@ efetch
 
 This example uses a file intermediate between and . You could feasibly use a temp file in place of a file, or even a pipe as get_Response() also allows -compliant callbacks (method parameter '-cb') and stream size settings (parameter '-read_size_hint'). All passed args to get_Response() are merely passed onto the LWP::UserAgent::request() method. Note that piping data hasn't yet been extensively tested.
 
-'''Note''': This retrieves the basic GenBank record for the IDs you pass in; this record could be a WGS record, a CONTIG record, etc. If you '''always''' want a full sequence record use: `-rettype => 'gbwithparts'  (instead of `-rettype => 'gb'`).
+*Note* This retrieves the basic GenBank record for the IDs you pass in; this record could be a WGS record, a CONTIG record, etc. If you *always* want a full sequence record use: `-rettype => 'gbwithparts'`  (instead of `-rettype => 'gb'`).
 
 ```perl
 
@@ -77,9 +77,9 @@ print join(',',@accs), "\n";
 
 ### Get GIs for a list of accessions
 
-There are two ways to go about this. The first (shown here) uses `efetch`, which is the only eUtil capable of accepting both UIDs as well as accession numbers. This returns a simple list of the UIDs for the accession indicated; the raw response data from the object is split into an array for further use. As with the GI->accession example above, the list is generally globbed together, so there is no one-to-one correspondence between the UID and accession.
+There are two ways to go about this. The first (shown here) uses `efetch`, which is the only eUtil capable of accepting both UIDs as well as accession numbers. This returns a simple list of the UIDs for the accession indicated; the raw response data from the object is split into an array for further use. As with the `GI->accession` example above, the list is generally globbed together, so there is no one-to-one correspondence between the UID and accession.
 
-The second uses esummary and is to be added!
+The second uses `esummary` and is to be added!
 
 ```perl
 
@@ -101,9 +101,9 @@ print join(',',@gis), "\n";
 
 ### Downloading a large contig
 
-Normally using a '-rettype' set to 'gb' when retrieving any file designated as a contig will retrieve the file without a sequence, but with the CONTIG section containing a join() statement describing how the sequence is built from smaller fragments.
+Normally using a `-rettype` set to *gb* when retrieving any file designated as a contig will retrieve the file without a sequence, but with the CONTIG section containing a `join()` statement describing how the sequence is built from smaller fragments.
 
-You should set '-rettype' to 'gbwithparts' to get the full sequence with all of its features.
+You should set `-rettype` to `gbwithparts` to get the full sequence with all of its features.
 
 ```perl
 
@@ -154,7 +154,7 @@ esearch
 
 ### Simple database query
 
-Here we use the the simple query 'BRCA1 and human' to answer the question: "What protein UIDs correspond to BRCA1 in humans?" To ensure you retrieve the full list of IDs, set the '-retmax' parameter to a high value if you expect long list of returned IDs.
+Here we use the the simple query 'BRCA1 and human' to answer the question: "What protein UIDs correspond to BRCA1 in humans?" To ensure you retrieve the full list of IDs, set the `-retmax` parameter to a high value if you expect long list of returned IDs.
 
 ```perl
 
@@ -191,16 +191,19 @@ use Bio::DB::EUtilities;
 my $factory = Bio::DB::EUtilities->new(-eutil => 'einfo',
                                        -email => 'mymail@foo.bar',);
 
-print "available databases:  t", join(" t",$factory->get_available_databases),"\n";
-
+print "available databases:  t", join("\t",
+  $factory->get_available_databases),"\n";
 ```
 
 or as a one-liner. The following:
 
-  perl -MBio::DB::EUtilities -e "Bio::DB::EUtilities->new(-eutil => 'einfo')->print_all"
+```perl
+perl -MBio::DB::EUtilities -e "Bio::DB::EUtilities->new(-eutil => 'einfo')->print_all"
+```
 
 gets:
 
+```
     EUtil               :einfo
     DB                  :pubmed, protein, nucleotide, nuccore, nucgss, nucest, structure, genome,
                         :biosystems, books, cancerchromosomes, cdd, gap,
@@ -210,6 +213,7 @@ gets:
                         :proteinclusters, pcassay, pccompound, pcsubstance,
                         :seqannot, snp, sra, taxonomy, toolkit, toolkitall,
                         :unigene, unists
+```
 
 ### What information is available for database 'x'?
 
@@ -222,7 +226,6 @@ use Bio::DB::EUtilities;
 my $factory = Bio::DB::EUtilities->new(-eutil => 'einfo',
                                        -email => 'mymail@foo.bar',
                                        -db    => 'pubmed');
-
 # for quick simple output, use:
 # 1.  $factory->print_all;
 # 2.  or use snippets of the following for what you need
@@ -241,7 +244,9 @@ while (my $field = $factory->next_FieldInfo) {
     print "\t\tdesc: ",$field->get_field_description,"\n";
     print "\t\tcount: ",$field->get_term_count,"\n";
     print "\t\tAttributes: ";
-    print join(',', grep {$field->$_} qw(is_date is_singletoken is_hierarchy is_hidden is_numerical)),"\n"; }
+    print join(',', grep {$field->$_} 
+      qw(is_date is_singletoken is_hierarchy is_hidden is_numerical)),"\n"; 
+}
 
 while (my $link = $factory->next_LinkInfo) {
     print "\t\tLink name: ",$link->get_link_name,"\n";
@@ -257,7 +262,7 @@ egquery
 
 ### How do I run a global query against all Entrez databases?
 
-You can use egquery to do this. Note this only gives you the count (no IDs), but you could easily follow this by iterating through the specific databases with hits using esearch to retrieve relevant UIDs.
+You can use `egquery` to do this. Note this only gives you the count (no IDs), but you could easily follow this by iterating through the specific databases with hits using esearch to retrieve relevant UIDs.
 
 ```perl
 
@@ -272,7 +277,6 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'egquery',
 # 2.  or use snippets of the following for what you need
 
 # iterate through GlobalQuery objects
-
 while (my $gq = $factory->next_GlobalQuery) {
     print "Database: ",$gq->get_database,"\n";
     print "   Count: ",$gq->get_count,"\n";
@@ -280,7 +284,6 @@ while (my $gq = $factory->next_GlobalQuery) {
 }
 
 # counts from specific databases
-
 print "PubMed Count: ", $factory->get_count('pubmed'),"\n";
 print "Protein Count: ", $factory->get_count('protein'),"\n";
 
@@ -305,7 +308,6 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
                                        -id    => @ids);
 
 # iterate through the individual DocSum objects (one per ID)
-
 while (my $ds = $factory->next_DocSum) {
     print "ID: ",$ds->get_id,"\n";
 
@@ -354,7 +356,7 @@ elink
 
 ### I want a list of database 'x' UIDs that are linked from a list of database 'y' UIDs.
 
-The originating database ('-dbfrom') is 'y', and the destination database ('-db') is 'x.' There are two ways to go about this; you can retrieve all the destination database IDs lumped together (where there is no one-to-one correspondence, the default), or you can set the 'correspondence' flag to retrieve the destination IDs in a way where they correspond with the query IDs. I'll demonstrate both. By the way, don't be surprised if you don't have a linked UID for every initial query UID; UIDs (in particular sequence records) are notoriously volatile, so you may be using an older UID which no longer links to a corresponding UID in the database of interest.
+The originating database (`-dbfrom`) is 'y', and the destination database (`-db`) is 'x.' There are two ways to go about this; you can retrieve all the destination database IDs lumped together (where there is no one-to-one correspondence, the default), or you can set the  `correspondence` flag to retrieve the destination IDs in a way where they correspond with the query IDs. We'll demonstrate both. By the way, don't be surprised if you don't have a linked UID for every initial query UID; UIDs (in particular sequence records) are notoriously volatile, so you may be using an older UID which no longer links to a corresponding UID in the database of interest.
 
 '''No correspondence:''' Each print statement below will print all submitted IDs and linked-to IDs lumped together, as they were retrieved.
 
@@ -408,9 +410,9 @@ while (my $ds = $factory->next_LinkSet) {
 
 ### I want a list of the closest neighbor UIDs for a single UID.
 
-Set '-dbfrom' = '-db'. This retrieves a list of neighbors based on a score (also accessible, see the example code). The 'score' depends on the database queried. The curious can check [this link](http://eutils.ncbi.nlm.nih.gov/entrez/query/static/entrezlinks.html) for an updated list of link names; the link descriptions specify how the scores are calculated. For the example, IDs returned using the link name 'protein_protein' (where 'dbfrom' = 'db' = 'protein') are based on a score calculated from precomputed BLASTP results.
+Set `-dbfrom` to `-db`. This retrieves a list of neighbors based on a score (also accessible, see the example code). The `score` depends on the database queried. The curious can check [this link](http://eutils.ncbi.nlm.nih.gov/entrez/query/static/entrezlinks.html) for an updated list of link names; the link descriptions specify how the scores are calculated. For the example, IDs returned using the link name 'protein_protein' (where `dbfrom` = 'db' = 'protein') are based on a score calculated from precomputed BLASTP results.
 
-'''Note :''' You can also do this for a list of IDs (as each neighbor list per ID is preserved in a LinkSet); in cases where multiple IDs are submitted you should use 'correspondence' to ensure that the returned IDs relate to each query ID. Also, each ID query may get thousands of neighboring IDs, something to remember when it comes to memory (and something I'm also actively working on).
+'''Note :''' You can also do this for a list of IDs (as each neighbor list per ID is preserved in a LinkSet); in cases where multiple IDs are submitted you should use `correspondence` to ensure that the returned IDs relate to each query ID. Also, each ID query may get thousands of neighboring IDs, something to remember when it comes to memory.
 
 ```perl
 
@@ -440,7 +442,7 @@ while (my $ls = $factory->next_LinkSet) {
 
 ### What LinkOut URLs are available for my list of IDs?
 
-LinkOut URLs are provided as a service by NCBI and link to information present outside of Entrez. These links are available via elink using '-cmd' parameter settings of 'llinks', 'llinklibs', and 'prlinks'. Among the links provided in the following example are the USCS Genome Browser.
+LinkOut URLs are provided as a service by NCBI and link to information present outside of Entrez. These links are available via elink using `-cmd` parameter settings of `llinks`, `llinklibs`, and `prlinks`. Among the links provided in the following example are the USCS Genome Browser.
 
 ```perl
 
@@ -450,16 +452,16 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
                                        -email  => 'mymail@foo.bar',
                                        -dbfrom => 'nucleotide',
                                        -cmd    => 'llinks',
-                                       -id     => [qw(28864546 53828898 14523048
-                                                      14336674 1817575)]);
+                                       -id     => 
+                  [qw(28864546 53828898 14523048 14336674 1817575)]);
 
 while (my $ls = $factory->next_LinkSet) {
     my ($id) = $ls->get_ids; # these are evaluated per id by default
     print "ID:$id\n";
 
     while (my $linkout = $ls->next_UrlLink) {
-        print "tProvider: ",$linkout->get_provider_name,"\n";
-        print "tLink    : ",$linkout->get_url,"\n";
+        print "\tProvider: ", $linkout->get_provider_name, "\n";
+        print "\tLink    : ", $linkout->get_url, "\n";
     }
 
 }
@@ -490,7 +492,7 @@ epost
 
 ### How do I post a specific list of UIDs to NCBI's history server?
 
-Use epost. This comes in handy if you have a large list of UIDs and want to retrieve the data in batches. NCBI recommends that UIDs be posted in batches of 500.
+Use `epost`. This comes in handy if you have a large list of UIDs and want to retrieve the data in batches. NCBI recommends that UIDs be posted in batches of 500.
 
 ```perl
 
@@ -520,28 +522,26 @@ esearch->efetch
 
 ### How do I retrieve a long list of sequences using a query?
 
-This example uses the esearch parameter `'-usehistory'  to store the relevant IDs on the remote server, and then fetches the sequences (in chunks of 500) and saves to a file.
+This example uses the esearch parameter `-usehistory`  to store the relevant IDs on the remote server, and then fetches the sequences (in chunks of 500) and saves to a file.
 
 A few notes:
 
-The `get_Response()  method can take either a file name or a callback as arguments, along with an optional third argument that determines the size of the data chunk returned from the remote server (if allowed). These are then passed into `{{CPAN|LWP::UserAgent}}::response()`. Due to the API, one can only use a destructive write with the file passed in; therefore, each call to `get_Response  with a file name would effectively overwrite any prior response content (e.g. from previous loop iterations), even with a filename with a redirect such as `'>>foo.txt'  (it will just create a file with the name `'>>foo.txt'  and overwrite it in each iteration).
+The `get_Response()`  method can take either a file name or a callback as arguments, along with an optional third argument that determines the size of the data chunk returned from the remote server (if allowed). These are then passed into `{{CPAN|LWP::UserAgent}}::response()`. Due to the API, one can only use a destructive write with the file passed in; therefore, each call to `get_Response`  with a file name would effectively overwrite any prior response content (e.g. from previous loop iterations), even with a filename with a redirect such as `>>foo.txt`  (it will just create a file with the name '>>foo.txt'  and overwrite it in each iteration).
 
 To get around this, one can use a callback as shown below. The callback is called with three arguments: the chunk of data returned, a reference to the object, and a reference to the object. In this case, all we really care about is the data, which is then printed to the already-open file handle.
 
-Also, note that the server retrieval is wrapped in an `eval  block; this is to catch possible server errors and repost if necessary. As NCBI has recently allowed posting up to 3 requests per second, each request could feasibly be forked into separate processes/threads for faster data retrieval (though separate files should be used under such circumstances).
+Also, note that the server retrieval is wrapped in an `eval`  block; this is to catch possible server errors and repost if necessary. As NCBI has recently allowed posting up to 3 requests per second, each request could feasibly be forked into separate processes/threads for faster data retrieval (though separate files should be used under such circumstances).
 
 ```perl
 
 use Bio::DB::EUtilities;
 
 # set optional history queue
-
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
                                        -email      => 'mymail@foo.bar',
                                        -db         => 'protein',
                                        -term       => 'BRCA1 AND human',
                                        -usehistory => 'y');
-
 my $count = $factory->get_count;
 
 # get history from queue
@@ -572,7 +572,6 @@ while ($retstart < $count) {
     }
     say "Retrieved $retstart";
     $retstart += $retmax;
-
 }
 
 close $out;
@@ -581,7 +580,7 @@ close $out;
 
 ### How do I retrieve records for the last X days for a particular query?
 
-Set the `-reldate  parameter to the number of days prior to today's date. As a note, for some reason NCBI has dropped the `EDAT  field for the nucleotide and protein databases (which is the default date type when using `-reldate`); in this case use the `-datetype  flag to `MDAT  (modification date) or `PDAT  (publication date, or the date added to the database). Note in the following example we don't loop through the sequence IDs; I have managed to download ~ 2000 sequences this way. However it's probably advisable to use a loop as in the above example just in case.
+Set the `-reldate`  parameter to the number of days prior to today's date. As a note, for some reason NCBI has dropped the `EDAT`  field for the nucleotide and protein databases (which is the default date type when using `-reldate`); in this case use the `-datetype`  flag to `MDAT`  (modification date) or `PDAT`  (publication date, or the date added to the database). Note in the following example we don't loop through the sequence IDs; we have managed to download ~ 2000 sequences this way. However it's probably advisable to use a loop as in the above example just in case.
 
 ```perl
 
@@ -591,8 +590,10 @@ my $eutil = Bio::DB::EUtilities->new(-eutil => 'esearch',
                                      -email      => 'mymail@foo.bar',
                                      -db         => 'nucest',
                                      -term       => 'Drosophila[ORGN]',
-                                     -reldate    => 10, # records 10 days old or newer
-                                     -datetype   => 'pdat', #publication date
+                                     -reldate    => 10, 
+                                     # records 10 days old or newer
+                                     -datetype   => 'pdat', 
+                                     #publication date
                                      -usehistory => 'y'
                                      );
 
@@ -620,13 +621,12 @@ EntrezGene has almost everything about a specific gene with the exception of the
 use Bio::DB::EUtilities;
 
 # this needs to be a list of EntrezGene unique IDs
-
 my @ids = @ARGV;
 
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'esummary',
-                                       -email => 'mymail@foo.bar',
-                                       -db    => 'gene',
-                                       -id    => @ids);
+                                     -email => 'mymail@foo.bar',
+                                     -db    => 'gene',
+                                     -id    => @ids);
 
 my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -email => 'mymail@foo.bar',
@@ -634,7 +634,6 @@ my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -rettype => 'gb');
 
 while (my $docsum = $eutil->next_DocSum) {
-
     # to ensure we grab the right ChrStart information, we grab the Item above
     # it in the Item hierarchy (visible via print_all from the eutil instance)
     my ($item) = $docsum->get_Items_by_name('GenomicInfoType');
@@ -663,25 +662,23 @@ while (my $docsum = $eutil->next_DocSum) {
                              -seq_stop  => $item_data{ChrStop} + 1,
                              -strand    => $strand);
     print $fetcher->get_Response->content;
-
 }
 
 ```
 
-If you are using bioperl-live (the latest core code from our [Git] repository), the above has been simplified somewhat. Since both DocSums and Items can contain Items, they both now can use the same methods to retrieve Items they contain. In the above example, we know the `GenomicInfoType  Item contains other Items of interest. Using the ItemContainerI interface, we can look up a (contained) Item's contents and name, instead of delving into the innards of the tree:
+If you are using bioperl-live (the latest core code from our GitHub repository), the above has been simplified somewhat. Since both DocSums and Items can contain Items, they both now can use the same methods to retrieve Items they contain. In the above example, we know the `GenomicInfoType`  Item contains other Items of interest. Using the `ItemContainerI` interface, we can look up a (contained) Item's contents and name, instead of delving into the innards of the tree:
 
 ```perl
 
 use Bio::DB::EUtilities;
 
 # this needs to be a list of EntrezGene unique IDs
-
 my @ids = @ARGV;
 
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'esummary',
-                                       -email => 'mymail@foo.bar',
-                                       -db    => 'gene',
-                                       -id    => @ids);
+                                     -email => 'mymail@foo.bar',
+                                     -db    => 'gene',
+                                     -id    => @ids);
 
 my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -email   => 'mymail@foo.bar',
@@ -701,7 +698,8 @@ while (my $docsum = $eutil->next_DocSum) {
                                $item->get_contents_by_name('ChrStop'));
 
     my $strand = $start > $end ? 2 : 1;
-    printf("Retrieving %s, from %d-%d, strand %d\n", $acc, $start, $end,$strand );
+    printf("Retrieving %s, from %d-%d, strand %d\n", 
+      $acc, $start, $end,$strand );
     $fetcher->set_parameters(-id        => $acc,
                              -seq_start => $start + 1,
                              -seq_stop  => $end + 1,
@@ -716,7 +714,7 @@ esearch->esummary
 
 ### Get GIs (as well as other information) for a list of accessions
 
-Retrieving GIs using accessions and maintaining one-to-one correspondence is a little tricky since efetch is the only eUtil which accepts accessions using the '-id' parameter. However, you can search for the accession using a term with esearch; the trick is you must join the accessions together in a comma-separated list (performed below using the perl built-in `join`).
+Retrieving GIs using accessions and maintaining one-to-one correspondence is a little tricky since efetch is the only eUtil which accepts accessions using the `-id` parameter. However, you can search for the accession using a term with esearch; the trick is you must join the accessions together in a comma-separated list (performed below using the perl built-in `join`).
 
 The UIDs returned are (again) not in correspondence with the accessions, so you will then pass them on to esummary, which has both accessions and GIs available. Note that in this example one of the accessions is out-of-date, an advantage of this approach.
 
@@ -744,11 +742,9 @@ while (my $ds = $factory->next_DocSum) {
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
         printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
-
     }
     print "\n";
 }
-
 ```
 
 esearch->elink->esummary
@@ -765,7 +761,6 @@ First, get the protein GI, then find the related sequences to that GI using elin
 use Bio::DB::EUtilities;
 
 # get the GI
-
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
                                        -email      => 'mymail@foo.bar',
                                        -term       => 'BAA20519',
@@ -775,7 +770,6 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'esearch',
 my $hist1 = $factory->next_History || die 'esearch failed';
 
 # get neighbor proteins (note db=dbfrom, using neighbor_history)
-
 $factory->reset_parameters(-eutil => 'elink',
                            -history => $hist1,
                            -db      => 'protein',
@@ -785,7 +779,6 @@ $factory->reset_parameters(-eutil => 'elink',
 my $hist2 = $factory->next_History || die 'elink1 failed';
 
 # get structural neighbors for the protein GIs on the server
-
 $factory->reset_parameters(-eutil => 'elink',
                            -history => $hist2,
                            -db      => 'structure',
@@ -795,7 +788,6 @@ $factory->reset_parameters(-eutil => 'elink',
 my $hist3 = $factory->next_History || die 'elink2 failed';
 
 # get docsums for the structure IDs on the server
-
 $factory->reset_parameters(-eutil => 'esummary',
                            -history => $hist3,
                            -db      => 'structure');
@@ -804,7 +796,8 @@ for my $ds ( $factory->get_DocSums) {
     print "ID: ",$ds->get_id,"\n";
 
     while (my $item = $ds->next_Item('flattened'))  {
-        printf("%-20s:%s\n",$item->get_name,$item->get_content) if $item->get_content;
+        printf("%-20s:%s\n", $item->get_name, $item->get_content) 
+          if $item->get_content;
 
     }
     print "\n";
@@ -816,9 +809,9 @@ for my $ds ( $factory->get_DocSums) {
 
 '''NOTE:''' This code requires a bug fix in bioperl-live that will appear in 1.6.1.
 
-This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2009-July/030558.html) from the bioperl [mail list].
+This originally appeared as a [post](http://bioperl.org/pipermail/bioperl-l/2009-July/030558.html) from the Bioperl mail list.
 
-There are several approaches to answering the above question, all based on whether or not you know the UID for the specific bioassay. The below script is a basic skeleton of what one can do if the UID is unknown but you know the name, thus using it as a search term. This approach uses esearch to find the BioAssay UIDs, elink to find all active compounds using the specific linkname `pcassay_pccompound_ active`, then dumps out esummary information via `print_all  (to get active substances, use the linkname `pcassay_pcsubstance_ active  instead). The various summary information can be munged using the key names via the DocSum interface methods (see the code examples above for ways to do this).
+There are several approaches to answering the above question, all based on whether or not you know the UID for the specific bioassay. The below script is a basic skeleton of what one can do if the UID is unknown but you know the name, thus using it as a search term. This approach uses esearch to find the BioAssay UIDs, elink to find all active compounds using the specific linkname `pcassay_pccompound_ active`, then dumps out esummary information via `print_all`  (to get active substances, use the linkname `pcassay_pcsubstance_` active  instead). The various summary information can be munged using the key names via the DocSum interface methods (see the code examples above for ways to do this).
 
 ```perl
 
@@ -844,10 +837,9 @@ $factory->reset_parameters(-eutil => 'elink',
 my $hist = $factory->next_History || die "Arghh!";
 
 # you may want to iterate through chunks of summary info using retstart/retmax
-
 $factory->reset_parameters(-eutil => 'esummary',
-                           -db          => 'pccompound',
-                           -history     => $hist); 
+                           -db    => 'pccompound',
+                           -history => $hist); 
 
 $factory->print_all;
 
@@ -885,17 +877,15 @@ $eutil->set_parameters(-eutil => 'efetch',
 $eutil->get_Response(-file => 'snps.txt');
 
 # or ...
-
 $eutil->set_parameters(-eutil => 'esummary',
                        -history => $hist);
 
 $eutil->print_all;
-
 ```
 
 References / See Also
 =====================
 
-- [HOWTO:EUtilities Web Service] - more info about the SOAP interface
-- The official [NCBI EUtilities Help manual](http://www.ncbi.nlm.nih.gov/books/NBK25501/)'
+- [HOWTO:EUtilities Web Service](EUtilities_Web_Service.html) - more info about the SOAP interface
+- The official [NCBI EUtilities Help manual](http://www.ncbi.nlm.nih.gov/books/NBK25501/)
 

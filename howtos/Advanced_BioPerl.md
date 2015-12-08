@@ -163,13 +163,6 @@ One of the things you'll always hear about [BioPerl](BioPerl "wikilink") is that
 
 Most authors have also documented their methods. The typical approach is to give the method Name and describe the Usage, Function, Arguments, what it Returns, and then an Example. Note that private or internal method names are always preceded by "`_`".
 
-Having Fun
-----------
-
-The coding process should be enjoyable, and we get very proud of people who tell us that they picked up [BioPerl](BioPerl "wikilink") and it worked for them, even if they don't use a single module that we wrote. There is a brilliant sense of community in [BioPerl](BioPerl "wikilink") about providing useful, stable code and it should be a pleasure to contribute to it.
-
-So - we are always looking forward to people posting on the [bioperl-l list](Mailing_lists "wikilink") with their feedback/questions/proposals. As well as the long standing fun we have making new releases.
-
 The  Object
 ----------
 

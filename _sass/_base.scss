@@ -203,5 +203,14 @@ tbody tr:nth-child(odd) {
    background: $grey-color-light;
 }
 
+.header_table {
+    font-family: Arial;
+    table, th, td, tr {
+        border: none;
+    }
+    tbody: {
+        background: solid white;
+    }
+}
 
 
