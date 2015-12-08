@@ -6,17 +6,17 @@ layout: howto
 Abstract
 --------
 
-This is a HOWTO about the [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) module, and how to use it to read and write complete Nexml documents. We will also describe how the [Bio::SeqIO::nexml](https://metacpan.org/pod/Bio::SeqIO::nexml), [Bio::AlignIO::nexml](https://metacpan.org/pod/Bio::AlignIO::nexml), and [Bio::TreeIO::nexml](https://metacpan.org/pod/Bio::TreeIO::nexml) modules work for outputting individual data types (e.g. just trees) to nexml.
+This is a HOWTO about the [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) module, and how to use it to read and write complete Nexml documents. We will also describe how the [Bio::SeqIO::nexml](https://metacpan.org/pod/Bio::SeqIO::nexml), [Bio::AlignIO::nexml](https://metacpan.org/pod/Bio::AlignIO::nexml), and [Bio::TreeIO::nexml](https://metacpan.org/pod/Bio::TreeIO::nexml) modules work for outputting individual data types (e.g. just trees) to Nexml.
 
 Author
 ------
 
-[Chase Miller](http://www.bioperl.org/wiki/User:Chmille4)
+Chase Miller
 
 Introduction
 ------------
 
-The nexml modules integrate the [NeXML](http://www.nexml.org/) exchange standard into [BioPerl](http://www.bioperl.org/wiki/BioPerl), facilitating the adoption of this standard and easing the transition from the overworked NEXUS standard. A wrapper was used to allow [BioPerl](http://www.bioperl.org/wiki/BioPerl) native access to the preferred NeXML parser ([Bio::Phylo](https://metacpan.org/pod/Bio::Phylo)).
+The nexml modules integrate the [NeXML](http://www.nexml.org/) exchange standard into BioPerl, facilitating the adoption of this standard and easing the transition from the overworked NEXUS standard. A wrapper was used to allow BioPerl native access to the preferred NeXML parser ([Bio::Phylo](https://metacpan.org/pod/Bio::Phylo)).
 
 NeXML functionality in bioperl consists of four modules that allow the user to interact with NeXML data in two different ways. [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) allows users to read/write an entire NeXML document, whereas [Bio::SeqIO::nexml](https://metacpan.org/pod/Bio::SeqIO::nexml), [Bio::AlignIO::nexml](https://metacpan.org/pod/Bio::AlignIO::nexml), and [Bio::TreeIO::nexml](https://metacpan.org/pod/Bio::TreeIO::nexml) allow the user to only read/write one data type (seqs, alns, or trees, respectively).
 
@@ -47,9 +47,9 @@ Design
 
 Nexml support in BioPerl is accomplished by creating four nexml modules (described above) that make use of [Bio::Phylo](https://metacpan.org/pod/Bio::Phylo) the prefered Nexml parser/unparser. The basic flow goes: BioPerl object to [Bio::Phylo](https://metacpan.org/pod/Bio::Phylo) object to Nexml format and vice versa. The [Bio::Nexml::Factory](https://metacpan.org/pod/Bio::Nexml::Factory) module handles the creation/conversion of BioPerl and [Bio::Phylo](https://metacpan.org/pod/Bio::Phylo) objects providing a single `Bio::Phylo` access point for all four nexml modules.
 
-The [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO), [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO), and [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) modules are normal extensions of BioPerl and are used in the same ways as other formats. (For more on the \*IO modules read [SeqIO HOWTO](SeqIO.html).)
+The [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO), [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO), and [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) modules are normal extensions of BioPerl and are used in the same ways as other formats. (For more on the *IO modules read [SeqIO HOWTO](SeqIO.html).)
 
-The [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) module allows the writing/reading of multiple data object types (i.e. trees/alns/seqs), as opposed to the other \*IO modules which only allow a single data object type.
+The [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) module allows the writing/reading of multiple data object types (i.e. trees/alns/seqs), as opposed to the other *IO modules which only allow a single data object type.
 
 Example NeXML Documents
 -----------------------
@@ -65,7 +65,8 @@ Reading and writing a whole NeXML document is accomplished with the [Bio::NexmlI
 
 ```perl
 #Instantiate a Bio::NexmlIO object and link it to a file
-my $in_nexml = Bio::NexmlIO->new(-file => 'nexml_doc.xml', -format => 'Nexml');
+my $in_nexml = Bio::NexmlIO->new(-file => 'nexml_doc.xml', 
+                                 -format => 'Nexml');
 
 #Read in some data
 my $bptree1 = $in_nexml->next_tree();
@@ -82,14 +83,15 @@ push (@bptrees, $bptree1);
 push (@bptrees, $bptree2);
 
 #Write data to nexml file
-my $out_nexml = Bio::NexmlIO->new(-file => '>new_nexml_doc.xml', -format => 'Nexml');
+my $out_nexml = Bio::NexmlIO->new(-file => '>new_nexml_doc.xml', 
+                                  -format => 'Nexml');
 $out_nexml->write(-trees => \@bptrees, -alns => \@alns, -seqs => \@seqs);
 ```
 
 Reading/Writing Individual Datatypes (e.g. trees)
 -------------------------------------------------
 
-Sometimes it may be preferable to only work with a single data type. In these cases the use of the `Bio::\*IO::nexml` modules ([Bio::TreeIO::nexml](https://metacpan.org/pod/Bio::TreeIO::nexml), [Bio::AlignIO::nexml](https://metacpan.org/pod/Bio::AlignIO::nexml), or [Bio::SeqIO::nexml](https://metacpan.org/pod/Bio::SeqIO::nexml)) are available.
+Sometimes it may be preferable to only work with a single data type. In these cases the use of the `Bio::*IO::nexml` modules ([Bio::TreeIO::nexml](https://metacpan.org/pod/Bio::TreeIO::nexml), [Bio::AlignIO::nexml](https://metacpan.org/pod/Bio::AlignIO::nexml), or [Bio::SeqIO::nexml](https://metacpan.org/pod/Bio::SeqIO::nexml)) are available.
 
 ### Example Code
 
@@ -115,7 +117,8 @@ Read/Write an alignment
 
 ```perl
 #Create stream object
-my $AlnStream = Bio::AlignIO->new(-file => 'characters.xml', -format => 'Nexml');
+my $AlnStream = Bio::AlignIO->new(-file => 'characters.xml', 
+                                  -format => 'Nexml');
 
 #Read and convert first tree to BioPerl Bio::SimpleAlign object
 my $aln_obj = $AlnStream->next_aln();
@@ -124,7 +127,8 @@ my $aln_obj = $AlnStream->next_aln();
 ...
 
 #Convert and output BioPerl alignment object to nexml
-my $outAln = Bio::AlignIO->new(-file => '>aln_out.xml', -format => 'nexml');
+my $outAln = Bio::AlignIO->new(-file => '>aln_out.xml', 
+                               -format => 'nexml');
 $outAln->write_aln($aln_obj);
 ```
 
@@ -168,7 +172,7 @@ $out->write(-trees => \@trees, -alns => \@alns);
 
 ### Write NeXML from other formats
 
-This example converts a Nexus file ([trees.nex](http://www.bioperl.org/wiki/HOWTO:Nexml/trees.nex)) to a NeXML document
+This example converts a Nexus file ([trees.nex](trees.nex)) to a NeXML document
 
 ```perl
 use strict;
@@ -176,7 +180,8 @@ use Bio::TreeIO;
 use Bio::NexmlIO;
 
 #intialize input streams
-my $trees_in  = Bio::TreeIO->new(-file => "trees.nex", -format => "nexus");
+my $trees_in  = Bio::TreeIO->new(-file => "trees.nex", 
+                                 -format => "nexus");
 
 #read in trees and convert to bioperl objects
 my $tree1 = $trees_in->next_tree();
@@ -188,7 +193,8 @@ push (@trees, $tree1);
 #intialize output stream
 my $out = Bio::NexmlIO->new(-file => ">trees_converted.xml");
 
-#call write, which converts the data to a nexml document and writes to the stream
+#call write, which converts the data to a nexml document 
+# and writes to the stream
 $out->write(-trees => \@trees);
 ```
 
@@ -227,7 +233,7 @@ Some associations available in [Bio::Phylo](https://metacpan.org/pod/Bio::Phylo)
 
 ### Alignments and Sequences of arbitrary genotype
 
-NeXML is a robust standard and can represent wide-ranging types of data. NeXML allows `Bio::Phylo::Matrices::Matrix` objects (i.e. alignments) and `Bio::Phylo::Matrices::Datum` objects (i.e. sequences) to represent data that is not DNA, RNA, or Protein. We are working on an implementation that interconverts `Bio::Phylo` objects and BioPerl objects using [Jason's](http://www.bioperl.org/wiki/User:Jason) [Bio::PopGen::Population](https://metacpan.org/pod/Bio::PopGen::Population) model.
+NeXML is a robust standard and can represent wide-ranging types of data. NeXML allows `Bio::Phylo::Matrices::Matrix` objects (i.e. alignments) and `Bio::Phylo::Matrices::Datum` objects (i.e. sequences) to represent data that is not DNA, RNA, or Protein. We are working on an implementation that interconverts `Bio::Phylo` objects and BioPerl objects using Jason Stajich's [Bio::PopGen::Population](https://metacpan.org/pod/Bio::PopGen::Population) model.
 
 Related Modules
 ---------------
