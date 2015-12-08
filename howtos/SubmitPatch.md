@@ -6,67 +6,70 @@ layout: howto
 Author
 ------
 
-Torsten Seemann [mailto:torsten.seemann-at-infotech-monash-edu-au torsten.seemann-at-infotech-monash-edu-au]
+Torsten Seemann
 
 [Victorian Bioinformatics Consortium](http://www.vicbioinformatics.com), [Monash University](http://www.monash.edu.au/), Australia.
 
 Copyright
 ---------
 
-This document is copyright Torsten Seemann, 2005. It can be copied and distributed under the terms of the [Perl Artistic License].
+This document is copyright Torsten Seemann, 2005. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.bioperl.org/wiki/Perl_Artistic_License).
 
 Revisions
 ---------
 
--   First draft - [Tseemann] 02:50, 29 December 2005 (EST)
+-   First draft - [Tseemann](http://www.bioperl.org/wiki/User:Tseemann) 02:50, 29 December 2005 (EST)
 
 Introduction
 ------------
 
-This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into BioPerl, from checking out the latest version to creating a diff file and submitting it to Bugzilla.
+This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into [BioPerl](http://www.bioperl.org/wiki/BioPerl), from checking out the latest version to creating a diff file and submitting it to Bugzilla.
 
 Step by Step
 ------------
 
 ### Get the latest version from Subversion
 
-You should ensure you are using the latest developer version of BioPerl - this means checking out [bioperl-live] (or the appropriate repository) from Subversion. Here are [instructions on how to do this]. This is important because the change you want to make may have already been made!
+You should ensure you are using the latest developer version of BioPerl - this means checking out [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live) (or the appropriate repository) from Subversion. Here are [instructions on how to do this](http://www.bioperl.org/wiki/Using_Subversion#Checking_out_code_from_the_repository_with_a_developer_account). This is important because the change you want to make may have already been made!
 
-
+```
 mkdir -p ~/src/bioperl
-cd ~/src/bioperl `
-svn co `[`svn://code.open-bio.org/bioperl/bioperl-live/trunk`](svn://code.open-bio.org/bioperl/bioperl-live/trunk)` bioperl-live`
+cd ~/src/bioperl
+svn co svn://code.open-bio.org/bioperl/bioperl-live/trunk bioperl-live
+```
 
 ### Back up the original file
 
 Let's imagine you want to modify something in `Bio::SeqIO::fasta`. First make a backup copy:
 
- cd ~/src/bioperl/bioperl-live`
- cp Bio/SeqIO/fasta.pm Bio/SeqIO/fasta.pm.orig`
+```
+ cd ~/src/bioperl/bioperl-live
+ cp Bio/SeqIO/fasta.pm Bio/SeqIO/fasta.pm.orig
+```
 
 ### Modify the file
 
 Now go ahead and modify `Bio/SeqIO/fasta.pm` to make the changes you think will enhance the module or rectify a bug. Make sure you check it for syntax too.
 
- perl -I. -c Bio/SeqIO/fasta.pm`
+`perl -I. -c Bio/SeqIO/fasta.pm`
 
 ### Try your script
 
 You need to now check that you fixed the problem. At this point you will probably re-run the original script which brought the bug to your attention in the first place.
 
- perl -I. /path/to/my_test_script.pl `
+`perl -I. /path/to/my_test_script.pl`
 
 ### Write a test
 
-Although trivial bug fixes will be accepted as-is, anything which modifies functionality or any major change will require a [test case] for it to be accepted with any confidence. This will mean either adding extra tests to an existing test file (`t/fasta.t` in this example - make sure you back it up to `t/fasta.t.orig`), or you will need to create a new test file. I would recommend naming it `SeqIO-fasta.t` in this case to avoid future clashes. If your test needs data files, place them in `t/data/`.
+Although trivial bug fixes will be accepted as-is, anything which modifies functionality or any major change will require a [test case](http://en.wikipedia.org/wiki/Test_case) for it to be accepted with any confidence. This will mean either adding extra tests to an existing test file (`t/fasta.t` in this example - make sure you back it up to `t/fasta.t.orig`), or you will need to create a new test file. I would recommend naming it `SeqIO-fasta.t` in this case to avoid future clashes. If your test needs data files, place them in `t/data/`.
 
- cp t/fasta.t t/fasta.t.orig`
+`cp t/fasta.t t/fasta.t.orig`
 
 ### Run the test
 
 You need to make sure the test is successful too.
 
- perl -w -I. t/fasta.t`
+`perl -w -I. t/fasta.t`
 
 The -w option ensures that all the warnings are reported just like they will be when the perl test harness runs all BioPerl tests.
 
@@ -78,45 +81,49 @@ You now need to produce a difference file for each modified (or new) file relate
 
 For single files or directories:
 
- svn diff Bio/SeqIO/`
- svn diff Bio/SeqIO/fasta.pm`
+```
+svn diff Bio/SeqIO/
+svn diff Bio/SeqIO/fasta.pm
+```
 
 For everything:
 
- svn diff `
+`svn diff`
 
--   Use the [diff] tool in Unix.
+-   Use the [diff](http://en.wikipedia.org/wiki/diff) tool in Unix.
 
- diff -Bub Bio/SeqIO/fasta.pm.orig Bio/SeqIO/fasta.pm > /tmp/fasta.pm.diff`
- diff -Bub t/fasta.t.orig          t/fasta.t          > /tmp/fasta.t.diff`
+```
+diff -Bub Bio/SeqIO/fasta.pm.orig Bio/SeqIO/fasta.pm > /tmp/fasta.pm.diff
+diff -Bub t/fasta.t.orig          t/fasta.t          > /tmp/fasta.t.diff
+```
 
 ### Submit the patch
 
-First read about [Bugs] then log into [Redmine](http://redmine.bioperl.org/). Submit a new feature request, and attach `/tmp/fasta.pm.diff` and `/tmp/fasta.t.diff` to your bug submission. Make sure you write a clear and concise description for the feature request.
+First read about [Bugs](http://www.bioperl.org/wiki/Bugs) then log into the [Issues](https://github.com/bioperl/bioperl-live/issues) page of bioperl-live on Github. Submit a new feature request, and attach `/tmp/fasta.pm.diff` and `/tmp/fasta.t.diff` to your bug submission. Make sure you write a clear and concise description for the feature request.
 
 ### The waiting game
 
-Eventually your bug submission will be processed and assimilated into [bioperl-live] (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list] which most [BioPerl] developers read.
+Eventually your bug submission will be processed and assimilated into [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live) (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list](http://www.bioperl.org/wiki/Mailing_lists) which most [BioPerl](http://www.bioperl.org/wiki/BioPerl) developers read.
 
- while true; do echo "Waiting..."; sleep 3600; done`
+`while true; do echo "Waiting..."; sleep 3600; done`
 
 ### Update your local Git repository
 
-Don't forget to regularly update your Git version of [BioPerl]!
+Don't forget to regularly update your Git version of [BioPerl](http://www.bioperl.org/wiki/BioPerl)!
 
- git pull origin master`
+`git pull origin master`
 
 Conclusion
 ----------
 
-It takes a little bit of effort to submit a patch to [BioPerl] but you are rewarded with that warm fuzzy feeling that giving back to your community provides. If the patch showed BioPerl aptitude, there's a good chance that you will be invited to [become a BioPerl developer] via your own [developer account].
+It takes a little bit of effort to submit a patch to [BioPerl](http://www.bioperl.org/wiki/BioPerl) but you are rewarded with that warm fuzzy feeling that giving back to your community provides. If the patch showed BioPerl aptitude, there's a good chance that you will be invited to [become a BioPerl developer](http://www.bioperl.org/wiki/Becoming_a_developer) via your own [developer account](http://www.bioperl.org/wiki/Using_CVS#Checking_out_code_from_the_repository_with_a_developer_account).
 
 Further reading
 ---------------
 
--   [Advanced BioPerl]
--   [Project priority list]
--   [Orphan modules]
--   [Becoming a developer]
--   [Using Subversion]
--   [Mailing lists]'
+-   [Advanced BioPerl](http://www.bioperl.org/wiki/Advanced_BioPerl)
+-   [Project priority list](http://www.bioperl.org/wiki/Project_priority_list)
+-   [Orphan modules](http://www.bioperl.org/wiki/Orphan_modules)
+-   [Becoming a developer](http://www.bioperl.org/wiki/Becoming_a_developer)
+-   [Using Subversion](http://www.bioperl.org/wiki/Using_Subversion)
+-   [Mailing lists](http://www.bioperl.org/wiki/Mailing_lists)
