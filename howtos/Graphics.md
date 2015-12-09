@@ -65,14 +65,14 @@ Getting Started
 
 All the code examples, [BLAST] input files, and sequence files we'll use are available here:
 
--   [BLASTN output]
--   [render_blast1.pl]
--   [render_blast2.pl]
--   [render_blast3.pl]
--   [render_blast4.pl]
--   [embl2picture.pl]
--   [render_features.pl]
--   [factor7.embl]
+-   [BLASTN output](BLASTN_output)
+-   [render_blast1.pl](render_blast1.pl)
+-   [render_blast2.pl](render_blast2.pl)
+-   [render_blast3.pl](render_blast3.pl)
+-   [render_blast4.pl](render_blast4.pl)
+-   [embl2picture.pl](embl2picture.pl)
+-   [render_features.pl](render_features.pl)
+-   [factor7.embl](factor7.embl)
 
 Our first example will be rendering a table of [BLAST] hits on a sequence that is exactly 1000 residues long. For now, we're ignoring finicky little details like [HSPs], and assume that each hit is a single span from start to end. Also, we'll be using the [BLAST] score rather than P or E value. Later on, we'll switch to using real [BLAST] output parsed by the module, but for now, our table looks like this:
 
@@ -135,17 +135,17 @@ print $panel->png;
 
 The script begins by loading the module (line 3), which in turn brings in a number of other modules that we'll use later. We also load in order to create a series of objects for rendering. We then create a object by calling its new() method, specifying that the panel is to correspond to a sequence that is 1000 nucleotides long, and has a physical width of 800 pixels (line 5). The Panel can contain multiple horizontal tracks, each of which has its own way of rendering features (called a "glyph"), color, labeling convention, and so forth. In this simple example, we create a single track by calling the panel object's `add_track()` method (line 6), specify a glyph type of "generic", and ask that the objects in the track be labeled by providing a true value to the `-label` argument. This gives us a track object that we can add our hits to.
 
-We're now ready to render the blast hit file. We loop through it (line 7-14), stripping off the comments, and parsing out the name, score and range (line 10). We now need a object to place in the track. The easiest way to do this is to create a object, which is similar to , except that it provides a way of attaching start and end positions to the sequence, as well as such nebulous but useful attributes as the "score" and "source". The `{{PM|Bio::SeqFeature::Generic}}->new()` method, invoked in line 11, takes arguments corresponding to the name of each hit, its start and end coordinates, and its score.
+We're now ready to render the blast hit file. We loop through it (line 7-14), stripping off the comments, and parsing out the name, score and range (line 10). We now need a object to place in the track. The easiest way to do this is to create a object, which is similar to , except that it provides a way of attaching start and end positions to the sequence, as well as such nebulous but useful attributes as the "score" and "source". The `[Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic)->new()` method, invoked in line 11, takes arguments corresponding to the name of each hit, its start and end coordinates, and its score.
 
 After creating the feature object, we add it to the track by calling the track's `add_feature()` method (line 13).
 
-After processing all the hits, we call the panel's `png()` method to render them and convert it into a [Portable Network Graphics  file, the contents of which are printed to standard output. We can now view the result by piping it to our favorite image display program. Users of operating systems that don't support pipes can simply redirect the output to a file and view it in their favorite image program.
+After processing all the hits, we call the panel's `png()` method to render them and convert it into a Portable Network Graphics  file, the contents of which are printed to standard output. We can now view the result by piping it to our favorite image display program. Users of operating systems that don't support pipes can simply redirect the output to a file and view it in their favorite image program.
 
 `% perl render_blast1.pl data1.txt | display -`
 
 *Figure 1. Rendering BLAST hits* ![](Howto-graphics-fig1.png "fig:Howto-graphics-fig1.png")
 
-'''Important!'''
+Important!
 
 `  If you are on a Windows platform, you need to put STDOUT into binary`
 `  mode so that the PNG file does not go through Window's carriage`
@@ -398,7 +398,7 @@ while( my $hit = $result->next_hit ) {
 print $panel->png;
 ```
 
-In lines 6-8 we read the name of the file that contains the [BLAST] results from the command line, and pass it to `{{PM|Bio::SearchIO}}->new()`, returning a parser object. We read a single result from the searchIO object (line 9). This assumes that the [BLAST] output file contains a single run of BLAST only.
+In lines 6-8 we read the name of the file that contains the [BLAST] results from the command line, and pass it to `[Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO)->new()`, returning a parser object. We read a single result from the searchIO object (line 9). This assumes that the [BLAST] output file contains a single run of BLAST only.
 
 We then initialize the panel and tracks as before. The only change here is in lines 24-36, where we create the track for the [BLAST] hits. The `-description` option has now been enhanced to create a line of text that incorporates the "description" tag from the feature object as well as its similarity score. There's also a slight change in line 26, where we introduce the -connector option. This allows us to configure a line that connects the segments of a discontinuous feature, such as the [HSPs] in a [BLAST] hit. In this case, we asked the rendering engine to produce a dashed connector line.
 
