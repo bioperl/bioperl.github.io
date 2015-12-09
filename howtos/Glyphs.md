@@ -25,6 +25,7 @@ Revision History
 | 2007-01-15                                                        | Revision History |
 | Revision 0.1 Lincoln Stein 2007-05-15 | Created document |
 
+<br>
 Abstract
 --------
 
@@ -318,10 +319,9 @@ Some glyphs will want to add decoration to the region outside their bounds box. 
 
 Our first pass will add the arrow, but won't let Bio::Graphics know we need the additional space. This is intended to show why this is necessary. Create a file in `~/lib/Bio/Graphics/Glyph` named `hourglass_arrow.pm`. Its contents should be as follows:
 
-*Example 3. The hourglass glyph (second version)*
+**Example 3. The hourglass glyph (second version)**
 
 ```perl
-
 package Bio::Graphics::Glyph::hourglass_arrow;
 
 use strict;
@@ -330,18 +330,15 @@ use base 'Bio::Graphics::Glyph::hourglass';
 use constant ARROW_LENGTH => 20;
 
 sub draw_component {
-
  my $self = shift;
  $self->SUPER::draw_component(@_);
 
  my ($gd,$dx,$dy) = @_;
  my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);
  $self->arrow($gd,$right,$right+ARROW_LENGTH,($bottom+$top)/2);
-
 }
 
 1;
-
 ```
 
 This class inherits from Bio::Graphics::Glyph::hourglass, allowing us to build on the previous drawing code without duplicating it. We define a constant *ARROW_LENGTH* corresponding to the length of the arrow to draw to the right.
@@ -352,10 +349,9 @@ We next proceed to draw the arrow. We calculate our bounds box using the bounds(
 
 To view the new glyph, save test_hourglass.pl under the filename test_hourglass_arrow.pl, and modify it to read as follows:
 
-*Example 4. A script to exercise the hourglass_arrow glyph*
+**Example 4. A script to exercise the hourglass_arrow glyph**
 
 ```perl
-
 #!/usr/bin/perl
 
 use strict;
@@ -365,30 +361,31 @@ use Bio::Graphics;
 use Bio::SeqFeature::Generic;
 my $bsg = 'Bio::SeqFeature::Generic';
 
-my $span = $bsg->new(-start=>1,-end=>1000);
-my $test_feature = $bsg->new(-start=>300,-end=>700,
+my $span         = $bsg->new(-start=>1,
+                             -end=>1000);
+my $test_feature = $bsg->new(-start=>300,
+                             -end=>700,
+                             -display_name=>'Test Feature',
+                             -source_tag=>'This is only a test');
 
-                            -display_name=>'Test Feature',
-                            -source_tag=>'This is only a test');
-
-my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
-
-                                            -pad_left=>12,-pad_right=>12);
-
-$panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
+my $panel        = Bio::Graphics::Panel->new(-width=>600,
+                                             -length=>$span->length,
+                                             -pad_left=>12,
+                                            -pad_right=>12);
+$panel->add_track($span,-glyph=>'arrow',
+                        -double=>1,
+                        -tick=>2);
 
 $panel->add_track($test_feature,
-
                  -glyph   => 'hourglass_arrow',
                  -bgcolor => 'orange',
                  -font2color => 'red',
                  -height  => 20,
                  -label   => 1,
                  -description => 1,
-  );
+                );
 
 print $panel->png;
-
 ```
 
 After sending the output of this script to a suitable display program, you will get the following:
@@ -399,10 +396,9 @@ After sending the output of this script to a suitable display program, you will 
 
 Everything looks fine, but there's something wrong with the glyph. To see the problem, look at what happens when we modify the testing script to draw two adjacent features:
 
-*Example 5. A script that shows problems in the hourglass_arrow glyph*
+**Example 5. A script that shows problems in the hourglass_arrow glyph**
 
 ```perl
-
 #!/usr/bin/perl
 
 use strict;
@@ -412,24 +408,25 @@ use Bio::Graphics;
 use Bio::SeqFeature::Generic;
 my $bsg = 'Bio::SeqFeature::Generic';
 
-my $span = $bsg->new(-start=>1,-end=>1000);
-my $test_feature = $bsg->new(-start=>300,-end=>700,
+my $span          = $bsg->new(-start=>1,
+                             -end=>1000);
+my $test_feature  = $bsg->new(-start=>300,
+                             -end=>700,
+                             -display_name=>'Test Feature',
+                             -source_tag=>'This is only a test');
+my $test2_feature = $bsg->new(-start=>710,
+                              -end=>800,
+                              -display_name=>'Test Feature 2');
 
-                            -display_name=>'Test Feature',
-                            -source_tag=>'This is only a test');
-
-my $test2_feature = $bsg->new(-start=>710,-end=>800,
-
-        -display_name=>'Test Feature 2');
-
-my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
-
-                                            -pad_left=>12,-pad_right=>12);
-
-$panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
+my $panel         = Bio::Graphics::Panel->new(-width=>600,
+                                              -length=>$span->length,
+                                              -pad_left=>12,
+                                              -pad_right=>12);
+$panel->add_track($span,-glyph=>'arrow',
+                        -double=>1,
+                        -tick=>2);
 
 $panel->add_track([$test_feature,$test2_feature],
-
                  -glyph   => 'hourglass_arrow',
                  -bgcolor => 'orange',
                  -font2color => 'red',
@@ -439,7 +436,6 @@ $panel->add_track([$test_feature,$test2_feature],
   );
 
 print $panel->png;
-
 ```
 
 When we run this, we do not get what we expect:
@@ -448,10 +444,9 @@ When we run this, we do not get what we expect:
 
 The issue is that the second feature overlaps the arrow of the first. This is because the hourglass_arrow didn't tell Bio::Graphics that the glyph needs extra padding on the right in order to draw the arrow. Fortunately, this is easy to do:
 
-*Example 6. Revised hourglass_arrow Glyph*
+**Example 6. Revised hourglass_arrow Glyph**
 
 ```perl
-
 package Bio::Graphics::Glyph::hourglass_arrow;
 
 use strict;
@@ -462,17 +457,14 @@ use constant ARROW_LENGTH => 20;
 sub pad_right { return ARROW_LENGTH }
 
 sub draw_component {
-
- my $self = shift;
- my ($gd,$dx,$dy) = @_;
- $self->SUPER::draw_component(@_);
- my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);
- $self->arrow($gd,$right,$right+ARROW_LENGTH,($bottom+$top)/2);
-
+  my $self = shift;
+  my ($gd,$dx,$dy) = @_;
+  $self->SUPER::draw_component(@_);
+  my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);
+  $self->arrow($gd,$right,$right+ARROW_LENGTH,($bottom+$top)/2);
 }
 
 1;
-
 ```
 
 We add a pad_right() method that simply returns the constant value ARROW_LENGTH. During layout, Bio::Graphics calls pad_right() (as well as all the other pad_* methods) to find out whether each glyph requires extra space.
@@ -485,12 +477,11 @@ We will see later how to add top and bottom padding.
 
 ### Third Pass
 
-What if we want to give the user the option of changing the length of the arrow? It is very easy to define new *-option_name* options for custom glyphs. In this case we want to add support for a runtime option named *-arrow_length*. Open up the current hourglass_arrow.pm and modify it to look like the following:
+What if we want to give the user the option of changing the length of the arrow? It is very easy to define new **-option_name** options for custom glyphs. In this case we want to add support for a runtime option named **-arrow_length**. Open up the current hourglass_arrow.pm and modify it to look like the following:
 
-*Example 7. The hourglass_arrow Glyph Enhanced with Support for -arrow_length*
+**Example 7. The hourglass_arrow Glyph Enhanced with Support for -arrow_length**
 
 ```perl
-
 package Bio::Graphics::Glyph::hourglass_arrow;
 
 use strict;
@@ -499,14 +490,11 @@ use base 'Bio::Graphics::Glyph::hourglass';
 use constant ARROW_LENGTH => 20;
 
 sub pad_right {
-
  my $self = shift;
  return $self->arrow_length;
-
 }
 
 sub arrow_length {
-
  my $self = shift;
  my $requested_len = $self->option('arrow_length');
  if (defined $requested_len) {
@@ -515,19 +503,17 @@ sub arrow_length {
  else {
    return ARROW_LENGTH;
  }
+}
 
-} sub draw_component {
-
+sub draw_component {
  my $self = shift;
  my ($gd,$dx,$dy) = @_;
  $self->SUPER::draw_component(@_);
  my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);
  $self->arrow($gd,$right,$right+$self->arrow_length,($bottom+$top)/2);
-
 }
 
 1;
-
 ```
 
 What we do here is to define a new method named arrow_length(). It is responsible for returning the desired length of the arrow. It first looks for the existence of an option named *arrow_length* using the inherited option() method. If this is defined, it returns it. Otherwise it defaults to the previously defined ARROW_LENGTH constant.
@@ -537,9 +523,7 @@ We make two other changes. pad_right() now calls $self->arrow_length() in order 
 To test whether this new feature works, modify the test script's second add_track() to look like this:
 
 ```perl
-
 $panel->add_track([$test_feature,$test2_feature],
-
                  -glyph   => 'hourglass_arrow',
                  -bgcolor => 'orange',
                  -font2color => 'red',
@@ -548,7 +532,6 @@ $panel->add_track([$test_feature,$test2_feature],
                  -description => 1,
                  -arrow_length => 100,
   );
-
 ```
 
 When we redraw, we get:
@@ -558,9 +541,7 @@ When we redraw, we get:
 The nice thing about this is that you can pass a callback (subroutine coderef) to -arrow_length, and it will work just like all the other callback options. To see this, modify add_track() once again so that -arrow_length corresponds to an anonymous subroutine that returns different arrow lengths depending on whether it was called for $test_feature or $test2_feature:
 
 ```perl
-
 $panel->add_track([$test_feature,$test2_feature],
-
                  -glyph   => 'hourglass_arrow',
                  -bgcolor => 'orange',
                  -font2color => 'red',
@@ -573,7 +554,6 @@ $panel->add_track([$test_feature,$test2_feature],
                           return  50 if $feature eq $test2_feature;
                }
    );
-
 ```
 
 The result looks like this:
@@ -584,10 +564,9 @@ The result looks like this:
 
 Allocating top and bottom padding is slightly more difficult than left and right padding because our superclass, Bio::Graphics::Glyph::box, already uses some padding to draw the label and description. Fortunately it's not all that difficult to finesse this. You merely need to add the amount of padding your custom glyph needs to the padding needed by the parent. Example 8 illustrates this:
 
-*Example 8: Adjusting top and bottom padding*
+**Example 8: Adjusting top and bottom padding**
 
 ```perl
-
 package Bio::Graphics::Glyph::hourglass_up;
 
 use strict;
@@ -597,50 +576,45 @@ use constant T_LENGTH => 30;
 use constant T_WIDE => 7;
 
 sub t_length {
-
  shift->option('tee_length') || T_LENGTH;
-
 }
 
 sub pad_top {
-
- my $self = shift;
- my $parent_pad = $self->SUPER::pad_top;
- my $height     = $self->height/2;
- my $extra      = $self->t_length - $height;
- return $parent_pad if $extra `<= 0;
+  my $self = shift;
+  my $parent_pad = $self->SUPER::pad_top;
+  my $height     = $self->height/2;
+  my $extra      = $self->t_length - $height;
+  return $parent_pad if $extra <= 0;
   return $parent_pad + $extra;
 }
 
 sub pad_bottom {
   my $self = shift;
-  my $parent_pad = $self->`SUPER::pad_bottom;
- my $height     = $self->height/2;
- my $extra      = $self->t_length - $height;
- return $parent_pad if $extra `<= 0;
+  my $parent_pad = $self->SUPER::pad_bottom;
+  my $height     = $self->height/2;
+  my $extra      = $self->t_length - $height;
+  return $parent_pad if $extra <= 0;
   return $parent_pad + $extra;
 }
 
 sub draw_component {
   my $self = shift;
-  $self->`SUPER::draw_component(@_);
+  $self->SUPER::draw_component(@_);
 
- my $gd  = shift;
- my ($left,$top,$right,$bottom) = $self->bounds(@_);
+  my $gd  = shift;
+  my ($left,$top,$right,$bottom) = $self->bounds(@_);
 
- my $tee_x       = ($left + $right)/2;
- my $tee_top     = ($top + $bottom)/2 - $self->t_length;
- my $tee_bottom  = ($top + $bottom)/2 + $self->t_length;
+  my $tee_x       = ($left + $right)/2;
+  my $tee_top     = ($top + $bottom)/2 - $self->t_length;
+  my $tee_bottom  = ($top + $bottom)/2 + $self->t_length;
 
- $gd->line($tee_x,$tee_top,$tee_x,$tee_bottom,$self->fgcolor);
+  $gd->line($tee_x,$tee_top,$tee_x,$tee_bottom,$self->fgcolor);
 
- $gd->line($tee_x - T_WIDE/2, $tee_top,   $tee_x + T_WIDE/2, $tee_top,    $self->fgcolor);
- $gd->line($tee_x - T_WIDE/2, $tee_bottom,$tee_x + T_WIDE/2, $tee_bottom, $self->fgcolor);
-
+  $gd->line($tee_x - T_WIDE/2, $tee_top,   $tee_x + T_WIDE/2, $tee_top,    $self->fgcolor);
+  $gd->line($tee_x - T_WIDE/2, $tee_bottom,$tee_x + T_WIDE/2, $tee_bottom, $self->fgcolor);
 }
 
 1;
-
 ```
 
 Multipart Glyphs
@@ -652,45 +626,40 @@ The superclass for all multipart glyphs is Bio::Graphics::Glyph::segments. To cr
 
 To see how this works, let's look at a version of the hourglass glyph that will accept multipart features:
 
-*Example 9. The hourglass glyph with support for multipart features*
+**Example 9. The hourglass glyph with support for multipart features**
 
 ```perl
-
 package Bio::Graphics::Glyph::multihourglass;
 
 use strict;
 use base 'Bio::Graphics::Glyph::segments';
 
 sub draw_component {
+  my $self = shift;
+  my ($gd,$dx,$dy) = @_;
+  my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);
 
- my $self = shift;
- my ($gd,$dx,$dy) = @_;
- my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);
-
- # draw the hourglass as a polygon
- my $poly = GD::Polygon->new;
- $poly->addPt($left,$top);
- $poly->addPt($right,$bottom);
- $poly->addPt($right,$top);
- $poly->addPt($left,$bottom);
- $poly->addPt($left,$top);
- $gd->filledPolygon($poly,$self->bgcolor);
- $gd->polygon($poly,$self->fgcolor);
-
+  # draw the hourglass as a polygon
+  my $poly = GD::Polygon->new;
+  $poly->addPt($left,$top);
+  $poly->addPt($right,$bottom);
+  $poly->addPt($right,$top);
+  $poly->addPt($left,$bottom);
+  $poly->addPt($left,$top);
+  $gd->filledPolygon($poly,$self->bgcolor);
+  $gd->polygon($poly,$self->fgcolor);
 }
 
 1;
-
 ```
 
-The new glyph is named "multihourglass". Its definition is *exactly* the same as the original hourglass glyph, with one critical change: Instead of inheriting from Bio::Graphics::Glyph::box, it inherits from Bio::Graphics::Glyph::segments.
+The new glyph is named "multihourglass". Its definition is **exactly** the same as the original hourglass glyph, with one critical change: Instead of inheriting from Bio::Graphics::Glyph::box, it inherits from Bio::Graphics::Glyph::segments.
 
 To exercise the new glyph, we can use the script shown in Example 10.
 
-*Example 10. A script to exercise the multihourglass glyph*
+**Example 10. A script to exercise the multihourglass glyph**
 
 ```perl
-
 #!/usr/bin/perl
 
 use strict;
@@ -703,55 +672,60 @@ use Bio::Location::Simple;
 my $bsg = 'Bio::SeqFeature::Generic';
 my $bls = 'Bio::Location::Simple';
 
-my $span = $bsg->new(-start=>1,-end=>1000);
-my $test_feature = $bsg->new(-start=>100,-end=>700,
+my $span         = $bsg->new(-start=>1,
+                             -end=>1000);
+my $test_feature = $bsg->new(-start=>100,
+                             -end=>700,
+                             -display_name=>'Test Feature 1',
+                             -source_tag=>'Multiple subfeatures');
+$test_feature->add_SeqFeature($bsg->new(-start=>100,
+                                        -end=>400));
+$test_feature->add_SeqFeature($bsg->new(-start=>500,
+                                        -end=>600));
+$test_feature->add_SeqFeature($bsg->new(-start=>650,
+                                        -end=>700));
 
-                            -display_name=>'Test Feature 1',
-                            -source_tag=>'Multiple subfeatures');
-
-$test_feature->add_SeqFeature($bsg->new(-start=>100,-end=>400));
-$test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600));
-$test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
-
-my $test2_feature = $bsg->new(-start=>680,-end=>800,
--display_name=>'Test Feature 2',
--source_tag => 'Single top-level feature');
+my $test2_feature = $bsg->new(-start=>680,
+                              -end=>800,
+                              -display_name=>'Test Feature 2',
+                              -source_tag => 'Single top-level feature');
 
 my $test3_feature = $bsg->new(-display_name => 'Test Feature 3',
--source_tag => 'Feature with split location');
+                              -source_tag => 'Feature with split location');
 my $location = Bio::Location::Split->new();
-$location->add_sub_Location($bls->new(-start=>200,-end=>300));
-$location->add_sub_Location($bls->new(-start=>400,-end=>450));
-$location->add_sub_Location($bls->new(-start=>480,-end=>500));
+$location->add_sub_Location($bls->new(-start=>200,
+                                      -end=>300));
+$location->add_sub_Location($bls->new(-start=>400,
+                                      -end=>450));
+$location->add_sub_Location($bls->new(-start=>480,
+                                      -end=>500));
 $test3_feature->location($location);
 
-my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
-
-                                            -pad_left=>12,-pad_right=>12);
-
-$panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
+my $panel = Bio::Graphics::Panel->new(-width=>600,
+                                      -length=>$span->length,
+                                      -pad_left=>12,
+                                      -pad_right=>12);
+$panel->add_track($span,-glyph=>'arrow',
+                        -double=>1,
+                        -tick=>2);
 
 $panel->add_track([$test_feature,$test2_feature,$test3_feature],
-
                  -glyph   => 'multihourglass',
                  -bgcolor => 'orange',
                  -font2color => 'red',
                  -height  => 20,
                  -label   => 1,
                  -description => 1,
-
-
 );
 
 print $panel->png;
-
 ```
 
 This script creates three features:
 
-# *Test feature 1* is a complex feature containing three sub seqfeatures.
-  *Test feature 2*, which is a simple feature with no subparts.
-  *Test feature 3*, a simple feature with a three-part split location.
+1. **Test feature 1** is a complex feature containing three sub seqfeatures.
+2. **Test feature 2**, which is a simple feature with no subparts.
+3. **Test feature 3**, a simple feature with a three-part split location.
 
 The result is shown in Figure 8. As you can see, the glyph handles all three cases in the way that you'd expect.
 
@@ -764,32 +738,27 @@ For performance reasons, the segments glyph assumes that each feature has at mos
 To test this option, we will modify the Example 10 script so that $test_feature contains three levels of subfeatures:
 
 ```perl
-
-my $test_feature = $bsg->new(-start=>100,-end=>700,
-
-                            -display_name=>'Test Feature 1',
-                            -source_tag=>'Multiple subfeatures');
-
+my $test_feature = $bsg->new(-start=>100,
+                             -end=>700,
+                             -display_name=>'Test Feature 1',
+                             -source_tag=>'Multiple subfeatures');
 my $subfeat = $bsg->new(-start=>100,-end=>400);
 $subfeat->add_SeqFeature($bsg->new(-start=>100,-end=>200));
 $subfeat->add_SeqFeature($bsg->new(-start=>300,-end=>400));
 $test_feature->add_SeqFeature($subfeat);
 $test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600));
 $test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
-
 ```
 
-(The full modified script is [here].)
+(The full modified script is [here](http://www.bioperl.org/wiki/Glyph-howto-supplementary-script-1#supplement-1).)
 
-The feature now contains three subfeatures. The second and third subfeatures still only contain one part, but the first subfeature contains two subfeatures of its own, one which spans the location 1..200 and the other which spans the location 300..400. However, when we run the script with this modification, we get the same image as Figure 8;
-the first subfeature is shown as a single part.
+The feature now contains three subfeatures. The second and third subfeatures still only contain one part, but the first subfeature contains two subfeatures of its own, one which spans the location 1..200 and the other which spans the location 300..400. However, when we run the script with this modification, we get the same image as Figure 8; the first subfeature is shown as a single part.
 
 To fix this, we modify the multihourglass.pm module as follows:
 
-*Example 10. The multihourglass glyph with support for two levels of subfeatures*
+**Example 10. The multihourglass glyph with support for two levels of subfeatures**
 
 ```perl
-
 package Bio::Graphics::Glyph::multihourglass;
 
 use strict;
@@ -798,13 +767,10 @@ use base 'Bio::Graphics::Glyph::segments';
 sub maxdepth { 2 }
 
 sub draw_component {
-
  # as in example 9
-
 }
 
 1;
-
 ```
 
 The *maxdepth()* method returns the numeric value 2 to tell Bio::Graphics to step into at most two levels of features. This has exactly the same effect as passing `-maxdepth=>2` to the *add_track()* method, except that it is now hard-coded into the glyph. Now when we run the modified test script, the first subfeature of the leftmost feature is broken into its two parts as we want (Figure 9).
@@ -908,11 +874,11 @@ sub cell_width {
  my @cell_data = $self->cell_data;
  my $max_size = 0;
  foreach (@cell_data) {
-   $max_size = length($_) if $max_size `< length($_);
+   $max_size = length($_) if $max_size < length($_);
   }
 
 
-  my $font = $self->`font;
+  my $font = $self->font;
  return $max_size * $font->width + 3;
 
 }
@@ -955,14 +921,14 @@ sub draw_contents {
  my $column_count = $self->column_count;
  my $fontwidth    = $self->font->width;
 
- for (my $i=0;$i`<$row_count-1;$i++) {
+ for (my $i=0;$i<$row_count-1;$i++) {
     my $y = $top + ($i+1) * $cell_height;
-    $gd->`line($left,$y,$right,$y,$self->fgcolor);
+    $gd->line($left,$y,$right,$y,$self->fgcolor);
  }
 
- for (my $i=0;$i`<$column_count-1;$i++) {
+ for (my $i=0;$i<$column_count-1;$i++) {
     my $x = $left + ($i+1) * $cell_width;
-    $gd->`line($x,$top,$x,$bottom,$self->fgcolor);
+    $gd->line($x,$top,$x,$bottom,$self->fgcolor);
  }
 
  my @cell_data = $self->cell_data;
