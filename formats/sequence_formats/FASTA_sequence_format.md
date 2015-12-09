@@ -49,7 +49,7 @@ GAAACCGTGTCATGTTTCCGATCCATGATCATCACGGGGCTGTTGTTGCTTTCTCAGGCAGGGCTCTTGG
 Different version of Fasta
 ----
 
-Note that there is no formal definition for the header line, so `>CATL_HUMAN` and `>gi|7733636|ref|NP_887744 Gadget protein` are both valid. NCBI has one format, Swissprot another, and so on. Therefore BioPerl has no guaranteed way of knowing where names, accessions, and particular identifiers are in the header line. 
+There is no formal definition for the header line, so `>CATL_HUMAN` and `>gi|7733636|ref|NP_887744 Gadget protein` are both valid. NCBI has one format, Swissprot another, and so on. Therefore BioPerl has no guaranteed way of knowing where names, accessions, and particular identifiers are in the header line. 
 
 File extensions
 ---------------
