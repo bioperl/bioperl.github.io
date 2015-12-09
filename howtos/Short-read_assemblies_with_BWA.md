@@ -148,7 +148,7 @@ See the `bwa` [manpage](http://bio-bwa.sourceforge.net/bwa.shtml) for many gory 
 
 ## Specifying files
 
-When a command requires filenames, these are provided to the `run_bwa` method, not the constructor (`new()`). To see the set of files required by a command, use `available_parameters(\'filespec\')` or the alias `filespec()`.
+When a command requires filenames, these are provided to the `run_bwa` method, not the constructor (`new()`). To see the set of files required by a command, use `available_parameters('filespec')` or the alias `filespec()`.
 
 ```perl
 $bwa = Bio::Tools::Run::BWA->new( -command => 'aln' );

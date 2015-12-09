@@ -186,8 +186,8 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; my $bsg = 'Bio::SeqFeature::Gen
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>300,-end=>700,
 
-                            -display_name=>\'Test Feature\',`
-                            -source_tag=>\'This is only a test\');`
+                            -display_name=>'Test Feature',`
+                            -source_tag=>'This is only a test');`
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
@@ -197,9 +197,9 @@ $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track($test_feature,
 
-                 -glyph   => \'hourglass\',`
-                 -bgcolor => \'orange\',`
-                 -font2color => \'red\',`
+                 -glyph   => 'hourglass',`
+                 -bgcolor => 'orange',`
+                 -font2color => 'red',`
                  -height  => 20,`
                  -label   => 1,`
                  -description => 1);`
@@ -381,8 +381,8 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; my $bsg = 'Bio::SeqFeature::Gen
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>300,-end=>700,
 
-                            -display_name=>\'Test Feature\',`
-                            -source_tag=>\'This is only a test\');`
+                            -display_name=>'Test Feature',`
+                            -source_tag=>'This is only a test');`
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
@@ -392,9 +392,9 @@ $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track($test_feature,
 
-                 -glyph   => \'hourglass_arrow\',`
-                 -bgcolor => \'orange\',`
-                 -font2color => \'red\',`
+                 -glyph   => 'hourglass_arrow',`
+                 -bgcolor => 'orange',`
+                 -font2color => 'red',`
                  -height  => 20,`
                  -label   => 1,`
                  -description => 1,`
@@ -424,12 +424,12 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; my $bsg = 'Bio::SeqFeature::Gen
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>300,-end=>700,
 
-                            -display_name=>\'Test Feature\',`
-                            -source_tag=>\'This is only a test\');`
+                            -display_name=>'Test Feature',`
+                            -source_tag=>'This is only a test');`
 
 my $test2_feature = $bsg->new(-start=>710,-end=>800,
 
-        -display_name=>\'Test Feature 2\');`
+        -display_name=>'Test Feature 2');`
 
 my $panel = Bio::Graphics::Panel->new(-width=>600,-length=>$span->length,
 
@@ -439,9 +439,9 @@ $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track(\[$test_feature,$test2_feature\],
 
-                 -glyph   => \'hourglass_arrow\',`
-                 -bgcolor => \'orange\',`
-                 -font2color => \'red\',`
+                 -glyph   => 'hourglass_arrow',`
+                 -bgcolor => 'orange',`
+                 -font2color => 'red',`
                  -height  => 20,`
                  -label   => 1,`
                  -description => 1,`
@@ -515,7 +515,7 @@ sub pad_right {
 sub arrow_length {
 
  my $self = shift;`
- my $requested_len = $self->option(\'arrow_length\');`
+ my $requested_len = $self->option('arrow_length');`
  if (defined $requested_len) {`
    return $requested_len;`
  }`
@@ -547,9 +547,9 @@ To test whether this new feature works, modify the test script's second add_trac
 
 $panel->add_track(\[$test_feature,$test2_feature\],
 
-                 -glyph   => \'hourglass_arrow\',`
-                 -bgcolor => \'orange\',`
-                 -font2color => \'red\',`
+                 -glyph   => 'hourglass_arrow',`
+                 -bgcolor => 'orange',`
+                 -font2color => 'red',`
                  -height  => 20,`
                  -label   => 1,`
                  -description => 1,`
@@ -568,9 +568,9 @@ The nice thing about this is that you can pass a callback (subroutine coderef) t
 
 $panel->add_track(\[$test_feature,$test2_feature\],
 
-                 -glyph   => \'hourglass_arrow\',`
-                 -bgcolor => \'orange\',`
-                 -font2color => \'red\',`
+                 -glyph   => 'hourglass_arrow',`
+                 -bgcolor => 'orange',`
+                 -font2color => 'red',`
                  -height  => 20,`
                  -label   => 1,`
                  -description => 1,`
@@ -603,7 +603,7 @@ use constant T_LENGTH => 30; use constant T_WIDE => 7;
 
 sub t_length {
 
- shift->option(\'tee_length\') || T_LENGTH;`
+ shift->option('tee_length') || T_LENGTH;`
 
 }
 
@@ -703,8 +703,8 @@ use Bio::Graphics; use Bio::SeqFeature::Generic; use Bio::Location::Split; use B
 
 my $span = $bsg->new(-start=>1,-end=>1000); my $test_feature = $bsg->new(-start=>100,-end=>700,
 
-                            -display_name=>\'Test Feature 1\',`
-                            -source_tag=>\'Multiple subfeatures\');`
+                            -display_name=>'Test Feature 1',`
+                            -source_tag=>'Multiple subfeatures');`
 
 $test_feature->add_SeqFeature($bsg->new(-start=>100,-end=>400)); $test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600)); $test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
 
@@ -723,9 +723,9 @@ $panel->add_track($span,-glyph=>'arrow',-double=>1,-tick=>2);
 
 $panel->add_track(\[$test_feature,$test2_feature,$test3_feature\],
 
-                 -glyph   => \'multihourglass\',`
-                 -bgcolor => \'orange\',`
-                 -font2color => \'red\',`
+                 -glyph   => 'multihourglass',`
+                 -bgcolor => 'orange',`
+                 -font2color => 'red',`
                  -height  => 20,`
                  -label   => 1,`
                  -description => 1,`
@@ -757,8 +757,8 @@ To test this option, we will modify the Example 10 script so that $test_feature 
 
 my $test_feature = $bsg->new(-start=>100,-end=>700,
 
-                            -display_name=>\'Test Feature 1\',`
-                            -source_tag=>\'Multiple subfeatures\');`
+                            -display_name=>'Test Feature 1',`
+                            -source_tag=>'Multiple subfeatures');`
 
 my $subfeat = $bsg->new(-start=>100,-end=>400); $subfeat->add_SeqFeature($bsg->new(-start=>100,-end=>200)); $subfeat->add_SeqFeature($bsg->new(-start=>300,-end=>400)); $test_feature->add_SeqFeature($subfeat); $test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600)); $test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
 
@@ -863,13 +863,13 @@ use strict; use Bio::Graphics; use base 'Bio::Graphics::Glyph::fixedwidth';
 
 sub column_count {
 
- return shift->option(\'columns\') || 2;`
+ return shift->option('columns') || 2;`
 
 }
 
 sub row_count {
 
- return shift->option(\'rows\') || 2;`
+ return shift->option('rows') || 2;`
 
 }
 
@@ -901,8 +901,8 @@ sub cell_data {
 
  my $self = shift;`
  my $feature = $self->feature;`
- return unless $feature->has_tag(\'cell_data\');`
- my ($cell_data) = $feature->get_tag_values(\'cell_data\');`
+ return unless $feature->has_tag('cell_data');`
+ my ($cell_data) = $feature->get_tag_values('cell_data');`
  return split /s+/,$cell_data;`
 
 }
@@ -975,20 +975,20 @@ use lib "$ENV{HOME}/lib"; use Bio::Graphics; use Bio::Graphics::Feature; use Bio
 my $segment = Bio::Graphics::Feature->new(-start=>1,-end=>700); my $snp1 = Bio::SeqFeature::Generic ->new (-start => 100,
 
            -end=>400,`
-           -display_name =>\'bioseqfeature\',`
-           -source => \'foo bar\',`
-           -display_name =>\'bar foo\',`
+           -display_name =>'bioseqfeature',`
+           -source => 'foo bar',`
+           -display_name =>'bar foo',`
            -tag => {`
-      cell_data => \'1 2 3 4 5 6\',`
+      cell_data => '1 2 3 4 5 6',`
             },`
            );`
 
 my $snp2 = Bio::SeqFeature::Generic->new(-start => 500,
 
          -end       => 501,`
-         -display_name      => \'rs12345\',`
+         -display_name      => 'rs12345',`
          -tag => {`
-           cell_data => \'one two three four five six\',`
+           cell_data => 'one two three four five six',`
           },`
         );`
 
@@ -997,10 +997,10 @@ my $panel = Bio::Graphics::Panel->new(-segment=>$segment,-width=>800);
 $panel->add_track($segment,-glyph=>'arrow',-double=>1,-tick=>2); $panel->add_track(\[$snp1,$snp2\],
 
    -label       => 1,`
-   -font        => \'gdLargeFont\',`
-   -glyph       => \'table\',`
+   -font        => 'gdLargeFont',`
+   -glyph       => 'table',`
    -description => 1,`
-   -bgcolor     => \'lightyellow\',`
+   -bgcolor     => 'lightyellow',`
    -fixed_gap   => 20,`
    -cell_size   => 50,`
    -rows        => 2,`
