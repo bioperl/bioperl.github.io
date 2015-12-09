@@ -1013,6 +1013,6 @@ print $gd->png;
 
 ```
 
-Output: ![](figXX.jpg "fig:figXX.jpg")'
+Output: ![](Howto-glyphs-fig11.jpg "fig:figXX.jpg")'
 
 
