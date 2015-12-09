@@ -6,6 +6,6 @@ layout: default
 Description
 -----------
 
-A chromatogram format. BioPerl supports parsing of this binary format through the Ext package.'
+A chromatogram format. BioPerl supports parsing of this binary format through the Ext package.
 
 

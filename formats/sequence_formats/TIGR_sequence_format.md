@@ -6,7 +6,7 @@ layout: default
 Description
 -----------
 
-The TIGR sequence format format, referred to as `tigrxml` in the system.
+The TIGR sequence format format, referred to as `tigrxml` here.
 
 There are a couple of variants of it for the Rice and ''Arabidopsis'' data versus some of the pre-release data.
 

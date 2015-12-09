@@ -6,7 +6,7 @@ layout: default
 Description
 -----------
 
-One of the oldest and simplest sequence formats.
+One of the oldest and simplest sequence formats. A single header line followed by 1 or more sequence lines.
 
 Examples
 --------
@@ -54,6 +54,6 @@ Note that there is no formal definition for the header line, so `>CATL_HUMAN` an
 File extensions
 ---------------
 
-There are no standard file extensions for FASTA formatted files. However, common ones are .fa and .fsa. [NCBI](http://www.ncbi.nlm.nih.gov/) distributes their genomic data in FASTA format using four different extensions: `.fna` for whole genomic DNA sequences, `.faa` for protein coding sequences (CDS), `.ffn` for the untranslated nucleotide sequences for each CDS, and `.frn` for nucleotide sequences of RNA related features.
+There are no standard file extensions for FASTA formatted files. However, common ones are `.fa` and `.fsa`. [NCBI](http://www.ncbi.nlm.nih.gov/) distributes their genomic data in FASTA format using four different extensions: `.fna` for whole genomic DNA sequences, `.faa` for protein coding sequences (CDS), `.ffn` for the untranslated nucleotide sequences for each CDS, and `.frn` for nucleotide sequences of RNA related features.
 
 
