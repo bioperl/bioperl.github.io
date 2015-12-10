@@ -29,7 +29,7 @@ Revision History
 Abstract
 --------
 
-This [HOWTO] describes how to render sequence data graphically in a horizontal map. It applies to a variety of situations ranging from rendering the feature table of a [GenBank] entry, to graphing the positions and scores of a [BLAST] search, to rendering a clone map. It describes the programmatic interface to the module, and discusses how to create dynamic web pages using and the [Gbrowse] package.
+This [HOWTO] describes how to render sequence data graphically in a horizontal map. It applies to a variety of situations ranging from rendering the feature table of a [GenBank] entry, to graphing the positions and scores of a [BLAST] search, to rendering a clone map. It describes the programmatic interface to the module, and discusses how to create dynamic web pages using and the GBrowse package.
 
 Introduction
 ------------
@@ -41,7 +41,7 @@ This [HOWTO] describes the module, and some of the applications that were built 
 -   You have a list of [ESTs] that you've mapped to a genome, and you want to show how they align.
 -   You have created a clone fingerprint map, and you want to display it.
 
-The module was designed to solve these problems. In addition, using the module (part of BioPerl) and the [Gbrowse] program (available from [<http://www.gmod.org>](http://www.gmod.org)) you can create interactive web pages to explore your data.
+The module was designed to solve these problems. In addition, using the module (part of BioPerl) and the GBrowse program (available from [<http://www.gmod.org>](http://www.gmod.org)) you can create interactive web pages to explore your data.
 
 This document takes you through a few common applications of Bio::Graphics in a cookbook fashion. Advanced users might be interested in the [Custom Glyph HOWTO], which explains how to extend Bio::Graphics using custom glyphs.
 
