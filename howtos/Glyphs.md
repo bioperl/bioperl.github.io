@@ -29,16 +29,16 @@ Revision History
 Abstract
 --------
 
-This [HOWTO](http://www.bioperl.org/wiki/HOWTO) describes how to extend the Bio::Graphics module with custom glyphs. Custom glyphs can be used to display sequence features that have special display needs, including quantitative data, images, and spectrographs. For background information, please see [HOWTO:Graphics](Graphics.html).
+This [HOWTO](http://www.bioperl.org/wiki/HOWTO) describes how to extend the [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) module with custom glyphs. Custom glyphs can be used to display sequence features that have special display needs, including quantitative data, images, and spectrographs. For background information, please see [HOWTO:Graphics](Graphics.html).
 
 Introduction
 ------------
 
-The Bio::Graphics module provides you with a large number of well-tested glyphs for displaying a variety of feature types. However, you may find that one of the built-in glyphs does not meet your specialized needs, in which case you can relatively easily create a custom glyph. This HOWTO leads you through the steps of designing, writing and installing a custom glyph.
+The [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) module provides you with a large number of well-tested glyphs for displaying a variety of feature types. However, you may find that one of the built-in glyphs does not meet your specialized needs, in which case you can relatively easily create a custom glyph. This HOWTO leads you through the steps of designing, writing and installing a custom glyph.
 
 In order to follow this tutorial, you will need to be familiar with the following software modules:
 
-- Bio::Graphics (naturally)
+- [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) (naturally)
 
 - [GD](https://metacpan.org/pod/GD) The Perl GD graphics module, available from CPAN.
 
@@ -49,13 +49,13 @@ The Anatomy of a Glyph
 
 Before we begin, we need to go over some glyph jargon, starting with the anatomy of a glyph. Figure 1 shows the major parts of a glyph.
 
-*Figure 1. Major parts of a glyph* ![](Howto-glyphs-fig1.jpg "fig:Howto-glyphs-fig1.jpg")
+**Figure 1. Major parts of a glyph** ![](Howto-glyphs-fig1.jpg "fig:Howto-glyphs-fig1.jpg")
 
 A glyph consists of several parts:
 
 **The main part, also called the body.**
 
-- The body starts at the nucleotide indicated by the start of the associated feature, and ends at the nucleotide indicated by the end of the associated feature. The body is *width* pixels wide and *height* pixels high. The width is ordinarily calculated automatically by Bio::Graphics. The height is set by the **-height** option. The *bounds rectangle* completely surrounds the body and does not include the label, description, or other parts. The body may consist of several subparts, and each of these may contain sub-subparts.
+- The body starts at the nucleotide indicated by the start of the associated feature, and ends at the nucleotide indicated by the end of the associated feature. The body is *width* pixels wide and *height* pixels high. The width is ordinarily calculated automatically by [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics). The height is set by the **-height** option. The *bounds rectangle* completely surrounds the body and does not include the label, description, or other parts. The body may consist of several subparts, and each of these may contain sub-subparts.
 
 **The label**
 
@@ -97,7 +97,7 @@ A Simple Glyph
 
 To get an idea of how glyph writing works, we'll create a simple custom glyph. This glyph is an hourglass that is high at its left and right edges and tapers to zero at its midpoint. Figure 2 shows what it will look like.
 
-*Figure 2. The example hourglass glyph* ![](Howto-glyphs-fig2.jpg "fig:Howto-glyphs-fig2.jpg")
+**Figure 2. The example hourglass glyph** ![](Howto-glyphs-fig2.jpg "fig:Howto-glyphs-fig2.jpg")
 
 In preparation for creating the module for this glyph, you will need a private library directory in which to place Perl code. Please create the directory `~/lib/Bio/Graphics/Glyph` in your home directory (or another convenient place). On Linux systems, the following command will do the trick:
 
@@ -127,7 +127,6 @@ sub draw_component {
  $poly->addPt($left,$top);
  $gd->filledPolygon($poly,$self->bgcolor);
  $gd->polygon($poly,$self->fgcolor);
-
 }
 
 1;
@@ -204,7 +203,7 @@ The other thing to notice is that when we add the hourglass glyph, we can use an
 Quick Reference
 ---------------
 
-We'll take a quick break from glyph building in order to list a few methods that come in handy when writing glyphs. These fall into two categories, utility methods that are commonly used within glyph subclass methods, and key drawing & formatting methods that subclasses typically redefine. For full reference material, use perldoc to read the manual page for Bio::Graphics::Glyph.
+We'll take a quick break from glyph building in order to list a few methods that come in handy when writing glyphs. These fall into two categories, utility methods that are commonly used within glyph subclass methods, and key drawing & formatting methods that subclasses typically redefine. For full reference material, use perldoc to read the manual page for [Bio::Graphics::Glyph](https://metacpan.org/pod/Bio::Graphics::Glyph).
 
 ### Methods Commonly Used within Glyph Subclasses
 
@@ -371,7 +370,7 @@ my $test_feature = $bsg->new(-start=>300,
 my $panel        = Bio::Graphics::Panel->new(-width=>600,
                                              -length=>$span->length,
                                              -pad_left=>12,
-                                            -pad_right=>12);
+                                             -pad_right=>12);
 $panel->add_track($span,-glyph=>'arrow',
                         -double=>1,
                         -tick=>2);
@@ -390,7 +389,7 @@ print $panel->png;
 
 After sending the output of this script to a suitable display program, you will get the following:
 
-*Figure 3. The example hourglass_arrow glyph* ![](Howto-glyphs-fig3.jpg "fig:Howto-glyphs-fig3.jpg")
+**Figure 3. The example hourglass_arrow glyph** ![](Howto-glyphs-fig3.jpg "fig:Howto-glyphs-fig3.jpg")
 
 ### Second Pass
 
@@ -440,7 +439,7 @@ print $panel->png;
 
 When we run this, we do not get what we expect:
 
-*Figure 4. The hourglass_arrow glyph does not bump correctly* ![](Howto-glyphs-fig4.jpg "fig:Howto-glyphs-fig4.jpg")
+**Figure 4. The hourglass_arrow glyph does not bump correctly** ![](Howto-glyphs-fig4.jpg "fig:Howto-glyphs-fig4.jpg")
 
 The issue is that the second feature overlaps the arrow of the first. This is because the hourglass_arrow didn't tell Bio::Graphics that the glyph needs extra padding on the right in order to draw the arrow. Fortunately, this is easy to do:
 
@@ -471,7 +470,7 @@ We add a pad_right() method that simply returns the constant value ARROW_LENGTH.
 
 When we rerun the test script, we get the desired output:
 
-*Figure 5. The revised hourglass_arrow glyph* ![](Howto-glyphs-fig5.jpg "fig:Howto-glyphs-fig5.jpg")
+**Figure 5. The revised hourglass_arrow glyph** ![](Howto-glyphs-fig5.jpg "fig:Howto-glyphs-fig5.jpg")
 
 We will see later how to add top and bottom padding.
 
@@ -536,7 +535,7 @@ $panel->add_track([$test_feature,$test2_feature],
 
 When we redraw, we get:
 
-*Figure 6. The hourglass_arrow glyph with a long tail* ![](Howto-glyphs-fig6.jpg "fig:Howto-glyphs-fig6.jpg")
+**Figure 6. The hourglass_arrow glyph with a long tail** ![](Howto-glyphs-fig6.jpg "fig:Howto-glyphs-fig6.jpg")
 
 The nice thing about this is that you can pass a callback (subroutine coderef) to -arrow_length, and it will work just like all the other callback options. To see this, modify add_track() once again so that -arrow_length corresponds to an anonymous subroutine that returns different arrow lengths depending on whether it was called for $test_feature or $test2_feature:
 
@@ -558,7 +557,7 @@ $panel->add_track([$test_feature,$test2_feature],
 
 The result looks like this:
 
-*Figure 7. The hourglass_arrow glyph with a callback-controlled tail* ![](Howto-glyphs-fig7.jpg "fig:Howto-glyphs-fig7.jpg")
+**Figure 7. The hourglass_arrow glyph with a callback-controlled tail** ![](Howto-glyphs-fig7.jpg "fig:Howto-glyphs-fig7.jpg")
 
 ### Allocating Top and Bottom Padding
 
@@ -729,7 +728,7 @@ This script creates three features:
 
 The result is shown in Figure 8. As you can see, the glyph handles all three cases in the way that you'd expect.
 
-*Figure 8. The multihourglass glyph with a variety of features* ![](Howto-glyphs-fig8.jpg "fig:Howto-glyphs-fig8.jpg").
+**Figure 8. The multihourglass glyph with a variety of features** ![](Howto-glyphs-fig8.jpg "fig:Howto-glyphs-fig8.jpg").
 
 ### Sub-subfeatures and the maxdepth() method
 
@@ -750,7 +749,7 @@ $test_feature->add_SeqFeature($bsg->new(-start=>500,-end=>600));
 $test_feature->add_SeqFeature($bsg->new(-start=>650,-end=>700));
 ```
 
-(The full modified script is [here](http://www.bioperl.org/wiki/Glyph-howto-supplementary-script-1#supplement-1).)
+(The full modified script is [here](Glyph-howto-supplementary-script-1.pl).)
 
 The feature now contains three subfeatures. The second and third subfeatures still only contain one part, but the first subfeature contains two subfeatures of its own, one which spans the location 1..200 and the other which spans the location 300..400. However, when we run the script with this modification, we get the same image as Figure 8; the first subfeature is shown as a single part.
 
@@ -775,7 +774,7 @@ sub draw_component {
 
 The *maxdepth()* method returns the numeric value 2 to tell Bio::Graphics to step into at most two levels of features. This has exactly the same effect as passing `-maxdepth=>2` to the *add_track()* method, except that it is now hard-coded into the glyph. Now when we run the modified test script, the first subfeature of the leftmost feature is broken into its two parts as we want (Figure 9).
 
-*Figure 9. The multihourglass glyph with support for two levels of subfeature* ![](Howto-glyphs-fig9.jpg "fig:Howto-glyphs-fig9.jpg").
+**Figure 9. The multihourglass glyph with support for two levels of subfeature** ![](Howto-glyphs-fig9.jpg "fig:Howto-glyphs-fig9.jpg").
 
 ### Drawing at different nesting levels
 
@@ -783,14 +782,13 @@ An unsatisfactory feature of the image produced at the end of the previous secti
 
 To fix this, we will make a small change to the *draw()* method. *draw()* is defined in Bio::Graphics::Glyph. It walks through each subglyph and calls its *draw_component()* method. It then draws a solid line to connect each of the subglyphs. We will change *draw()* so that there is a rectangle drawn around each level 1 subfeature if it contains subparts. The effect is shown in Figure 10.
 
-*Figure 10: Multihourglass glyph modified to show grouping of sub-subfeatures* ![](Howto-glyphs-fig10.jpg "fig:Howto-glyphs-fig10.jpg")
+**Figure 10: Multihourglass glyph modified to show grouping of sub-subfeatures** ![](Howto-glyphs-fig10.jpg "fig:Howto-glyphs-fig10.jpg")
 
 Example 10 shows the modifications to multihourglass.pm needed to achieve this effect.
 
-*Example 10: The multihourglass.pm module with subfeature grouping*
+**Example 10: The multihourglass.pm module with subfeature grouping**
 
 ```perl
-
 package Bio::Graphics::Glyph::multihourglass;
 
 use strict;
@@ -799,17 +797,13 @@ use base 'Bio::Graphics::Glyph::segments';
 sub maxdepth { 2 }
 
 sub draw {
-
  my $self = shift;
 
  if ($self->level == 1 && $self->parts) {
    my ($gd,$dx,$dy) = @_;
    my ($left,$top,$right,$bottom) = $self->bounds($dx,$dy);
    $gd->filledRectangle($left,$top,$right,$bottom,
-
-
-$self->translate_color('lightgrey'));
-
+                        $self->translate_color('lightgrey'));
  }
 
  $self->SUPER::draw(@_);
@@ -817,13 +811,10 @@ $self->translate_color('lightgrey'));
 }
 
 sub draw_component {
-
  #unchanged
-
 }
 
 1;
-
 ```
 
 The new code overrides the *draw()* method. The call signature of this method is identical to *draw_component()*. It receives the GD object and the topleft coordinates of the glyph. What this code does is to ask whether the current level of the glyph is equal to 1, which is the first level of subglyph. If this is true, then it asks whether the current glyph has any subglyph by calling the method *parts()*. *parts()* will return a list of the subglyphs, which will be true if there are subglyphs and false otherwise.
@@ -840,7 +831,6 @@ An Embedded Table Using the fixedwidth Glyph
 *This is a scrap that will be incorporated into a later section*
 
 ```perl
-
 package Bio::Graphics::Glyph::table;
 
 use strict;
@@ -848,65 +838,51 @@ use Bio::Graphics;
 use base 'Bio::Graphics::Glyph::fixedwidth';
 
 sub column_count {
-
  return shift->option('columns') || 2;
-
 }
 
 sub row_count {
-
  return shift->option('rows') || 2;
-
 }
 
 sub cell_height {
-
  my $self = shift;
  my $font = $self->font;
  my $lineheight = $font->height;
  return $lineheight + 2;
-
 }
 
 sub cell_width {
-
  my $self = shift;
  my @cell_data = $self->cell_data;
  my $max_size = 0;
  foreach (@cell_data) {
    $max_size = length($_) if $max_size < length($_);
-  }
+ }
 
-
-  my $font = $self->font;
+ my $font = $self->font;
  return $max_size * $font->width + 3;
-
 }
 
 sub cell_data {
-
  my $self = shift;
  my $feature = $self->feature;
  return unless $feature->has_tag('cell_data');
  my ($cell_data) = $feature->get_tag_values('cell_data');
- return split /s+/,$cell_data;
-
+ return split /\s+/,$cell_data;
 }
 
 sub width_needed {
-
  my $self = shift;
  return $self->cell_width * $self->column_count;
+}
 
-} sub height_needed {
-
+sub height_needed {
  my $self = shift;
  return ($self->cell_height+1) * $self->row_count;
-
 }
 
 sub draw_contents {
-
  my $self = shift;
  my ($gd,$left,$top,$right,$bottom) = @_;
  $self->filled_box($gd,$left,$top,$right,$bottom);
@@ -941,17 +917,14 @@ sub draw_contents {
      $gd->string($self->font,$x,$y,$cell_data,$self->fontcolor);
    }
  }
-
 }
 
 1;
-
 ```
 
 Test script:
 
 ```perl
-
 #!/usr/bin/perl
 
 use strict;
@@ -962,49 +935,44 @@ use Bio::Graphics;
 use Bio::Graphics::Feature;
 use Bio::SeqFeature::Generic;
 
-my $segment = Bio::Graphics::Feature->new(-start=>1,-end=>700);
-my $snp1 = Bio::SeqFeature::Generic ->new (-start => 100,
+my $segment = Bio::Graphics::Feature->new(-start => 1,
+                                          -end => 700);
+my $snp1    = Bio::SeqFeature::Generic->new(-start => 100,
+                            -end => 400,
+                            -display_name => 'bioseqfeature',
+                            -source => 'foo bar',
+                            -display_name =>'bar foo',
+                            -tag => {
+                              cell_data => '1 2 3 4 5 6',
+                            },
+                          );
 
-           -end=>400,
-           -display_name =>'bioseqfeature',
-           -source => 'foo bar',
-           -display_name =>'bar foo',
-           -tag => {
-      cell_data => '1 2 3 4 5 6',
-            },
-           );
-
-my $snp2 = Bio::SeqFeature::Generic->new(-start => 500,
-
-         -end       => 501,
-         -display_name      => 'rs12345',
-         -tag => {
-           cell_data => 'one two three four five six',
-          },
-        );
+my $snp2    = Bio::SeqFeature::Generic->new(-start => 500,
+                            -end => 501,
+                            -display_name => 'rs12345',
+                            -tag => {
+                              cell_data => 'one two three four five six',
+                            },
+                          );
 
 my $panel = Bio::Graphics::Panel->new(-segment=>$segment,-width=>800);
 
 $panel->add_track($segment,-glyph=>'arrow',-double=>1,-tick=>2);
 $panel->add_track([$snp1,$snp2],
-
-   -label       => 1,
-   -font        => 'gdLargeFont',
-   -glyph       => 'table',
-   -description => 1,
-   -bgcolor     => 'lightyellow',
-   -fixed_gap   => 20,
-   -cell_size   => 50,
-   -rows        => 2,
-   -columns     => 3,
-  );
+                   -label       => 1,
+                   -font        => 'gdLargeFont',
+                   -glyph       => 'table',
+                   -description => 1,
+                   -bgcolor     => 'lightyellow',
+                   -fixed_gap   => 20,
+                   -cell_size   => 50,
+                   -rows        => 2,
+                   -columns     => 3,
+                  );
 
 my $gd = $panel->gd;
 
 print $gd->png;
-
 ```
 
-Output: ![](Howto-glyphs-fig11.jpg "fig:figXX.jpg")'
-
-
+Output: ![](Howto-glyphs-fig11.jpg "fig:figXX.jpg")
