@@ -32,7 +32,7 @@ Abstract
 --------
 
 This [HOWTO](http://bioperl.github.io/howtos/) intends to show how to use the [BioPerl Tree](https://metacpan.org/pod/Bio::Tree::Tree)
-objects to manipulate phylogenetic trees. It shows how to read and write trees, query them for information about specific nodes or overall statistics, and create pictures of trees. Advanced topics include discussion of generating random trees and extensions of the basic structure for integration with other modules in [BioPerl](https://bioperl.github.io). See the [list of tree formats](/formats/tree_formats/index.html) for details on each format.
+objects to manipulate phylogenetic trees. It shows how to read and write trees, query them for information about specific nodes or overall statistics, and create pictures of trees. Advanced topics include discussion of generating random trees and extensions of the basic structure for integration with other modules in BioPerl. See the [list of tree formats](/formats/tree_formats/index.html) for details on each format.
 
 Introduction
 ------------
@@ -52,7 +52,7 @@ Reading and Writing Trees
 
 Trees are used to represent the ancestry of a collection of taxa, sequences, or populations.
 
-Using [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) one can read trees from files or datastreams and create [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree) objects. This is analogous to how we read sequences from sequence files with [Bio::Bio::SeqIO](https://metacpan.org/pod/Bio::Bio::SeqIO) to create [BioPerl](https://bioperl.github.io) sequence objects which can be queried and manipulated. Similarly we can write [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree)
+Using [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) one can read trees from files or datastreams and create [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree) objects. This is analogous to how we read sequences from sequence files with [Bio::Bio::SeqIO](https://metacpan.org/pod/Bio::Bio::SeqIO) to create BioPerlsequence objects which can be queried and manipulated. Similarly we can write [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree)
 objects out to string representations like the [Newick or New Hampshire](https://en.wikipedia.org/wiki/Newick_format)  which can be printed to a file, a datastream, stored in database, etc.
 
 The main module for reading and writing trees is the factory module which has several driver modules which plug into it. These drivers include [Bio::TreeIO::newick](https://metacpan.org/pod/Bio::TreeIO::newick) for [New Hampshire or Newick tree format](https://en.wikipedia.org/wiki/Newick_format), [Bio::TreeIO::nhx](https://metacpan.org/pod/Bio::TreeIO::nhx)
@@ -390,7 +390,7 @@ matrix object of pairwise distances. The code example below shows how this could
 Given the matrix of pairwise distances one can build a phylogenetic tree using 2 methods provided in the [Bio::Tree::DistanceFactory](https://metacpan.org/pod/Bio::Tree::DistanceFactory). Simply request either Neighbor-Joining (NJ) trees or Unweighted Pair Group Method with Arithmetic (UPGMA) clusters. There are caveats with these methods and whether or not the distances are additive. The method `check_additivity` in [Bio::Tree::DistanceFactory](https://metacpan.org/pod/Bio::Tree::DistanceFactory)
 is provided to calculate whether or not additivity holds for the data.
 
-The following is a basic code snippet which describes how to use the pairwise distance and tree building modules in [BioPerl](https://bioperl.github.io) starting with a DNA alignment file from clustalw. Note that there is also a [Bio::Align::ProteinStatistics](https://metacpan.org/pod/Bio::Align::ProteinStatistics)
+The following is a basic code snippet which describes how to use the pairwise distance and tree building modules in BioPerlstarting with a DNA alignment file from clustalw. Note that there is also a [Bio::Align::ProteinStatistics](https://metacpan.org/pod/Bio::Align::ProteinStatistics)
 module.
 
 ```perl

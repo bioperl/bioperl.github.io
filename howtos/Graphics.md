@@ -41,7 +41,7 @@ This [HOWTO] describes the module, and some of the applications that were built 
 -   You have a list of [ESTs] that you've mapped to a genome, and you want to show how they align.
 -   You have created a clone fingerprint map, and you want to display it.
 
-The module was designed to solve these problems. In addition, using the module (part of [BioPerl]) and the [Gbrowse] program (available from [<http://www.gmod.org>](http://www.gmod.org)) you can create interactive web pages to explore your data.
+The module was designed to solve these problems. In addition, using the module (part of BioPerl) and the [Gbrowse] program (available from [<http://www.gmod.org>](http://www.gmod.org)) you can create interactive web pages to explore your data.
 
 This document takes you through a few common applications of Bio::Graphics in a cookbook fashion. Advanced users might be interested in the [Custom Glyph HOWTO], which explains how to extend Bio::Graphics using custom glyphs.
 
@@ -714,7 +714,7 @@ Although we haven't shown it, provides support for generating HTML image maps. T
 
 Another application you should investigate is the script. This script uses the BioFetch interface to fetch GenBank/EMBL/SwissProt entries dynamically from the web before rendering them into PNG images.
 
-Finally, if you find yourself constantly tweaking the graphic options, you might be interested in , a utility module for interpreting and rendering a simple tab-delimited format for sequence features. is a Perl script built on top of this module, which you can find in the scripts/graphics directory in the [BioPerl] distribution.
+Finally, if you find yourself constantly tweaking the graphic options, you might be interested in , a utility module for interpreting and rendering a simple tab-delimited format for sequence features. is a Perl script built on top of this module, which you can find in the scripts/graphics directory in the BioPerl distribution.
 
 *Tip:
 
