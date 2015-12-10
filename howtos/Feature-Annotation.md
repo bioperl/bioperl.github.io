@@ -85,9 +85,6 @@ my $seqio_object = Bio::SeqIO->new(-file => "BAB55667.gb" );
 my $seq_object = $seqio_object->next_seq;
 ```
 
-*Note* `$seq_object` is an object. A object, such as would be returned from a
-fasta file, does not have associated feature or annotation objects (see Table 6 below).
-
 Now that we have a sequence object in hand we can examine its features and annotations.
 
 Getting the Features
@@ -210,7 +207,7 @@ for my $feat_object ($seq_object->get_SeqFeatures) {
 }
 ```
 
-**Important** Make sure to include that `if ($feat_object->has_tag("..."))` part, otherwise you'll get errors when the feature does not have the tag you're
+***Important*** Make sure to include that `if ($feat_object->has_tag("..."))` part, otherwise you'll get errors when the feature does not have the tag you're
 requesting.
 
 One last note on Genbank features. The Bioperl parsers for Genbank and EMBL are
