@@ -48,7 +48,7 @@ RP   SEQUENCE FROM N.A., AND PARTIAL SEQUENCE.
 RX   MEDLINE=94253723; PubMed=8195709;
 RA   Ghebrehiwet B., Lim B.L., Peerschke E.I., Willis A.C., Reid K.B.;
 RT   "Isolation, cDNA cloning, and overexpression of a 33-kD cell surface
-RT   glycoprotein that binds to the globular \'heads\' of C1q.";
+RT   glycoprotein that binds to the globular 'heads' of C1q.";
 RL   J. Exp. Med. 179:1809-1821(1994).
 RN   [4]
 RP   X-RAY CRYSTALLOGRAPHY (2.25 ANGSTROMS).

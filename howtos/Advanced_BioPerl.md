@@ -25,7 +25,7 @@ sub validate_seq {
  }
 ```
 
-And `$MATCHPATTERN` is defined as `$MATCHPATTERN = \'A-Za-z-.*?\';`.
+And `$MATCHPATTERN` is defined as `$MATCHPATTERN = 'A-Za-z-.*?';`.
 
 However we would like to additionally support numbers d, and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq), objects which is an extension of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
 
@@ -35,7 +35,7 @@ sub Bio::LocatableSeq::validate_seq {
     if( ! defined $seqstr ){ $seqstr = $self->seq(); }
     return 0 unless( defined $seqstr); 
     if((CORE::length($seqstr) > 0) && ($seqstr !~ /^([A-Za-z-.*?d]+)$/)) {
-        $self->warn("seq doesn\'t validate, mismatch is " .
+        $self->warn("seq doesn't validate, mismatch is " .
                     ($seqstr =~ /([^A-Za-z-.*?d]+)/g));
         return 0;
     }

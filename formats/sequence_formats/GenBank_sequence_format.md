@@ -20,7 +20,7 @@ ACCESSION   CAA89576
 VERSION     CAA89576.1  GI:1015707
 DBSOURCE    embl locus SCYJR048W, accession Z49548.1
 KEYWORDS    .
-SOURCE      Saccharomyces cerevisiae (baker\'s yeast)
+SOURCE      Saccharomyces cerevisiae (baker's yeast)
   ORGANISM  Saccharomyces cerevisiae
             Eukaryota; Fungi; Ascomycota; Saccharomycotina; Saccharomycetes;
             Saccharomycetales; Saccharomycetaceae; Saccharomyces.
