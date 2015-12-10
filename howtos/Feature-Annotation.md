@@ -85,12 +85,12 @@ my $seqio_object = Bio::SeqIO->new(-file => "BAB55667.gb" );
 my $seq_object = $seqio_object->next_seq;
 ```
 
-Now that we have a sequence object in hand we can examine its features and annotations.
+Now that we have a sequence object, `$seq_object`, we can examine its features and annotations.
 
 Getting the Features
 --------------------
 
-The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features and annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the Feature table section, something like this:
+The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features and annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the FEATURES table section, something like this:
 
 ```
  FEATURES            Location/Qualifiers
@@ -553,12 +553,12 @@ For example, if the Sequence object in hand is a [Bio::Seq::RichSeq](https://met
 
 | Method                     | Returns |
 |----------------------------|---------|
-| get_secondary_accessions | array   |
-| keywords                   | array   |
-| get_dates                 | array   |
-| seq_version               | string  |
-| pid                        | string  |
-| division                   | string  |
+| `get_secondary_accessions` | array   |
+| `keywords`                   | array   |
+| `get_dates`                 | array   |
+| `seq_version`               | string  |
+| `pid`                       | string  |
+| `division`                   | string  |
 Table 5. [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) methods
 
 These objects are created automatically when you use to read from EMBL, GenBank,GAME, Chado XML, TIGR XML, Locuslink, BSML, KEGG, Entrez Gene, and SwissProt
@@ -625,13 +625,15 @@ First collect all the annotations:
 ```perl
 use Bio::SeqIO;
 
-my @annotations = Bio::SeqIO->new(-file => "148.ll", -format => "locuslink")->next_seq->annotation->get_Annotations;
+my @annotations = Bio::SeqIO->new(-file => "148.ll", 
+   -format => "locuslink")->next_seq->annotation->get_Annotations;
 ```
 
 And from this array of Annotations let's extract a hash containing the `as_text` strings as keys and the concatenated tagnames and object types as values:
 
 ```perl
-my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } @annotations;
+my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) } 
+  @annotations;
 ```
 
 The contents of the `%tagname_type` hash can be represented in table form, below.
@@ -666,7 +668,8 @@ If you were only interested in a certain type of Annotation you could retrieve
 it efficently with something like this:
 
 ```perl
-@ontology_terms = map { $_->isa("Bio::Ontology::TermI"); } $seq_object->get_Annotations();
+@ontology_terms = map { $_->isa("Bio::Ontology::TermI"); } 
+  $seq_object->get_Annotations();
 ```
 
 To completely parse these sequence formats you may also need to use methods that don't have anything to do with Features or Annotations *per se*. For example, the `display_id` method returns the LOCUS name of a Genbank entry or the ID from a SwissProt file. The `desc()` method will return the DEFINITION line of a Genbank file or the DE field in a SwissProt file. Again, this is a situation where you may have to examine a module, probably a [SeqIO](http://search.cpan.org/search?query=Bio::SeqIO) module, to find out more of the details.

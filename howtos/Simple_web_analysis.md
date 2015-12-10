@@ -48,7 +48,7 @@ At present the following prediction servers are supported, mainly reflecting my 
 Simple Examples
 ---------------
 
-The script below runs multiple analyses on a single sequence and parses the results into standard [BioPerl](http://www.bioperl.org/wiki/BioPerl) sequence feature objects, ([Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic) objects to be precise).
+The script below runs multiple analyses on a single sequence and parses the results into standard BioPerl sequence feature objects, ([Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic) objects to be precise).
 
 ```perl
  # load up the modules

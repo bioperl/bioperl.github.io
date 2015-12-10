@@ -544,7 +544,7 @@ If you compare these values to the values taken from the Genbank entry you'll se
 
 Another natural question is why the values returned by methods like `display_id` are different even though the only thing distinguishing these entries are their respective formats. The reason is that there are no rules governing how one interconverts formats, meaning how Genbank creates Fasta files from Genbank files may be different from how SwissProt performs the same interconversion. Until the organizations creating these databases agree on standard sets of names and formats all that Bioperl can do is do make reasonable choices.
 
-Yes, Bioperl could follow the conventions of a single organization like Genbank such that `display_id` returns the same value when using Genbank format or Genbank's fasta format but the authors have elected not to base [Bioperl] around the conventions of any one organization.
+Yes, Bioperl could follow the conventions of a single organization like Genbank such that `display_id` returns the same value when using Genbank format or Genbank's fasta format but the authors have elected not to base Bioperl around the conventions of any one organization.
 
 Let's use a Swissprot file as our last example. The input entry looks like this:
 
