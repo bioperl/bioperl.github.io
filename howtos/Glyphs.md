@@ -8,7 +8,7 @@ layout: howto
 Author
 ------
 
-Lincoln Stein
+Lincoln Stein lstein@cshl.edu
 
 [Cold Spring Harbor Laboratory](http://www.cshl.edu/)
 
@@ -136,7 +136,7 @@ This module begins by declaring its package name. All glyphs must begin with "Bi
 
 It then turns on strict type checking, and declares that it is inheriting from "Bio::Graphics::Glyph::box" with `use base.`
 
-The module then overrides the single method *draw_component()*. This method is responsible for drawing each of the parts of a feature (e.g. the exons of a gene). For simple single-part features, it draws the entire body of the glyph. `draw_component()` begins by reading its first argument, which is the object itself. This gets stored into `$self`. It then reads three arguments passed to it by Bio::Graphics:
+The module then overrides the single method `draw_component()`. This method is responsible for drawing each of the parts of a feature (e.g. the exons of a gene). For simple single-part features, it draws the entire body of the glyph. `draw_component()` begins by reading its first argument, which is the object itself. This gets stored into `$self`. It then reads three arguments passed to it by Bio::Graphics:
 
 -   The GD object to draw into, which we store into `$gd`
 -   The left coordinate of our bounds box, which we store into `$dx`
@@ -144,9 +144,9 @@ The module then overrides the single method *draw_component()*. This method is r
 
 The topleft coordinate is passed by Bio::Graphics as a convenience for relative layout of complex objects. You can do all your layout based on a topleft coordinate of (0,0) and then add $dx and $dy to all your coordinates in order to position them correctly on the screen. In this case, we aren't doing anything fancy, so we just pass ($dx,$dy) to `$self->bounds()`, which returns our bounds box as the four-element list ($left,$top,$right,$bottom).
 
-Now we create a polygon to draw the hourglass. We invoke `GD::Polygon->new()` to create a polygon, and then call the polygon's *add_pt()* method five times to trace out the vertices of the hourglass. Polygons must be closed, so the last vertex added is the same as the first one.
+Now we create a polygon to draw the hourglass. We invoke `GD::Polygon->new()` to create a polygon, and then call the polygon's `add_pt()` method five times to trace out the vertices of the hourglass. Polygons must be closed, so the last vertex added is the same as the first one.
 
-Having finished the polygon, we invoke the GD object's *filledPolygon()* method to draw a polygon filled with a solid color. To behave like other glyphs, we will use the user's selected background color by calling our inherited *bgcolor()* method: `$self->bgcolor`. We would also like to draw the outline of the hourglass, so we invoke GD's *polygon()* method to draw its boundaries. This time around we pass `$gd->polygon()` the color returned by our inherited *fgcolor* (foreground color) method.
+Having finished the polygon, we invoke the GD object's `filledPolygon()` method to draw a polygon filled with a solid color. To behave like other glyphs, we will use the user's selected background color by calling our inherited `bgcolor()` method: `$self->bgcolor`. We would also like to draw the outline of the hourglass, so we invoke GD's `polygon()` method to draw its boundaries. This time around we pass `$gd->polygon()` the color returned by our inherited `fgcolor` (foreground color) method.
 
 That's all there is to it! We end the module with `1;` so that Perl knows it compiled correctly.
 
@@ -227,7 +227,7 @@ Here are the most common methods that can be called by glyphs to get information
 
 **$color = $self->color('option_name')**
 
-- Transform the value of option *option_name* into a GD color index.
+- Transform the value of option `option_name` into a GD color index.
 
 **($left,$top,$right,$bottom) = $self->bounds($dx,$dy)**
 
@@ -293,17 +293,17 @@ Here are the most common methods that can be called by glyphs to get information
 
 Here are the methods most commonly redefined by glyph subclasses.
 
-**$self->draw_component($gd,$dx,$dy,$partno,$total_parts)**
+**$self->draw\_component($gd,$dx,$dy,$partno,$total\_parts)**
 
 - Draw part of a glyph. For simple glyphs descended from Bio::Graphics::Glyph::box, this method will be called only once. For multipart glyphs descended from Bio::Graphics::Glyph::segments or Bio::Graphics::Glyph::generic, this method will be called once for each subpart of the glyph. $gd is the GD object, and ($dx,$dy) are offsets from the topleft corner of the track. Ordinarily you will pass ($dx,$dy) to `$self->bounds()` to get the bounds box of the content. For multipart glyphs, $partno and $total_parts indicate which number part this is (counting from the left, starting with part number 0) and how many parts total there are. Usually you can ignore this information.
 
-**$self->pad_left, $self->pad_right, $self->pad_top,$self->pad_bottom**
+**$self->pad\_left, $self->pad\_right, $self->pad\_top,$self->pad\_bottom**
 
 - Some glyphs will want to draw decoration outside the bounds box. If they do so, they will need to let Bio::Graphics know how much extra padding they need so that glyphs do not collide.
 
 **$self->maxdepth**
 
-- The maxdepth() method provides Bio::Graphics with information about how deeply to step into subfeatures. Returning 0 tells Bio::Graphics that this glyph doesn't want to step into subfeatures. Returning 1 tells Bio::Graphics to step into one level of glyphs and so forth. This is a big performance win. generic steps into 1 level of subparts, box steps into 0 level of subparts, and segments steps into multiple levels. Each of these base classes respects the -maxdepth option, and lets it overrides their default.
+- The `maxdepth()` method provides Bio::Graphics with information about how deeply to step into subfeatures. Returning 0 tells Bio::Graphics that this glyph doesn't want to step into subfeatures. Returning 1 tells Bio::Graphics to step into one level of glyphs and so forth. This is a big performance win. generic steps into 1 level of subparts, box steps into 0 level of subparts, and segments steps into multiple levels. Each of these base classes respects the -maxdepth option, and lets it overrides their default.
 
 **$self->draw($gd,$dx,$dy)**
 
@@ -340,13 +340,13 @@ sub draw_component {
 1;
 ```
 
-This class inherits from Bio::Graphics::Glyph::hourglass, allowing us to build on the previous drawing code without duplicating it. We define a constant *ARROW_LENGTH* corresponding to the length of the arrow to draw to the right.
+This class inherits from Bio::Graphics::Glyph::hourglass, allowing us to build on the previous drawing code without duplicating it. We define a constant `ARROW_LENGTH` corresponding to the length of the arrow to draw to the right.
 
-We now override the draw_component() method. The first thing we want to do is to invoke the old hourglass drawing code, which we do by calling $self->SUPER::draw_component() with our argument list. The SUPER:: notation tells Perl that we intend to call our inherited (superclass's) method. This will draw the old hourglass.
+We now override the `draw_component()` method. The first thing we want to do is to invoke the old hourglass drawing code, which we do by calling `$self->SUPER::draw_component()` with our argument list. The SUPER:: notation tells Perl that we intend to call our inherited (superclass's) method. This will draw the old hourglass.
 
-We next proceed to draw the arrow. We calculate our bounds box using the bounds() method, and then invoke the inherited arrow() utility method. This takes the GD object, and draws a horizontal arrow from a start position to an end position at the indicated y coordinate. In this case, we want the arrow to start at horizontal position $right (the right side of our bounds box), go to position $right+ARROW_LENGTH, and position the arrow vertically at our vertical center, which is simply the average of $bottom and $top.
+We next proceed to draw the arrow. We calculate our bounds box using the `bounds()` method, and then invoke the inherited `arrow()` utility method. This takes the GD object, and draws a horizontal arrow from a start position to an end position at the indicated y coordinate. In this case, we want the arrow to start at horizontal position $right (the right side of our bounds box), go to position $right+ARROW_LENGTH, and position the arrow vertically at our vertical center, which is simply the average of $bottom and $top.
 
-To view the new glyph, save test_hourglass.pl under the filename test_hourglass_arrow.pl, and modify it to read as follows:
+To view the new glyph, save `test_hourglass.pl` under the filename `test_hourglass_arrow.pl`, and modify it to read as follows:
 
 **Example 4. A script to exercise the hourglass_arrow glyph**
 
@@ -466,7 +466,7 @@ sub draw_component {
 1;
 ```
 
-We add a pad_right() method that simply returns the constant value ARROW_LENGTH. During layout, Bio::Graphics calls pad_right() (as well as all the other pad_* methods) to find out whether each glyph requires extra space.
+We add a `pad_right()` method that simply returns the constant value `ARROW_LENGTH`. During layout, Bio::Graphics calls `pad_right()` (as well as all the other `pad_*` methods) to find out whether each glyph requires extra space.
 
 When we rerun the test script, we get the desired output:
 
@@ -478,7 +478,7 @@ We will see later how to add top and bottom padding.
 
 What if we want to give the user the option of changing the length of the arrow? It is very easy to define new **-option_name** options for custom glyphs. In this case we want to add support for a runtime option named **-arrow_length**. Open up the current hourglass_arrow.pm and modify it to look like the following:
 
-**Example 7. The hourglass_arrow Glyph Enhanced with Support for -arrow_length**
+**Example 7. The hourglass\_arrow Glyph Enhanced with Support for -arrow\_length**
 
 ```perl
 package Bio::Graphics::Glyph::hourglass_arrow;
@@ -515,9 +515,9 @@ sub draw_component {
 1;
 ```
 
-What we do here is to define a new method named arrow_length(). It is responsible for returning the desired length of the arrow. It first looks for the existence of an option named *arrow_length* using the inherited option() method. If this is defined, it returns it. Otherwise it defaults to the previously defined ARROW_LENGTH constant.
+What we do here is to define a new method named `arrow_length()`. It is responsible for returning the desired length of the arrow. It first looks for the existence of an option named `arrow_length` using the inherited `option()` method. If this is defined, it returns it. Otherwise it defaults to the previously defined `ARROW_LENGTH` constant.
 
-We make two other changes. pad_right() now calls $self->arrow_length() in order to return the currently configured arrow length as the padding size. Meanwhile, draw_component() also calls $self->arrow_length() when calculating the extent of the arrow.
+We make two other changes. `pad_right()` now calls ``$self->arrow_length()`` in order to return the currently configured arrow length as the padding size. Meanwhile, `draw_component()` also calls `$self->arrow_length()` when calculating the extent of the arrow.
 
 To test whether this new feature works, modify the test script's second add_track() to look like this:
 
@@ -537,7 +537,7 @@ When we redraw, we get:
 
 **Figure 6. The hourglass_arrow glyph with a long tail** ![](Howto-glyphs-fig6.jpg "fig:Howto-glyphs-fig6.jpg")
 
-The nice thing about this is that you can pass a callback (subroutine coderef) to -arrow_length, and it will work just like all the other callback options. To see this, modify add_track() once again so that -arrow_length corresponds to an anonymous subroutine that returns different arrow lengths depending on whether it was called for $test_feature or $test2_feature:
+The nice thing about this is that you can pass a callback (subroutine coderef) to `-arrow_length`, and it will work just like all the other callback options. To see this, modify `add_track()` once again so that `-arrow_length` corresponds to an anonymous subroutine that returns different arrow lengths depending on whether it was called for ``$test_feature` or `$test2_feature`:
 
 ```perl
 $panel->add_track([$test_feature,$test2_feature],
@@ -619,9 +619,9 @@ sub draw_component {
 Multipart Glyphs
 ----------------
 
-Some features contain subfeatures. Common examples include a transcript that contains multiple exons. Similarly, some features are split across multiple locations, for example alignments. Bio::Graphics deals with both of these situations in the same way: by creating a series of subglyphs for each of the subfeatures or locations. Each subglyph is given the same class as the parent glyph. When the time comes to draw the glyph, Bio::Graphics invokes *draw_component()* on each of the subglyphs.
+Some features contain subfeatures. Common examples include a transcript that contains multiple exons. Similarly, some features are split across multiple locations, for example alignments. Bio::Graphics deals with both of these situations in the same way: by creating a series of subglyphs for each of the subfeatures or locations. Each subglyph is given the same class as the parent glyph. When the time comes to draw the glyph, Bio::Graphics invokes `draw_component()` on each of the subglyphs.
 
-The superclass for all multipart glyphs is Bio::Graphics::Glyph::segments. To create a new multipart glyph, simply inherit from Bio::Graphics::Glyph::segments and override the *draw_component()* method. *draw_component()* will be called for each subpart of the feature. This also works recursively, allowing you to deal with features that contain three or more levels of subfeatures.
+The superclass for all multipart glyphs is Bio::Graphics::Glyph::segments. To create a new multipart glyph, simply inherit from Bio::Graphics::Glyph::segments and override the `draw_component()` method. `draw_component()` will be called for each subpart of the feature. This also works recursively, allowing you to deal with features that contain three or more levels of subfeatures.
 
 To see how this works, let's look at a version of the hourglass glyph that will accept multipart features:
 
@@ -732,7 +732,7 @@ The result is shown in Figure 8. As you can see, the glyph handles all three cas
 
 ### Sub-subfeatures and the maxdepth() method
 
-For performance reasons, the segments glyph assumes that each feature has at most one level of subfeatures, which is the case for the vast majority of multipart features. In the rare case that you need to represent a feature that has more than one sublevel, you will need to override the maxdepth() method.
+For performance reasons, the segments glyph assumes that each feature has at most one level of subfeatures, which is the case for the vast majority of multipart features. In the rare case that you need to represent a feature that has more than one sublevel, you will need to override the `maxdepth()` method.
 
 To test this option, we will modify the Example 10 script so that $test_feature contains three levels of subfeatures:
 
@@ -772,7 +772,7 @@ sub draw_component {
 1;
 ```
 
-The *maxdepth()* method returns the numeric value 2 to tell Bio::Graphics to step into at most two levels of features. This has exactly the same effect as passing `-maxdepth=>2` to the *add_track()* method, except that it is now hard-coded into the glyph. Now when we run the modified test script, the first subfeature of the leftmost feature is broken into its two parts as we want (Figure 9).
+The `maxdepth()` method returns the numeric value 2 to tell Bio::Graphics to step into at most two levels of features. This has exactly the same effect as passing `-maxdepth=>2` to the `add_track()` method, except that it is now hard-coded into the glyph. Now when we run the modified test script, the first subfeature of the leftmost feature is broken into its two parts as we want (Figure 9).
 
 **Figure 9. The multihourglass glyph with support for two levels of subfeature** ![](Howto-glyphs-fig9.jpg "fig:Howto-glyphs-fig9.jpg").
 
@@ -780,7 +780,7 @@ The *maxdepth()* method returns the numeric value 2 to tell Bio::Graphics to ste
 
 An unsatisfactory feature of the image produced at the end of the previous section is that the extra nesting of the sub-subfeatures in feature #1 is not shown. There is no way to distinguish between level 1 and level 2 features.
 
-To fix this, we will make a small change to the *draw()* method. *draw()* is defined in Bio::Graphics::Glyph. It walks through each subglyph and calls its *draw_component()* method. It then draws a solid line to connect each of the subglyphs. We will change *draw()* so that there is a rectangle drawn around each level 1 subfeature if it contains subparts. The effect is shown in Figure 10.
+To fix this, we will make a small change to the `draw()` method. `draw()` is defined in Bio::Graphics::Glyph. It walks through each subglyph and calls its `draw_component()` method. It then draws a solid line to connect each of the subglyphs. We will change `draw()` so that there is a rectangle drawn around each level 1 subfeature if it contains subparts. The effect is shown in Figure 10.
 
 **Figure 10: Multihourglass glyph modified to show grouping of sub-subfeatures** ![](Howto-glyphs-fig10.jpg "fig:Howto-glyphs-fig10.jpg")
 
@@ -817,11 +817,11 @@ sub draw_component {
 1;
 ```
 
-The new code overrides the *draw()* method. The call signature of this method is identical to *draw_component()*. It receives the GD object and the topleft coordinates of the glyph. What this code does is to ask whether the current level of the glyph is equal to 1, which is the first level of subglyph. If this is true, then it asks whether the current glyph has any subglyph by calling the method *parts()*. *parts()* will return a list of the subglyphs, which will be true if there are subglyphs and false otherwise.
+The new code overrides the `draw()` method. The call signature of this method is identical to `draw_component()`. It receives the GD object and the topleft coordinates of the glyph. What this code does is to ask whether the current level of the glyph is equal to 1, which is the first level of subglyph. If this is true, then it asks whether the current glyph has any subglyph by calling the method `parts()`. `parts()` will return a list of the subglyphs, which will be true if there are subglyphs and false otherwise.
 
-If both these criteria are true, then we retrieve the GD object and translate the topleft into the bounds rectangle. We then call the GD object's filledRectangle() method to draw a lightgrey background filling the entire bounds box. The call to our inherited *translate_color()* is a convenience method that will translate a symbolic color name (or a #RRGGBB name) into the appropriate color index for GD.
+If both these criteria are true, then we retrieve the GD object and translate the topleft into the bounds rectangle. We then call the GD object's `filledRectangle()` method to draw a lightgrey background filling the entire bounds box. The call to our inherited `translate_color()` is a convenience method that will translate a symbolic color name (or a #RRGGBB name) into the appropriate color index for GD.
 
-We then call our inherited *draw()* method in order to iterate through the subglyphs, call their *draw_component()* methods, draw the label and description, and so forth.
+We then call our inherited `draw()` method in order to iterate through the subglyphs, call their `draw_component()` methods, draw the label and description, and so forth.
 
 If you are following along, try removing one or both of the conditions (e.g. remove the check for $self->level==1 or $self->parts) and see what happens.
 
