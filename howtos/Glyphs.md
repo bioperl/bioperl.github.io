@@ -15,7 +15,7 @@ Lincoln Stein lstein@cshl.edu
 Copyright
 ---------
 
-This document is copyright [Lincoln Stein](http://www.bioperl.org/wiki/Lincoln_Stein), 2007. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.bioperl.org/wiki/Perl_Artistic_License).
+This document is copyright Lincoln Stein, 2007. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.bioperl.org/wiki/Perl_Artistic_License).
 
 Revision History
 ----------------
@@ -72,23 +72,23 @@ Glyph Class Hierarchy
 
 Glyphs follow a simple class hierarchy:
 
-**Bio::Graphics::Glyph**
+**[Bio::Graphics::Glyph](https://metacpan.org/pod/Bio::Graphics::Glyph)**
 
 - This is the base class for all glyphs. It provides methods for reading options passed to it by the caller, laying glyphs out with collision control, setting up fonts and colors correctly, transforming from nucleotide coordinates to pixel coordinates, and generating imagemaps. It also provides some utility methods for drawing filled and unfilled rectangles, arrows, and other fundamental elements (these are convenience methods built on top of GD).
 
-**Bio::Graphics::Glyph::generic**
+**[Bio::Graphics::Glyph::generic](https://metacpan.org/pod/Bio::Graphics::Glyph::generic)**
 
 - The generic glyph inherits from Glyph and adds methods to draw the label and description. When given a complex feature (i.e. a feature that contains subfeatures), it draws each of the subfeatures separately and does not connect them visually.
 
-**Bio::Graphics::Glyph::box**
+**[Bio::Graphics::Glyph::box](https://metacpan.org/pod/Bio::Graphics::Glyph::box)**
 
 - The box glyph inherits from Glyph. It is optimized for "simple" features, in other words those that have no subfeatures. When drawing simple one-part features, this is the glyph you should inherit from for performance reasons.
 
-**Bio::Graphics::Glyph::segments**
+**[Bio::Graphics::Glyph::segments](https://metacpan.org/pod/Bio::Graphics::Glyph::segments)**
 
 - This is a subclass of generic, which enables the ability to draw the internal structure of the feature. It draws each part of the feature and then connects them visually with various types of lines. You should inherit from this class to draw multi-part features.
 
-**Bio::Graphics::Glyph::fixedwidth**
+**[Bio::Graphics::Glyph::fixedwidth](https://metacpan.org/pod/Bio::Graphics::Glyph::fixedwidth)**
 
 - This is a subclass of generic specialized for drawing fixed width features. It draws a horizontal line showing the extent of the feature on the sequence, and reserves a rectangle of specified fixed width and height for its subclasses to draw into. It is useful for images, scatterplots and other visual representations that should not be stretched or shrunk.
 
@@ -132,9 +132,9 @@ sub draw_component {
 1;
 ```
 
-This module begins by declaring its package name. All glyphs must begin with "Bio::Graphics::Glyph::" followed by their lowercase name.
+This module begins by declaring its package name. All glyphs must begin with `Bio::Graphics::Glyph::` followed by their lowercase name.
 
-It then turns on strict type checking, and declares that it is inheriting from "Bio::Graphics::Glyph::box" with `use base.`
+It then turns on `strict` type checking, and declares that it is inheriting from [Bio::Graphics::Glyph::box](https://metacpan.org/pod/Bio::Graphics::Glyph::box) with `use base.`
 
 The module then overrides the single method `draw_component()`. This method is responsible for drawing each of the parts of a feature (e.g. the exons of a gene). For simple single-part features, it draws the entire body of the glyph. `draw_component()` begins by reading its first argument, which is the object itself. This gets stored into `$self`. It then reads three arguments passed to it by Bio::Graphics:
 
@@ -142,7 +142,7 @@ The module then overrides the single method `draw_component()`. This method is r
 -   The left coordinate of our bounds box, which we store into `$dx`
 -   The top coordinate of our bounds box, which we store into `$dy`
 
-The topleft coordinate is passed by Bio::Graphics as a convenience for relative layout of complex objects. You can do all your layout based on a topleft coordinate of (0,0) and then add $dx and $dy to all your coordinates in order to position them correctly on the screen. In this case, we aren't doing anything fancy, so we just pass ($dx,$dy) to `$self->bounds()`, which returns our bounds box as the four-element list ($left,$top,$right,$bottom).
+The topleft coordinate is passed by Bio::Graphics as a convenience for relative layout of complex objects. You can do all your layout based on a topleft coordinate of (0,0) and then add `$dx` and `$dy` to all your coordinates in order to position them correctly on the screen. In this case, we aren't doing anything fancy, so we just pass `($dx,$dy)` to `$self->bounds()`, which returns our bounds box as the four-element list `($left,$top,$right,$bottom)`.
 
 Now we create a polygon to draw the hourglass. We invoke `GD::Polygon->new()` to create a polygon, and then call the polygon's `add_pt()` method five times to trace out the vertices of the hourglass. Polygons must be closed, so the last vertex added is the same as the first one.
 
@@ -207,7 +207,7 @@ We'll take a quick break from glyph building in order to list a few methods that
 
 ### Methods Commonly Used within Glyph Subclasses
 
-Here are the most common methods that can be called by glyphs to get information that is useful during setup and drawing. Most of these methods are defined in Bio::Graphics::Glyph; a few are added by Bio::Graphics::Glyph::generic.
+Here are the most common methods that can be called by glyphs to get information that is useful during setup and drawing. Most of these methods are defined in Bio::Graphics::Glyph; a few are added by [Bio::Graphics::Glyph::generic](https://metacpan.org/pod/Bio::Graphics::Glyph::generic).
 
 **$feature = $self->feature**
 
@@ -295,7 +295,7 @@ Here are the methods most commonly redefined by glyph subclasses.
 
 **$self->draw\_component($gd,$dx,$dy,$partno,$total\_parts)**
 
-- Draw part of a glyph. For simple glyphs descended from Bio::Graphics::Glyph::box, this method will be called only once. For multipart glyphs descended from Bio::Graphics::Glyph::segments or Bio::Graphics::Glyph::generic, this method will be called once for each subpart of the glyph. $gd is the GD object, and ($dx,$dy) are offsets from the topleft corner of the track. Ordinarily you will pass ($dx,$dy) to `$self->bounds()` to get the bounds box of the content. For multipart glyphs, $partno and $total_parts indicate which number part this is (counting from the left, starting with part number 0) and how many parts total there are. Usually you can ignore this information.
+- Draw part of a glyph. For simple glyphs descended from [Bio::Graphics::Glyph::box](https://metacpan.org/pod/Bio::Graphics::Glyph::box), this method will be called only once. For multipart glyphs descended from [Bio::Graphics::Glyph::segments](https://metacpan.org/pod/Bio::Graphics::Glyph::segments) or [Bio::Graphics::Glyph::generic](https://metacpan.org/pod/Bio::Graphics::Glyph::generic), this method will be called once for each subpart of the glyph. $gd is the GD object, and ($dx,$dy) are offsets from the topleft corner of the track. Ordinarily you will pass ($dx,$dy) to `$self->bounds()` to get the bounds box of the content. For multipart glyphs, $partno and $total_parts indicate which number part this is (counting from the left, starting with part number 0) and how many parts total there are. Usually you can ignore this information.
 
 **$self->pad\_left, $self->pad\_right, $self->pad\_top,$self->pad\_bottom**
 
@@ -340,7 +340,7 @@ sub draw_component {
 1;
 ```
 
-This class inherits from Bio::Graphics::Glyph::hourglass, allowing us to build on the previous drawing code without duplicating it. We define a constant `ARROW_LENGTH` corresponding to the length of the arrow to draw to the right.
+This class inherits from [Bio::Graphics::Glyph::hourglass](https://metacpan.org/pod/Bio::Graphics::Glyph::hourglass), allowing us to build on the previous drawing code without duplicating it. We define a constant `ARROW_LENGTH` corresponding to the length of the arrow to draw to the right.
 
 We now override the `draw_component()` method. The first thing we want to do is to invoke the old hourglass drawing code, which we do by calling `$self->SUPER::draw_component()` with our argument list. The SUPER:: notation tells Perl that we intend to call our inherited (superclass's) method. This will draw the old hourglass.
 
@@ -561,7 +561,7 @@ The result looks like this:
 
 ### Allocating Top and Bottom Padding
 
-Allocating top and bottom padding is slightly more difficult than left and right padding because our superclass, Bio::Graphics::Glyph::box, already uses some padding to draw the label and description. Fortunately it's not all that difficult to finesse this. You merely need to add the amount of padding your custom glyph needs to the padding needed by the parent. Example 8 illustrates this:
+Allocating top and bottom padding is slightly more difficult than left and right padding because our superclass, [Bio::Graphics::Glyph::box](https://metacpan.org/pod/Bio::Graphics::Glyph::box), already uses some padding to draw the label and description. Fortunately it's not all that difficult to finesse this. You merely need to add the amount of padding your custom glyph needs to the padding needed by the parent. Example 8 illustrates this:
 
 **Example 8: Adjusting top and bottom padding**
 
@@ -609,8 +609,10 @@ sub draw_component {
 
   $gd->line($tee_x,$tee_top,$tee_x,$tee_bottom,$self->fgcolor);
 
-  $gd->line($tee_x - T_WIDE/2, $tee_top,   $tee_x + T_WIDE/2, $tee_top,    $self->fgcolor);
-  $gd->line($tee_x - T_WIDE/2, $tee_bottom,$tee_x + T_WIDE/2, $tee_bottom, $self->fgcolor);
+  $gd->line($tee_x - T_WIDE/2, $tee_top,   
+        $tee_x + T_WIDE/2, $tee_top,    $self->fgcolor);
+  $gd->line($tee_x - T_WIDE/2, $tee_bottom,
+        $tee_x + T_WIDE/2, $tee_bottom, $self->fgcolor);
 }
 
 1;
@@ -621,7 +623,7 @@ Multipart Glyphs
 
 Some features contain subfeatures. Common examples include a transcript that contains multiple exons. Similarly, some features are split across multiple locations, for example alignments. Bio::Graphics deals with both of these situations in the same way: by creating a series of subglyphs for each of the subfeatures or locations. Each subglyph is given the same class as the parent glyph. When the time comes to draw the glyph, Bio::Graphics invokes `draw_component()` on each of the subglyphs.
 
-The superclass for all multipart glyphs is Bio::Graphics::Glyph::segments. To create a new multipart glyph, simply inherit from Bio::Graphics::Glyph::segments and override the `draw_component()` method. `draw_component()` will be called for each subpart of the feature. This also works recursively, allowing you to deal with features that contain three or more levels of subfeatures.
+The superclass for all multipart glyphs is [Bio::Graphics::Glyph::segments](https://metacpan.org/pod/Bio::Graphics::Glyph::segments). To create a new multipart glyph, simply inherit from Bio::Graphics::Glyph::segments and override the `draw_component()` method. `draw_component()` will be called for each subpart of the feature. This also works recursively, allowing you to deal with features that contain three or more levels of subfeatures.
 
 To see how this works, let's look at a version of the hourglass glyph that will accept multipart features:
 
@@ -652,7 +654,7 @@ sub draw_component {
 1;
 ```
 
-The new glyph is named "multihourglass". Its definition is **exactly** the same as the original hourglass glyph, with one critical change: Instead of inheriting from Bio::Graphics::Glyph::box, it inherits from Bio::Graphics::Glyph::segments.
+The new glyph is named "multihourglass". Its definition is **exactly** the same as the original hourglass glyph, with one critical change: Instead of inheriting from [Bio::Graphics::Glyph::box](https://metacpan.org/pod/Bio::Graphics::Glyph::box), it inherits from [Bio::Graphics::Glyph::segments](https://metacpan.org/pod/Bio::Graphics::Glyph::segmentsf).
 
 To exercise the new glyph, we can use the script shown in Example 10.
 
@@ -823,7 +825,7 @@ If both these criteria are true, then we retrieve the GD object and translate th
 
 We then call our inherited `draw()` method in order to iterate through the subglyphs, call their `draw_component()` methods, draw the label and description, and so forth.
 
-If you are following along, try removing one or both of the conditions (e.g. remove the check for $self->level==1 or $self->parts) and see what happens.
+If you are following along, try removing one or both of the conditions (e.g. remove the check for `$self->level==1` or `$self->parts`) and see what happens.
 
 An Embedded Table Using the fixedwidth Glyph
 --------------------------------------------
@@ -912,7 +914,8 @@ sub draw_contents {
  for my $row (0..$row_count-1) {
    for my $col (0..$column_count-1) {
      my $cell_data = $cell_data[$row*$column_count + $col];
-     my $x = $left + ($col+1) * $cell_width - length($cell_data) * $fontwidth - 1;
+     my $x = $left + ($col+1) * $cell_width - length($cell_data) 
+        * $fontwidth - 1;
      my $y = $top  + $row * $cell_height + 1;
      $gd->string($self->font,$x,$y,$cell_data,$self->fontcolor);
    }
