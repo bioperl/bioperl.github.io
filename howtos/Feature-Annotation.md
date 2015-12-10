@@ -85,12 +85,12 @@ my $seqio_object = Bio::SeqIO->new(-file => "BAB55667.gb" );
 my $seq_object = $seqio_object->next_seq;
 ```
 
-Now that we have a sequence object in hand we can examine its features and annotations.
+Now that we have a sequence object, `$seq_object`, we can examine its features and annotations.
 
 Getting the Features
 --------------------
 
-The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features and annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the Feature table section, something like this:
+The focus of this HOWTO is mostly on Genbank format but bear in mind that all of the code shown here will also work on other formats containing features and annotations (EMBL, Swissprot, BSML, Chado XML, GAME, KEGG, Locuslink, Entrez Gene, TIGR XML). When the entry comes from Genbank it's easy to see where most of the features are, they're in the FEATURES table section, something like this:
 
 ```
  FEATURES            Location/Qualifiers

@@ -23,7 +23,7 @@ Revisions
 Introduction
 ------------
 
-This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into [BioPerl](http://www.bioperl.org/wiki/BioPerl), from checking out the latest version to creating a diff file and submitting it to Bugzilla.
+This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into BioPerl, from checking out the latest version to creating a diff file and submitting it to Bugzilla.
 
 Step by Step
 ------------
@@ -103,20 +103,20 @@ First read about [Bugs](http://www.bioperl.org/wiki/Bugs) then log into the [Iss
 
 ### The waiting game
 
-Eventually your bug submission will be processed and assimilated into [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live) (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list](http://www.bioperl.org/wiki/Mailing_lists) which most [BioPerl](http://www.bioperl.org/wiki/BioPerl) developers read.
+Eventually your bug submission will be processed and assimilated into [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live) (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list](http://www.bioperl.org/wiki/Mailing_lists) which most BioPerl developers read.
 
 `while true; do echo "Waiting..."; sleep 3600; done`
 
 ### Update your local Git repository
 
-Don't forget to regularly update your Git version of [BioPerl](http://www.bioperl.org/wiki/BioPerl)!
+Don't forget to regularly update your Git version of BioPerl!
 
 `git pull origin master`
 
 Conclusion
 ----------
 
-It takes a little bit of effort to submit a patch to [BioPerl](http://www.bioperl.org/wiki/BioPerl) but you are rewarded with that warm fuzzy feeling that giving back to your community provides. If the patch showed BioPerl aptitude, there's a good chance that you will be invited to [become a BioPerl developer](http://www.bioperl.org/wiki/Becoming_a_developer) via your own [developer account](http://www.bioperl.org/wiki/Using_CVS#Checking_out_code_from_the_repository_with_a_developer_account).
+It takes a little bit of effort to submit a patch to BioPerl but you are rewarded with that warm fuzzy feeling that giving back to your community provides. If the patch showed BioPerl aptitude, there's a good chance that you will be invited to [become a BioPerl developer](http://www.bioperl.org/wiki/Becoming_a_developer) via your own [developer account](http://www.bioperl.org/wiki/Using_CVS#Checking_out_code_from_the_repository_with_a_developer_account).
 
 Further reading
 ---------------

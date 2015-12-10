@@ -37,7 +37,7 @@ This document will be split up into sections which describe the data objects for
 The Bio::PopGen Objects
 -----------------------
 
-In [BioPerl](http://www.bioperl.org/wiki/BioPerl) we have created a few objects to describe population genetic data. These are all located in the Bio::PopGen namespace, so they can be browsed by looking at the `Bio/PopGen` directory.
+In BioPerl we have created a few objects to describe population genetic data. These are all located in the Bio::PopGen namespace, so they can be browsed by looking at the `Bio/PopGen` directory.
 
 [Bio::PopGen::Population](https://metacpan.org/pod/Bio::PopGen::Population) is a container for a set of [Bio::PopGen::Individual](https://metacpan.org/pod/Bio::PopGen::Individual) in order to represent individuals from a population. Each Individual has a set of [Bio::PopGen::Genotype](https://metacpan.org/pod/Bio::PopGen::Genotype) genotype objects which are an allele set associated with a unique marker name. Methods associated with the Population object can calculate the summary statistics such as pi, theta, heterozygocity by processing each Individual in the set.
 
