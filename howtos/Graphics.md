@@ -508,9 +508,9 @@ The script reads the features from the sequence object by calling `all_SeqFeatur
 
 Next, we create the object (lines 21-27). As in previous examples, we specify the width of the image, as well as some extra white space to pad out the left and right borders.
 
-We now add two tracks, one for the scale (lines 28-32) and the other for the sequence as a whole (33-37). As in the earlier examples, we pass add_track() the sequence object as the first argument before the options so that the object is incorporated into the track immediately.
+We now add two tracks, one for the scale (lines 28-32) and the other for the sequence as a whole (33-37). As in the earlier examples, we pass `add_track()` the sequence object as the first argument before the options so that the object is incorporated into the track immediately.
 
-We are now ready to create a track for each feature type. In order to distinguish the tracks by color, we initialize an array of 9 color names and simply cycle through them (lines 39-54). For each feature tag, we retrieve the corresponding list of features from %sorted_features (line 42) and create a track for it using the "generic" glyph and the next color in the list (lines 43-53). We set the `-label` and `-description` options to the value "1". This signals that it should do the best it can to choose useful label and description values on its own.
+We are now ready to create a track for each feature type. In order to distinguish the tracks by color, we initialize an array of 9 color names and simply cycle through them (lines 39-54). For each feature tag, we retrieve the corresponding list of features from `%sorted_features` (line 42) and create a track for it using the "generic" glyph and the next color in the list (lines 43-53). We set the `-label` and `-description` options to the value "1". This signals that it should do the best it can to choose useful label and description values on its own.
 
 After adding all the feature types, we call the panel's `png()` method to generate a graphic file, which we print to STDOUT. If we are on a Windows platform, we would have to include `binmode(STDOUT)` prior to this statement in order to avoid Windows textmode carriage return/linefeed transformations. Figure 5 shows an example of the output of this script using an EMBL sequence file as input.
 
