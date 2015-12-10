@@ -230,7 +230,7 @@ When we run the modified script, we get this image:
 
 *Figure 2. The improved image.* ![](Howto-graphics-fig2.png "fig:Howto-graphics-fig2.png")
 
-'''Important!'''
+***Important!***
 ` Remember that if you are on a Windows platform, you need to put STDOUT`
 `  into binary mode so that the PNG file does not go through Window's`
 `  carriage return/linefeed transformations. Before the final print`
@@ -309,7 +309,7 @@ There are two changes to look at. The first appears in line 24, where we pass th
 
 The second change is more complicated, and involves the -description option that appears in the `add_track()` call on lines 25-28. The value of `-description` will be printed beneath each feature. We could pass `-description` a constant string, but that would simply print the same string under each feature. Instead we pass `-description` a code reference to a subroutine that will be invoked while the picture is being rendered. This subroutine will be passed the current feature, and must return the string to use as the value of the description. In our code, we simply fetch out the [BLAST] hit's score using its `score()` method, and incorporate that into the description string.
 
-'''Tip:'''
+***Tip:***
 `  The ability to use a code reference as a configuration option isn't`
 `  unique to ``-description``. In fact, you can use a code reference for any`
 `  of the options passed to ``add_track()``.`
@@ -414,7 +414,7 @@ Figure 4 shows the output from a sample [BLAST] hit file.
 
 The next section will demonstrate how to parse and display [feature tables] from [GenBank] and [EMBL].
 
-'''Important!'''
+***Important!***
 
 `  Remember that if you are on a Windows platform, you need to put STDOUT`
 `  into binary mode so that the PNG file does not go through Window's`
