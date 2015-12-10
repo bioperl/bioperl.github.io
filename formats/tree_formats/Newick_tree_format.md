@@ -12,14 +12,14 @@ Examples of Newick tree format
 ------------------------------
 
 ```
-(,,(,));                               ''no nodes are named''
-(A,B,(C,D));                           ''leaf nodes are named''
-(A,B,(C,D)E)F;                         ''all nodes are named''
-(:0.1,:0.2,(:0.3,:0.4):0.5);           ''all but root node have a distance to parent''
-(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);       ''distances and leaf names'' ***(popular)***
-(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5)F;     ''distances and all names''
-A;                                     ''a (degenerate) tree with one named node''
-((B:0.2,(C:0.3,D:0.4)E:0.5)F:0.1)A;    ''a tree rooted on a leaf node'' ***(rare)***
+(,,(,));                               *no nodes are named*
+(A,B,(C,D));                           *leaf nodes are named*
+(A,B,(C,D)E)F;                         *all nodes are named*
+(:0.1,:0.2,(:0.3,:0.4):0.5);           *all but root node have a distance to parent*
+(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);       *distances and leaf names* ***(popular)***
+(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5)F;     *distances and all names*
+A;                                     *a (degenerate) tree with one named node*
+((B:0.2,(C:0.3,D:0.4)E:0.5)F:0.1)A;    *a tree rooted on a leaf node* ***(rare)***
 
 ```
 
@@ -28,9 +28,9 @@ Newick format is typically used for tools like PHYLIP and is a minimal definitio
 Rooted, unrooted, and binary trees
 ----------------------------------
 
-When an ''unrooted'' tree is represented in Newick notation, an arbitrary node is chosen as its root. Whether rooted or unrooted, typically a tree's representation is rooted on an internal node and it is rare (but legal) to root a tree on a leaf node.
+When an *unrooted* tree is represented in Newick notation, an arbitrary node is chosen as its root. Whether rooted or unrooted, typically a tree's representation is rooted on an internal node and it is rare (but legal) to root a tree on a leaf node.
 
-A ''rooted binary'' tree that is rooted on an internal node has exactly two immediate descendant nodes for each internal node. An ''unrooted binary'' tree that is rooted on an arbitrary internal node has exactly three immediate descendant nodes for the root node, and each other internal node has exactly two immediate descendant nodes. A ''binary tree rooted from a leaf'' has at most one immediate descendant node for the root node, and each internal node has exactly two immediate descendant nodes.
+A *rooted binary* tree that is rooted on an internal node has exactly two immediate descendant nodes for each internal node. An *unrooted binary* tree that is rooted on an arbitrary internal node has exactly three immediate descendant nodes for the root node, and each other internal node has exactly two immediate descendant nodes. A *binary tree rooted from a leaf* has at most one immediate descendant node for the root node, and each internal node has exactly two immediate descendant nodes.
 
 Grammar
 -------
@@ -61,7 +61,7 @@ Note, *|** separates alternatives.
 * Name --> empty | string
 * Length --> empty | ":" number
 
-Whitespace (spaces, tabs, carriage returns, and linefeeds) within ''number'' is prohibited. Whitespace within ''string'' is often prohibited. Whitespace elsewhere is ignored.
+Whitespace (spaces, tabs, carriage returns, and linefeeds) within *number* is prohibited. Whitespace within *string* is often prohibited. Whitespace elsewhere is ignored.
 
 See also
 --------

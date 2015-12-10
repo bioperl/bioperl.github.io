@@ -34,7 +34,7 @@ An HSP involves two sequences, aligned to each other: the _query_ and the _hit_ 
 
 ## Sequence _length_ ##
 
-There are two lengths associated with each of the sequences in a given HSP: the ''aligned'' length, which is the length of the sequence (query or hit) actually involved in the HSP alignment, and the ''total'' length, which is the length of the entire sequence input by the user as a query, or the entire length of the hit sequence in the database. The distinction becomes important when calculating the fraction of a sequence successfully aligned over multiple HSPs in a search report.
+There are two lengths associated with each of the sequences in a given HSP: the *aligned* length, which is the length of the sequence (query or hit) actually involved in the HSP alignment, and the *total* length, which is the length of the entire sequence input by the user as a query, or the entire length of the hit sequence in the database. The distinction becomes important when calculating the fraction of a sequence successfully aligned over multiple HSPs in a search report.
 
 
 ## Coordinate _mapping_ and _conversion_ ##

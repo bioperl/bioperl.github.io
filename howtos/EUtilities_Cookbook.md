@@ -128,7 +128,7 @@ $factory->get_Response(-file => 'full_contig.gb');
 
 ```
 
-### Get the ''scientific name'' for an organism
+### Get the *scientific name* for an organism
 
 Start with the NCBI taxon id and all the taxonomic data is available to you.
 

@@ -51,7 +51,7 @@ The upshot of these comments is that one [PAML](http://abacus.gene.ucl.ac.uk/sof
 Accessing PAML results
 ======================
 
-The BioPerl PAML result parser takes the view that a distinct ''recordset'' or single, top-level  [Bio::Tools::Phylo::PAML::Result](https://metacpan.org/pod/Bio::Tools::Phylo::PAML::Result) object represents a single dataset. Each [Bio::Tools::Phylo::PAML::Result](https://metacpan.org/pod/Bio::Tools::Phylo::PAML::Result) object may therefore contain data from multiple genes, models, and/or tree topologies. To parse the output from a multiple-dataset paml run, the familiar `next_result()` iterator common to other BioPerl modules is invoked.
+The BioPerl PAML result parser takes the view that a distinct *recordset* or single, top-level  [Bio::Tools::Phylo::PAML::Result](https://metacpan.org/pod/Bio::Tools::Phylo::PAML::Result) object represents a single dataset. Each [Bio::Tools::Phylo::PAML::Result](https://metacpan.org/pod/Bio::Tools::Phylo::PAML::Result) object may therefore contain data from multiple genes, models, and/or tree topologies. To parse the output from a multiple-dataset paml run, the familiar `next_result()` iterator common to other BioPerl modules is invoked.
 
 ```perl
 # Example 1. Iterating over results with next_result

@@ -506,7 +506,7 @@ We have to register the HSPFactory, which is the object which will create HSPI o
 Speed improvements with lightweight objects
 -------------------------------------------
 
-The approaches described above will create a lot of objects, one for each of the components of a report. When you have 2000 hits in a BLASTX result there will be quite a few objects built, and a lot of memory consumed. It's possible that you'll want to use an approach that's less memory-intensive if your result sets are large. One option is to use the tabular output from BLAST when dealing with large datasets (''-m 8'' or ''-m 9'').
+The approaches described above will create a lot of objects, one for each of the components of a report. When you have 2000 hits in a BLASTX result there will be quite a few objects built, and a lot of memory consumed. It's possible that you'll want to use an approach that's less memory-intensive if your result sets are large. One option is to use the tabular output from BLAST when dealing with large datasets (*-m 8* or *-m 9*).
 
 There are other workarounds depending on what kind of data you want. We designed to be a modular system which separates parsing the data from instantiating objects by throwing events (like SAX) and having a listener build objects from these events. So one can instantiate a different listener which builds simpler objects and throws away the data you don't want.
 
