@@ -2,25 +2,22 @@
 title: "INSTALL.WIN"
 layout: default
 ---
-                         Installing Bioperl on Windows
 
-   Contents
+Installing Bioperl on Windows
+=============================
 
+## Contents
      * 1 Introduction
      * 2 Requirements
      * 3 Installation using the ActiveState Perl Package Manager
-     
           * 3.1 GUI Installation
           * 3.2 Comand-line Installation
-          
      * 4 Installation using CPAN or manual installation
      * 5 Bioperl
      * 6 Bioperl on Windows
      * 7 Beyond the Core
-
           * 7.1 Setting environment variables
           * 7.2 Installing bioperl-db
-
      * 8 Bioperl in Cygwin
      * 9 bioperl-db in Cygwin
      * 10 Cygwin tips
@@ -31,235 +28,236 @@ layout: default
      * 15 Compiling C code
 
 Introduction
+============
 
-   This installation guide was written by Barry Moore, Nathan Haigh
-   and other Bioperl authors based on the original work of Paul Boutros. The
-   guide was updated for the BioPerl wiki by Chris Fields and Nathan
-   Haigh.
+This installation guide was written by Barry Moore, Nathan Haigh
+and other Bioperl authors based on the original work of Paul Boutros. The
+guide was updated for the BioPerl wiki by Chris Fields and Nathan
+Haigh.
 
-   Please report problems and/or fixes to the BioPerl mailing list.
-   
-   An up-to-date version of this document can be found on the BioPerl wiki:
-   
-   http://www.bioperl.org/wiki/Installing_Bioperl_on_Windows
+Please report problems and/or fixes to the BioPerl mailing list.
+
+An up-to-date version of this document can be found on the [BioPerl wiki](http://www.bioperl.org/wiki/Installing_Bioperl_on_Windows)
 
 Requirements
+============
 
-   There are a couple of ways of installing Perl on a Windows machine. One is
-   to get the most recent build from Strawberry Perl, and the other is to get
-   it from ActiveState; both are software companies that provides free builds
-   of Perl for Windows users, but Strawberry Perl is recommended since is more
-   CPAN friendly because it includes a compiler (gcc), related tools and other
-   external libraries. The current (March 2014) build is 5.18.2.
+There are a couple of ways of installing Perl on a Windows machine. One is
+to get the most recent build from [Strawberry Perl](http://strawberryperl.com/), and the other is to get
+it from [ActiveState](http://www.activestate.com/); both are software companies that provides free builds
+of Perl for Windows users, but Strawberry Perl is recommended since is more
+CPAN friendly because it includes a compiler (gcc), related tools and other
+external libraries. The current (March 2014) build is 5.18.2.
 
-   NOTE - Only Perl >= 5.8.8.819 is supported by the BioPerl team. Earlier
-   versions may work, but we do not support them. Perl 5.18 also works. One of
-   the reason for this requirement is that ActivePerl >= 5.8.8.819 now use Perl
-   Package Manager 4 (PPM4). PPM4 is now superior to earlier versions and also
-   includes a Graphical User Interface (GUI). In short, it's easier for us to
-   produce and maintain a package for installation via PPM and also easier for
-   you to do the install! Proceed with earlier versions at your own risk.
+**NOTE** - Only Perl **>= 5.8.8.819** is supported by the BioPerl team. Earlier
+versions may work, but we do not support them. Perl 5.18 also works. One of
+the reason for this requirement is that ActivePerl >= 5.8.8.819 now use Perl
+Package Manager 4 (PPM4). PPM4 is now superior to earlier versions and also
+includes a Graphical User Interface (GUI). In short, it's easier for us to
+produce and maintain a package for installation via PPM and also easier for
+you to do the install! Proceed with earlier versions at your own risk.
 
-   To install Perl on Windows:
+To install Perl on Windows:
 
-           1) Download the Strawberry Perl MSI from
-           http://strawberryperl.com/releases.html or ActivePerl MSI from
-           http://www.activestate.com/activeperl/downloads.
+1. Download the [Strawberry Perl MSI](http://strawberryperl.com/releases.html) or [ActivePerl MSI](http://www.activestate.com/activeperl/downloads).
+2. Run the Installer (accepting all defaults is fine).
 
-           2) Run the Installer (accepting all defaults is fine).
+You can also build Perl yourself (which requires a C compiler) or download
+one of the other binary distributions. The Perl source for building it
+yourself is available from [CPAN](http://www.cpan.org/), as are a few other binary distributions
+that are alternatives to ActiveState. This approach is not recommended
+unless you have specific reasons for doing so and know what you're doing.
+If that's the case you probably don't need to be reading this guide.
 
-   You can also build Perl yourself (which requires a C compiler) or download
-   one of the other binary distributions. The Perl source for building it
-   yourself is available from CPAN, as are a few other binary distributions
-   that are alternatives to ActiveState. This approach is not recommended
-   unless you have specific reasons for doing so and know what you're doing.
-   If that's the case you probably don't need to be reading this guide.
+[Cygwin](http://en.wikipedia.org/wiki/Cygwin) is a [UNIX](http://en.wikipedia.org/wiki/UNIX) emulation environment for Windows and comes with its own copy of Perl.
 
-   Cygwin is a UNIX emulation environment for Windows and comes with its own
-   copy of Perl.
-
-   Information on Cygwin and Bioperl is found below. 
+Information on Cygwin and Bioperl is found below.
 
 Installation using the ActiveState Perl Package Manager
+=====
 
-  GUI Installation
+## GUI Installation
 
-           1) Start the Perl Package Manager GUI from the Start menu.
+1) Start the Perl Package Manager GUI from the Start menu.
 
-           2) Go to Edit >> Preferences and click the Repositories tab. Add a
-           new repository for each of the following (note the difference based
-           on the perl version). NOTE - The DB_File installed with ActivePerl
-           5.10 and above is a stub (i.e. it does not work). The Trouchelle
-           database below has a working DB_File.
+2) Go to Edit >> Preferences and click the Repositories tab. Add a
+new repository for each of the following (note the difference based
+on the perl version). NOTE - The [DB\_File](https://metacpan.org/pod/DB_File) installed with ActivePerl
+5.10 and above is a stub (i.e. it does not work). The Trouchelle
+database below has a working DB\_File.
 
-                              Repositories to add
-       +----------------------------------------------------------------+
-       |           Name           |              Location               |
-       |--------------------------+-------------------------------------|
-       |BioPerl-Release Candidates|http://bioperl.org/DIST/RC           |
-       |--------------------------+-------------------------------------|
-       |BioPerl-Regular Releases  |http://bioperl.org/DIST              |
-       |--------------------------+-------------------------------------|
-       |Kobes                     |http://theoryx5.uwinnipeg.ca/ppms    |
-       |--------------------------+-------------------------------------|
-       |Bribes                    |http://www.Bribes.org/perl/ppm       |
-       |--------------------------+-------------------------------------|
-       |Trouchelle                |http://trouchelle.com/ppm            |
-       +----------------------------------------------------------------+
+*Repositories to add*
 
-           3) Select View >> All Packages.
+|           Name           |              Location               |
+|--------------------------+-------------------------------------|
+|BioPerl-Release Candidates|http://bioperl.org/DIST/RC           |
+|BioPerl-Regular Releases  |http://bioperl.org/DIST              |
+|Kobes                     |http://theoryx5.uwinnipeg.ca/ppms    |
+|Bribes                    |http://www.Bribes.org/perl/ppm       |
+|Trouchelle                |http://trouchelle.com/ppm            |
+<br>
+3) Select View >> All Packages.
 
-           4) In the search box type bioperl.
+4) In the search box type `bioperl`.
 
-           5) Right click the latest version of Bioperl available and choose
-           install. (Note for users of previous Bioperl releases: you should
-           not have to use the Bundle-BioPerl package anymore.)
+5) Right click the latest version of Bioperl available and choose
+install. (Note for users of previous Bioperl releases: you should
+not have to use the Bundle-BioPerl package anymore.)
 
-           5a) From bioperl 1.5.2 onward, all 'optional' pre-requisites will
-           be marked for installation. If you see that some of them complain
-           about needing a command-line installation (eg. XML::SAX::ExpatXS),
-           and you want those particular pre-requisites, stop now (skip step
-           6) and see the 'Command-line Installation' section.
+5a) From bioperl 1.5.2 onward, all 'optional' pre-requisites will
+be marked for installation. If you see that some of them complain
+about needing a command-line installation (eg. XML::SAX::ExpatXS),
+and you want those particular pre-requisites, stop now (skip step
+6) and see the 'Command-line Installation' section.
 
-           6) Click the green arrow (Run marked actions) to complete the
-           installation.
+6) Click the green arrow (Run marked actions) to complete the
+installation.
 
-  Comand-line Installation
+## Comand-line Installation
 
-           Use the ActiveState ppm-shell:
+Use the ActiveState `ppm-shell`:
 
-	   1) Open a cmd window by going to Start >> Run and typing
-	   'cmd' and pressing return.
+- Open a cmd window by going to Start >> Run and typing
+'cmd' and pressing return.
 
-           2) Do 
-	      C:> ppm-shell
-	      ppm>
-           
-           3) Make sure you have the module PPM-Repositories. Try
-           installing it:
-              ppm> install PPM-Repositories
+- Do
 
-           4) For BioPerl 1.6.1, we require at least the following
-           repositories. You may have some present already.
+```
+C:> ppm-shell
+ppm>
+```
 
-              ppm> repo add http://bioperl.org/DIST
-              ppm> repo add uwinnipeg
-              ppm> repo add trouchelle
+- Make sure you have the module `PPM-Repositories`. Try
+installing it:
 
-           Because you have installed PPM-Repositories, PPM will know
-           your Perl version, and select the correct repo from the
-           table above.
+`ppm> install PPM-Repositories`
 
-           5) Install BioPerl (not "bioperl"). 
+- For BioPerl 1.6.1, we require at least the following
+repositories. You may have some present already.
 
-              ppm> install BioPerl
+```
+ppm> repo add http://bioperl.org/DIST
+ppm> repo add uwinnipeg
+ppm> repo add trouchelle
+```
 
-           If you are running ActiveState Perl 5.10, you may have a
-           glitch involving SOAP::Lite. Use the following workaround:
+Because you have installed `PPM-Repositories`, PPM will know
+your Perl version, and select the correct repo from the
+table above.
 
-           1) Get the index numbers for your active repositories: 
+- Install BioPerl (**not** "bioperl").
 
-              ppm> repo
+`ppm> install BioPerl`
 
-              | id | pkgs  | name                           |
-              |  1 | 11431 | ActiveState Package Repository |
-              |  2 |    14 | bioperl.org                    |
-              |  3 |   291 | uwinnipeg                      |
-              |  4 | 11755 | trouchelle                     | 
+If you are running ActiveState Perl 5.10, you may have a
+glitch involving [SOAP::Lite](https://metacpan.org/pod/SOAP::Lite). Use the following workaround:
 
-           2) Execute the following commands. (The session here is
-           based on the above table. Substitute the correct index
-           numbers for your situation.)
+- Get the index numbers for your active repositories:
 
-              rem -turn off ActiveState, trouchelle repos
-              ppm> repo off 1
-              ppm> repo off 4
-              rem -to get SOAP-Lite-0.69 from uwinnipeg...
-              ppm> install SOAP-Lite
-              rem -turn ActiveState, trouchelle back on...
-              ppm> repo on 1
-              ppm> repo on 4
-              rem -now try...
-              ppm> install BioPerl
+```
+ppm> repo
+
+| id | pkgs  | name                           |
+|  1 | 11431 | ActiveState Package Repository |
+|  2 |    14 | bioperl.org                    |
+|  3 |   291 | uwinnipeg                      |
+|  4 | 11755 | trouchelle                     |
+```
+
+- Execute the following commands. (The session here is
+based on the above table. Substitute the correct index
+numbers for your situation.)
+
+```
+rem -turn off ActiveState, trouchelle repos
+ppm> repo off 1
+ppm> repo off 4
+rem -to get SOAP-Lite-0.69 from uwinnipeg...
+ppm> install SOAP-Lite
+rem -turn ActiveState, trouchelle back on...
+ppm> repo on 1
+ppm> repo on 4
+rem -now try...
+ppm> install BioPerl
+```
 
 Installation using CPAN or manual installation
+====
 
-   When using ActivePerl, installation using PPM is preferred since it is
-   easier, but if you run into problems, or a PPM isn't available for the
-   latest version/package of BioPerl, or you want to choose which optional
-   dependencies to install, you can install manually by downloading the
-   appropriate package or by using CPAN (installation using CPAN will always
-   get you the latest version). Both manual methods ultimately need an
-   accessory compiling program like MinGW, which incorporates the necessary
-   tools like dmake and gcc. MinGW comes by default with Strawberry Perl, but
-   must be installed through PPM for ActivePerl. Also CPAN neeed to be upgraded
-   to >= v1.81, Module::Build to be installed (>= v0.2805) and Test::Harness to
-   be upgraded to >= v2.62:
+When using ActivePerl, installation using PPM is preferred since it is
+easier, but if you run into problems, or a PPM isn't available for the
+latest version/package of BioPerl, or you want to choose which optional
+dependencies to install, you can install manually by [downloading the appropriate package](http://bioperl.org/DIST/) or by using [CPAN](http://www.bioperl.org/wiki/CPAN) (installation using CPAN will always
+get you the latest version). Both manual methods ultimately need an
+accessory compiling program like MinGW, which incorporates the necessary
+tools like dmake and gcc. MinGW comes by default with Strawberry Perl, but
+must be installed through PPM for ActivePerl. Also CPAN neeed to be upgraded
+to >= v1.81, [Module::Build](https://metacpan.org/pod/Module::Build) to be installed (>= v0.2805) and [Test::Harness](https://metacpan.org/pod/Test::Harness) to
+be upgraded to >= v2.62:
 
-   Dmake for ActivePerl
+### Dmake for ActivePerl
 
-           1) Install MinGW package through PPM: Using a cmd window type
-           'ppm install MinGW' for 32bits Windows or 'ppm install MinGW64' for
-           64bits Windows. Is IMPORTANT to check previously if ActiveState
-           provides the MinGW package for your ActivePerl version. For example,
-           although ActivePerl 5.18.2.1802 is currently available (May 2014),
-           the download page point mainly at ActivePerl 5.16.3.1604, and the
-           MinGW package is available for version 5.16 but NOT for version 5.18.
+- 1) Install MinGW package through PPM: Using a cmd window type
+`ppm install MinGW` for 32bits Windows or `ppm install MinGW64` for
+64bits Windows. Is IMPORTANT to check previously if ActiveState
+provides the [MinGW](http://code.activestate.com/ppm/MinGW/) package for your ActivePerl version. For example,
+although ActivePerl 5.18.2.1802 is currently available (May 2014),
+the download page point mainly at ActivePerl 5.16.3.1604, and the
+MinGW package is available for version 5.16 but NOT for version 5.18.
 
-   CPAN for ActivePerl and Strawberry Perl
+### CPAN for ActivePerl and Strawberry Perl
 
-           1) Open a cmd window by going to Start >> Run and typing 'cmd'
-           into the box and pressing return.
+- 1) Open a cmd window by going to `Start >> Run` and typing `cmd`
+into the box and pressing return.
 
-           2) Type 'cpan' to enter the CPAN shell.
+- 2) Type `cpan` to enter the CPAN shell.
 
-           3) At the cpan> prompt, type 'install CPAN' to upgrade to the
-           latest version.
+- 3) At the `cpan>` prompt, type 'install CPAN' to upgrade to the
+latest version.
 
-           4) Quit (by typing 'q') and reload cpan. You may be asked some
-           configuration questions; accepting defaults is fine.
+- 4) Quit (by typing 'q') and reload cpan. You may be asked some
+configuration questions; accepting defaults is fine.
 
-           5) At the cpan> prompt, type 'o conf prefer_installer MB' to tell
-           CPAN to prefer to use Build.PL scripts for installation. Type 'o
-           conf commit' to save that choice.
+- 5) At the `cpan>` prompt, type `o conf prefer_installer MB` to tell
+CPAN to prefer to use `Build.PL` scripts for installation. Type `o conf commit` to save that choice.
 
-           6) At the cpan> prompt, type 'install Module::Build'.
+- 6) At the `cpan>` prompt, type `install Module::Build`.
 
-           7) At the cpan> prompt, type 'install Test::Harness'.
+- 7) At the `cpan>` prompt, type `install Test::Harness`.
 
-           8) At the cpan> prompt, type 'install Test::Most'.
+- 8) At the `cpan>` prompt, type `install Test::Most`.
 
-   You can now follow the unix instructions for installing using CPAN
-   (preferred), or install manually:
+### You can now follow the unix instructions for [installing using CPAN](http://www.bioperl.org/wiki/Installing_Bioperl_for_Unix#INSTALLING_BIOPERL_THE_EASY_WAY_USING_CPAN) (preferred), or install manually:
 
-           9) Download the .zip version of the package you want.
+- 9) [Download](http://bioperl.org/DIST/) the `.zip` version of the package you want.
 
-           10) Extract the archive in the normal way.
+- 10) Extract the archive in the normal way.
 
-           11) In a cmd window 'cd' to the directory you extracted to. Eg. if
-           you extracted to directory 'Temp', 'cd Temp\bioperl-1.5.2_100'
+- 11) In a cmd window `cd` to the directory you extracted to. Eg. if
+you extracted to directory 'Temp', `cd Temp\bioperl-1.5.2_100`
 
-           12) Type 'perl Build.PL' and answer the questions appropriately.
+- 12) Type `perl Build.PL` and answer the questions appropriately.
 
-           13) Type 'perl Build test'. All the tests should pass, but if they
-           don't, let us know. Your usage of Bioperl may not be affected
-           by the failure, so you can choose to continue anyway.
+- 13) Type `perl Build test`. All the tests should pass, but if they
+don't, [let us know](http://bioperl.org/wiki/Mailing_lists#Main_BioPerl_list). Your usage of Bioperl may not be affected
+by the failure, so you can choose to continue anyway.
 
-           14) Type 'perl Build install' to install Bioperl.
+- 14) Type `perl Build install` to install Bioperl.
 
 Bioperl
+====
 
-   Bioperl is a large collection of Perl modules (extensions to the
+   [Bioperl](http://www.bioperl.org/wiki/Bioperl) is a large collection of Perl modules (extensions to the
    Perl language) that aid in the task of writing Perl code to deal
    with sequence data in a myriad of ways. Bioperl provides objects for
    various types of sequence data and their associated features and
    annotations. It provides interfaces for analysis of these sequences with a
-   wide variety of external programs (BLAST, FASTA, clustalw and
-   EMBOSS to name just a few). It provides interfaces to various types of
-   databases both remote (GenBank, EMBL etc) and local (MySQL,
-   Flat_databases flat files, GFF etc.) for storage and retrieval of
-   sequences. And finally with its associated documentation and
-   mailing lists, Bioperl represents a community of bioinformatics
+   wide variety of external programs ([BLAST](http://www.bioperl.org/wiki/BLAST), [FASTA](http://www.bioperl.org/wiki/FASTA), [clustalw](http://www.bioperl.org/wiki/Clustalw) and
+   [EMBOSS](http://www.bioperl.org/wiki/EMBOSS) to name just a few). It provides interfaces to various types of
+   databases both remote ([GenBank](http://www.bioperl.org/wiki/GenBank), [EMBL](http://www.bioperl.org/wiki/EMBL) etc) and local ([MySQL](http://www.mysql.com/),
+   Flat_databases flat files, [GFF](http://www.bioperl.org/wiki/GFF) etc.) for storage and retrieval of
+   sequences. And finally with its associated [documentation](http://doc.bioperl.org/) and
+   [mailing lists](http://www.bioperl.org/wiki/Mailing_lists), Bioperl represents a community of bioinformatics
    professionals working in Perl who are committed to supporting both
    development of Bioperl and the new users who are drawn to the project.
 
@@ -280,7 +278,7 @@ Bioperl
    These can be installed and work quite happily with Bioperl in the native
    Windows environment. Some external programs such as Staden and the
    EMBOSS suite of programs can only be installed on Windows by using
-   Cygwin and its gcc C compiler (see Bioperl in Cygwin, below).
+   [Cygwin](http://www.cygwin.com/) and its [gcc C compiler](http://gcc.gnu.org/) (see Bioperl in Cygwin, below).
    Recent attempts to port EMBOSS to Windows, however, have been mostly
    successful.
 
@@ -290,7 +288,7 @@ Bioperl
    good place for you to start. For example, downloading a bunch of sequences
    from GenBank and sorting out the ones that have a particular
    annotation or feature works great. Running a bunch of your sequences
-   against remote or local BLAST, parsing the output and storing it
+   against [remote](https://metacpan.org/pod/Bio::Tools::Run::RemoteBlast) or [local](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlast) BLAST, parsing the output and storing it
    in a MySQL database would be fine also.
 
    Be aware that most Bioperl developers are working in some type of a
@@ -306,14 +304,15 @@ Bioperl
    and it is discussed in more detail below.
 
 Bioperl on Windows
+====
 
-   Perl is a programming language that has been extended a lot by the
+   [Perl](http://www.bioperl.org/wiki/Perl) is a programming language that has been extended a lot by the
    addition of external modules.
 
    These modules work with the core language to extend the functionality of
    Perl.
 
-   Bioperl is one such extension to Perl. These modular extensions to
+   [Bioperl](http://www.bioperl.org/wiki/Bioperl) is one such extension to Perl. These modular extensions to
    Perl sometimes depend on the functionality of other Perl modules and this
    creates a dependency. You can't install module X unless you have already
    installed module Y. Some Perl modules are so fundamentally useful that the
@@ -326,31 +325,19 @@ Bioperl on Windows
    currently) and these modules are split into seven packages. These seven
    packages are:
 
-   +------------------------------------------------------------------------+
-   |    Bioperl Group     |                    Functions                    |
-   |----------------------+-------------------------------------------------|
-   |bioperl (the core)    |Most of the main functionality of Bioperl        |
-   |----------------------+-------------------------------------------------|
-   |bioperl-run           |Wrappers to a lot of external programs           |
-   |----------------------+-------------------------------------------------|
-   |bioperl-ext           |Interaction with some alignment functions and the|
-   |                      |Staden package                                   |
-   |----------------------+-------------------------------------------------|
-   |bioperl-db            |Using Bioperl with BioSQL and local relational   |
-   |                      |databases                                        |
-   |----------------------+-------------------------------------------------|
-   |bioperl-microarray    |Microarray specific functions                    |
-   |----------------------+-------------------------------------------------|
-   |bioperl-pedigree      |manipulating genotype, marker, and individual    |
-   |                      |data for linkage studies                         |
-   |----------------------+-------------------------------------------------|
-   |bioperl-gui           |Some preliminary work on a graphical user        |
-   |                      |interface to some Bioperl functions              |
-   +------------------------------------------------------------------------+
-
+|    Bioperl Group     |                    Functions                    |
+|----------------------+-------------------------------------------------|
+|bioperl (the core)    |Most of the main functionality of Bioperl        |
+|bioperl-run           |Wrappers to a lot of external programs           |
+|bioperl-ext           |Interaction with some alignment functions and the Staden package |
+|bioperl-db            |Using Bioperl with BioSQL and local relational databases |
+|bioperl-microarray    |Microarray specific functions                    |
+|bioperl-pedigree      |manipulating genotype, marker, and individual data for linkage studies |
+|bioperl-gui           |Some preliminary work on a graphical user interface to some Bioperl functions |
+<br>
    The Bioperl core is what most new users will want to start with. Bioperl
    (the core) and the Perl modules that it depends on can be easily installed
-   with the perl package Manager PPM. PPM is an ActivePerl utility for
+   with the perl package Manager [PPM](http://aspn.activestate.com/ASPN/docs/ActivePerl/5.8/faq/ActivePerl-faq2.html). PPM is an ActivePerl utility for
    installing Perl modules on systems using ActivePerl. PPM will look online
    (you have to be connected to the internet of course) for files (these
    files end with .ppd) that tell it how to install the modules you want and
@@ -370,6 +357,7 @@ Bioperl on Windows
    interest and then tell PPM to install the selected packages.
 
 Beyond the Core
+====
 
    You may find that you want some of the features of other Bioperl groups
    like bioperl-run or bioperl-db. Currently, plans include setting up PPM
@@ -384,54 +372,56 @@ Beyond the Core
    component that you want to install, and use nmake where the instructions
    call for make, like so:
 
+```
  perl Makefile.PL
  nmake
  nmake test
  nmake install
+```
 
-   'nmake test' will likely produce lots of warnings, many of these can be
+   `nmake test` will likely produce lots of warnings, many of these can be
    safely ignored. You will have to determine from the installation documents
    what dependencies are required, and you will have to get them, read their
    documentation and install them first. It is recommended that you look
-   through the PPM repositories for any modules before resorting to using nmake
-   as there isn't any guarantee modules built using nmake will work. The
+   through the PPM repositories for any modules before resorting to using `nmake`
+   as there isn't any guarantee modules built using `nmake` will work. The
    details of this are beyond the scope of this guide. Read the documentation.
    Search Google. Try your best, and if you get stuck consult with others on
-   the BioPerl mailing list.
+   the [BioPerl mailing list](http://www.bioperl.org/wiki/Mailing_lists).
 
-    Setting environment variables
+### Setting environment variables
 
-   Some modules and tools such as Bio::Tools::Run::StandAloneBlast and
-   clustal_w, require that environment variables are set; a few examples
+   Some modules and tools such as [Bio::Tools::Run::StandAloneBlast](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlast) and
+   `clustal_w`, require that [environment variables](http://en.wikipedia.org/wiki/environment_variables) are set; a few examples
    are listed in the INSTALL document. Different versions of Windows utilize
-   different methods for setting these variables. NOTE: The instructions that
+   different methods for setting these variables. **NOTE**: The instructions that
    comes with the BLAST executables for setting up BLAST on Windows are
    out-of-date. Go to the following web address for instructions on setting
    up standalone BLAST for Windows:
    http://www.ncbi.nlm.nih.gov/staff/tao/URLAPI/pc_setup.html
 
-     * For Windows XP, go here. This does not require a reboot but all
+- For Windows XP, go [here](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/environment_variables.mspx). This does not require a reboot but all
        active shells will not reflect any changes made to the environment.
-     * For older versions (Windows 95 to ME), generally editing the
-       C:\autoexec.bat file to add a variable works. This requires a reboot.
-       Here's an example:
+- For older versions (Windows 95 to ME), generally editing the `C:\autoexec.bat` file to add a variable works. This requires a reboot. Here's an example:
 
- set BLASTDB=C:\blast\data
+`set BLASTDB=C:\blast\data`
 
-   For either case, you can check the variable this way:
+For either case, you can check the variable this way:
 
- C:\Documents and Settings\Administrator>echo %BLASTDB%
- C:\blast\data
+```
+C:\Documents and Settings\Administrator>echo %BLASTDB%
+C:\blast\data
+```
 
    Some versions of Windows may have problems differentiating forward and
-   back slashes used for directories. In general, always use backslashes (\).
+   back slashes used for directories. In general, always use backslashes `\`.
    If something isn't working properly try reversing the slashes to see if it
    helps.
 
    For setting up Cygwin environment variables quirks, see an example
-   below.
+   [below](#Directory_for_temporary_files).
 
-    Installing bioperl-db
+### Installing bioperl-db
 
    bioperl-db now works for Windows w/o installing CygWin. This has
    primarily been tested on WinXP using MySQL5, but it is expected that other
@@ -553,6 +543,7 @@ Beyond the Core
    Bug #1938, and to Hilmar Lapp for his input.
 
 Bioperl in Cygwin
+====
 
    Cygwin is a Unix emulator and shell environment available free at
    http://www.cygwin.com. Bioperl v. 1.* supposedly runs well within Cygwin,
@@ -577,6 +568,7 @@ Bioperl in Cygwin
    CPAN).
 
 bioperl-db in Cygwin
+====
 
    This package is installed using the instructions contained in the package,
    without modification. Since postgres is a package within Cygwin this is
@@ -584,6 +576,7 @@ bioperl-db in Cygwin
    install (postgres, Mysql, Oracle).
 
 Cygwin tips
+====
 
    If you can, install Cygwin on a drive or partition that's
    NTFS-formatted, not FAT32-formatted. When you install Cygwin on
@@ -595,10 +588,11 @@ Cygwin tips
    directory and you're having a problem remember that Cygwin's path syntax
    may not be the correct one. Cygwin understands /home/jacky or
    /cygdrive/e/cygwin/home/jacky (when referring to the E: drive) but the
-   external resource may want E:/cygwin/home/jacky. So your *rc files may end
+   external resource may want `E:/cygwin/home/jacky`. So your `*rc` files may end
    up with paths written in these different syntaxes, depending.
 
 MySQL and DBD::mysql
+====
 
    You may want to install a relational database in order to use BioPerl
    db, BioSQL or OBDA. The easiest way to install Mysql is to use
@@ -619,19 +613,21 @@ MySQL and DBD::mysql
 
      * Instructions included with DBD::mysql:
        http://search.cpan.org/src/JWIED/DBD-mysql-2.1025/INSTALL.html#windows/cygwin
-       
+
      * Additional instructions if you run into any problems; this
        information is more up-to-date, covers post-2.9 DBD::mysql quirks in
        Cygwin.
        http://rage.against.org/installingdbdmysqlInCygwin
 
 Expat
+====
 
    Note that expat comes with Cygwin (it's used by the modules
    XML::Parser and XML::SAX::ExpatXS, which are used by certain
    Bioperl modules).
 
-Directory for temporary files
+Directory for temporary files<a name="Directory_for_temporary_files"></a>
+====
 
    Set the environmental variable TMPDIR, programs like BLAST and
    clustalw need a place to create temporary files. e.g.:
@@ -654,6 +650,7 @@ Directory for temporary files
    [edit]
 
 BLAST
+====
 
    If you want use BLAST we recommend that the Windows binary be obtained from
    NCBI (ftp://ftp.ncbi.nih.gov/blast/executables/blast+/LATEST/ - the file
@@ -667,7 +664,7 @@ BLAST
    for Unix for more details.
 
 Compiling C code
-
+====
    Although we've recommended using the BLAST and MySQL binaries
    you should be able to compile just about everything else from source code
    using Cygwin's gcc. You'll notice when you're installing Cygwin that many
