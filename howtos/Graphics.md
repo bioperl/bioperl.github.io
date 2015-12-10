@@ -52,7 +52,7 @@ Bio::Graphics is dependent on [GD](https://metacpan.org/pod/Bio::GD), a Perl mod
 
 If you are on a Linux system, you might already have GD installed. To verify, run the following command:
 
-`% perl -MGD -e 'print $GD::VERSION`
+`% perl -MGD -e 'print $GD::VERSION, "\n"';`
 
 If the program prints out a version number, you are in luck. Otherwise, if you get a `Can't locate GD.pm` error, you'll have to install the module. For users of [ActiveState Perl](http://www.activestate.com/) this is very easy. Just start up the PPM program and issue the command `install GD`. For users of other versions of Perl, you should go to [www.cpan.org](http://www.cpan.org), download a recent version of the module, unpack it, and follow the installation instructions.
 
@@ -88,7 +88,7 @@ BUM             400     300     620
 PRES1           127     310     700
 ```
 
-*Hint* when copy-pasting this into your own text, make sure that there are tab stops between the different columns. You can use your favorite text editor to replace the spaces to tabs (in vim, type `:%s/[ ]+/t/g`) or use the unix command `tr` to translate to tabs: `cat data1.xt | tr -s ' ' | tr ' ' 't'`. The first `tr` will sequeeze many spaces into one space and the second `tr` will then translate a space into a tab stop.)
+*Hint* when copy-pasting this into your own text, make sure that there are tab stops between the different columns. You can use your favorite text editor to replace the spaces to tabs (in vim, type `:%s/[ ]\+/\t/g`) or use the unix command `tr` to translate to tabs: `cat data1.xt | tr -s ' ' | tr ' ' '\t'`. The first `tr` will sequeeze many spaces into one space and the second `tr` will then translate a space into a tab stop.)
 
 Our first attempt to parse and render this file looks like this:
 
@@ -116,7 +116,7 @@ while (<>) { # read blast file
 
  chomp;
  next if /^#/;  # ignore comments
- my($name,$score,$start,$end) = split /t+/;
+ my($name,$score,$start,$end) = split /\t+/;
  my $feature = Bio::SeqFeature::Generic->new(
                                              -display_name => $name,
                                              -score        => $score,
@@ -204,7 +204,7 @@ while (<>) { # read blast file
 
  chomp;
  next if /^#/;  # ignore comments
- my($name,$score,$start,$end) = split /t+/;
+ my($name,$score,$start,$end) = split /\t+/;
  my $feature = Bio::SeqFeature::Generic->new(
                                              -display_name => $name,
                                              -score        => $score,
@@ -288,7 +288,7 @@ my $track = $panel->add_track(
 while (<>) { # read blast file
     chomp;
     next if /^#/;  # ignore comments
-    my($name,$score,$start,$end) = split /t+/;
+    my($name,$score,$start,$end) = split /\t+/;
     my $feature = Bio::SeqFeature::Generic->new(
                                              -score        => $score,
                                              -display_name => $name,
@@ -332,7 +332,7 @@ use lib "$ENV{HOME}/projects/bioperl-live";
 use Bio::Graphics; 
 use Bio::SearchIO; 
 use Bio::SeqFeature::Generic; 
-my $file = shift or die "Usage: render_blast4.pl <blast file> ";
+my $file = shift or die "Usage: render_blast4.pl <blast file>\n";
 
 my $searchio = Bio::SearchIO->new(-file => $file,
                                   -format => 'blast') or die "parse failed";
@@ -603,8 +603,8 @@ if ($sorted_features{CDS}) {
                    -key         => 'CDS',
                    -bump        =>  +1,
                    -height      =>  12,
-                   -label       => &gene_label,
-                   -description => &gene_description,
+                   -label       => \&gene_label,
+                   -description => \&gene_description,
                   );
     delete $sorted_features{'CDS'};
 }
@@ -618,7 +618,7 @@ if ($sorted_features{tRNA}) {
                    -key        => 'tRNAs',
                    -bump       =>  +1,
                    -height     =>  12,
-                   -label      => &gene_label,
+                   -label      => \&gene_label,
                   );
     delete $sorted_features{tRNA};
 }
@@ -637,7 +637,7 @@ for my $tag (sort keys %sorted_features) {
                    -key         => "${tag}s",
                    -bump        => +1,
                    -height      => 8,
-                   -description => &generic_description,
+                   -description => \&generic_description,
                   );
 }
 
