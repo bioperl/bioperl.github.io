@@ -36,7 +36,7 @@ my $seqio_object = Bio::SeqIO->new(-file => $file);
 my $seq_object = $seqio_object->next_seq;
 ```
 
-Why use [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO)? In part because SeqIO understands the many different sequence file formats and creates the proper BioPerl object for each format. Some formats, like FASTA sequence format, are minimal. The fasta format contains a sequence and some kind of identifier, but nothing else is required nor does the format inherently allow for much more detail, like a feature (a sub-sequence, usually with some biological property - see the [Feature-Annotation HOWTO](Feature-Annotation.html) for more information). When given fasta SeqIO creates a [Bio:Seq](https://metacpan.org/pod/Bio::Seq) object, a more spare object than the [Bio:Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) object that's created when [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) is given formats like Genbank or EMBL, which may contain features and annotations.
+Why use [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO)? In part because SeqIO understands the many different sequence file formats and creates the proper BioPerl object for each format. Some formats, like FASTA sequence format, are minimal. The fasta format requires a sequence and some kind of identifier, but nothing else is required nor does the format inherently allow for much more detail, like a feature (a sub-sequence, usually with some biological property - see the [Feature-Annotation HOWTO](Feature-Annotation.html) for more information). When given fasta SeqIO creates a [Bio:Seq](https://metacpan.org/pod/Bio::Seq) object, a more spare object than the [Bio:Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) object that's created when [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) is given formats like Genbank or EMBL, which may contain features and annotations.
 
 Now, should you care what kind of BioPerl object is created by SeqIO? For the most part no - let SeqIO take care of those details.
 
@@ -104,7 +104,7 @@ BioPerl's SeqIO system understands lot of formats and can interconvert all of th
 
 Table 1. SeqIO formats.
 
-**Note** [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) needs the deprecated bioperl-ext package and the `io_lib` library from the [Staden](http://staden.sourceforge.net/) package in order to read the `scf, abi, alf, pln, exp, ctf, ztr` formats.
+**Note** [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) needs the deprecated [bioperl-ext](https://github.com/bioperl/bioperl-ext) package and the `io_lib` library from the [Staden](http://staden.sourceforge.net/) package in order to read the `scf, abi, alf, pln, exp, ctf, ztr` formats.
 
 For some one of the initial perplexities of BioPerl is the variety of different sequence objects, and this gives rise to questions like "How do I convert a PrimarySeq object into a RichSeq object?". The answer is that one should never have to do this, SeqIO takes care of all these conversions. The reason for these different objects in the first place has to with the information, or lack of information, inherent to the different file formats. Though we just said that the conversions are done automatically we offer this table that shows some common formats and their corresponding object types, just to satisfy the curious.
 
@@ -118,7 +118,7 @@ For some one of the initial perplexities of BioPerl is the variety of different 
 | ace     | [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq) |
 | bsml    | [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) |
 | swiss   | [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) |
-Table 2. Some formats and the objects they create.
+Table 2. Some formats and the objects that SeqIO creates from them.
 
 Working Examples
 ----------------
