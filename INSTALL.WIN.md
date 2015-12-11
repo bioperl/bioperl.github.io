@@ -106,7 +106,7 @@ not have to use the Bundle-BioPerl package anymore.)
 
 5a) From bioperl 1.5.2 onward, all 'optional' pre-requisites will
 be marked for installation. If you see that some of them complain
-about needing a command-line installation (eg. XML::SAX::ExpatXS),
+about needing a command-line installation (eg. [XML::SAX::ExpatXS](https://metacpan.org/pod/XML::SAX::ExpatXS)),
 and you want those particular pre-requisites, stop now (skip step
 6) and see the 'Command-line Installation' section.
 
@@ -423,19 +423,19 @@ C:\blast\data
 
 ### Installing bioperl-db
 
-   bioperl-db now works for Windows w/o installing CygWin. This has
+   [bioperl-db](http://www.bioperl.org/wiki/BioPerl_db) now works for Windows w/o installing CygWin. This has
    primarily been tested on WinXP using MySQL5, but it is expected that other
    bioperl-db supported databases (PostgreSQL, Oracle) should work.
 
    You will need Bioperl rel. 1.5.2, a relational database (I use MySQL5 here
-   as an example), and the Perl modules DBI and DBD::mysql, which
+   as an example), and the Perl modules [DBI](https://metacpan.org/pod/DBI) and [DBD::mysql](https://metacpan.org/pod/DBD::mysql), which
    can be installed from PPM as desribed above (make sure the additional
    repositories for Kobes and Bribes are added, they will have the latest
    releases). Do NOT try using nmake with these modules as they will not
    build correctly under Windows! The PPM builds, by Randy Kobes, have been
    modified and tested specifically for Windows and ActivePerl.
 
-   NOTE: we plan on having a PPM for bioperl-db available along with the
+   **NOTE**: we plan on having a PPM for bioperl-db available along with the
    regular bioperl 1.5.2 release PPM. We will post instructions at that
    time on using PPM to install bioperl-db.
 
@@ -443,75 +443,88 @@ C:\blast\data
    adding the three new repositories (Bioperl, Kobes and Bribes). Then
    install the following packages:
 
-           1) DBI
-           2) DBD-mysql
+1. DBI
+2. DBD-mysql
 
    The next step involves creating a database. The following steps are for
    MySQL5:
 
+```
  >mysqladmin -u root -p create bioseqdb
  Enter password: **********
+```
 
-   The database needs to be loaded with the BioSQL schema, which can be
+   The database needs to be loaded with the [BioSQL](http://www.bioperl.org/wiki/BioSQL) schema, which can be
    downloaded as a tarball here.
 
+```
  >mysql -u root -p bioseqdb < biosqldb-mysql.sql
  Enter password: **********
+```
 
-   Download bioperl-db from the anonymous Git repository. Use the following
+   Download [bioperl-db](http://www.bioperl.org/wiki/Bioperl-db) from the [anonymous Git repository](http://www.bioperl.org/wiki/Using_Git). Use the following
    to install the modules:
 
+```
  perl Makefile.PL
  nmake
+```
 
    Now, for testing out bioperl-db, make a copy of the file
-   DBHarness.conf.example in the bioperl-db test subdirectory (bioperl-db\t).
-   Rename it to DBHarness.biosql.conf, and modify it for your database setup
+   `DBHarness.conf.example` in the bioperl-db test subdirectory (`bioperl-db\t`).
+   Rename it to `DBHarness.biosql.conf`, and modify it for your database setup
    (particularly the user, password, database name, and driver). Save the
-   file, change back to the main bioperl-db directory, and run 'nmake test'.
+   file, change back to the main bioperl-db directory, and run `nmake test`.
    You may see lots of the following lines,
 
+```
  ....
  Subroutine Bio::Annotation::Reference::(eq redefined at C:/Perl/lib/overload.pm line 25,
      <GEN0> line 1.
  Subroutine new redefined at C:\Perl\src\bioperl\bioperl-live/Bio\Annotation\Reference.pm line 80,
      <GEN0> line 1.
  ....
+```
 
    which can be safely ignored (again, these come from ActivePerl's paranoid
-   '-w' flag). All tests should pass. NOTE : tests should be run with
+   `-w` flag). All tests should pass. **NOTE**: tests should be run with
    a clean database with the BiOSQL schema loaded, but w/o taxonomy loaded
    (see below).
 
    To install, run:
 
+```
  nmake install
+```
 
    It is recommended that you load the taxonomy database using the script
-   load_ncbi_taxonomy.pl included in biosql-schema\scripts. You will need to
+   `load_ncbi_taxonomy.pl` included in `biosql-schema\scripts`. You will need to
    download the latest taxonomy files. This can be accomplished using the
-   -download flag in load_ncbi_taxonomy.pl, but it will not 'untar' the file
-   correctly unless you have GNU tar present in your PATH (which most Windows
+   `-download flag` in `load_ncbi_taxonomy.pl`, but it will not 'untar' the file
+   correctly unless you have GNU `tar` present in your PATH (which most Windows
    users will not have), thus causing the following error:
 
- >load_ncbi_taxonomy.pl -download -driver mysql -dbname bioseqdb -dbuser root -dbpass **********
- The system cannot find the path specified.
- Loading NCBI taxon database in taxdata:
-         ... retrieving all taxon nodes in the database
-         ... reading in taxon nodes from nodes.dmp
- Couldn't open data file taxdata/nodes.dmp: No such file or directory rollback ineffective with
- AutoCommit enabled at C:\Perl\src\bioperl\biosql-schema\scripts\load_ncbi_taxonomy.pl line 818.
- Rollback ineffective while AutoCommit is on at
- C:\Perl\src\bioperl\biosql-schema\scripts\load_ncbi_taxonomy.pl line 818.
- rollback failed: Rollback ineffective while AutoCommit is on
+```
+$ load_ncbi_taxonomy.pl -download -driver mysql -dbname bioseqdb -dbuser root -dbpass **********
+The system cannot find the path specified.
+Loading NCBI taxon database in taxdata:
+       ... retrieving all taxon nodes in the database
+       ... reading in taxon nodes from nodes.dmp
+Couldn't open data file taxdata/nodes.dmp: No such file or directory rollback ineffective with
+AutoCommit enabled at C:\Perl\src\bioperl\biosql-schema\scripts\load_ncbi_taxonomy.pl line 818.
+Rollback ineffective while AutoCommit is on at
+C:\Perl\src\bioperl\biosql-schema\scripts\load_ncbi_taxonomy.pl line 818.
+rollback failed: Rollback ineffective while AutoCommit is on
+```
 
-   Use a file decompression utility like 7-Zip to 'untar' the files in
+   Use a file decompression utility like [7-Zip](http://www.7-zip.org/) to 'untar' the files in
    the folder (if using 7-Zip, this can be accomplished by right-clicking on
    the file and using the option 'Extract here'). Rerun the script without
-   the -download flag to load the taxonomic information. Be patient, as this
+   the `-download flag` to load the taxonomic information. Be patient, as this
    can take quite a while:
 
- >load_ncbi_taxonomy.pl -driver mysql -dbname bioseqdb -dbuser root -dbpass **********
+```
+$ load_ncbi_taxonomy.pl -driver mysql -dbname bioseqdb -dbuser root -dbpass **********
 
  Loading NCBI taxon database in taxdata:
          ... retrieving all taxon nodes in the database
@@ -524,28 +537,31 @@ C:\blast\data
          ... inserting new taxon names
          ... cleaning up
  Done.
+```
 
    Now, load the database with your sequences using the script
-   load_seqdatabase.pl, in bioperl-db's bioperl-db\script directory:
+   `load_seqdatabase.pl`, in bioperl-db's `bioperl-db\script` directory:
 
+```
  C:\Perl\src\bioperl\bioperl-db\scripts\biosql>load_seqdatabase.pl -drive mysql
                                -dbname bioseqdb -dbuser root -dbpass **********
  Loading NP_249092.gpt ...
  Done.
+```
 
    You may see occasional errors depending on the sequence format, which is a
    non-platform-related issue. Many of these are due to not having an updated
    taxonomic database and may be rectified by updating the taxonomic
-   information as detailed in load_ncbi_taxonomy.pl's POD.
+   information as detailed in `load_ncbi_taxonomy.pl`'s POD.
 
    Thanks to Baohua Wang, who found the initial Windows-specific problem in
-   Bio::Root::Root that led to this fix, to Sendu Bala for fixing
-   Bug #1938, and to Hilmar Lapp for his input.
+   [Bio::Root::Root](https://metacpan.org/pod/Bio::Root::Root) that led to this fix, to [Sendu Bala](http://www.bioperl.org/wiki/Sendu_Bala) for fixing
+   [Bug #1938](http://redmine.open-bio.org/issues/1938), and to [Hilmar Lapp](http://www.bioperl.org/wiki/Hilmar_Lapp) for his input.
 
 Bioperl in Cygwin
 ====
 
-   Cygwin is a Unix emulator and shell environment available free at
+   [Cygwin](http://en.wikipedia.org/wiki/Cygwin) is a Unix emulator and shell environment available free at
    http://www.cygwin.com. Bioperl v. 1.* supposedly runs well within Cygwin,
    though the latest release has not been tested with Cygwin yet. Some
    users claim that installation of Bioperl is easier within Cygwin than
@@ -560,10 +576,10 @@ Bioperl in Cygwin
    utility.
 
    To get Bioperl running first install the basic Cygwin package as well as
-   the Cygwin perl, make, binutils, and gcc packages. Clicking the View
+   the Cygwin `perl`, `make`, `binutils`, and `gcc` packages. Clicking the **View**
    button in the upper right of the installer window enables you to see
    details on the various packages. Then start up Cygwin and follow the
-   Bioperl installation instructions for UNIX in Bioperl's INSTALL file
+   Bioperl installation instructions for UNIX in Bioperl's [INSTALL](INSTALL.html) file
    (for example, THE BIOPERL BUNDLE and INSTALLING BIOPERL THE EASY WAY USING
    CPAN).
 
@@ -572,96 +588,92 @@ bioperl-db in Cygwin
 
    This package is installed using the instructions contained in the package,
    without modification. Since postgres is a package within Cygwin this is
-   probably the easiest of the 3 platforms supported in bioperl-db to
+   probably the easiest of the 3 platforms supported in [bioperl-db](http://www.bioperl.org/wiki/Bioperl-db) to
    install (postgres, Mysql, Oracle).
 
 Cygwin tips
 ====
 
    If you can, install Cygwin on a drive or partition that's
-   NTFS-formatted, not FAT32-formatted. When you install Cygwin on
+   [NTFS](http://en.wikipedia.org/wiki/Ntfs)-formatted, not [FAT32](http://en.wikipedia.org/wiki/File_Allocation_Table)-formatted. When you install Cygwin on
    a FAT32 partition you will not be able to set permissions and ownership
    correctly. In most situations this probably won't make any difference but
    there may be occasions where this is a problem.
 
    If you're trying to use some application or resource outside of Cygwin
    directory and you're having a problem remember that Cygwin's path syntax
-   may not be the correct one. Cygwin understands /home/jacky or
-   /cygdrive/e/cygwin/home/jacky (when referring to the E: drive) but the
+   may not be the correct one. Cygwin understands `/home/jacky` or
+   `/cygdrive/e/cygwin/home/jacky` (when referring to the E: drive) but the
    external resource may want `E:/cygwin/home/jacky`. So your `*rc` files may end
    up with paths written in these different syntaxes, depending.
 
 MySQL and DBD::mysql
 ====
 
-   You may want to install a relational database in order to use BioPerl
-   db, BioSQL or OBDA. The easiest way to install Mysql is to use
+   You may want to install a relational database in order to use [BioPerl db](http://www.bioperl.org/wiki/BioPerl_db), [BioSQL](http://www.bioperl.org/wiki/BioSQL) or [OBDA](http://www.bioperl.org/wiki/OBDA). The easiest way to install Mysql is to use
    the Windows binaries available at http://www.mysql.com. Note that
    Windows does not have sockets, so you need to force the Mysql connections
-   to use TCP/IP instead. Do this by using the -h, or host, option from the
+   to use TCP/IP instead. Do this by using the `-h`, or host, option from the
    command-line. Example:
 
- >mysql -h 127.0.0.1 -u <user> -p<password> <database>
+`>mysql -h 127.0.0.1 -u <user> -p<password> <database>`
 
    Alternatively you could install postgres instead of MySQL, postgres is
    already a package in Cygwin.
 
-   One known issue is that DBD::mysql can be tricky to install in Cygwin
+   One known issue is that [DBD::mysql](https://metacpan.org/pod/DBD::mysql) can be tricky to install in Cygwin
    and this module is required for the bioperl-db, Biosql, and
    bioperl-pipeline external packages. Fortunately there's some good
    instructions online:
 
-     * Instructions included with DBD::mysql:
-       http://search.cpan.org/src/JWIED/DBD-mysql-2.1025/INSTALL.html#windows/cygwin
+ * [Instructions included with DBD::mysql](http://search.cpan.org/src/JWIED/DBD-mysql-2.1025/INSTALL.html#windows/cygwin)
 
-     * Additional instructions if you run into any problems; this
-       information is more up-to-date, covers post-2.9 DBD::mysql quirks in
-       Cygwin.
-       http://rage.against.org/installingdbdmysqlInCygwin
+ * Additional instructions if you run into any problems; this
+   information is more up-to-date, covers post-2.9 DBD::mysql quirks in
+   Cygwin. http://rage.against.org/installingdbdmysqlInCygwin
 
 Expat
 ====
 
-   Note that expat comes with Cygwin (it's used by the modules
-   XML::Parser and XML::SAX::ExpatXS, which are used by certain
+   Note that `expat` comes with Cygwin (it's used by the modules
+   [XML::Parser](https://metacpan.org/pod/XML::Parser) and [XML::SAX::ExpatXS](https://metacpan.org/pod/XML::SAX::ExpatXS), which are used by certain
    Bioperl modules).
 
 Directory for temporary files<a name="Directory_for_temporary_files"></a>
 ====
 
-   Set the environmental variable TMPDIR, programs like BLAST and
+   Set the environmental variable `TMPDIR`, programs like BLAST and
    clustalw need a place to create temporary files. e.g.:
 
+```
  setenv TMPDIR e:/cygwin/tmp     # csh, tcsh
  export TMPDIR=e:/cygwin/tmp    # sh, bash
+```
 
    This is not the syntax that Cygwin understands, which would be something
-   like /cygdrive/e/cygwin/tmp or /tmp, this is the syntax that a Windows
+   like `/cygdrive/e/cygwin/tmp` or `/tmp`, this is the syntax that a Windows
    application expects.
 
    If this variable is not set correctly you'll see errors like this when you
-   run Bio::Tools::Run::StandAloneBlast:
+   run [Bio::Tools::Run::StandAloneBlast](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlast):
 
+```
    ------------- EXCEPTION: Bio::Root::Exception -------------
    MSG: Could not open /tmp/gXkwEbrL0a: No such file or directory
    STACK: Error::throw
    ..........
-
-   [edit]
+```
 
 BLAST
 ====
 
-   If you want use BLAST we recommend that the Windows binary be obtained from
-   NCBI (ftp://ftp.ncbi.nih.gov/blast/executables/blast+/LATEST/ - the file
-   will be named something like ncbi-blast-2.2.29+-win64.exe). Then follow the
-   Windows instructions from BLAST Help
-   (http://www.ncbi.nlm.nih.gov/books/NBK1762). You will also need to set the
-   BLASTDIR environment variable to reflect the directory which holds the blast
+   If you want use BLAST we recommend that the Windows binary be obtained from [NCBI](http://ftp.ncbi.nih.gov/blast/executables/blast+/LATEST/) (the file
+   will be named something like `ncbi-blast-2.2.29+-win64.exe`). Then follow the
+   Windows instructions from [BLAST Help](http://www.ncbi.nlm.nih.gov/books/NBK1762). You will also need to set the
+   `BLASTDIR` environment variable to reflect the directory which holds the blast
    executable and data folder. You may also want to set other variables to
    reflect the location of your databases and substitution matrices if they
-   differ from the location of your blast executables; see Installing Bioperl
-   for Unix for more details.
+   differ from the location of your `blast` executables; see [Installing Bioperl for Unix](http://www.bioperl.org/wiki/Installing_Bioperl_for_Unix#Environment_Variables) for more details.
 
 Compiling C code
 ====
