@@ -16,14 +16,20 @@ layout: default
 
 1 Introduction
 
-This installation guide was written by Barry Moore, Nathan Haigh and other Bioperl authors based on the original work of Paul Boutros.
+This installation guide was written by Barry Moore, Nathan Haigh and other Bioperl 
+authors based on the original work of Paul Boutros.
 
-Please report problems and fixes to the BioPerl mailing list, *bioperl-l* (http://lists.open-bio.org/mailman/listinfo/bioperl-l).
+Please report problems and fixes to the BioPerl mailing list, *bioperl-l* 
+(http://lists.open-bio.org/mailman/listinfo/bioperl-l).
 
 2 Requirements
 
 There are a couple of ways of installing Perl on a Windows machine. One is
-to get the most recent build from Strawberry Perl (http://strawberryperl.com), and the other is to get it from ActiveState (http://www.activestate.com). Both are software companies that provide free builds of Perl for Windows users, but Strawberry Perl is recommended since it is more CPAN friendly and because it includes a compiler (`gcc`) and  related tools. 
+to get the most recent build from Strawberry Perl (http://strawberryperl.com), 
+and the other is to get it from ActiveState (http://www.activestate.com). Both 
+are software companies that provide free builds of Perl for Windows users, but 
+Strawberry Perl is recommended since it is more CPAN friendly and because it 
+includes a compiler (`gcc`) and related tools. 
 
 3 To install Perl on Windows:
 
@@ -174,7 +180,9 @@ Dmake for ActivePerl
 6 Beyond the Core
 
 You may find that you want some of the features of other Bioperl packages
-like bioperl-run or bioperl-db. Check this by doing a Bioperl search in PPM.  If these are not available, though, you can use the following instructions for installing the other distributions.
+like bioperl-run or bioperl-db. Check this by doing a Bioperl search in PPM.  
+If these are not available, though, you can use the following instructions for 
+installing the other distributions.
 
 For bioperl-run, bioperl-db and bioperl-network v1.5.2 or higher you can use
 the PPD or CPAN installation instructions above. For other packages you will
@@ -191,7 +199,8 @@ call for make, like so:
 7 Bioperl in Cygwin
 
 Cygwin is a Unix emulator and shell environment available free at
-http://www.cygwin.com. It has been reported that Bioperl v. 1.* runs well within Cygwin, though the latest release has not been tested with Cygwin. Some
+http://www.cygwin.com. It has been reported that Bioperl v. 1.* runs well 
+within Cygwin, though the latest release has not been tested with Cygwin. Some
 users claim that installation of Bioperl is easier within Cygwin than
 within Windows, but these may be users with UNIX backgrounds. A note on
 Cygwin: it doesn't write to your Registry, it doesn't alter your system or
@@ -203,8 +212,7 @@ To get Bioperl running first install the basic Cygwin package as well as
 the Cygwin `perl`, `make`, `binutils`, and `gcc` packages. Clicking the View
 button in the upper right of the installer window enables you to see
 details on the various packages. Then start up Cygwin and follow the
-Bioperl installation instructions for UNIX in Bioperl's [INSTALL](INSTALL.html)file (for example, THE BIOPERL BUNDLE and INSTALLING BIOPERL THE EASY WAY USING
-CPAN).
+Bioperl installation instructions for UNIX in Bioperl's INSTALL file.
 
 Cygwin paths
 
@@ -215,7 +223,8 @@ may not be the correct one. Cygwin understands */home/jacky* or
 external resource may want *E:/cygwin/home/jacky*. So your *rc files may end
 up with paths written in these different syntaxes, depending.
 
-For example, here's how to set the environmental variable TMPDIR, programs like BLAST and clustalw need a place to create temporary files:
+For example, here's how to set the environmental variable TMPDIR, programs 
+like BLAST and clustalw need a place to create temporary files:
 
      setenv TMPDIR e:/cygwin/tmp    # csh, tcsh
      export TMPDIR=e:/cygwin/tmp    # sh, bash
