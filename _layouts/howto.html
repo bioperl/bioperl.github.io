@@ -11,6 +11,17 @@
       <div class="wrapper">
         <font color="blue">{{ page.title }}</font>
         <BR><BR>
+        <!-- jQuery -->
+        <script src="/assets/jquery-2.1.4.min.js"></script>
+        <link href="/assets/tocmd-generator/css/toc.css" rel="stylesheet">
+        <script src="/assets/tocmd-generator/js/jquery.toc.js" type="text/javascript">
+          //$(document).ready(function(){ 
+          $('#main_content').toc({
+            showAlways:true
+          });          
+          //});
+        </script>
+        <BR><BR>
         {{ content }}
       </div>
     </div>
