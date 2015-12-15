@@ -20,7 +20,7 @@ Sendu Bala
 Introduction
 ============
 
-The BioPerl developers are currently switching from using the [Test](https://metacpan.org/pod/Test&mode=all) module to the more current [Test::More](https://metacpan.org/pod/Test::More&mode=all), accessed via [Bio::Root::Test](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-live/trunk/Bio/Root/Test.pm). This is meant to be a general guide on how to write BioPerl-related regression tests using [Test::More](https://metacpan.org/pod/Test::More&mode=all) (and possibly other modules related to test writing that we may include in the future, which can have additional sections added as needed).
+The BioPerl developers are currently switching from using the [Test](http://search.cpan.org/search?query=Test) module to the more current [Test::More](https://metacpan.org/pod/Test::More&mode=all), accessed via [Bio::Root::Test](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-live/trunk/Bio/Root/Test.pm). This is meant to be a general guide on how to write BioPerl-related regression tests using [Test::More](https://metacpan.org/pod/Test::More&mode=all) (and possibly other modules related to test writing that we may include in the future, which can have additional sections added as needed).
 
 Some guidelines
 ===============
@@ -192,10 +192,10 @@ my @methods = qw(get_Seq_by_id get_Stream_by_id);
 can_ok($testobj, @methods);
 ```
 
-Significant differences between [Test](https://metacpan.org/pod/Test&mode=all) and [Test::More](https://metacpan.org/pod/Test::More&mode=all)
+Significant differences between [Test](http://search.cpan.org/search?query=Test) and [Test::More](https://metacpan.org/pod/Test::More&mode=all)
 ---------------------------------------------------
 
-When either converting tests over from [Test](https://metacpan.org/pod/Test&mode=all) or writing new tests based on older [Test](https://metacpan.org/pod/Test&mode=all)-based code, take note of some small gotchas that occur.
+When either converting tests over from [Test](http://search.cpan.org/search?query=Test) or writing new tests based on older Test code, take note of some small gotchas that occur.
 
 For instance, descriptive messages passed as an additional argument to `ok()` in [Test](https://metacpan.org/pod/Test&mode=all) are diagnostic in nature (show up on failure).
 
@@ -203,7 +203,7 @@ For instance, descriptive messages passed as an additional argument to `ok()` in
 ok($value, 12, "$value not okay");
 ```
 
-With [Test::More](https://metacpan.org/pod/Test::More&mode=all) you can have both descriptive messages (always displayed, normally to describe the test in some way) and optional user-based diagnostic messages (appear during the test run, which do not interfere with tests). The above [Test](https://metacpan.org/pod/Test&mode=all) could be the following in [Test::More](https://metacpan.org/pod/Test::More&mode=all), with an added descriptive message:
+With [Test::More](https://metacpan.org/pod/Test::More&mode=all) you can have both descriptive messages (always displayed, normally to describe the test in some way) and optional user-based diagnostic messages (appear during the test run, which do not interfere with tests). The above could be the following in [Test::More](https://metacpan.org/pod/Test::More&mode=all), with an added descriptive message:
 
 ```perl
 ok($value, "Total sequences in SeqIO stream") || diag("$value not okay");
@@ -215,7 +215,7 @@ Of course, you'll probably want to use `is()` or something more explicit instead
 is($value, 12, "Total sequences in SeqIO stream") || diag("$value wrong; Got $value, expected 12");
 ```
 
-Note that just substituting the older Test-based `ok()` to the newer Test::More-based `is()` in the first example:
+Note that just substituting the older Test-based `ok()` to the newer [Test::More](https://metacpan.org/pod/Test::More) -based `is()` in the first example:
 
 ```perl
 is($value, 12, "$value not okay");
@@ -243,7 +243,7 @@ is_deeply(\%h1, \%h2);
 
 `is_deeply()` is also capable of comparing more complex data structures. Note that this hasn't been currently tested extensively in BioPerl.
 
-Alternatively, one could also use [Test::Deep](http://search.cpan.org/~fdaly/Test-Deep-0.096/) which provides us with a greater level of output an a more detailed insight into where the data structures differ. The syntax is very similar to the native `is_deeply`
+Alternatively, one could also use [Test::Deep](https://metacpan.org/pod/Test::Deep) which provides us with a greater level of output an a more detailed insight into where the data structures differ. The syntax is very similar to the native `is_deeply`
 
 ```perl
 cmp_deeply(\@arr1, \@arr2);
