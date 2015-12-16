@@ -7,18 +7,37 @@
 
     {% include howto_header.html %}
 
-    <div class="page-content">
+    <div id="page-content">
       <div class="wrapper">
         <font color="blue">{{ page.title }}</font>
         <BR><BR>
-        <link href="/assets/tocmd-generator/css/toc.css" rel="stylesheet">
-        <script src="/assets/jquery-2.1.4.min.js"></script>
+        <!-- Does not work with any Markdown converter
         <script src="/assets/tocmd-generator/js/jquery.toc.js" type="text/javascript"></script>
         <script type="text/javascript">
-          $('.page-content').toc({
+          $('#page-content').toc({
             showAlways:true
           });
         </script>
+        -->
+        <link rel="stylesheet" href="/assets/googlecode.min.css">
+        <script src="/assets/jquery-2.1.4.min.js"></script>
+        <script src="/assets/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $("h2,h3,h4,h5,h6").each(function(i,item){
+              var tag = $(item).get(0).localName;
+              $(item).attr("id", "wow" + i);
+              $("#category").append('<a class="new'+tag+'" href="#wow'+i+'">'+$(this).text()+'</a></br>');
+              $(".newh2").css("margin-left",0);
+              $(".newh3").css("margin-left",20);
+              $(".newh4").css("margin-left",40);
+              $(".newh5").css("margin-left",60);
+              $(".newh6").css("margin-left",80);
+            });
+          });
+        </script>
+        <div id="category"></div>
         <BR><BR>
         {{ content }}
       </div>

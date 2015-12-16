@@ -8,6 +8,10 @@ url: "http://bioperl.github.io" # the base hostname & protocol for your site
 #github_username:  jekyll
 encoding: UTF-8
 # Build settings
+# converters: kramdown (default), maruku (deprecated), redcarpet, rdiscount
+# rdiscount partially formats the '''perl blocks, no highlighting
+# kramdown does not format Perl correctly, the blocks are not recognized
+# none of them work correctly with tocmd-generator
 markdown: redcarpet
 markdown_ext: markdown,mkdown,mkdn,mkd,mkd,md
 redcarpet:
