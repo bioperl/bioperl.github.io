@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:BioGraphics"
+title: "BioGraphics HOWTO"
 layout: howto
 ---
 

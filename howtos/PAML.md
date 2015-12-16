@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:PAML"
+title: "PAML HOWTO"
 layout: howto
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:OBDA"
+title: "OBDA HOWTO"
 layout: howto
 ---
 

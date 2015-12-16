@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Local Databases"
+title: "Local Databases HOWTO"
 layout: howto
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:SearchIO"
+title: "SearchIO HOWTO"
 layout: howto
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Tiling"
+title: "Tiling HOWTO"
 layout: howto
 ---
 

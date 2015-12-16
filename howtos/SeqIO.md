@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:SeqIO"
+title: "SeqIO HOWTO"
 layout: howto
 ---
 

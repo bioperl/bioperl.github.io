@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Short Read assemblies using bwa"
+title: "Short Read assemblies using bwa HOWTO"
 layout: howto
 ---
 

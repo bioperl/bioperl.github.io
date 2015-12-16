@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:BlastPlus"
+title: "BlastPlus HOWTO"
 layout: howto
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Advanced BioPerl"
+title: "Advanced BioPerl HOWTO"
 layout: howto
 ---
 

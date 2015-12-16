@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Features and Annotations"
+title: "Features and Annotations HOWTO"
 layout: howto
 ---
 

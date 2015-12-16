@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:EUtilities Cookbook"
+title: "EUtilities Cookbook HOWTO"
 layout: howto
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Population Genetics"
+title: "Population Genetics HOWTO"
 layout: howto
 ---
 

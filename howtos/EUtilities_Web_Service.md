@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:EUtilities Web Service"
+title: "EUtilities Web Service HOWTO"
 layout: howto
 ---
 

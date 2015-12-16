@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Glyphs"
+title: "Glyphs HOWTO"
 layout: howto
 ---
 

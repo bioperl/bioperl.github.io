@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Simple Web Analysis"
+title: "Simple Web Analysis HOWTO"
 layout: howto
 ---
 

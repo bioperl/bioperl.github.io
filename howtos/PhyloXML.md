@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:PhyloXML"
+title: "PhyloXML HOWTO"
 layout: howto
 ---
 

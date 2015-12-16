@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:AlignIO and SimpleAlign"
+title: "AlignIO and SimpleAlign HOWTO"
 layout: howto
 ---
 

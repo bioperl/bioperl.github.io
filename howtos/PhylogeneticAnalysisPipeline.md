@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Phylogenetic Analysis Pipeline"
+title: "Phylogenetic Analysis Pipeline HOWTO"
 layout: howto
 ---
 

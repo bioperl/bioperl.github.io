@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Restriction Enzyme Analysis"
+title: "Restriction Enzyme Analysis HOWTO"
 layout: howto
 ---
 

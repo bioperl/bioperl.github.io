@@ -11,8 +11,8 @@ encoding: UTF-8
 # converters: kramdown (default), maruku (deprecated), redcarpet, rdiscount
 # rdiscount partially formats the '''perl blocks, no highlighting
 # kramdown does not format Perl correctly, the blocks are not recognized
-# none of them work correctly with tocmd-generator
 markdown: redcarpet
 markdown_ext: markdown,mkdown,mkdn,mkd,mkd,md
 redcarpet:
-  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks", ":no_intra_emphasis", "quote"]
+  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", 
+               "fenced_code_blocks", ":no_intra_emphasis", "quote"]

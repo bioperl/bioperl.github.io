@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Getting Genomic Sequences"
+title: "Getting Genomic Sequences HOWTO"
 layout: howto
 ---
 

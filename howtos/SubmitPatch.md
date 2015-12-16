@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Submit Patch"
+title: "Submit Patch HOWTO"
 layout: howto
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Short Read assemblies using maq"
+title: "Short Read assemblies using maq HOWTO"
 layout: howto
 ---
 

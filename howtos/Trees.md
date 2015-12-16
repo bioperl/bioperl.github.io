@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:Trees"
+title: "Trees HOWTO"
 layout: howto
 ---
 

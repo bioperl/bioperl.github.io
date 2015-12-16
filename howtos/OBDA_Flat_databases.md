@@ -1,5 +1,5 @@
 ---
-title: "HOWTO:OBDA Flat Databases"
+title: "OBDA Flat Databases HOWTO"
 layout: howto
 ---
 
