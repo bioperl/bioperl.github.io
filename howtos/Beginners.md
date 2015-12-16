@@ -121,7 +121,7 @@ All objects in Bioperl are created by specific Bioperl modules, so if you want t
 use Bio::Seq;
 ```
 
-This line tells Perl to use a module on your machine called `Bio/Seq.pm`. We will use this module to create a object. The module is one of the central modules in Bioperl. The analogous object, or "Sequence object", or "Seq object", is ubiquitous in Bioperl, it contains a single sequence and associated names, identifiers, and properties. Let's create a very simple sequence object at first, like so:
+This line tells Perl to use a module on your machine called *Bio/Seq.pm*. We will use this module to create a object. The module is one of the central modules in Bioperl. The analogous object, or "Sequence object", or "Seq object", is ubiquitous in Bioperl, it contains a single sequence and associated names, identifiers, and properties. Let's create a very simple sequence object at first, like so:
 
 ```perl
 #!/bin/perl -w
@@ -136,9 +136,9 @@ That's it! The variable `$seq_obj` is the Sequence object, a simple one, contain
 
 Sequence objects can be created manually, as above, but they're also created automatically in many operations in Bioperl, for example when alignment files or database entries or BLAST reports are parsed.
 
-Any time you explicitly create an object, you will use this `new()` method. The syntax of this line is one you'll see again and again in Bioperl: the name of the object or variable, the module name, the `->` symbol, the method name `new`, some argument name like `-seq`, the `=>` symbol, and then the argument or value itself, like `aaaatgggggggggggccccgtt`.
+Any time you explicitly create an object, you will use this `new()` method. The syntax of this line is one you'll see again and again in Bioperl: the name of the object or variable, the module name, the `->` symbol, the method name `new`, some argument name like `-seq`, the `=>` symbol, and then the argument or value itself, like *aaaatgggggggggggccccgtt*.
 
-*Note* You may have come across the term "function" or "sub-routine". In object-oriented programming the term "method" is used instead.
+*Note* You may have come across the term "function" or "sub-routine". In object-oriented programming the term `method` is used instead.
 
 The object was described as a data container, but it is more than that. It can also do work, meaning it can use or call specific methods taken from the module or modules that were used to create it. For example, the Bio::Seq module can access a method named `seq()` that will print out the sequence of objects. You could use it like this:
 
@@ -170,7 +170,7 @@ $seq_obj = Bio::Seq->new(-seq        => "aaaatgggggggggggccccgtt",
 print $seq_obj->seq();
 ```
 
-`aaaatgggggggggggccccgtt`, `#12345`, and `example 1` are called "arguments" in programming jargon. You could say that this example shows how to pass arguments to the `new()` method.
+*aaaatgggggggggggccccgtt*, *#12345*, and *example 1* are called "arguments" in programming jargon. You could say that this example shows how to pass arguments to the `new()` method.
 
 ### Writing a sequence to a file
 
