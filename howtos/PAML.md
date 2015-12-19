@@ -61,7 +61,7 @@ my $parser = Bio::Tools::Phylo::PAML->new(-file => "./output.mlc",
                                           -ctlf => "./codeml.ctl");
 
 while(my $result = $parser->next_result) {
-   # do something with the results from this dataset ...`
+   # do something with the results from this dataset ...
 }
 ```
 
@@ -227,8 +227,8 @@ use Bio::Tools::Phylo::PAML::Result;
 use Bio::Tools::Phylo::PAML;
 
 my $outcodeml = shift(@ARGV);
-my $paml_parser = Bio::Tools::Phylo::PAML->newe(-file => $outcodeml,
-                                             -dir => "./");
+my $paml_parser = Bio::Tools::Phylo::PAML->new(-file => $outcodeml,
+                                               -dir => "./");
 
 if( my $result = $paml_parser->next_result() ) {
  while ( my $tree = $result->next_tree ) {
@@ -268,7 +268,7 @@ In cases where `nssites=1` or `nssites=2` is provided the data for the results i
 use Bio::Tools::Phylo::PAML;
 my $outcodeml = shift(@ARGV);
 my $paml_parser = Bio::Tools::Phylo::PAML->new(-file => $outcodeml,
-                                              -dir => "./");
+                                               -dir => "./");
 if( my $result = $paml_parser->next_result() ) {
  for my $ns_result ( $result->get_NSSite_results ) {
    print "model ", $ns_result->model_num, " ",
@@ -305,7 +305,7 @@ if( my $result = $paml_parser->next_result() ) {
 References
 ==========
 
-PAML can be downloaded from <http://abacus.gene.ucl.ac.uk/software/paml.html> .
+PAML can be downloaded from http://abacus.gene.ucl.ac.uk/software/paml.html.
 
 1. Goldman N and Yang Z. A codon-based model of nucleotide substitution for protein-coding DNA sequences. Mol Biol Evol. 1994 Sep;11(5):725-36. [PubMed ID:7968486](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=pubmed&dopt=Abstract&list_uids=7968486) | [HubMed](http://www.hubmed.org/display.cgi?uids=7968486) `goldman94`
 2. Yang Z. PAML: a program package for phylogenetic analysis by maximum likelihood. Comput Appl Biosci. 1997 Oct;13(5):555-6. [PubMed ID:9367129](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=pubmed&dopt=Abstract&list_uids=9367129) | [HubMed](http://www.hubmed.org/display.cgi?uids=9367129) `PAML97`
