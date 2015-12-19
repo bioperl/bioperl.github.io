@@ -9,8 +9,11 @@
 
     <div id="page-content">
       <div class="wrapper">
-        <font color="blue">{{ page.title }}</font>
         <BR>
+        {{ page.title }}
+        <BR>
+        <BR>
+        <div style="font-size:16px; font-style: italic">
         <!-- Generate TOC -->
         <script src="/assets/jquery-2.1.4.min.js"></script>
         <script src="/assets/highlight.js/src/highlight.js"></script>
@@ -32,7 +35,8 @@
         </script>
         <div id="category"></div>
         <!-- end TOC -->
-        <BR><BR>
+        </div>
+        <BR>
 
         {{ content }}
 
