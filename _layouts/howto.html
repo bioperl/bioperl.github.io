@@ -13,14 +13,15 @@
         <BR>
         <!-- Generate TOC -->
         <script src="/assets/jquery-2.1.4.min.js"></script>
-        <script src="/assets/highlight.min.js"></script>
+        <script src="/assets/highlight.js/src/highlight.js"></script>
+        <!-- Uses highlight.min.js -->
         <script>hljs.initHighlightingOnLoad();</script>
         <script type="text/javascript">
           $(document).ready(function(){
             $("h1, h2, h3, h4, h5, h6").each(function(i,item){
               var tag = $(item).get(0).localName;
-              $(item).attr("id", "wow" + i);
-              $("#category").append('<a class="new'+tag+'" href="#wow'+i+'">'+$(this).text()+'</a></br>');
+              $(item).attr("id", "item" + i);
+              $("#category").append('<a class="new'+tag+'" href="#item'+i+'">'+$(this).text()+'</a></br>');
               $(".newh2").css("margin-left",0);
               $(".newh3").css("margin-left",20);
               $(".newh4").css("margin-left",40);

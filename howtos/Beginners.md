@@ -228,7 +228,7 @@ ORIGIN       1 aaaatggggg ggggggcccc gtt
 
 ### Retrieving a sequence from a file
 
-One beginner mistake is to not use [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) when working with sequence files. This is understandable in some respects. You may have read about Perl's `open()` function, and Bioperl's way of retrieving sequences may look overly complicated, at first. But don't use `open()`! Using `open(),` immediately forces you to do the parsing of the sequence file and this can get complicated very quickly. Trust the object, it's built to open and parse all the common sequence formats, it can read and write to files, and it's built to operate with all the other Bioperl modules that you will want to use.
+One beginner mistake is to not use [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) when working with sequence files. This is understandable in some respects. You may have read about Perl's `open()` function, and Bioperl's way of retrieving sequences may look overly complicated, at first. But don't use `open()`! Using `open()` immediately forces you to do the parsing of the sequence file and this can get complicated very quickly. Trust the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) object, it's built to open and parse all the common sequence formats, it can read and write to files, and it's built to operate with all the other Bioperl modules that you will want to use.
 
 Let's read the file we created previously, *sequence.fasta*, using [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO). The syntax will look familiar:
 
@@ -482,10 +482,10 @@ FEATURES       Location/Qualifiers
                IDAMEFLINKLAMTKTNDDFFEMMKRS"
 
 ORIGIN  1 aaccctagca ctgcgccgaa atatggcatc cgtggtatcc cgactctgct gctgttcaaa
-        61 aacggtgaag tggcggcaac caaagtgggt gcactgtcta aaggtcagtt gaaagagttc
+       61 aacggtgaag tggcggcaac caaagtgggt gcactgtcta aaggtcagtt gaaagagttc
                                   ...deleted...  
-        1801 tgggcatgtt aggaaaattc ctggaatttg ctggcatgtt atgcaatttg catatcaaat
-        1861 ggttaatttt tgcacaggac
+     1801 tgggcatgtt aggaaaattc ctggaatttg ctggcatgtt atgcaatttg catatcaaat
+     1861 ggttaatttt tgcacaggac
 //      
 ```
 
@@ -803,7 +803,7 @@ while( $result = $report_obj->next_result ) {
 
 This code prints out details about the match when the HSP or aligned pair are greater than 75% identical.
 
-Sometimes you'll see errors when you try to use that have nothing to do with Bioperl. Make sure that BLAST is set up properly and running before you attempt to script it using . There are some notes on setting up BLAST in the [INSTALL](http://bioperl.open-bio.org/SRC/bioperl-live/INSTALL) file.
+Sometimes you'll see errors when you try to use that have nothing to do with Bioperl. Make sure that BLAST is set up properly and running before you attempt to script it.
 
 Bioperl enables you to run a wide variety of bioinformatics programs but in order to do so, in most cases, you will need to install the accessory bioperl-run package. In addition there is no guarantee that there is a corresponding parser for the program that you wish to run, but parsers have been built for the most popular programs. You can find the bioperl-run package on the download page.
 
