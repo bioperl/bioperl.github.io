@@ -10,8 +10,6 @@ Description
 
 See <http://www.agavexml.org/>
 
-This file format can be parsed by the system using the module.
-
 Example
 -------
 

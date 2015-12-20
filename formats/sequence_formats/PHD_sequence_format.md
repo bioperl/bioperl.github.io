@@ -7,7 +7,7 @@ layout: default
 Description
 -----------
 
-The *phd format* is created by PHRED data.
+The *phd format* is created by PHRED data and contains both sequence and quality data.
 
 Example
 -------

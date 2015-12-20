@@ -8,8 +8,6 @@ Description
 
 The **qual** sequence format is a FASTA-like format which stores numerical quality values for each nucleotide or amino acid. It is used by CAP3 and Phrap.
 
-This file format can be parsed by the system using the module.
-
 See also the FASTQ format.
 
 Example

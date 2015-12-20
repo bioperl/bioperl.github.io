@@ -8,8 +8,6 @@ Description
 
 BSML format for exchanging sequences and their meta-data.
 
-This file format can be parsed by the system using the module.
-
 Example
 -------
 

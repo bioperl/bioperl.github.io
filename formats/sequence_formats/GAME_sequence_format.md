@@ -8,8 +8,6 @@ Description
 
 The GAME format is a rich XML format for storing sequences and their associated annotations. More information can be found in this [GAME.rng file](http://flybase.bio.indiana.edu/annot/game.rng.txt).
 
-This file format can be parsed by the system using the module.
-
 Example
 -------
 

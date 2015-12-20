@@ -6,7 +6,7 @@ layout: default
 Description
 -----------
 
-The following is an example of Swissprot "flat" format, the only swissprot format flavor that BioPerl is capable of parsing as of version 1.5.1. The system can parse these files with the module.
+The following is an example of Swissprot "flat" format, the only swissprot format flavor that BioPerl is capable of parsing as of version 1.5.1.
 
 Swissprot also releases an XML formatted database.
 
