@@ -110,12 +110,6 @@ You will need to clone the repository from your forked code on your account.
 
 From here, you can make changes to the code, make local commits, then push the code back up to GitHub. Note this makes changes only on your fork, not on the main BioPerl repository.
 
-#### Syncing your fork with the BioPerl repository
-
-If the changes you are making are extensive or the repository you have forked is fairly active, you may need to sync your local fork with the original repository code. This is done by the following:
-
-#### Creating a pull request
-
 ### Developing on Branches
 
 With git, everything is a branch, including 'master'. So, learning to develop on a branch and merge changes over from one branch to another is critical. Luckily, git makes this very easy. See [1](http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#examining-remote-branches).
