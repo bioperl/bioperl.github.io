@@ -20,25 +20,28 @@ Download BioPerl from GitHub
 
 To checkout (or *clone*) the BioPerl *core* package (most people only want the core package) from GitHub, use:
 
-`$ git clone `[`git://github.com/bioperl/bioperl-live.git`](git://github.com/bioperl/bioperl-live.git)
+`$ git clone git://github.com/bioperl/bioperl-live.git`
 
-Alternatively, you can checkout (or *clone*) a specific BioPerl package such as [bioperl-db](bioperl-db "wikilink") (assuming you know what you are doing):
+Alternatively, you can checkout (or *clone*) a specific BioPerl package such as *bioperl-db*:
 
-`$ git clone `[`git://github.com/bioperl/bioperl-db.git`](git://github.com/bioperl/bioperl-db.git)
+`$ git clone git://github.com/bioperl/bioperl-db.git`
 
-*Note* For the full list of packages, see the [\#Appendix](#Appendix "wikilink").
 
-To use this 'live' version of BioPerl, you need to tell Perl where to find it. This is typically done by adjusting the PERL5LIB environment variable. Assuming you checked out the code above into $HOME/src, set this in your `.bash_profile` or `.profile`:
+Bioperl GitHub Repositories
+---------------------------
 
-`export PERL5LIB="$HOME/src/bioperl-live:$PERL5LIB"`
-
-or if you use tcsh, in `.cshrc`:
-
-`setenv PERL5LIB "$HOME/src/bioperl-live:$PERL5LIB"`
-
-This setting will override any other bioperl installation you may have. To test the version of BioPerl that you are running, use:
-
-`$ perl -MBio::Perl -le 'print Bio::Perl->VERSION;'`
+|       Link        |  Description |
+|--------------------------------------------------------------------|----|
+| [bioperl-live](http://github.com/bioperl/bioperl-live)             | Core package including parsers and main objects |
+| [bioperl-run](http://github.com/bioperl/bioperl-run)               | Wrapper package around key applications    |
+| [bioperl-db](http://github.com/bioperl/bioperl-db)                 | BioPerl DB is the Perl API that accesses the [BioSQL](http://biosql.org) schema  |
+| [bioperl-dev](http://github.com/bioperl/bioperl-dev)               | Bioperl-dev is a development repository for exploratory package       |
+| [bioperl-ext](http://github.com/bioperl/bioperl-ext)               | Ext package has C extensions including alignment routines and link to [staden IO library](http://staden.sourceforge.net/) for sequence trace reads.       |
+| [bioperl-network](http://github.com/bioperl/bioperl-network)       | Network package can be used to read and analyze protein-protein interaction networks  |
+| [bioperl-pedigree](http://github.com/bioperl/bioperl-pedigree)     | Pedigree package has objects for Pedigrees, Individuals, Markers, & Genotypes  |
+| [bioperl-gui](http://github.com/bioperl/bioperl-gui)               | GUI package which for Perl-[Tk](http://www.tcl.tk/) objects for a *G*raphical *U*ser *I*nterface. Serves as the basis for [Genquire](http://www.bioinformatics.org/Genquire/) |
+| [bioperl-microarray](http://github.com/bioperl/bioperl-microarray) | Microarray package  has preliminary objects for microarray data    |
+Table 1. BioPerl packages
 
 ### Release tags and branches
 
@@ -47,11 +50,13 @@ By default, after 'cloning' (above), your checkout is on the BioPerl 'master' de
 To list tags and branches, use:
 
 `$ git tag -l`
+
 `$ git branch -r `
 
 To checkout a release tag or branch (for example), use:
 
 `$ git checkout bioperl-release-1-6-1 # tag`
+
 `$ git checkout origin/release-1-6-2 # branch`
 
 Keeping up to date
@@ -73,29 +78,6 @@ GitHub itself has excellent documentation on forking and pull requests, see:
 -   [Forking a repository](http://help.github.com/fork-a-repo/)
 -   [Sending a pull request](http://help.github.com/send-pull-requests/)
 
-Notes
------
-
-Git commit messages and links to [diffs](wp:diff "wikilink") are posted to the bioperl-guts [mailing list](Mailing_lists "wikilink"), and are available on the [RSS feeds](Project:RSS_feeds "wikilink") as well. See also [Tracking Git commits](Tracking_Git_commits "wikilink").
-
-Appendix
-========
-
-Bioperl GitHub Repositories
----------------------------
-
-|                                                                    |                                                                                                                                                                                                                                                         |
-|--------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [bioperl-live](http://github.com/bioperl/bioperl-live)             | [Core package](Core_package "wikilink") including parsers and main objects                                                                                                                                                                              |
-| [bioperl-run](http://github.com/bioperl/bioperl-run)               | [Wrapper package](Run_package "wikilink") around key applications                                                                                                                                                                                       |
-| [bioperl-db](http://github.com/bioperl/bioperl-db)                 | [BioPerl DB](BioPerl_db "wikilink") is the Perl API that accesses the [BioSQL](BioSQL "wikilink") schema                                                                                                                                                |
-| [bioperl-dev](http://github.com/bioperl/bioperl-dev)               | [Bioperl-dev](Bioperl-dev "wikilink") is a development repository for exploratory package (users welcome!)                                                                                                                                              |
-| [bioperl-ext](http://github.com/bioperl/bioperl-ext)               | [Ext package](Ext_package "wikilink") has C extensions including alignment routines and link to [staden IO library](http://staden.sourceforge.net/) for sequence trace reads.                                                                           |
-| [bioperl-network](http://github.com/bioperl/bioperl-network)       | [Network package](Network_package "wikilink") can be used to read and analyze protein-protein interaction networks                                                                                                                                      |
-| [bioperl-pedigree](http://github.com/bioperl/bioperl-pedigree)     | [Pedigree package](Pedigree_package "wikilink") has objects for Pedigrees, Individuals, Markers, & Genotypes                                                                                                                                            |
-| [bioperl-gui](http://github.com/bioperl/bioperl-gui)               | [GUI package](GUI_package "wikilink") which for Perl-[Tk](http://www.tcl.tk/) objects for a *G*raphical *U*ser *I*nterface. Serves as the basis for [Genquire](http://www.bioinformatics.org/Genquire/) |
-| [bioperl-microarray](http://github.com/bioperl/bioperl-microarray) | [Microarray package](Microarray_package "wikilink") has preliminary objects for [microarray](wp:DNA_microarray "wikilink") data                                                                                                                         |
-||
 
 Developing BioPerl
 ------------------
@@ -142,27 +124,29 @@ With git, everything is a branch, including 'master'. So, learning to develop on
 
 To create a local branch:
 
-` $ git checkout -b my_new_branch`
+`$ git checkout -b my_new_branch`
 
 This switches you automatically to that branch:
 
-` $ git branch`
-`   master`
-` * my_new_branch`
+```
+$ git branch
+   master
+ * my_new_branch
+```
 
 #### Checking out an existing remote branch
 
 For a branch that is not yet in your local repository, makes a new local branch with the same name and sets it up to track the remote branch of the same name.
 
-` $ git checkout -t origin/branch_name`
+`$ git checkout -t origin/branch_name`
 
-One can also checkout a remote branch into a local branch with a different name. The following pulls down the remote branch `branch_name` into the local branch `foo`:
+One can also checkout a remote branch into a local branch with a different name. The following pulls down the remote branch `branch_name` into the local branch *foo*:
 
-` $ git checkout --track -b foo origin/branch_name`
+`$ git checkout --track -b foo origin/branch_name`
 
 For a branch that is already in your local repository, just:
 
-` $ git checkout branch_name`
+`$ git checkout branch_name`
 
 #### Making commits to a branch
 
@@ -175,13 +159,13 @@ With git, you make a commit by first this can be done by:
 
 Since git is a distributed version control system, your commits all occur locally and are not sent anywhere until you *push* them back to the remote repository with `git push`. This also means that network connectivity is not required to work and make commits, only for sending with `git push`.
 
-##### Basic workflow
+#### Basic workflow
 
 *Note* These are general suggestions for workflows, but they have been demonstrated to work very well in other projects.
 
-1.  Hack, hack, hack on `Foo.pm`
+1.  Hack, hack, hack on *Foo.pm*
 2.  `git add Foo.pm`
-3.  git commit -m "Foo system now correctly handles FooBar situation"
+3.  `git commit -m "Foo system now correctly handles FooBar situation"`
 
 You can then follow this up with multiple commits as needed until you are ready to send (*push*) them to the specific remote repository. If you have a standard master branch checkout from github, you can do this by:
 
@@ -207,17 +191,19 @@ See [Resolving a merge](http://www.kernel.org/pub/software/scm/git/docs/user-man
 
 Usually, you want to merge changes from some other branch into the local branch you are currently working on. This is done by simply:
 
-` $ git merge branch_name`
+`$ git merge branch_name`
 
-##### Troubleshooting
+#### Troubleshooting
 
 Did you get an error? Something like this?
 
-`! [rejected]        master -> master (non-fast-forward)`
-`error: failed to push some refs to 'git@github.com:bioperl/bioperl-live.git' `
-`To prevent you from losing history, non-fast-forward updates were rejected`
-`Merge the remote changes before pushing again.  See the 'Note about`
-`fast-forwards' section of 'git push --help' for details.`
+```
+! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'git@github.com:bioperl/bioperl-live.git' 
+To prevent you from losing history, non-fast-forward updates were rejected
+Merge the remote changes before pushing again.  See the 'Note about
+fast-forwards' section of 'git push --help' for details.
+```
 
 Most likely someone else has committed and pushed to the same remote branch in the meantime and now your local copy is out of date. You then have a set of choices, depending on what you want to do.
 
@@ -233,11 +219,11 @@ Of course, you should replace `'origin/master'` with whatever remote repo you ar
 
 1b) You can do all of the above in one set:
 
-` $ git pull --rebase origin/master`
+`$ git pull --rebase origin/master`
 
 1c) Or you can simply merge the commits to your local branch:
 
-` $ git pull`
+`$ git pull`
 
 The last version, though less verbose, is also a bit dirtier in that you see a merge message as well as replay the commit messages.
 
@@ -275,9 +261,11 @@ When starting a new repository for a subset of the modules that are currently pa
 
 We start with a fresh clone of the bioperl-live repository in a directory already named for those set of modules. To avoid accidentally pushing the rewritten history into github, we will use the read-only url for the clone and remove it from the remotes.
 
-`git clone `[`git://github.com/bioperl/bioperl-live.git`](git://github.com/bioperl/bioperl-live.git)` bioperl-tmp`
-`cd bioperl-tmp`
-`git remote rm origin`
+```
+git clone git://github.com/bioperl/bioperl-live.git bioperl-tmp
+cd bioperl-tmp
+git remote rm origin
+```
 
 Rewriting the history is done with the [](http://git-scm.com/docs/git-filter-branch) command. We will go through *all* the commits ever made and remove the files we are not interested from those commits. Commits that only change those files will be empty and removed. Commits that change both, will be edited to only keep the files we are interested.
 
@@ -291,13 +279,13 @@ The first thing to do is create a list of the files that should be removed from 
 
 *Note* On some systems, the list of files needs to be quoted in order to work as input matches for grep (see below). In this case, pipe through `sed` to add quotes:
 
-`git rev-list --objects --do-walk HEAD | cut -c 42- | grep -v '^$' | LC_ALL=C sort -u | sed "s/^.*$/"&"/" > ../all_files_ever `
+`git rev-list --objects --do-walk HEAD | cut -c 42- | grep -v '^$' | LC_ALL=C sort -u | sed "s/^.*$/"&"/" > ../all_files_ever`
 
 From this file, we need to remove the ones whose history *should be kept*. The easiest way is to create a separate file, with the filenames that should be kept and use it filter them out of the files_to_remove. There's two important points when creating a list of files to keep:
 
 -   *file renames* if we want to keep the history of file X, but that file was once named Y, then we should also try to keep Y. To identify renames, the following can be used:
 
-    git log --stat --follow filepath | grep "=>"
+`git log --stat --follow filepath | grep "=>"`
 
 There may be only a problem here. If the commit that renamed a file also changed its contents, won't mark it as a rename (that's why edit and rename should be always made in separate commits). To work around this, one can either inspect the oldest commit of each file manually, or try to make a guess with
 
@@ -315,21 +303,25 @@ Once you have the filenames whose history you want to keep, one per line, you ca
 
 With a list of targets (the files to be removed), we can start filtering the history of the project. The bioperl-live repository is quite large and this command might take a long time (leave it running on the background or overnight). Basically, the list of files is passed to for each commit ever done (argument of ). The option will make it ignore any empty commits generated by our filter.
 
-`git filter-branch -f --prune-empty --index-filter 'xargs git rm -r --cached --ignore-unmatch `< /filepath/to/files_to_remove' HEAD
+`git filter-branch -f --prune-empty --index-filter 'xargs git rm -r --cached --ignore-unmatch < /filepath/to/files_to_remove' HEAD`
 
 After this command, some files from the list may still appear on the history. It may take a few runs of {{inlinecode|filter-branch}} until we have removed them completely. However, only the first run of {{inlinecode|filter-branch}} will take a long time. As the repository shrinks and empty commits are removed, there's less history to go through. So, we get a new list of all files in history, re-filter the file list, re-filter the history, and repeat until {{inlinecode|filter-branch}} no longer changes anything.
 
- git rev-list --objects --do-walk HEAD | cut -c 42- | grep -v '^$' | LC_ALL=C sort -u >` ../all_files_ever`
-`grep -Fxv -f ../files_to_keep ../all_files_ever | sed "s/^.*$/"&"/" > ../files_to_remove`
-`git filter-branch -f --prune-empty --index-filter 'xargs git rm -r --cached --ignore-unmatch `< /filepath/to/files_to_remove' HEAD
+```
+git rev-list --objects --do-walk HEAD | cut -c 42- | grep -v '^$' | LC_ALL=C sort -u > ../all_files_ever
+grep -Fxv -f ../files_to_keep ../all_files_ever | sed "s/^.*$/"&"/" > ../files_to_remove
+git filter-branch -f --prune-empty --index-filter 'xargs git rm -r --cached --ignore-unmatch < /filepath/to/files_to_remove' HEAD
+```
 
 *Note* Again, on some systems you will need to quote output files as input for grep (as in the original {{inlinecode|rev-list}} step above):
 
- git rev-list --objects --do-walk HEAD | cut -c 42- | grep -v '^$' | LC_ALL=C sort -u | sed "s/^.*$/"&"/" >` ../all_files_ever`
-`grep -Fxv -f ../files_to_keep ../all_files_ever > ../files_to_remove`
-`git filter-branch -f --prune-empty --index-filter 'xargs git rm -r --cached --ignore-unmatch `< /filepath/to/files_to_remove' HEAD
+```
+git rev-list --objects --do-walk HEAD | cut -c 42- | grep -v '^$' | LC_ALL=C sort -u | sed "s/^.*$/"&"/" > ../all_files_ever
+grep -Fxv -f ../files_to_keep ../all_files_ever > ../files_to_remove
+git filter-branch -f --prune-empty --index-filter 'xargs git rm -r --cached --ignore-unmatch < /filepath/to/files_to_remove' HEAD
+```
 
-==== Cleaning up ====
+### Cleaning up 
 
 `git` holds on to objects even after they are filtered; it generally cleans them up only when asked. However, cloning does not carry over removed objects, thus it acts as a quick cleaning step. The fastest way to clean up everything is then to simply create a clean clone:
 
@@ -345,46 +337,46 @@ The final part is to change to the newly cloned, clean repo, add a new clean rem
  git push
 ```
 
-==== Start new repository ====
+#### Start new repository 
 
 ```
  mkdir lib
  git mv Bio lib/Bio
  git commit -am "maint: move Bio::modulesXXX into lib/ after split from bioperl-live"
 ```
-==== Notes ====
+#### Notes 
 
 For better or worse, `git` is a terribly complex tool. There are many ways to accomplish this task. But as long as you get a list of files to be removed, and you use it to filter through the history, you should get the same results.
 
-== Assembling a release ==
+## How BioPerl's GitHub repository is configured 
 
-[[Making a BioPerl release]]
+### Archived Branches 
 
-== How BioPerl's GitHub repository is configured ==
+At the time of BioPerl's conversion to Git (May 2010), branches in Subversion dating from 2007 or before were archived in *refs/archives/*.These branches are not visible in the normal workflow.  To list them:
 
-=== Archived Branches ===
-
-At the time of BioPerl's conversion to Git (May 2010), branches in Subversion dating from 2007 or before were archived in <tt>`refs/archives/*`</tt>`.  These branches are not visible in the normal workflow.  To list them:`
-
-` $ git ls-remote origin refs/archives/* `
+`$ git ls-remote origin refs/archives/*`
 
 To inspect one of them:
 
-` $ git fetch origin refs/archives/branches/branch_to_inspect`
-` $ git log FETCH_HEAD`
-` $ git show FETCH_HEAD`
-` # and so on, using the FETCH_HEAD as a convenient temporary handle on the branch`
+```
+$ git fetch origin refs/archives/branches/branch_to_inspect
+$ git log FETCH_HEAD
+$ git show FETCH_HEAD
+# and so on using the FETCH_HEAD as a convenient temporary handle on the branch
+```
 
 To move one of them into the current set of branches:
 
-` $ git fetch origin refs/archives/heads/branch_to_resurrect`
-` $ git push origin FETCH_HEAD:refs/heads/new_name_for_this_branch  :refs/archives/heads/branch_to_resurrect`
+```
+$ git fetch origin refs/archives/heads/branch_to_resurrect
+$ git push origin FETCH_HEAD:refs/heads/new_name_for_this_branch  :refs/archives/heads/branch_to_resurrect
+```
 
 ### The Fork Queue
 
 On Github, BioPerl collaborators will see a "Fork Queue". For example, [here](http://github.com/bioperl/bioperl-live/forkqueue) is the bioperl-live fork queue.
 
-Note that commits from anyone's fork of a BioPerl repository will appear there and *may not be ready to be committed* to master ([details here](http://github.com/blog/270-the-fork-queue)). So please resist the urge to blindly push the 'apply' button (ask me how I know xefxbfxbd$-1xc3xb2xc3xb4[Dave Messina](User:Dave_Messina "wikilink") 14:48, 27 May 2010 (UTC)).
+Note that commits from anyone's fork of a BioPerl repository will appear there and *may not be ready to be committed* to master ([details here](http://github.com/blog/270-the-fork-queue)).
 
 ### Submitting a Pull Request
 
@@ -400,7 +392,7 @@ For all other changes, after a decent code review (does it break the API? do all
 
 -   Add the forked repository as a new remote:
 
-` git remote add `<fork_name>` `[`git://github.com/`](git://github.com/)<github_user>`/bioperl-live.git`
+`git remote add <fork_name> git://github.com/<github_user>/bioperl-live.git`
 
 From this point on, there are two ways you can merge in commits. The first method is considered cleaner (nothing goes to the 'master' branch until tests pass) and is preferred.
 
@@ -408,30 +400,34 @@ From this point on, there are two ways you can merge in commits. The first metho
 
 1) Fetch the remote changes:
 
-` git fetch <fork_name>`
+`git fetch <fork_name>`
 
 2) Create a local branch based on the remote one:
 
-` git checkout -b merge-fork <fork_name> /master`
+`git checkout -b merge-fork <fork_name> /master`
 
 3) Run tests on the new branch to make sure everything passes. Don't forget to add any necessary changes to the 'Changes' file, and commit that:
 
-` # edit Changes`
-` git add Changes`
-` git commit -m 'update Changes'`
+```
+# edit Changes
+git add Changes
+git commit -m 'update Changes'
+```
 
 4) Rebase against the local master branch (*MAKE SURE THIS IS CLEAN*):
 
-` git rebase master`
+`git rebase master`
 
 5) Checkout master branch:
 
-` git checkout master`
+`git checkout master`
 
-6) Merge changes from the fork branch and push upstream (the `-s` is recommended; it indicates who signed off on the commit):
+6) Merge changes from the fork branch and push upstream (the `-s` is recommended, it indicates who signed off on the commit):
 
-` git merge merge-fork`
-` git push origin master`
+```
+git merge merge-fork
+git push origin master
+```
 
 #### *Pull/Push*
 
@@ -444,31 +440,35 @@ With both reasons above one could work around them (create a branch from 'master
 
 1) Change to the branch you wish to merge into (here, the 'master' branch):
 
-` git checkout master`
+`git checkout master`
 
 2) Merge from the proper remote branch to the one you are currently on, adding a commit message:
 
-` git merge `<fork_name>`/master`
+`git merge <fork_name>/master`
 
 *Note* If you are worried about the changes and don't want to commit them in right away, you can add a `--no-commit` flag:
 
-` git merge --no-commit `<local name for fork>`/master`
+`git merge --no-commit <local name for fork>/master`
 
 3) Test the changes:
 
-` perl Build.PL`
-` ./Build`
-` ./Build test`
+```
+perl Build.PL
+./Build
+./Build test
+```
 
 Don't forget to add any necessary changes to the 'Changes' file, and commit that:
 
-` # edit Changes`
-` git add Changes`
-` git commit -m 'update Changes'`
+```
+# edit Changes
+git add Changes
+git commit -m 'update Changes'
+```
 
 4) Push merged changes and additional commits back to origin:
 
-` git push origin master`
+`git push origin master`
 
 A few standard development workflows
 ------------------------------------
@@ -477,12 +477,14 @@ A few standard development workflows
 
 If there are some small documentation glitches that can be fixed very quickly, one can make these locally on the 'master' branch and commit them in.
 
-` $ git checkout master`
-` $ git pull`
-` ...add doc fixes...`
-` $ git add Foo.pm`
-` $ git commit -m 'misspelling'`
-` $ git push`
+```
+$ git checkout master
+$ git pull
+# ...add doc fixes...
+$ git add Foo.pm
+$ git commit -m 'misspelling'
+$ git push
+```
 
 Larger scale doc fixes (such as global changes to fix POD errors) should be done on a branch (see below).
 
@@ -490,23 +492,25 @@ Larger scale doc fixes (such as global changes to fix POD errors) should be done
 
 Bug fixes should be done on a 'topic' branch. These can be labeled however you want, but it's generally a good idea to reference any bug report (if there is one).
 
-` $ git checkout -b topic/bug_1234`
-` ...patch patch patch...`
-` ...intermittent commits to the branch on remote...`
-` $ git push origin topic/bug_1234`
-` ...test commit test commit...`
-` ...merge fixes...`
-` $ git checkout master`
-` $ git merge topic/bug_1234`
-` $ git push origin master`
+```
+$ git checkout -b topic/bug_1234
+ ...patch patch patch...
+ ...intermittent commits to the branch on remote...
+$ git push origin topic/bug_1234
+ ...test commit test commit...
+ ...merge fixes...
+$ git checkout master
+$ git merge topic/bug_1234
+$ git push origin master
+```
 
 After testing by others, this branch can be safely deleted locally using `git branch -d` (which only deletes if the code has been merged):
 
-` $ git branch -d topic/bug_1234`
+`$ git branch -d topic/bug_1234`
 
 Don't forget to delete the remote branch as well.
 
-` $ git push origin :topic/bug_1234`
+`$ git push origin :topic/bug_1234`
 
 ### New or modified features
 
@@ -514,19 +518,21 @@ These would follow the same pattern as a bug fix, with the exception that the br
 
 For instance, recent Bio::FeatureIO work was:
 
-` $ git checkout -b topic/featureio_refactor`
+`$ git checkout -b topic/featureio_refactor`
 
 The rest would follow a similar pattern to the above. One critical piece would be, if development on the branch is expected to take a while, to ensure you are routinely syncing your feature branch with the master branch:
 
-` ...on your branch...`
-` $ git merge master`
+```
+ ...on your branch...
+$ git merge master
+```
 
 ### Release branches
 
 To list branches, do:
 
-`git branch -r `
+`git branch -r`
 
 To checkout a release branch, do (for example):
 
-`git checkout origin/release-1-6-2'`
+`git checkout origin/release-1-6-2`
