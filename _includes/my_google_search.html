@@ -1,11 +1,11 @@
 <script type="text/javascript">
   function my_search_google() {
-    var query = document.getElementById("tfq").value;
+    var query = document.getElementById("gsearch").value;
     window.open("http://google.com/search?q=" + query + "%20site:http://bioperl.github.io");
   }
 
   window.onload = function() {
-    var submitbutton = document.getElementById("tfq");
+    var submitbutton = document.getElementById("gsearch");
     if(submitbutton.addEventListener) {
       submitbutton.addEventListener("click", function() {
         if (submitbutton.value == 'Search our website'){  submitbutton.value = ''; }
@@ -21,11 +21,11 @@
 	}
 	#tfnewsearch{
 		float:right;
-#		padding:20px;
+		padding: 0px 25px;
 	}
 	.tftextinput2{
 		margin: 0;
-		padding: 5px 15px;
+		padding: 5px 10px;
 		font-family: Arial, Helvetica, sans-serif;
 		font-size:14px;
 		color:#666;
