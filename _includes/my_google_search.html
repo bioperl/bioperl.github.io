@@ -1,10 +1,10 @@
 <script type="text/javascript">
-  function my_search_google() {
+  function my_search_google() {  // modified from https://truongtx.me/2012/12/28/jekyll-create-simple-search-box/
     var query = document.getElementById("gsearch").value;
     window.open("http://google.com/search?q=" + query + "%20site:http://bioperl.github.io");
   }
 
-  window.onload = function() {
+  window.onload = function() {  // modified from http://www.textfixer.com/tutorials/html-search-box.php
     var submitbutton = document.getElementById("gsearch");
     if(submitbutton.addEventListener) {
       submitbutton.addEventListener("click", function() {
@@ -14,11 +14,9 @@
   }
 </script>
 
-<!-- CSS styles for standard search box with placeholder text-->
+<!-- CSS styles for standard search box with placeholder text
+modified from http://www.textfixer.com/tutorials/html-search-box.php -->
 <style type="text/css">
-	#tfheader{
-#		background-color:#c3dfef;
-	}
 	#tfnewsearch{
 		float:right;
 		padding: 0px 25px;
