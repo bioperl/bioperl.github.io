@@ -49,13 +49,13 @@ see [ActivePerl MinGW PPM webpage](http://www.activestate.com/activeperl/downloa
 1. Download the [Strawberry Perl MSI](http://strawberryperl.com/releases.html) or [ActivePerl MSI](http://www.activestate.com/activeperl/downloads).
 2. Run the Installer (accepting all defaults is fine).
 
-You can also build Perl yourself (which requires a C compiler) or download
-one of the other binary distributions. The Perl source for building it
-yourself is available from [CPAN](http://www.cpan.org/), as are a few other binary distributions that are alternatives to ActiveState. This approach is 
-not recommended unless you have specific reasons for doing so and know what 
-you're doing.
+You can also build Perl yourself (which requires a C compiler). The Perl
+source for building it yourself is available from [CPAN](http://www.cpan.org/).
+This approach is not recommended unless you have specific reasons for doing so
+and know what you're doing.
 
-[Cygwin](http://en.wikipedia.org/wiki/Cygwin) is a [UNIX](http://en.wikipedia.org/wiki/UNIX) emulation environment for Windows and comes with its own copy of Perl. Information on Cygwin and Bioperl is found below.
+[Cygwin](http://en.wikipedia.org/wiki/Cygwin) is a [UNIX](http://en.wikipedia.org/wiki/UNIX)
+emulation environment for Windows and comes with its own copy of Perl. Information on Cygwin and Bioperl is found below.
 
 ### Installation using the ActiveState Perl Package Manager
 
@@ -80,8 +80,10 @@ to be upgraded (>= v0.2805) and [Test::Harness](https://metacpan.org/pod/Test::H
 `ppm install MinGW`.
 
 It is `important` to check if ActiveState provides the
-[MinGW package](http://code.activestate.com/ppm/MinGW/) for your ActivePerl version. For example, although MinGW has been available since ActivePerl 
-version 5.18, at present date (December 2015 version 5.22) it is not available. 
+[MinGW package](http://code.activestate.com/ppm/MinGW/) for your ActivePerl version,
+since each version have to wait its own release. For example,
+although MinGW has been available since ActivePerl version 5.18,
+the release for newest version 5.22 it's still not available (December 2015).
 
 ### Start the install with CPAN
 
@@ -110,7 +112,7 @@ CPAN to prefer to use `Build.PL` scripts for installation, and the type `o conf 
 You can now follow the instructions INSTALLING BIOPERL THE EASY WAY
 USING CPAN in the [INSTALL file](INSTALL.html).
 
-### BioPerl from GitHub
+### Finish the install with BioPerl from GitHub
 
 For the bleeding edge version install manually using a ZIP file from the
 GitHub repository:
