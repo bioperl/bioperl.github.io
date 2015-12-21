@@ -29,7 +29,7 @@ Dependencies and Installation
 
 The module and dependencies are available in the [bioperl/bioperl-run git](https://github.com/bioperl/bioperl-run) repository. To download and install BioPerl core and packages from github see [INSTALL](/INSTALL.html).
 
-Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site] (http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](http://www.ncbi.nlm.nih.gov/books/NBK279690/) is very helpful.
+Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site](http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](http://www.ncbi.nlm.nih.gov/books/NBK279690/) is very helpful.
 
 Overview
 --------
@@ -98,8 +98,8 @@ $result = $fac->blastn( -query => 'query_seqs.fas',
 ```perl
 $result = $fac->blastn( -query => 'query_seqs.fas',
                         -outfile => 'query.bls',
-                        -method_args => [ '-num_alignments' => 10,
-                                          '-evalue' => 100 ]);
+                        -method_args => [ -num_alignments => 10,
+                                          -evalue => 100 ]);
 ```
 
 -   To get the name of the blast output file, do
@@ -268,10 +268,10 @@ To create a mask ASN1 file that can be used in the `-mask_file` parameter separa
 
 ```perl
 $mask_file = $fac->make_mask(-data => 'maskseqs.fas',
-                            -masker => 'dustmasker');
+                             -masker => 'dustmasker');
 # segmasker can use a blastdb as input
 $mask_file = $fac->make_mask(-mask_db => 'mydb',
-                            -masker => 'segmasker')
+                             -masker => 'segmasker')
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
  -db_name => 'my_masked_db',
  -db_data => 'myseqs.fas',
@@ -363,10 +363,10 @@ and call BLAST methods from the factory as usual. Note that the database info me
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
  -db_name => 'customdb',
  -db_data => 'myseqs.fas',
- -db_make_args => [ '-taxid_map' => 'seq_to_taxa.txt' ],
+ -db_make_args => [ -taxid_map => 'seq_to_taxa.txt' ],
  -masker => 'windowmasker',
  -mask_data => 'myseqs.fas',
- -mask_make_args => [ '-dust' => 'T' ],
+ -mask_make_args => [ -dust => 'T' ],
  -create => 1
 );
 ```
@@ -377,7 +377,7 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 $fac->no_throw_on_crash(1);
 $fac->make_db;
 if ($fac->stderr =~ /Error:/) {
-  #handle error
+  # handle error
   ...
 }
 ```
@@ -403,20 +403,20 @@ $alnio = Bio::AlignIO->new( -file => 'alignment.msf' );
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
  -db_name => 'mydb',
  -db_data => $alnio,
- -create => 1
+ -create  => 1
 );
 
 # blast against the remote NCBI db
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
  -db_name => 'nr',
- -remote => 1
+ -remote  => 1
 );
 
 @seqs = $alnio->next_aln->each_seq;
 $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
  -db_name => 'mydb',
  -db_data => @seqs,
- -create => 1
+ -create  => 1
 );
 
 # create database with masks
@@ -448,16 +448,16 @@ $fac = Bio::Tools::Run::StandAloneBlastPlus->new(
 );
 
 # get your results
-$result = $fac->blastn( -query => 'query_seqs.fas',
+$result = $fac->blastn(-query => 'query_seqs.fas',
                        -outfile => 'query.bls',
-                       -method_args => [ '-num_alignments' => 10 ] );
+                       -method_args => [ -num_alignments => 10 ] );
 
-$result = $fac->tblastx( -query => $an_alignment_object,
+$result = $fac->tblastx(-query => $an_alignment_object,
                         -outfile => 'query.bls',
                         -outformat => 7 );
 
 # do a bl2seq
-$fac->bl2seq( -method => 'blastp',
+$fac->bl2seq(-method => 'blastp',
              -query => $seq_object_1,
              -subject => $seq_object_2 );
 ```
