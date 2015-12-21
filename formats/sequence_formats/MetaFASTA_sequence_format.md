@@ -10,7 +10,7 @@ The *MetaFASTA* format "extends" the popular FASTA sequence format to store meta
 
 It can be also used as a multiple alignment format.
 
-Heikki Lehvxc3xa4slaiho's original specs for this format and the responses can be found [here](http://thread.gmane.org/gmane.comp.lang.perl.bio.general/1370/focus=1370):
+Heikki Lehväslaiho's original specs for this format and the responses can be found [here](http://thread.gmane.org/gmane.comp.lang.perl.bio.general/1370/focus=1370):
 
 Example
 -------
