@@ -27,7 +27,7 @@ Introduction
 Dependencies and Installation
 -----------------------------
 
-The module and dependencies are available in the [bioperl/bioperl-run git](https://github.com/bioperl/bioperl-run) repository. To download and install BioPerl core and packages from github see [INSTALL](INSTALL.html).
+The module and dependencies are available in the [bioperl/bioperl-run git](https://github.com/bioperl/bioperl-run) repository. To download and install BioPerl core and packages from github see [INSTALL](/INSTALL.html).
 
 Like all run wrappers, these modules need the underlying programs to work. Get `blast+ 2.2.22` at the [NCBI FTP site] (http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/). The user [manual](http://www.ncbi.nlm.nih.gov/books/NBK279690/) is very helpful.
 
