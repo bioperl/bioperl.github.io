@@ -40,7 +40,12 @@ BioPerl in General
 
 ### What is BioPerl?
 
-BioPerl is a toolkit of perl modules useful in building [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) solutions in [Perl](http://perl.org). It is built in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner so that many modules depend on each other to achieve a task. The collection of modules in the [bioperl-live](https://github.com/bioperl/bioperl-live) repository consist of the [core](https://en.wikipedia.org/wiki/Core_package) of the functionality of bioperl. Additionally auxiliary modules for creating persistent storage in [RDMBS](https://en.wikipedia.org/wiki/RDMBS) ([bioperl-db](https://github.com/bioperl/bioperl-db)) and running and parsing the results from hundreds of [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) applications ([bioperl-run](https://github.com/bioperl/bioperl-run)) are all available as [Git](https://en.wikipedia.org/wiki/Using_Git) modules in our repository.
+BioPerl is a toolkit of perl modules useful in building [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) solutions in [Perl](http://perl.org). It is built in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner so that many modules depend on each other to achieve a task. The collection of modules in the [bioperl-live](https://github.com/bioperl/bioperl-live) repository consist of the [core](https://en.wikipedia.org/wiki/Core_package) of the functionality of bioperl. Additionally auxiliary modules for creating persistent storage in [RDMBS](https://en.wikipedia.org/wiki/RDMBS) ([bioperl-db](https://github.com/bioperl/bioperl-db)) and running and parsing the results from hundreds of [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) applications ([bioperl-run](https://github.com/bioperl/bioperl-run)) are all available in our [Git](https://en.wikipedia.org/wiki/Using_Git) repository.
+
+Some early articles about BioPerl:
+
+- [History of BioPerl](/articles/History_of_BioPerl.html)
+- [How Perl Saved the Human Genome Project](/articles/How_Perl_saved_human_genome.html)
 
 ### Where do I go to get the latest release?
 
@@ -62,7 +67,7 @@ The 0.9 series was our first attempt at releasing so called developer releases. 
 
 Careful - spelling and case count! If you are not sure about case you can use the `-i` switch with perldoc. You may also find useful documentation in the form of a [HOWTOs](/howtos/index.html). There are also many scripts in the `examples/` and `scripts/` directories that may be useful - see [the BioPerl scripts page](https://github.com/bioperl/bioperl-live/tree/master/scripts) for brief descriptions.
 
-Additionally we have written many test, you can see test data and example usage of the modules in these tests - look in the test dir, called `t/`.
+Additionally we have written many tests, these are a great source of example code, look in the [test dir](https://github.com/bioperl/bioperl-live/tree/master/t), called `t/`.
 
 ### I'm interested in the bleeding edge version of the code, where can I get it?
 
