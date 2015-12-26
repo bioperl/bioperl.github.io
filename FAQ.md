@@ -511,6 +511,10 @@ Note that newer versions of io_lib no longer support ABI sequences unless the St
 
 The [BioPerl db](https://github.com/bioperl/bioperl-db) package contains interfaces and adaptors that work with a [BioSQL](https://en.wikipedia.org/wiki/BioSQL) database to serialize and de-serialize Bioperl objects. We *strongly recommend you use the [Git version](https://github.com/bioperl/bioperl-db) with the latest [biosql-schema](http://biosql.org).
 
+### What is bioperl-network?
+
+The [BioPerl network](https://github.com/bioperl/bioperl-network) package is code to read protein-protein interaction data and convert it to networks of BioPerl objects for analysis.
+
 ### What is bioperl-microarray?
 
 The [Microarray package](https://github.com/bioperl/bioperl-microarray) provides some basic tools for [microarray](https://en.wikipedia.org/wiki/microarray) functionality. It was started by [Allen Day](https://en.wikipedia.org/wiki/Allen_Day) and may need some more work before it is a mature product.
