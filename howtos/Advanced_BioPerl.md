@@ -154,14 +154,27 @@ When you want to get involved, hopefully it will be because you want to extend s
 Designing Good Tests
 --------------------
 
-Sadly, you might think that you have written good code, but you don't know that until you manage to test it! The [CPAN](http://metacpan.org/pod/CPAN) style perl modules have a wonderful test suite system (delve around into the t/ directories) and we have extended the [makefile](https://en.wikipedia.org/wiki/Makefile) system so that the test script which you write to test the module can be part of the *t/* system from the start. Once a test is in the *t/* system it will be run millions of times worldwide when BioPerl is downloaded, providing incredible and continual [regression testing](https://en.wikipedia.org/wiki/Regression_testing) of your module, for free!
+Sadly, you might think that you have written good code, but you don't know that until you manage to test it! The [CPAN](http://metacpan.org/pod/CPAN) style perl modules have a wonderful test suite system (delve around into the *t/* directories) and we have extended the [makefile](https://en.wikipedia.org/wiki/Makefile) system so that the test script which you write to test the module can be part of the *t/* system from the start. Once a test is in the *t/* system it will be run millions of times worldwide when BioPerl is downloaded, providing incredible and continual [regression testing](https://en.wikipedia.org/wiki/Regression_testing) of your module.
 
 Writing POD documentation
 -------------------------
 
-If you are writing code for BioPerl make sure to write good [POD](POD). Start by using an existing module as a template (or use [bioperl.lisp](Emacs_template) or [bioperl-mode](Emacs_bioperl-mode) if you're an Emacs user). Fill in those NAME, SYNOPSIS, DESCRIPTION, and AUTHOR sections.
+If you are writing code for BioPerl make sure to write good POD. Fill in those NAME, SYNOPSIS, DESCRIPTION, and AUTHOR sections.
 
-Most authors have also documented their methods. The typical approach is to give the method Name and describe the Usage, Function, Arguments, what it Returns, and then an Example. Note that private or internal method names are always preceded by "_".
+Most authors have also documented their methods. The typical approach is to give the method Name and describe the Usage, Function, Arguments, what it Returns, and then an Example. Note that private or internal method names are always preceded by "_". An example of POD for a public method:
+
+```
+=head2 new()
+
+ Title   : new()
+ Usage   : my $primer = Bio::SeqFeature::Primer(-seq => $seq_object);
+ Function: Instantiate a new Bio::SeqFeature::Primer object
+ Returns : A Bio::SeqFeature::Primer object
+ Args    : -seq, a sequence object or a sequence string (optional)
+           -id, the ID to give to the primer sequence, not feature (optional)
+
+=cut
+```
 
 The  Object
 ----------
@@ -350,11 +363,11 @@ Some people might justifiably argue "why do this?". The main reason is to suppor
 
 A better solution would be to implement the interface. You would read, and then provide the methods which it required, and put in your `@ISA` array. Then you could pass in your object into Bioperl routines and - *voila* - you *are* a BioPerl sequence object.
 
-A problem might arise if your object has the same methods as the methods but use them differently - your `$obj->id()` might mean provide the raw memory location of the object, whereas the documentation for `$obj->id()` says it should return the human-readable name. If so you need to look into providing an 'Adaptor' class, as suggested in the Gang-of-four <cite>GoF</cite>.
+A problem might arise if your object has the same methods as the methods but use them differently - your `$obj->id()` might mean provide the raw memory location of the object, whereas the documentation for `$obj->id()` says it should return the human-readable name. If so you need to look into providing an 'Adaptor' class, as suggested in the [Design Patterns book](https://en.wikipedia.org/wiki/Design_Patterns).
 
 Interface classes really come into their own when we start leaving Perl and enter extensions wrapped over C or over databases, or through systems like [CORBA](https://en.wikipedia.org/wiki/Corba) to other languages, like [Java](https://en.wikipedia.org/wiki/Java_programming_language)/[Python](https://en.wikipedia.org/wiki/Python_programming_language) etc. Here the "object" is often a very thin wrapper over a interface, or an XS interface, and how it stores the object is really different. By providing a very clear, implementation free interface with good documentation there is a very clear target to hit.
 
-Some people might complain that we are doing something very "un-perl-like" by providing these separate interface files. They are 90% documentation, and could be provided anywhere, in many ways they could be merged with the actual implementation classes and just made clear that if someone wants to mimic a class they should override the following methods. However, we (and in particular myself - (Ewan_Birney) - prefer a clear separation of the interface. It gives us a much clearer way of defining what is going on. It is in many ways just "design sugar" (as opposed to syntactic sugar) to help us, but it really helps, so that's good enough justification to me.
+Some people might complain that we are doing something very "un-perl-like" by providing these separate interface files. They are 90% documentation, and could be provided anywhere, in many ways they could be merged with the actual implementation classes and just made clear that if someone wants to mimic a class they should override the following methods.
 
 Implementation functions in Interface files
 -------------------------------------------
@@ -398,17 +411,15 @@ Since Object Oriented programming in Perl 5 is not as elegant as intentionally o
 Notes on Accessor Methods
 -------------------------
 
-This is mostly taken from tail end of a bioperl-l thread, message by [Chris Mungall](Chris_Mungall).
-
 Questions about accessors come up quite frequently on the list, and offline in various discussions between Bioperl developers. What follows is a summary of these discussions.
 
 The consensus is that bioperl should be consistent, and employ consistent styles throughout modules. It would be disastrous if there was a mixture of both explicit get-setters and a hodge-podge of different `AUTOLOAD` conventions.
 
-Bioperl developers seem to be religiously divided over using `AUTOLOAD` for accessors. The majority of those that contribute most to Bioperl prefer explicit accessor methods, they feel that explicit method definitions means easier-to-understand code. However, `AUTOLOAD` appears to be used fairly frequently in [bioperl-run](bioperl-run) modules.
+Bioperl developers seem to be religiously divided over using `AUTOLOAD` for accessors. The majority of those that contribute most to Bioperl prefer explicit accessor methods, they feel that explicit method definitions means easier-to-understand code. However, `AUTOLOAD` appears to be used fairly frequently in [bioperl-run](http://github.com/bioperl/bioperl-run) modules.
 
-Then there are those of us for whom the multitude of explicit getsetters (and accompanying POD docs) in Perl is the programming equivalent of fingernails scratching a blackboard, both anti-Perl and anti "every principle we hold dear in programming" such as high-level declarative <b>compact</b> code and data representations, accessor methods that type-check consistently, and eliminating repetition/redundancy. However, such delicate aesthetics are often a barrier to producing vast and enormously useful modules such as Bioperl.
+Then there are those of us for whom the multitude of explicit getsetters (and accompanying POD docs) in Perl is the programming equivalent of fingernails scratching a blackboard, both anti-Perl and anti "every principle we hold dear in programming" such as high-level declarative compact code and data representations, accessor methods that type-check consistently, and eliminating repetition/redundancy. However, such delicate aesthetics are often a barrier to producing vast and enormously useful modules such as Bioperl.
 
 References
 ----------
 
-GoF Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides. *Design patterns : elements of reusable object-oriented software.* 1994. Addison-Wesley: Reading, Mass. Also see [Design Patterns book](https://en.wikipedia.org/wiki/Design_Patterns)
+Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides. *Design patterns : elements of reusable object-oriented software.* 1994. Addison-Wesley: Reading, Mass. Also see [Design Patterns book](https://en.wikipedia.org/wiki/Design_Patterns)
