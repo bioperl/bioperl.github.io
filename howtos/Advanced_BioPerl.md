@@ -27,16 +27,16 @@ sub validate_seq {
 
 And `$MATCHPATTERN` is defined as `$MATCHPATTERN = 'A-Za-z-.*?';`.
 
-However we would like to additionally support numbers d, and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq), objects which is an extension of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
+However we would like to additionally support numbers (`\d+`), and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq), objects which is an extension of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
 
 ```perl
 sub Bio::LocatableSeq::validate_seq {
     my ($self,$seqstr) = @_;
     if( ! defined $seqstr ){ $seqstr = $self->seq(); }
     return 0 unless( defined $seqstr); 
-    if((CORE::length($seqstr) > 0) && ($seqstr !~ /^([A-Za-z-.*?d]+)$/)) {
+    if((CORE::length($seqstr) > 0) && ($seqstr !~ /^([A-Za-z-.*?\d]+)$/)) {
         $self->warn("seq doesn't validate, mismatch is " .
-                    ($seqstr =~ /([^A-Za-z-.*?d]+)/g));
+                    ($seqstr =~ /([^A-Za-z-.*?\d]+)/g));
         return 0;
     }
     return 1;
@@ -119,7 +119,7 @@ sub write_seq {
 Reusing Code and Working in Collaborative Projects
 --------------------------------------------------
 
-The biggest problem often in [reusing a code base](https://en.wikipedia.org/wiki/Reusability) like BioPerl is that it requires both the people using it and the people contributing to it to change their attitude towards code. People in bioinformatics may be self-taught programmers who put together most of their scripts or programs working alone. BioPerl is truly a collaborative project (the core code is the product of about [15 individuals](History_of_BioPerl)) and anyone will be only contributing some part of it in the future.
+The biggest problem often in [reusing a code base](https://en.wikipedia.org/wiki/Reusability) like BioPerl is that it requires both the people using it and the people contributing to it to change their attitude towards code. People in bioinformatics may be self-taught programmers who put together most of their scripts or programs working alone. BioPerl is truly a collaborative project and anyone will be only contributing some part of it in the future.
 
 Here are some notes about how a coding style can change to work in collaborative projects.
 
@@ -129,8 +129,6 @@ Learn to Read Documentation
 Reading documentation is sometimes as tough as writing the documentation. Try to read documentation before you ask a question - not only might it answer your question, but more importantly it will give you idea why the person who wrote the module wrote it - and this will be the frame work in which you can understand his or her answer.
 
 You might also want to examine the models, or class diagrams, in the models directory. These diagrams are not guaranteed to include every single class but may help you understand the overall layout of BioPerl's modules.
-
-Documentation on can also be found in the form of scripts - check the examples/root directory for a start, as well as .
 
 Respect People's Code
 -----------------------
@@ -142,7 +140,7 @@ That said, it is still important that we periodically audit code to take advanta
 Learn How to Provide Good Feedback
 ----------------------------------
 
-This ranges from giving very accurate bug reports through to pointing out design issues in a constructive manner (not *this sucks*). If you find a problem, then providing a patch using diff or a work around is a great thing to do - the author/maintainer of the module will love you for it.
+This ranges from giving very accurate bug reports through to pointing out design issues in a constructive manner (not *this sucks*). If you find a problem, then providing a patch using `diff` or a work around is a great thing to do.
 
 Providing "I used XXX and it did just what I wanted it to do" feedback is also really great. Developers generally only hear about their mistakes. To hear about successes gives everyone a warm glow.
 
@@ -156,9 +154,7 @@ When you want to get involved, hopefully it will be because you want to extend s
 Designing Good Tests
 --------------------
 
-Sadly, you might think that you have written good code, but you don't know that until you manage to test it! The [CPAN](http://metacpan.org/pod/CPAN) style perl modules have a wonderful test suite system (delve around into the t/ directories) and we have extended the [makefile](https://en.wikipedia.org/wiki/Makefile) system so that the test script which you write to test the module can be part of the t/ system from the start. Once a test is in the *t/* system it will be run millions of times worldwide when BioPerl is downloaded, providing incredible and continual [regression testing](https://en.wikipedia.org/wiki/Regression_testing) of your module, for free!
-
-A good tool for assessing how well your tests cover your code is the module.
+Sadly, you might think that you have written good code, but you don't know that until you manage to test it! The [CPAN](http://metacpan.org/pod/CPAN) style perl modules have a wonderful test suite system (delve around into the t/ directories) and we have extended the [makefile](https://en.wikipedia.org/wiki/Makefile) system so that the test script which you write to test the module can be part of the *t/* system from the start. Once a test is in the *t/* system it will be run millions of times worldwide when BioPerl is downloaded, providing incredible and continual [regression testing](https://en.wikipedia.org/wiki/Regression_testing) of your module, for free!
 
 Writing POD documentation
 -------------------------
@@ -188,7 +184,7 @@ You can go to [Bio::Root::Root](http://metacpan.org/pod/Bio::Root::Root) for mor
 
 ### Using the Root object
 
-To use the root object, the object has to inherit from it. This means the `@ISA` array should have [Bio::Root::Root](http://metacpan.org/pod/Bio::Root::Root) in it and that the module has a use `Bio::Root::Root` (if you are an [Emacs](https://en.wikipedia.org/wiki/Emacs) user, consider using the boilerplate methods in the [bioperl.lisp](Emacs_template) to lay out your module initially for you). The root object provides a top level `new` function. You should inherit from this new method by calling the `new()` method of the superclass which is accessible by using `SUPER`. This is called chaining the constructors and allows a child class to utilize the initialization procedure of the superclass in addition to executing its own. This is a very powerful technique and allows BioPerl to behave in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner.
+To use the root object, the object has to inherit from it. This means the `@ISA` array should have [Bio::Root::Root](http://metacpan.org/pod/Bio::Root::Root) in it and that the module has a use `Bio::Root::Root`. The root object provides a top level `new` function. You should inherit from this new method by calling the `new()` method of the superclass which is accessible by using `SUPER`. This is called chaining the constructors and allows a child class to utilize the initialization procedure of the superclass in addition to executing its own. This is a very powerful technique and allows BioPerl to behave in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner.
 
 The full code is given below for a basic skeleton object that uses BioPerl:
 
@@ -258,7 +254,7 @@ while (my $seq = $seqin->next_seq) {
     ...
 }
 # though should it be next_Seq()? oh well... 
-my @features = $obj-&gt;get_SeqFeatures;
+my @features = $obj->get_SeqFeatures;
 ```
 
 ### Notes

@@ -9,7 +9,7 @@ A short version of the field specifications:
 
 *Column 1: "seqid"*
 
-The ID of the landmark used to establish the coordinate system for the current feature. IDs may contain any characters, but must escape any characters not in the set \[a-zA-Z0-9.:^\*$@!+_?-|\]. In particular, IDs may not contain unescaped whitespace and must not begin with an unescaped "&gt;".
+The ID of the landmark used to establish the coordinate system for the current feature. IDs may contain any characters, but must escape any characters not in the set \[a-zA-Z0-9.:^\*$@!+_?-|\]. In particular, IDs may not contain unescaped whitespace and must not begin with an unescaped ">".
 
 *Column 2: "source"*
 

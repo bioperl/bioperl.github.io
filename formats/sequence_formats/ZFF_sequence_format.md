@@ -6,7 +6,7 @@ layout: default
 Description
 -----------
 
-Ian Korf's **Z**oe **F**ile **F**ormat. It looks a lot like GFF but has a `&gt;` header which defines the name of the sequence and lacks the `seq_id` column accordingly.
+Ian Korf's **Z**oe **F**ile **F**ormat. It looks a lot like GFF but has a `>` header which defines the name of the sequence and lacks the `seq_id` column accordingly.
 
 *The following is from the SNAP documenation about ZFF:*
 
@@ -16,7 +16,7 @@ There are two styles of ZFF, the short format and the long format. In both cases
 
 ### Short format
 
-In the short format, there are 4 fields: Label, Begin, End, Group. The 4th field is optional. Label is a controlled vocabulary (see zoeFeature.h for a complete list). All exons of a gene (or more appropriately a transcriptional unit) must share the same unique group name. The strand of the feature is implied in the coordinates, so if Begin &gt; End, the feature is on the minus strand. Here's and example of the short format with two sequences, each containing a single gene on the plus strand:
+In the short format, there are 4 fields: Label, Begin, End, Group. The 4th field is optional. Label is a controlled vocabulary (see zoeFeature.h for a complete list). All exons of a gene (or more appropriately a transcriptional unit) must share the same unique group name. The strand of the feature is implied in the coordinates, so if Begin > End, the feature is on the minus strand. Here's and example of the short format with two sequences, each containing a single gene on the plus strand:
 
 ```
        >sequence-1
