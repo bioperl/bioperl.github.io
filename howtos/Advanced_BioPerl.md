@@ -27,7 +27,7 @@ sub validate_seq {
 
 And `$MATCHPATTERN` is defined as `$MATCHPATTERN = 'A-Za-z-.*?';`.
 
-However we would like to additionally support numbers (`\d+`), and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq), objects which is an extension of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
+However we would like to additionally support numbers (`\d+`), and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq) objects, which are extensions of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
 
 ```perl
 sub Bio::LocatableSeq::validate_seq {
@@ -317,13 +317,13 @@ if( $@ ) {
 # else - use $obj2
 ```
 
-Notice that the `eval` block can have multiple statements in it, and also that if you want to use variables outside of the eval block, they must be declared with my outside of the `eval` block (you are planning to `use strict` in your scripts, aren't you!).
+Notice that the `eval` block can have multiple statements in it, and also that if you want to use variables outside of the eval block, they must be declared with my outside of the `eval` block (and you are planning to `use strict` in your scripts, aren't you?).
 
 This context is particularly useful when objects are produced from a database. This is because some exceptions are really due to problems with the data in an object rather than the code. These sort of exceptions are better tracked down when you know where the object came from, not where in the code the exception is thrown.
 
 One of the drawbacks to this scheme is that the attribute name is "special" from BioPerl's perspective. We believe it is best to stay away from using `$obj->name()` to mean anything from the object's perspective (for example `id()`), leaving it free to be used as a context for debugging purposes. You might prefer to overload the name attribute to be "useful" for the object.
 
-See *scripts/root_object/error.pl* from [Bioperl scripts](Bioperl_scripts) for demonstration code.
+See *scripts/root_object/error.pl* for demonstration code.
 
 Bioperl Interface design
 ------------------------
