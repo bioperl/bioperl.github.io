@@ -617,7 +617,7 @@ earlier to dissect a Locuslink entry in a file, *148.ll*. Here's the file:
  OMIM: 104221
  MAP: 8p21-p11.2|RefSeq|C|
  MAPLINK: default_human_gene|ADRA1A
- GO: cellular component|integral to plasma membrane|P|`[`GO:0005887|Proteome|8396931`](GO:0005887%7CProteome%7C8396931)
+ GO: cellular component|integral to plasma membrane|P|[GO:0005887|Proteome|8396931](GO:0005887%7CProteome%7C8396931)
 ```
 
 First collect all the annotations:
@@ -638,8 +638,8 @@ my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) }
 
 The contents of the `%tagname_type` hash can be represented in table form, below.
 
-| `as_text`                                                             | `tagname`            | `ref`                         |
-|-----------------------------------------------------------------------|----------------------|-------------------------------|
+| `as_text`     | `tagname`            | `ref`                         |
+|-------------------|----------------------|--------------------|
 | Direct database link to AAA93114 in database GenBank                  | dblink               | Bio::Annotation::DBLink       |
 | Value: http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=Hs&CID=52931 | URL                  | Bio::Annotation::SimpleValue  |
 | Value: 8                                                              | CHR                  | Bio::Annotation::SimpleValue  |
@@ -684,9 +684,9 @@ what about creating these objects when you already have the data? The [Bio::SeqF
 use Bio::SeqFeature::Generic;
 
 # create the feature with some data, evidence and a note
-my $feat = new Bio::SeqFeature::Generic(-start => 10,
-                                        -end         => 22,
-                                        -strand      => 1,
+my $feat = new Bio::SeqFeature::Generic(-start  => 10,
+                                        -end    => 22,
+                                        -strand => 1,
                                         -primary_tag => 'TATA_signal',
                                         -tag => {evidence => 'predicted',
                                                  note     => 'TATA box' } );
@@ -763,7 +763,7 @@ Now let's examine what we've created by writing the contents of `$seq_obj` to a 
 ```perl
 use Bio::SeqIO;
 my $io = Bio::SeqIO->new(-format => "genbank",
-                            -file => ">test.gb" );
+                         -file => ">test.gb" );
                             
 $io->write_seq($seq_obj);
 ```
