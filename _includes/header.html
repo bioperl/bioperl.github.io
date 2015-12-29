@@ -18,7 +18,21 @@
             <!-- <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a> -->
             <font color="blue">{{ page.title }}</font>
           {% endif %}
+
+          <!-- HTML for SEARCH BAR -->
+          <form id="tfnewsearch" onsubmit="my_search_google()">
+            <input type="text" id="gsearch" class="tftextinput2" name="q" size="16" maxlength="120" value="Search our website"><input type="submit" value=">" class="tfbutton2">
+          </form>
+          <div class="tfclear"></div>
       </div>
+
+
+      <!-- my custom google search
+      <form onsubmit="my_search_google()">
+        Search site <input type="text" id="my-google-search">
+      </form>
+      -->
+
     </nav>
 
   </div>
