@@ -217,8 +217,8 @@ $samt = Bio::Tools::Run::Samtools->new(
   -bam_output => 1
   );
 $samt->run( -bam => 'assy_prd.bam', 
-            -rgn => [ "my_seqid:$start1\-$end1",
-                      "my_seqid:$start2\-$end2" ],
+            -rgn => [ "my_seqid:$start1-$end1",
+                      "my_seqid:$start2-$end2" ],
             -out => 'assy_rgns.bam'
             );
  

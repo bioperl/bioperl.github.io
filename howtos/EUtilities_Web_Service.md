@@ -188,7 +188,7 @@ Currently, there are FetchAdaptor subclasses for sequence data (both Genbank and
 
 ```perl
 $seqio = $fac->efetch( -db =>'nucleotide',
-                       -id => \@ids,
+                       -id => $ids,
                        -rettype => 'gb' )->run( -auto_adapt => 1 );
 while (my $seq = $seqio->next_seq) {
    my $taxio = $fac->efetch( 
@@ -213,7 +213,7 @@ use Bio::DB::SoapEUtilities;
 my @ids = qw(1621261 89318838 68536103 20807972 730439);
 my $fac = Bio::DB::SoapEUtilities->new();
 my $result = $fac->efetch( -db => 'protein', 
-			   -id => \@ids )->run( -no_parse => 1 );
+			   -id => $ids )->run( -no_parse => 1 );
 die "no result returned : ".$fac->errstr unless $result;
 my $seqio = Bio::DB::SoapEUtilities::FetchAdaptor->new(-result => $result);
 # clear all..
@@ -236,7 +236,7 @@ The `LinkAdaptor` manages LinkSets. In `SoapEU`, an `elink` call *always* preser
 ```perl
 my $links = $fac->elink( -db => 'protein', 
                          -dbfrom => 'nucleotide',
-                         -id => \@nucids )->run( -auto_adapt => 1 );
+                         -id => $nucids )->run( -auto_adapt => 1 );
  
 # maybe more than one associated id...
 my @prot_0 = $links->id_map( $nucids[0] );
@@ -400,7 +400,7 @@ my $fac = Bio::DB::SoapEUtilities->new()
 my $links = $fac->elink( 
               -dbfrom => 'protein',
               -db => 'taxonomy',
-              -id => \@protein_ids )->run(-auto_adapt => 1);
+              -id => $protein_ids )->run(-auto_adapt => 1);
  
 # get a Bio::DB::SoapEUtilities::Result object
 my $result = $fac->esearch(
@@ -410,12 +410,12 @@ my $result = $fac->esearch(
 # get the raw XML message
 my $xml = $fac->efetch(
             -db => 'gene',
-            -id => \@gids )->run( -raw_xml => 1 );
+            -id => $gids )->run( -raw_xml => 1 );
  
 # change parameters 
 my $new_result = $fac->efetch(
                   -db => 'gene',
-                  -id => \@more_gids)->run;
+                  -id => $more_gids)->run;
 # reset parameters
 $fac->efetch->reset_parameters( -db => 'nucleotide',
                                 -id => $nucid );

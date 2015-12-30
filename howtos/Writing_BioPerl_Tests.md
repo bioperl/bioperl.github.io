@@ -237,8 +237,10 @@ More complex tests
 If full arrays or hashes need to be compared, one could use `is_deeply()`:
 
 ```perl
-is_deeply(\@arr1, \@arr2);
-is_deeply(\%h1, \%h2);
+# array references
+is_deeply($arr1, $arr2);
+# hash references
+is_deeply($h1, $h2);
 ```
 
 `is_deeply()` is also capable of comparing more complex data structures. Note that this hasn't been currently tested extensively in BioPerl.
@@ -246,8 +248,8 @@ is_deeply(\%h1, \%h2);
 Alternatively, one could also use [Test::Deep](https://metacpan.org/pod/Test::Deep) which provides us with a greater level of output an a more detailed insight into where the data structures differ. The syntax is very similar to the native `is_deeply`
 
 ```perl
-cmp_deeply(\@arr1, \@arr2);
-cmp_deeply(\%h1, \%h2);
+cmp_deeply($arr1, $arr2);
+cmp_deeply($h1, $h2);
 ```
 
 Skipping tests

@@ -95,7 +95,7 @@ Typically it is expected that all individuals will have a genotype associated fo
 
 ```perl
 use Bio::PopGen::Genotype;
-$Bio::PopGen::Genotype::BlankAlleles = '[\s\-N\?\.]';
+$Bio::PopGen::Genotype::BlankAlleles = '[ -N?.]';
 ```
 
 [Bio::PopGen::Marker](https://metacpan.org/pod/Bio::PopGen::Marker) is a simple object to represent polymorphism regions of the genome.
@@ -115,7 +115,7 @@ SAMPLE,D17S1111,D7S123
 1002,105 123,104 111
 ```
 
-To read in this CSV we use the [Bio::PopGen::IO](https://metacpan.org/pod/Bio::PopGen::IO) object and specify the `csv` format. We can call `next_individual` repeated times to get back a list of the individuals (one is returned after each time the iterator is called). Additionally the `next_population` is a convience method which will read in all the individuals at once and create a new [Bio::PopGen::Population](https://metacpan.org/pod/Bio::PopGen::Population) object containing all of thse individuals. The CSV format assumes that ',' is the delimiter between columns while '\s+' is the delimiter between alleles. One can override these settings by providing the `-field_delimiter` and `-allele_delimited` argument to [Bio::PopGen::IO](https://metacpan.org/pod/Bio::PopGen::IO) when instantiating. Additionally a flag called `-no_header` can be supplied which specifies there is no header line in the report and that the object should assign arbitrary marker names in the form 'Marker1', 'Marker2' ... etc.
+To read in this CSV we use the [Bio::PopGen::IO](https://metacpan.org/pod/Bio::PopGen::IO) object and specify the `csv` format. We can call `next_individual` repeated times to get back a list of the individuals (one is returned after each time the iterator is called). Additionally the `next_population` is a convience method which will read in all the individuals at once and create a new [Bio::PopGen::Population](https://metacpan.org/pod/Bio::PopGen::Population) object containing all of thse individuals. The CSV format assumes that ',' is the delimiter between columns while ' ' is the delimiter between alleles. One can override these settings by providing the `-field_delimiter` and `-allele_delimited` argument to [Bio::PopGen::IO](https://metacpan.org/pod/Bio::PopGen::IO) when instantiating. Additionally a flag called `-no_header` can be supplied which specifies there is no header line in the report and that the object should assign arbitrary marker names in the form 'Marker1', 'Marker2' ... etc.
 
 ### Pretty Base format
 
@@ -167,7 +167,7 @@ use Bio::PopGen::IO;
 use Bio::PopGen::Statistics;
 my $stats = Bio::PopGen::Statistics->new();
 my $io = Bio::PopGen::IO->new(-format => 'prettybase',
-                              -fh     => \*DATA);
+                              -fh     => *DATA);
 if( my $pop = $io->next_population ) {
     my $pi = $stats->pi($pop);
     print "pi is $pi\n";
@@ -179,7 +179,7 @@ if( my $pop = $io->next_population ) {
             push @inds, $ind;
         }
     }
-    print "pi for inds 1,2,3 is ", $stats->pi(\@inds),"\n";
+    print "pi for inds 1,2,3 is ", $stats->pi($inds),"\n";
 }
 # pretty base data has 3 columns
 # Site
@@ -263,7 +263,7 @@ use Bio::PopGen::PopStats;
 #  @populations - the sets of Bio::PopGen::Population objects
 #  @markernames - set of Marker names to use in this analysis
 #
-my $fst = $stats->Fst(\@populations, \@markernames);
+my $fst = $stats->Fst($populations, $markernames);
 ```
 
 Coalescent Simulations

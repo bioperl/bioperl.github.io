@@ -127,7 +127,7 @@ my @ids       = $factory->get_ids;
 
 my $summaries = Bio::DB::EUtilities->new(-eutil => 'esummary',
                                          -db    => 'gene',
-                                         -id    => \@ids);
+                                         -id    => $ids);
 
 while (my $docsum = $summaries->next_DocSum) {
   # some items in DocSum are also named ChrStart so we pick the genomic
@@ -187,7 +187,7 @@ for my $ann ($ac->get_Annotations('dblink')) {
   if ($ann->database eq "Evidence Viewer") {
     # get the sequence identifier, the start, and the stop
     my ($contig,$from,$to) = $ann->url =~ 
-      /contig=([^&]+).+from=(\d+)&to=(\d+)/;
+      /contig=([^&]+).+from=([0-9]+)&to=([0-9]+)/;
     print "$contig\t$from\t$to\n";
   }
 }

@@ -106,7 +106,7 @@ For example try these two difference example scripts that read in a tree data an
 use Bio::TreeIO;
  
 my $treeio = Bio::TreeIO->new(-format => 'newick',
-			      -fh => \*DATA);
+			      -file => $file);
 while( my $tree = $treeio->next_tree ) {
   for my $node ( $tree->get_nodes ) {
   printf "id: %s bootstrap: %s\n", 
@@ -115,7 +115,9 @@ while( my $tree = $treeio->next_tree ) {
          "\n";
   }
 }
-__DATA__
+```
+File content:
+```
 (((A:5,B:5)90:2,C:4)25:3,D:10);
 ```
 
@@ -125,7 +127,7 @@ In the second example we have told the TreeIO parser to automatically move the b
 use Bio::TreeIO;
  
 my $treeio = Bio::TreeIO->new(-format => 'newick',
-			      -fh => \*DATA,
+			      -file => $file,
 			      -internal_node_id => 'bootstrap');
  
 while ( $tree = $treeio->next_tree ) {
@@ -136,7 +138,10 @@ while ( $tree = $treeio->next_tree ) {
             "\n";
     }
 }
-__DATA__
+```
+
+File content:
+```
 (((A:5,B:5)90:2,C:4)25:3,D:10);
 ```
 
@@ -146,7 +151,7 @@ One can also explictly invoke this by calling just calling the `move_id_to_boots
 use Bio::TreeIO;
  
 my $treeio = Bio::TreeIO->new(-format => 'newick',
-			                        -fh => \*DATA);
+			                        -file => $file);
 while ( $tree = $treeio->next_tree ) {
   $tree->move_id_to_bootstrap;
     for my $node ( $tree->get_nodes ) {
@@ -156,7 +161,9 @@ while ( $tree = $treeio->next_tree ) {
               "\n";
     }
 }
-__DATA__
+```
+File content:
+```
 (((A:5,B:5)90:2,C:4)25:3,D:10);
 ```
 
@@ -259,7 +266,8 @@ my $distances = $tree->distance(-nodes => [$node1, $node2]);
 Perform a test of [monophyly](http://en.wikipedia.org/wiki/monophyly) for a set of nodes and a given outgroup node. This means the common ancestor for the members of the internal_nodes group is more recent than the common ancestor that any of them share with the outgroup node. Please notice that a test of [monophyly](http://en.wikipedia.org/wiki/monophyly) is applicable for rooted trees only.
 
 ```perl
-if( $tree->is_monophyletic(-nodes    => \@internal_nodes,
+# $internal_nodes is an array reference
+if( $tree->is_monophyletic(-nodes    => $internal_nodes,
                            -outgroup => $outgroup) ) {
 print "these nodes are monophyletic: ",
        join(",",map { $_->id } @internal_nodes ), "\n";
@@ -269,7 +277,8 @@ print "these nodes are monophyletic: ",
 Perform a test of [paraphyly](http://en.wikipedia.org/wiki/paraphyly) for a set of nodes and a given outgroup node. This means that a common ancestor 'A' for the members of the ingroup is more recent than a common ancestor 'B' that they share with the outgroup node and that there are no other nodes in the tree which have 'A' as a common ancestor before 'B'. Please notice that a test of [paraphyly](http://en.wikipedia.org/wiki/paraphyly) is applicable for rooted trees only.
 
 ```perl
-if( $tree->is_paraphyletic(-nodes    => \@internal_nodes,
+# $internal_nodes is an array reference
+if( $tree->is_paraphyletic(-nodes    => $internal_nodes,
                            -outgroup => $outgroup) > 0 ) {
   print "these nodes are monophyletic: ",
         join(",",map { $_->id } @internal_nodes ), "\n";
@@ -307,7 +316,7 @@ Operations on Nodes
 use Bio::TreeIO;
  
 my $treeio = Bio::TreeIO->new(-format => 'newick',
-                              -fh => \*DATA);
+                              -file => $file);
 if ( my $tree = $treeio->next_tree ) {
   my $node = $tree->find_node(-id => 'x');
   print $node->id, " each_Descendent\n";
@@ -319,7 +328,9 @@ if ( my $tree = $treeio->next_tree ) {
     print $child->id, "\n";
   }
 }
-__DATA__
+```
+File content:
+```
 (((A:5,B:5)z:2,(C:4,D:4)y:1)x:3,D:10);
 ```
 
@@ -360,7 +371,7 @@ my $dir = shift || '.';
  
 opendir(DIR, $dir) || die $!;
 for my $file ( readdir(DIR) ) {
-    next unless $file =~ /(\S+)\.tre$/;
+    next unless $file =~ /([a-z]+)/i;
     my $stem = $1;
     my $treeio = Bio::TreeIO->new(-format => 'newick',
                                   -file   => "$dir/$file");
@@ -458,8 +469,8 @@ use Bio::Tree::RandomFactory;
 # initialize a TreeIO writer to output the trees as we create them
 my $out = Bio::TreeIO->new(-format => 'newick',
                            -file   => ">randomtrees.tre");
-my @listoftaxa = qw(A B C D E F G H);
-my $factory = new Bio::Tree::RandomFactory(-taxa => \@listoftaxa);
+my $listoftaxa = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' ];
+my $factory = new Bio::Tree::RandomFactory(-taxa => $listoftaxa);
  
 # generate 10 random trees
 for( my $i = 0; $i < 10; $i++ ) {

@@ -27,16 +27,16 @@ sub validate_seq {
 
 And `$MATCHPATTERN` is defined as `$MATCHPATTERN = 'A-Za-z-.*?';`.
 
-However we would like to additionally support numbers (`\d+`), and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq) objects, which are extensions of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
+However we would like to additionally support numbers, and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq) objects, which are extensions of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
 
 ```perl
 sub Bio::LocatableSeq::validate_seq {
     my ($self,$seqstr) = @_;
     if( ! defined $seqstr ){ $seqstr = $self->seq(); }
     return 0 unless( defined $seqstr); 
-    if((CORE::length($seqstr) > 0) && ($seqstr !~ /^([A-Za-z-.*?\d]+)$/)) {
+    if((CORE::length($seqstr) > 0) && ($seqstr !~ /^([A-Za-z-.*?0-9]+)$/)) {
         $self->warn("seq doesn't validate, mismatch is " .
-                    ($seqstr =~ /([^A-Za-z-.*?\d]+)/g));
+                    ($seqstr =~ /([^A-Za-z-.*?0-9]+)/g));
         return 0;
     }
     return 1;

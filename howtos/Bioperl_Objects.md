@@ -148,7 +148,7 @@ See [Bio::Seq::SeqWithQuality](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3ASeqWith
 Another format for transmitting machine-readable sequence-feature data is the Genome Feature Format (GFF). This file type is well suited to sequence annotation because it allows the ability to describe entries in terms of parent-child relationships (see <http://www.sanger.ac.uk/software/GFF> for details). Bioperl includes a parser for converting between GFF files and SeqFeature objects. Typical syntax looks like:
 
 ``` perl
-$gffio = Bio::Tools::GFF->new(-fh => \*STDIN, -gff_version => 2);
+$gffio = Bio::Tools::GFF->new(-file => $file, -gff_version => 2);
   # loop over the input stream
 while ($feature = $gffio->next_feature()) {
   # do something with feature
@@ -156,7 +156,7 @@ while ($feature = $gffio->next_feature()) {
 $gffio->close();
 ```
 
-Further information can be found at [Bio::Tools::GFF](http://metacpan.org/pod/Bio%3A%3ATools%3A%3AGFF). Also see examples/tools/gff2ps.pl, examples/tools/gb\_to\_gff.pl, and the scripts in scripts/Bio-DB-GFF. Note: this module shouldn't be confused with the module [Bio::DB::GFF](http://metacpan.org/pod/Bio%3A%3ADB%3A%3AGFF) which is for implementing relational databases when using bioperl-db.
+Further information can be found at [Bio::Tools::GFF](http://metacpan.org/pod/Bio%3A%3ATools%3A%3AGFF). Also see *examples/tools/gff2ps.pl*, *examples/tools/gb_to_gff.pl*, and the scripts in *scripts/Bio-DB-GFF*. Note: this module shouldn't be confused with the module [Bio::DB::GFF](http://metacpan.org/pod/Bio%3A%3ADB%3A%3AGFF) which is for implementing relational databases when using bioperl-db.
 
 ### [Bio::Structure](http://search.cpan.org/search?query=Bio::Structure) and [Bio::Structure::IO](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AIO)
 

@@ -142,7 +142,7 @@ What if you wanted to use some other part of the entry as a key, like the GI num
 use strict;
 use Bio::DB::Flat::BinarySearch;
 
-my $primary_pattern = \^>(S+)\;
+my $primary_pattern = '^>(S+)';
 # One or more patterns stored in a hash:
 my $secondary_patterns = { GI => 'gi|(d+)' };
 

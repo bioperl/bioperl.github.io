@@ -234,7 +234,7 @@ Note: [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) actually allows you to ma
 
 Notice that the universal formatter only required a few more lines of code than the accession number lister and mean sequence length analyzer (mostly to get more command-line args). This is the beauty of using the BioPerl system. It doesn't take a lot of code to do some really complex things.
 
-Now, let's play around with the previous code, changing aspects of it to exploit the functionality of the SeqIO system. Let's take a stream from `STDIN`, so that we can use other programs to stream data of a particular format into the program, and write out a file of a particular format. Here we have to make use of two new things: one Perl-specific, and one SeqIO-specific. Perl allows you to `GLOB` a filehandle by placing a `\*` in front of the handle name, making it available for use as a variable, or as in this case, as an argument to a function. In concert, [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) allows you to pass a GLOB'ed filehandle to it using the `-fh` parameter in place of the `-file` parameter. Here is a program that takes a stream of sequences in a given format from `STDIN`, meaning it could be used like this:
+Now, let's play around with the previous code, changing aspects of it to exploit the functionality of the SeqIO system. Let's take a stream from `STDIN`, so that we can use other programs to stream data of a particular format into the program, and write out a file of a particular format. Here we have to make use of two new things: one Perl-specific, and one SeqIO-specific. Perl allows you to `GLOB` a filehandle, making it available for use as a variable, or as in this case, as an argument to a function. In concert, [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) allows you to pass a GLOB'ed filehandle to it using the `-fh` parameter in place of the `-file` parameter. Here is a program that takes a stream of sequences in a given format from `STDIN`, meaning it could be used like this:
 
     >cat myseqs.fa | all2y.pl fasta newseqs.gb genbank
 
@@ -309,7 +309,7 @@ use Bio::SeqIO;
 
 # get a string into $string somehow, with its format in $format, 
 # say from a web form.
-my $string = ">SEQ1 acgt\n>revseq1 tgca "; 
+my $string = ">SEQ1\nacgt\n>revseq1\ntgca "; 
 my $format = "fasta";
 
 my $stringfh = IO::String->new($string); 

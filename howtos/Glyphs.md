@@ -871,7 +871,7 @@ sub cell_data {
  my $feature = $self->feature;
  return unless $feature->has_tag('cell_data');
  my ($cell_data) = $feature->get_tag_values('cell_data');
- return split /\s+/,$cell_data;
+ return split / /,$cell_data;
 }
 
 sub width_needed {

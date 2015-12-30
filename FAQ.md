@@ -223,7 +223,7 @@ use Bio::SeqIO;
 
 my $seqin = Bio::SeqIO->new(-file => $file, -format => 'genbank');
 
-my $seqout = Bio::SeqIO->new(-fh => \*STDOUT, -format => 'fasta');
+my $seqout = Bio::SeqIO->new(-fh => $out, -format => 'fasta');
 
 # From Bio::SeqIO::fasta
 $seqout->preferred_id_type('display');
@@ -287,7 +287,7 @@ $hsp->query->strand; $hsp->query->frame;
 So the value according to a blast report of -3 can be constructed as:
 
 ```perl
-my $blastframe = ($hsp->query->frame + 1) \* $hsp->query->strand;
+my $blastframe = ($hsp->query->frame + 1) * $hsp->query->strand;
 ```
 
 ### Can I get domain number from hmmpfam or hmmsearch output?

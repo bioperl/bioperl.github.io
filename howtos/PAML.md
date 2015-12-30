@@ -77,53 +77,12 @@ BioPerl also has facilities for running [PAML](http://abacus.gene.ucl.ac.uk/soft
 This code below is an excerpt from `scripts/utilities/pairwise_kaks.PLS` which will calculate all pairwise Ka,Ks values for a set of [cDNA](http://en.wikipedia.org/wiki/cDNA) sequences stored in a file. It will first translate the cDNA into protein and align the protein sequences. This is a simple way to insure gaps only occur at codon boundaries and amino acid substitution rates are applied when calculating the MSA. The protein alignment is then projected back into [cDNA](http://en.wikipedia.org/wiki/cDNA) coordinates using a method called `aa_to_dna_aln()`. Finally the [cDNA](http://en.wikipedia.org/wiki/cDNA) alignment is provided to a [PAML](http://abacus.gene.ucl.ac.uk/software/paml.html) executing module which sets up the running parameters and converts the alignment to the appropriate format.
 
 ```perl
-#!/usr/bin/perl -w
-use strict;
-use Bio::Tools::Run::Phylo::PAML::Codeml;
-use Bio::Tools::Run::Alignment::Clustalw;
-
-# for projecting alignments from protein to R/DNA space
-use Bio::Align::Utilities qw(aa_to_dna_aln);
-
-# for input of the sequence data
-use Bio::SeqIO;
-use Bio::AlignIO;
-my $aln_factory = Bio::Tools::Run::Alignment::Clustalw->new;
-my $seqdata = shift || 'cds.fa';
-
-my $seqio = new Bio::SeqIO(-file => $seqdata,
-                          -format => 'fasta');
-my %seqs;
-my @prots;
-# process each sequence
-while ( my $seq = $seqio->next_seq ) {
-   $seqs{$seq->display_id} = $seq;
-   # translate them into protein
-   my $protein = $seq->translate();
-   my $pseq = $protein->seq();
-   if( $pseq =~ /\*/ &&
-       $pseq !~ /\*$/ ) {
-         warn("provided a CDS sequence with a stop codon, PAML will choke!");
-         exit(0);
-   }
-   # Tcoffee can't handle '*' even if it is trailing
-   $pseq =~ s/\*//g;
-   $protein->seq($pseq);
-   push @prots, $protein;
-}
-
-if( @prots < 2 ) {
-    warn("Need at least 2 CDS sequences to proceed");
-    exit(0);
-}
-
-open(OUT, ">align_output.txt") || 
-  die("cannot open output align_output for writing");
+# $seqs and $prots are references to arrays of sequences 
 
 # Align the sequences with clustalw
-my $aa_aln = $aln_factory->align(\@prots);
+my $aa_aln = $aln_factory->align($prots);
 # project the protein alignment back to CDS coordinates
-my $dna_aln = aa_to_dna_aln($aa_aln, \%seqs);
+my $dna_aln = aa_to_dna_aln($aa_aln, $seqs);
 
 my @each = $dna_aln->each_seq();
 
@@ -181,8 +140,10 @@ use strict;
 use Bio::TreeIO;
 use IO::String;
 
+# File input is ((((3,4),1),2),5);
+
 my $in = Bio::TreeIO->new(-format => 'newick',
-                          -fh => \*DATA);
+                          -file => $file);
 my $iostr = IO::String->new;
 my $out = Bio::TreeIO->new(-format => 'newick',
                            -fh => $iostr,
@@ -200,12 +161,9 @@ while( my $t = $in->next_tree ) {
 
    $out->write_tree($t);
    my $treestr = ${$iostr->string_ref};
-   $treestr =~ s/\"//g;   #" for formatting only
-   print $treestr,"\n";
+   $treestr =~ s/"//g;   # for formatting only
+   print $treestr, "\n";
 }
-
-__DATA__
-((((3,4),1),2),5);
 ```
 
 Parsing branch-specific rates and NSSites results

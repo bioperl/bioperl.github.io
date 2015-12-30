@@ -41,7 +41,7 @@ Once you have a Tree object you can do a number of things with it. You can use t
 ```perl
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-                              -fh => \*DATA);
+                              -file => $file);
 
 while( my $tree = $treeio->next_tree ) {
   for my $node ( $tree->get_nodes ) {
@@ -51,8 +51,10 @@ while( my $tree = $treeio->next_tree ) {
             "\n";
   }
 }
+```
 
-__DATA__
+File contents:
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <phyloxml>
  <phylogeny rooted="true">
@@ -103,7 +105,7 @@ Users can use the `annotation()` method of AnnotatableNode to get the Annotation
 ```perl
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-                              -fh => \*DATA);
+                              -file => $file);
 my $tree = $treeio->next_tree;
 my ($A) = $tree->find_node('A');
 my ($ac) = $A->annotation();
@@ -111,8 +113,10 @@ my (@annotations) = $ac->get_Annotations('property');
 my (@keys) = $annotations[0]->get_all_annotation_keys();
 my (@value) = $annotations[0]->get_Annotations('_text');
 print "Annotation NOAA:depth ",$value[0]->value, "\n";
+```
 
-__DATA__
+File contents:
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <phyloxml>
   <phylogeny rooted="true">
@@ -143,7 +147,7 @@ Or users can use the read_annotation method provided in [Bio::TreeIO::phyloxml](
 ```perl
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-   -fh => \*DATA);
+   -file => $file);
 my $tree = $treeio->next_tree;
 my $node = $tree->get_root_node;
 my @leaves;
@@ -165,8 +169,10 @@ my ($long) = $treeio->read_annotation(-obj => $D,
 my ($alt) = $treeio->read_annotation(-obj => $D, 
         -path => 'distribution/point/alt');
 print ("node distribution lat: $lat long: $long alt: $alt\n");
+```
 
-__DATA__
+File contents:
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <phyloxml> <phylogeny rooted="true">
      <name>A tree with phylogeographic information</name>
@@ -197,7 +203,7 @@ __DATA__
            <clade>
               <name>C</name>
               <distribution>
-                 <desc>ETH Z\xc3\xbcrich</desc>
+                 <desc>ETH bcrich</desc>
                  <point geodetic_datum="WGS84">
                     <lat>47.376334</lat>
                     <long>8.548108</long>
@@ -230,7 +236,7 @@ __DATA__
 
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-                              -fh => \*DATA);
+                              -file => $file);
 my $tree = $treeio->next_tree;
 my @nodes = $tree->get_nodes;
 foreach my $n (@nodes) {
@@ -265,7 +271,7 @@ phyloXML annotations can be added to nodes, trees, or sequences. Users can use t
 
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-                              -fh => \*DATA);
+                              -file => $file);
 my $tree = $treeio->next_tree;
 my ($A) = $tree->find_node('A');
 $treeio->add_phyloXML_annotation(
@@ -290,7 +296,7 @@ We can also simply add attributes to an existing object or an annotation using t
 ```perl
 use Bio::TreeIO;
 my $treeio = Bio::TreeIO->new(-format => 'phyloxml',
-                              -fh => \*DATA);
+                              -file => $file);
 my $tree = $treeio->next_tree;
 my ($z) = $tree->find_node('Z');
 my $z_seq = $z->sequence->[0];

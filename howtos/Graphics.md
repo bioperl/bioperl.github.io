@@ -88,7 +88,7 @@ BUM             400     300     620
 PRES1           127     310     700
 ```
 
-*Hint* when copy-pasting this into your own text, make sure that there are tab stops between the different columns. You can use your favorite text editor to replace the spaces to tabs (in vim, type `:%s/[ ]\+/\t/g`) or use the unix command `tr` to translate to tabs: `cat data1.xt | tr -s ' ' | tr ' ' '\t'`. The first `tr` will sequeeze many spaces into one space and the second `tr` will then translate a space into a tab stop.)
+*Hint* when copy-pasting this into your own text, make sure that there are tab stops between the different columns. You can use your favorite text editor to replace the spaces to tabs.
 
 Our first attempt to parse and render this file looks like this:
 
@@ -593,6 +593,10 @@ $panel->add_track($wholeseq,
                  -label   => 1,
                 );
 
+$gene_label = gene_label();
+$gene_label = gene_label();
+$generic_description = generic_description();
+
 # special cases
 if ($sorted_features{CDS}) {
     $panel->add_track($sorted_features{CDS},
@@ -603,8 +607,8 @@ if ($sorted_features{CDS}) {
                    -key         => 'CDS',
                    -bump        =>  +1,
                    -height      =>  12,
-                   -label       => \&gene_label,
-                   -description => \&gene_description,
+                   -label       => $gene_label,
+                   -description => $gene_description,
                   );
     delete $sorted_features{'CDS'};
 }
@@ -618,7 +622,7 @@ if ($sorted_features{tRNA}) {
                    -key        => 'tRNAs',
                    -bump       =>  +1,
                    -height     =>  12,
-                   -label      => \&gene_label,
+                   -label      => $gene_label,
                   );
     delete $sorted_features{tRNA};
 }
@@ -637,7 +641,7 @@ for my $tag (sort keys %sorted_features) {
                    -key         => "${tag}s",
                    -bump        => +1,
                    -height      => 8,
-                   -description => \&generic_description,
+                   -description => $generic_description,
                   );
 }
 

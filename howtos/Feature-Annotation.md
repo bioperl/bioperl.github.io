@@ -792,7 +792,7 @@ Customizing Sequence Object Construction
 When you don't need access to the complete set of annotations in a set of potentially rich sequence database entries, it is possible to configure the SeqIO parser to ignore certain sections of the sequence record. For example, let's say you need to crunch through all of Genbank, collecting stats about the number of molecule types per species. In this case, you don't care about the sequence or features contained in each entry. Here's how to tell the parser to ignore these things:
 
 ```perl
-my $seqin = Bio::SeqIO->new( -fh=> \*STDIN, -format=> 'genbank' );
+my $seqin = Bio::SeqIO->new( -file => $file, -format=> 'genbank' );
 my $builder = $seqin->sequence_builder();
 $builder->want_all(1);
 $builder->add_unwanted_slot('seq','features','annotation');

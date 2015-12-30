@@ -78,14 +78,14 @@ my $bpseq1  = $in_nexml->next_seq();
 ...
 
 #push into arrays
-my @bptrees;
-push (@bptrees, $bptree1);
-push (@bptrees, $bptree2);
+my $bptrees;
+push (@{$bptrees}, $bptree1);
+push (@{$bptrees}, $bptree2);
 
 #Write data to nexml file
 my $out_nexml = Bio::NexmlIO->new(-file => '>new_nexml_doc.xml', 
                                   -format => 'Nexml');
-$out_nexml->write(-trees => \@bptrees, -alns => \@alns, -seqs => \@seqs);
+$out_nexml->write(-trees => $bptrees, -alns => $alns, -seqs => $seqs);
 ```
 
 Reading/Writing Individual Datatypes (e.g. trees)
@@ -159,15 +159,15 @@ my $tree2 = $trees_in->next_tree();
 $aln1->id("alignment 1");
 
 #push objects into array
-my (@alns, @trees);
-push (@alns, $aln1, $aln2);
-push (@trees, $tree1, $tree2);
+my ($alns, $trees);
+push (@{$alns}, $aln1, $aln2);
+push (@{$trees}, $tree1, $tree2);
 
 #intialize output stream
 my $out = Bio::NexmlIO->new(-file => ">characters+trees.xml");
 
 #call write, which generates a valid nexml document and writes it to the stream
-$out->write(-trees => \@trees, -alns => \@alns);
+$out->write(-trees => $trees, -alns => $alns);
 ```
 
 ### Write NeXML from other formats
@@ -187,15 +187,15 @@ my $trees_in  = Bio::TreeIO->new(-file => "trees.nex",
 my $tree1 = $trees_in->next_tree();
 
 #push objects into array
-my @trees;
-push (@trees, $tree1);
+my $trees;
+push (@{$trees}, $tree1);
 
 #intialize output stream
 my $out = Bio::NexmlIO->new(-file => ">trees_converted.xml");
 
 #call write, which converts the data to a nexml document 
 # and writes to the stream
-$out->write(-trees => \@trees);
+$out->write(-trees => $trees);
 ```
 
 ### Convert specific data types from NeXML to other formats
