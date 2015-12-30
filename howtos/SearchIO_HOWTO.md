@@ -55,7 +55,7 @@ Parsing with Bio::SearchIO
 
 This section is going to describe how to use the system to process reports. We'll describe [BLAST](http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpblast&part=CmdLineAppsManual) reports but the idea is that once you understand the methods associated with the objects you won't need to know anything special about other parsers.
 
-See [the BLAST+ HOWTO](BlastPlus.html) for more on running BLAST.
+See [the BLAST+ HOWTO](BlastPlus_HOWTO.html) for more on running BLAST.
 
 ### Using SearchIO
 

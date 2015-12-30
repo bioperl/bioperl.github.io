@@ -477,7 +477,7 @@ Running external programs
 
 ### How do I run BLAST from within BioPerl?
 
-Use [BlastPlus](/howtos/BlastPlus.html).
+Use [BlastPlus](/howtos/BlastPlus_HOWTO.html).
 
 ### How do I run applications within BioPerl?
 

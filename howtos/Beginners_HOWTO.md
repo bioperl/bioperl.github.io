@@ -754,7 +754,7 @@ The SeqWords object is similar to SeqStats and provides methods for calculating 
 
 ### Running applications: BLAST
 
-**This section is outdated, please see [HOWTO:BlastPlus](BlastPlus.html). BLAST is no longer supported by NCBI, it has been superceded by BLAST+.**
+**This section is outdated, please see [HOWTO:BlastPlus](BlastPlus_HOWTO.html). BLAST is no longer supported by NCBI, it has been superceded by BLAST+.**
 
 You have access to a large number of sequence analysis programs within Bioperl. Typically this means you have a means to run the program and frequently a means of parsing the resulting output, or report, as well. Certainly the most popular analytical program is BLAST so let's use it as an example. First you'll need to get [BLAST](http://www.ncbi.nlm.nih.gov/blast/), installed on your machine and running, versions of the program that can run on all the popular operating systems can be [downloaded](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) from NCBI. The example code assumes that you used the formatdb program to index the database sequence file *db.fa*.
 
