@@ -14,10 +14,35 @@
       </a>
 
       <div class="trigger">
+      <!--
           {% if page.title %}
-            <!-- <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a> -->
-            <font color="blue">{{ page.title }}</font>
+          <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a> 
+          <font color="blue">{{ page.title }}</font>
           {% endif %}
+      -->
+      <input id="searchterm" type="text">
+      <input id="searchbtn" type="submit" value="Search"/> 
+      <script type="text/javascript" src="/assets/jquery-2.1.4.min.js"></script>
+      <script type="text/javascript">
+        $("#searchbtn").click(function(){
+          var search_output = '';
+          var regex = new RegExp($("#searchterm").val(), "i");
+          // The _site/search.json file is created from the search.json template,
+          // the JSON must be valid, otherwise this method fails without an error
+          $.getJSON('search.json', function(data) {
+            $.each(data, function(key, val) {
+              // console.log("Title is [" + val.title + "], URL is [" + val.href + "]");
+              if ( regex.test(val.content) || regex.test(val.title) ) {
+                // console.log("Match to [" + val.title + "]");
+                search_output += '<p><a href="' + val.href + '">' + val.title + '</a></p>';
+              };
+            });
+            // console.log("Output is [" + search_output + "]");
+            $('.trigger').html(search_output);
+          });
+        });
+      </script>
+
       </div>
     </nav>
 

@@ -246,4 +246,4 @@ which are mnemonics for the contents of each `maq mapview` line; see [the `maq` 
 SEE ALSO
 --------
 
-[Short-read assemblies with `bwa`](http://bioperl.github.io/howtos/Short-read_assemblies_with_BWA.html)
+[Short-read assemblies with `bwa`](Short-read_assemblies_with_BWA_HOWTO.html)

@@ -174,7 +174,7 @@ print $seq_obj->seq();
 
 ### Writing a sequence to a file
 
-This next example will show how two objects can work together to create a sequence file. We already have a Sequence object, `$seq_obj`, and we will create an additional object whose responsibility it is to read from and write to files. This object is the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) object, where IO stands for Input/Output. By using in this manner you will be able to get input and make output for all of the sequence file formats supported by Bioperl (the [SeqIO HOWTO](SeqIO.html) has a complete list of supported formats). The way you create objects is very similar to the way we used `new()` to create a [Bio::Seq](https://metacpan.org/pod/Bio::Seq), or sequence, object:
+This next example will show how two objects can work together to create a sequence file. We already have a Sequence object, `$seq_obj`, and we will create an additional object whose responsibility it is to read from and write to files. This object is the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) object, where IO stands for Input/Output. By using in this manner you will be able to get input and make output for all of the sequence file formats supported by Bioperl (the [SeqIO HOWTO](SeqIO_HOWTO.html) has a complete list of supported formats). The way you create objects is very similar to the way we used `new()` to create a [Bio::Seq](https://metacpan.org/pod/Bio::Seq), or sequence, object:
 
 ```perl
 use Bio::SeqIO;
@@ -265,7 +265,7 @@ while ( $seq_obj = $seqio_obj->next_seq ) {
 }
 ```
 
-Do you have to supply a `-format` argument when you are reading from a file, as we did? Not necessarily, but it's the safe thing to do. If you don't give a format then the SeqIO object will try to determine the format from the file suffix or extension (and a list of the file extensions is in the [SeqIO HOWTO](SeqIO.html). In fact, the suffix *fasta* is one that SeqIO understands, so `-format` is unnecessary above. Without a known suffix SeqIO will attempt to guess the format based on the file's contents but there's no guarantee that it can guess correctly for every single format.
+Do you have to supply a `-format` argument when you are reading from a file, as we did? Not necessarily, but it's the safe thing to do. If you don't give a format then the SeqIO object will try to determine the format from the file suffix or extension (and a list of the file extensions is in the [SeqIO HOWTO](SeqIO_HOWTO.html). In fact, the suffix *fasta* is one that SeqIO understands, so `-format` is unnecessary above. Without a known suffix SeqIO will attempt to guess the format based on the file's contents but there's no guarantee that it can guess correctly for every single format.
 
 It may be useful to tell SeqIO the alphabet of the input, using the `-alphabet` argument. What this does is to tell SeqIO not to try to determine the alphabet (*dna*, *rna*, *protein*). This helps because Bioperl may guess incorrectly (for example, Bioperl is going to guess that the protein sequence `MGGGGTCAATT` is DNA). There may also be odd characters present in the sequence that SeqIO objects to (e.g. "`-~?`"). Set `-alphabet` to a value when reading sequences and SeqIO will not attempt to guess the alphabet of those sequences or validate the sequences.
 
@@ -390,7 +390,7 @@ Table 1. Sequence objects method.
 
 The table above shows the methods you're likely to use with the Sequence object directly. Bear in mind that not all values, such as `molecule` or `division`, are found in all sequence formats, you have to know something about your input sequences in order to get some of these values.
 
-There are also a number of methods that are concerned with the Features and Annotations associated with the Sequence object. This is something of a tangent but if you'd like to learn more see the [Feature-Annotation HOWTO](Feature-Annotation.html). The methods related to this topic are shown below.
+There are also a number of methods that are concerned with the Features and Annotations associated with the Sequence object. This is something of a tangent but if you'd like to learn more see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html). The methods related to this topic are shown below.
 
 | Name                  | Returns        | Note                  |
 |-----------------------|----------------|-----------------------|
@@ -510,7 +510,7 @@ Either way, the values returned by various methods are shown below.
 | get_secondary_accessions | J01674                                                         |
 Table 3. Values from Genbank.
 
-There's a few comments that need to be made. First, you noticed that there's an awful lot of information missing. All of this missing information is stored in what Bioperl calls Features and Annotations, see the [Feature and Annotation HOWTO](Feature-Annotation.html) if you'd like to learn more about this. Second, a few of the methods don't return anything, like `namespace` and `authority`. The reason is that though these are good values in principle there are no commonly agreed upon standard names - perhaps someday the authors will be able to rewrite the code when all our public databases agree what these values should be. Finally, you may be wondering why the method names are what they are and why particular fields or identifiers end up associated with particular methods. Again, without having standard names for things that are agreed upon by the creators of our public databases all the authors could do is use common sense, and these choices seem to be reasonable ones.
+There's a few comments that need to be made. First, you noticed that there's an awful lot of information missing. All of this missing information is stored in what Bioperl calls Features and Annotations, see the [Feature and Annotation HOWTO](Features_and_Annotations_HOWTO.html) if you'd like to learn more about this. Second, a few of the methods don't return anything, like `namespace` and `authority`. The reason is that though these are good values in principle there are no commonly agreed upon standard names - perhaps someday the authors will be able to rewrite the code when all our public databases agree what these values should be. Finally, you may be wondering why the method names are what they are and why particular fields or identifiers end up associated with particular methods. Again, without having standard names for things that are agreed upon by the creators of our public databases all the authors could do is use common sense, and these choices seem to be reasonable ones.
 
 Next let's take a look at the values returned by the methods used by the Sequence object when a Fasta file is used as input. The Fasta file entry looks like this, clearly much simpler than the corresponding Genbank entry:
 
@@ -645,7 +645,7 @@ The corresponding set of values is shown below.
 | get_secondary_accessions | Q8R2H6 Q8R4G3                                   |
 Table 5. Values from SwissProt.
 
-As in the Genbank example there's information that the Sequence object doesn't supply, and it's all stored in Annotation objects. See the [Feature and Annotation HOWTO](Feature-Annotation.html) for more.
+As in the Genbank example there's information that the Sequence object doesn't supply, and it's all stored in Annotation objects. See the [Feature and Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more.
 
 ### Translating
 

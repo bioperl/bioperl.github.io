@@ -164,7 +164,7 @@ while (my $docsum = $summaries->next_DocSum) {
 
 ### Using Bio::DB::EntrezGene to get genomic coordinates<a name="Using_Bio::DB::EntrezGene_to_get_genomic_coordinates"></a>
 
-You can get the coordinates of a given gene from Entrez Gene using the [Bio::DB::EntrezGene](https://metacpan.org/pod/Bio::DB::EntrezGene) module. This involves examining the Annotations associated with the gene (see the [Feature-Annotation HOWTO](Feature-Annotation.html) for more information on Annotations) and finding the one labelled *Evidence Viewer*, the data is found in a [URL](http://en.wikipedia.org/wiki/Url). The only identifier that the NCBI Entrez Gene API can use is a `Gene id`, formerly known as a LocusLink id.
+You can get the coordinates of a given gene from Entrez Gene using the [Bio::DB::EntrezGene](https://metacpan.org/pod/Bio::DB::EntrezGene) module. This involves examining the Annotations associated with the gene (see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more information on Annotations) and finding the one labelled *Evidence Viewer*, the data is found in a [URL](http://en.wikipedia.org/wiki/Url). The only identifier that the NCBI Entrez Gene API can use is a `Gene id`, formerly known as a LocusLink id.
 
 Requirement: BioPerl.
 

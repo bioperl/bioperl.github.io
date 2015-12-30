@@ -1,5 +1,5 @@
 ---
-title: HOWTO:NeXML
+title: NeXML HOWTO
 layout: howto
 ---
 
@@ -47,7 +47,7 @@ Design
 
 Nexml support in BioPerl is accomplished by creating four nexml modules (described above) that make use of [Bio::Phylo](https://metacpan.org/pod/Bio::Phylo) the prefered Nexml parser/unparser. The basic flow goes: BioPerl object to [Bio::Phylo](https://metacpan.org/pod/Bio::Phylo) object to Nexml format and vice versa. The [Bio::Nexml::Factory](https://metacpan.org/pod/Bio::Nexml::Factory) module handles the creation/conversion of BioPerl and [Bio::Phylo](https://metacpan.org/pod/Bio::Phylo) objects providing a single `Bio::Phylo` access point for all four nexml modules.
 
-The [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO), [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO), and [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) modules are normal extensions of BioPerl and are used in the same ways as other formats. (For more on the *IO modules read [SeqIO HOWTO](SeqIO.html).)
+The [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO), [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO), and [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) modules are normal extensions of BioPerl and are used in the same ways as other formats. (For more on the *IO modules read [SeqIO HOWTO](SeqIO_HOWTO.html).)
 
 The [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) module allows the writing/reading of multiple data object types (i.e. trees/alns/seqs), as opposed to the other *IO modules which only allow a single data object type.
 

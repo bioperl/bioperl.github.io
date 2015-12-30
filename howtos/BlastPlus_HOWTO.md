@@ -74,7 +74,7 @@ while ($result = $fac->next_result) {
 }
 ```
 
-BLAST methods include `blastn, blastp, blastx, tblastn, tblastx, rpsblast, psiblast, rpstblastn`, as well as others I probably forget. For more details on parsing and processing the results, see the [SearchIO HOWTO](SearchIO.html).
+BLAST methods include `blastn, blastp, blastx, tblastn, tblastx, rpsblast, psiblast, rpstblastn`, as well as others I probably forget. For more details on parsing and processing the results, see the [SearchIO HOWTO](SearchIO_HOWTO.html).
 
 Note the following details:
 

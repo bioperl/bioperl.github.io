@@ -421,7 +421,7 @@ The next section will demonstrate how to parse and display feature tables from G
 Rendering Features from a GenBank or EMBL File
 ----------------------------------------------
 
-With you can render the feature table of a GenBank or EMBL file quite easily. The trick is to use to generate a set of objects, and to use those features to populate tracks (see the [Feature-Annotation HOWTO](Feature-Annotation.html) for more information on features). The documentation for each of the individual. For simplicity's sake, we will sort each feature by its primary tag (such as "exon") and create a new track for each tag type. Code example 5 shows the code for rendering an EMBL or GenBank entry.
+With you can render the feature table of a GenBank or EMBL file quite easily. The trick is to use to generate a set of objects, and to use those features to populate tracks (see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more information on features). The documentation for each of the individual. For simplicity's sake, we will sort each feature by its primary tag (such as "exon") and create a new track for each tag type. Code example 5 shows the code for rendering an EMBL or GenBank entry.
 
 *Example 5. The embl2picture.pl script turns any EMBL or GenBank entry into a graphical rendering.*
 

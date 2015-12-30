@@ -203,7 +203,7 @@ while (my $seq = $seqio->next_seq) {
 
 See the pod for the FetchAdaptor subclasses (e.g., [Bio::DB::SoapEUtilities::FetchAdaptor::seq](https://metacpan.org/pod/Bio::DB::SoapEUtilities::FetchAdaptor::seq)) for more detail.
 
-*Tip:* : Use the `fasta` (a.k.a. `TSeq` in the WSDL) return type to avoid long wait times. This returns seq ids, sequence, and a few metadata items. The `gb` (a.k.a. `GBSeq`) return type will fetch all [feature and annotation](http://bioperl.github.io/howtos/Feature-Annotation.html) data by default.
+*Tip:* : Use the `fasta` (a.k.a. `TSeq` in the WSDL) return type to avoid long wait times. This returns seq ids, sequence, and a few metadata items. The `gb` (a.k.a. `GBSeq`) return type will fetch all [feature and annotation](http://bioperl.github.io/howtos/Features_and_Annotations_HOWTO.html) data by default.
 
 To cut down (a little) on GenBank format parsing time, you may use the [Bio::Seq::SeqBuilder](https://metacpan.org/pod/Bio::Seq::SeqBuilder) system, as in [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO). This is somewhat advanced, but would look like this:
 

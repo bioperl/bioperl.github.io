@@ -241,5 +241,5 @@ $samt->run( -bam => 'mysam.bam', -pfx => 'mysam.srt' );
 SEE ALSO
 --------
 
-[Short-read assemblies with `maq`](./Short-read_assemblies_with_maq.html)
+[Short-read assemblies with `maq`](Short-read_assemblies_with_maq_HOWTO.html)
 

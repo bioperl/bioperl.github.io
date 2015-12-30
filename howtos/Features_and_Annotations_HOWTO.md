@@ -75,7 +75,7 @@ disparate objects, such as two different kinds of SeqFeatures. You may also want
 
 SeqFeatures and Annotations will make the most sense if you're already somewhat
 familiar with BioPerl and its objects. The reader is referred to
-the [Beginners HOWTO](Beginners.html), [SeqIO HOWTO](SeqIO.html), and the [SearchIO HOWTO](SearchIO.html) for more information on these topics. Here's a bit of code, to summarize:
+the [Beginners HOWTO](Beginners.html), [SeqIO HOWTO](SeqIO_HOWTO.html), and the [SearchIO HOWTO](SearchIO_HOWTO.html) for more information on these topics. Here's a bit of code, to summarize:
 
 ```perl
 # BAB55667.gb is a Genbank file, and Bioperl knows that it
@@ -563,7 +563,7 @@ Table 5. [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) methods
 
 These objects are created automatically when you use to read from EMBL, GenBank,GAME, Chado XML, TIGR XML, Locuslink, BSML, KEGG, Entrez Gene, and SwissProt
 sequence files. However, it's not guaranteed that each of these formats will
-supply data for all of the methods above. See the [SeqIO HOWTO](SeqIO.html) for more details on formats.
+supply data for all of the methods above. See the [SeqIO HOWTO](SeqIO_HOWTO.html) for more details on formats.
 
 Other Sequence File Formats
 ---------------------------
@@ -809,7 +809,7 @@ on the complexity of the sequence records.
 
 As of version 1.5.1 this ability to customize your Sequence objects is only available for [Bio::SeqIO::genbank](https://metacpan.org/pod/Bio::SeqIO::genbank).
 
-See [Bio::Seq::SeqBuilder](https://metacpan.org/pod/Bio::Seq::SeqBuilder) and the [SeqIO HOWTO](SeqIO.html) for more documentation on this.
+See [Bio::Seq::SeqBuilder](https://metacpan.org/pod/Bio::Seq::SeqBuilder) and the [SeqIO HOWTO](SeqIO_HOWTO.html) for more documentation on this.
 
 Additional Information
 ----------------------

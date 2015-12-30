@@ -36,7 +36,7 @@ my $seqio_object = Bio::SeqIO->new(-file => $file);
 my $seq_object = $seqio_object->next_seq;
 ```
 
-Why use [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO)? In part because SeqIO understands the many different sequence file formats and creates the proper BioPerl object for each format. Some formats, like FASTA sequence format, are minimal. The fasta format requires a sequence and some kind of identifier, but nothing else is required nor does the format inherently allow for much more detail, like a feature (a sub-sequence, usually with some biological property - see the [Feature-Annotation HOWTO](Feature-Annotation.html) for more information). When given fasta SeqIO creates a [Bio:Seq](https://metacpan.org/pod/Bio::Seq) object, a more spare object than the [Bio:Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) object that's created when [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) is given formats like Genbank or EMBL, which may contain features and annotations.
+Why use [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO)? In part because SeqIO understands the many different sequence file formats and creates the proper BioPerl object for each format. Some formats, like FASTA sequence format, are minimal. The fasta format requires a sequence and some kind of identifier, but nothing else is required nor does the format inherently allow for much more detail, like a feature (a sub-sequence, usually with some biological property - see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more information). When given fasta SeqIO creates a [Bio:Seq](https://metacpan.org/pod/Bio::Seq) object, a more spare object than the [Bio:Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) object that's created when [Bio:SeqIO](https://metacpan.org/pod/Bio::SeqIO) is given formats like Genbank or EMBL, which may contain features and annotations.
 
 Now, should you care what kind of BioPerl object is created by SeqIO? For the most part no - let SeqIO take care of those details.
 
@@ -604,4 +604,4 @@ timethis(1, sub {
             (warning: too few iterations for a reliable count)
 ```
 
-See the [Feature-Annotation HOWTO](Feature-Annotation.html) for more discussion.
+See the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more discussion.

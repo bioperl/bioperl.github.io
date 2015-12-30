@@ -130,7 +130,7 @@ Sequences
 
 ### How do I parse a sequence file?
 
-Use the `Bio::SeqIO` system, this will create objects for you from file input. For more information see the [SeqIO HOWTO](/howtos/SeqIO.html), or type `perldoc Bio::SeqIO`.
+Use the `Bio::SeqIO` system, this will create objects for you from file input. For more information see the [SeqIO HOWTO](/howtos/SeqIO_HOWTO.html), or type `perldoc Bio::SeqIO`.
 
 ### I can't get sequences with Bio::DB::GenBank any more, why not?
 
@@ -248,11 +248,11 @@ Report Parsing
 
 ### I want to parse BLAST output, how do I do this?
 
-Read the [SearchIO HOWTO](/howtos/SearchIO.html) for more information.
+Read the [SearchIO HOWTO](/howtos/SearchIO_HOWTO.html) for more information.
 
 ### What was wrong with Bio::Tools::Blast?
 
-Bio::Tools::Blast* is no longer supported, as of BioPerl version 1.1. It has just been replaced by a more generic approach to reports. This generic approach allows us to just write pluggable modules for [FASTA](https://en.wikipedia.org/wiki/FASTA) and [BLAST](https://en.wikipedia.org/wiki/BLAST) parsing while using the same framework. This is completely analogous to the system of parsing sequence files. However, the objects produced are of the rather than variety. See the [SearchIO HOWTO](/howtos/SearchIO.html).
+Bio::Tools::Blast* is no longer supported, as of BioPerl version 1.1. It has just been replaced by a more generic approach to reports. This generic approach allows us to just write pluggable modules for [FASTA](https://en.wikipedia.org/wiki/FASTA) and [BLAST](https://en.wikipedia.org/wiki/BLAST) parsing while using the same framework. This is completely analogous to the system of parsing sequence files. However, the objects produced are of the rather than variety. See the [SearchIO HOWTO](/howtos/SearchIO_HOWTO.html).
 
 ### I want to parse FASTA or NCBI -m7 (XML) format, how do I do this?
 
@@ -462,7 +462,7 @@ There are a number of approaches. Within BioPerl take a look at . Or, take a loo
 
 It's also conceivable that the combination of BioPerl and Perl's [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) could do the trick. You might also consider the CPAN module (this module addresses the percent match query), but experienced users question whether its distance estimates are correct, the Unix [agrep](https://en.wikipedia.org/wiki/agrep) command is thought to be faster and more accurate. Finally, you could use [EMBOSS](http://emboss.org), as discussed in the previous question (or you could use Pise to run [EMBOSS](http://emboss.org) applications). The relevant programs would be `fuzzpro` or `fuzznuc`. Complex RNA sequence secondary structural 'motifs' can be searched with Tom Macke's RNAMotif available from the [Case group at Scripps](http://www.scripps.edu/mb/case/casegr-sh-3.5.html). See [Bio::Tools::RNAMotif](http://search.cpan.org/dist/BioPerl/Bio/Tools/RNAMotif.pm).
 
-### How do I merge a set of sequences along with their [features and annotations](/howtos/Feature-Annotation.html)?
+### How do I merge a set of sequences along with their [features and annotations](/howtos/Features_and_Annotations_HOWTO.html)?
 
 Try the `cat()` method in [Bio::SeqUtils](https://metacpan.org/pod/Bio::SeqUtils):
 
