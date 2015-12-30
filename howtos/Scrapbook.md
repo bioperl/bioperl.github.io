@@ -1,5 +1,5 @@
 ---
-title: Scrapbook
+title: "BioPerl Scrapbook"
 layout: howto
 ---
 
