@@ -27,6 +27,7 @@ Revision History
 | Revision 0.3 2005-07-11 JES | Explore Node objects more |
 | Revision 0.4 [Torst] 05:49, 22 December 2005 (EST) | Wiki version |
 | Revision 0.41 MAJ 2015-12-05 | Port to bioperl.github.io |
+Table 1. History
 
 Abstract
 --------
@@ -77,7 +78,9 @@ object.
 | phyloxml | PhyloXML | xml            |        |
 | svggraph | converts a Tree object to an SVG output | svg            |        |
 | tabtree  | format which displays a tree as an ASCII drawing |                
-Table 1. [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) formats
+Table 2. [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) formats
+
+Also see [Tree Formats](/formats/tree_formats/index.html).
 
 ## Example Code
 
@@ -306,7 +309,9 @@ Operations on Nodes
 -   `each_Descendent` - retrieve all immediete children from a node.
 -   `get_all_Descendents` - retrieve all sub Nodes from this node
 
+
 ![](Example5TaxaTree.jpg "Example5TaxaTree.jpg")
+
 
 ```perl
 use Bio::TreeIO;
@@ -354,7 +359,7 @@ while( my $tree = $in->next_tree ) {
 
 An even better way to draw trees is implemented in [Bio::Tree::Draw::Cladogram](https://metacpan.org/pod/Bio::Tree::Draw::Cladogram) which will draw a [cladogram](http://en.wikipedia.org/wiki/Cladogram) in [postscript](http://en.wikipedia.org/wiki/postscript) format. The postscript file can be converted to SVG, PDF which can also be rendered in PNG, JPEG, and other image file formats. [Bio::Tree::Draw::Cladogram](https://metacpan.org/pod/Bio::Tree::Draw::Cladogram) does depend on the external module [PostScript::TextBlock](https://metacpan.org/pod/PostScript::TextBlock).
 
-Here is a simple script that writes out a postscript file for every file ending in `.tre` in a directory. It assumes the files are in [Newick tree format](https://en.wikipedia.org/wiki/Newick_format) but can be switched to [Nexus tree format](https://en.wikipedia.org/wiki/Nexus_file) (like what you get out of a [MrBayes](http://mrbayes.sourceforge.net/) run) if 'newick' is replaced with 'nexus' in the code below. The `-bootstrap => 1` option specifies that internal id values should be written out - currently it assumes id is stored in the `id()` field so you will have to copy the values from the `bootstrap()` field if they are stored there. The `-compact => 0` option specifies that branch lengths should be written (so this is actually a [phylogram](https://en.wikipedia.org/wiki/Phylogenetic_tree#Types_of_phylogenetic_tree) ), `-compact => 1` would instead draw a cladogram with equal branch lengths for all branches.
+Here is a simple script that writes out a postscript file for every file ending in `.tre` in a directory. It assumes the files are in [Newick tree format](https://en.wikipedia.org/wiki/Newick_format) but can be switched to [Nexus tree format](https://en.wikipedia.org/wiki/Nexus_file) (like what you get out of a [MrBayes](http://mrbayes.sourceforge.net/) run) if 'newick' is replaced with 'nexus' in the code below. The `-bootstrap => 1` option specifies that internal id values should be written out - currently it assumes id is stored in the `id()` field so you will have to copy the values from the `bootstrap()` field if they are stored there. The `-compact => 0` option specifies that branch lengths should be written (so this is actually a [phylogram](https://en.wikipedia.org/wiki/Phylogenetic_tree#Types_of_phylogenetic_tree)), `-compact => 1` would instead draw a cladogram with equal branch lengths for all branches.
 
 ```perl
 #!/usr/bin/perl -w
