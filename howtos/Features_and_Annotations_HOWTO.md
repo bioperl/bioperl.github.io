@@ -815,7 +815,7 @@ Additional Information
 ----------------------
 
 If you would like to learn about representing sequences and features in
-graphical form take a look at the [Graphics HOWTO](Graphics_HOWTO.html). If you have questions or comments that aren't addressed herein then write the Bioperl community at bioperl-l@bioperl.org.
+graphical form take a look at the [Graphics HOWTO](BioGraphics_HOWTO.html). If you have questions or comments that aren't addressed herein then write the Bioperl community at bioperl-l@bioperl.org.
 
 Acknowledgements
 ----------------
