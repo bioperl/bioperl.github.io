@@ -12,7 +12,7 @@ Authors
 -------
 
 -   Lincoln Stein lstein-at-cshl.org stein at cshl.org
--   Brian Osborne briano@bioteam.net briano at bioteam.net
+-   Brian Osborne briano@bioteam.net *briano at bioteam.net*
 -   Heikki Lehvaslaiho heikki-at-ebi.co.uk heikki at ebi.co.uk
 
 Copyright

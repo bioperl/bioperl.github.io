@@ -5,9 +5,7 @@ layout: howto
 
 # Authors
 
-Brian Osborne
-  
-[briano at bioteam.net](mailto:briano@bioteam.net)
+Brian Osborne *briano at bioteam.net*
 
 ## Copyright
 

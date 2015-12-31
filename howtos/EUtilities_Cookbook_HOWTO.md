@@ -12,7 +12,7 @@ Authors
 
 Chris Fields
 
-Brian Osborne
+Brian Osborne *briano at bioteam.net*
 
 Simple examples
 ===============

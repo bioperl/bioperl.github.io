@@ -5,7 +5,7 @@ layout: howto
 
 ### Authors
 
-Brian Osborne
+Brian Osborne *briano at bioteam.net*
 
 Chris Fields
 

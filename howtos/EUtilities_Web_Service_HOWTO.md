@@ -8,6 +8,7 @@ Abstract
 
 Using BioPerl to make and manage [NCBI](http://www.ncbi.nlm.nih.gov/) Entrez web service queries via the [EUtilities](http://www.ncbi.nlm.nih.gov/books/NBK25501/) [SOAP](https://en.wikipedia.org/wiki/SOAP) service.
 
+Also see the [EUtilities Cookbook](EUtilities_Cookbook_HOWTO.html).
 Author
 ------
 

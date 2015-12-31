@@ -9,7 +9,7 @@ Authors
 -------
 
 -   Ewan Birney birney-at-ebi.ac.uk 
--   Brian Osborne briano-at-bioteam.net 
+-   Brian Osborne *briano at bioteam.net* 
 -   Darin London darin.london-at-duke.edu 
 
 Copyright

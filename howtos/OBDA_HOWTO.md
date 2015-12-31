@@ -12,7 +12,7 @@ Authors
 -------
 
 -   Aaron Mackey - [amackey at virginia.edu](mailto:amackey-at-virginia.edu)
--   Brian Osborne - [briano at bioteam.net](mailto:briano@bioteam.net)
+-   Brian Osborne - *briano at bioteam.net*
 -   Peter Schattner - [schattner at alum.mit.edu](mailto:schattner-at-alum.mit.edu)
 -   Heikki Lehvaslaiho - [heikki at bioperl.org](mailto:heikki-at-bioperl-dot-org)
 -   Lincoln Stein - [lstein at cshl.org](mailto:lstein-at-cshl.org)

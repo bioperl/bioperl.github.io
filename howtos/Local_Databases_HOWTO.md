@@ -5,7 +5,9 @@ layout: howto
 
 ### Authors
 
-Brian Osborne, Peter Schattner.
+Brian Osborne *briano at bioteam.net*
+
+Peter Schattner
 
 ### Abstract
 

@@ -11,7 +11,7 @@ This is a HOWTO about the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO
 ### Authors
 
 -   Jason Stajich [jason at bioperl.org](mailto:jason-at-bioperl.org)
--   Brian Osborne [briano at bioteam.net](mailto:briano@bioteam.net)
+-   Brian Osborne *briano at bioteam.net*
 
 Background and Design
 ---------------------

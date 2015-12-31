@@ -6,7 +6,7 @@ layout: howto
 Authors
 -------
 
-Brian Osborne [briano at bioteam.net](mailto:briano-at-bioteam.net)
+Brian Osborne *briano at bioteam.net*
 
 Steve Chervitz [sac at bioperl.org](mailto:sac-at-bioperl.org)
 
