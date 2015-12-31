@@ -1,5 +1,5 @@
 ---
-title: "BioPerl Beginners HOWTO"
+title: "Beginners HOWTO"
 layout: howto
 ---
 
@@ -13,17 +13,17 @@ This document is copyright Brian Osborne. It can be copied and distributed under
 
 # Abstract
 
-This is a HOWTO that talks about using Bioperl, for biologists who would like to learn more about writing their own bioinformatics scripts using Bioperl. Bioperl is an open source bioinformatics toolkit used by researchers all over the world. If you're looking for a script built to fit your exact needs you probably won't find it in Bioperl. What you will find is an extensive set of Perl modules that will enable you to write your own script, and a community of people who are willing to help you.
+This is a [HOWTO](/howtos/index.html) that talks about using Bioperl, for biologists who would like to learn more about writing their own bioinformatics scripts using Bioperl. Bioperl is an open source bioinformatics toolkit used by researchers all over the world. If you're looking for a script built to fit your exact needs you may or may not find it in Bioperl (check the [scripts](https://github.com/bioperl/bioperl-live/tree/master/scripts) and [examples](https://github.com/bioperl/bioperl-live/tree/master/examples) directories). What you will find is an extensive set of Perl modules that will enable you to write your own script, and a community of people who are willing to help you.
 
 # Introduction
 
-If you're a molecular biologist it's likely that you're interested in gene and protein sequences, and you study them in some way on a regular basis. Perhaps you'd like to try your hand at automating some of these tasks, or you're just curious about learning more about the programming side of bioinformatics. In this HOWTO you'll see discussions of some of the common uses of Bioperl, like sequence analysis with BLAST and retrieving sequences from public databases. You'll also see how to write Bioperl scripts that chain these tasks together, that's how you'll be able to do really powerful things with Bioperl.
+If you're a molecular biologist it's likely that you're interested in gene and protein sequences, and you study them in some way on a regular basis. Perhaps you'd like to try your hand at automating some of these tasks, or you're just curious about learning more about the programming side of bioinformatics. In this [HOWTO](/howtos/index.html) you'll see discussions of some of the common uses of Bioperl, like sequence analysis with BLAST and retrieving sequences from public databases. You'll also see how to write Bioperl scripts that chain these tasks together, that's how you'll be able to do really powerful things with Bioperl.
 
 You will also see some discussions of software concepts, this can't be avoided. The more you understand about programming the better but all efforts will be made to not introduce too much unfamiliar material. However, there will be an introduction to modularity, or objects. This is one of the aspects of the Bioperl package that you'll have to come to grips with as you attempt more complex tasks with your scripts.
 
 One of the challenging aspects of learning a new skill is learning the jargon, and programming certainly has its share of interesting terms and buzz phrases. Be patient - remember that the programmers learning biology have had just as tough a task (if not worse - just ask them!).
 
-*Note* This HOWTO does not discuss a very nice module that's designed for beginners, [Bio::Perl](https://metacpan.org/pod/Bio::Perl). The reason is that though this is an excellent introductory tool, it is not object-oriented and can't be extended. What we're attempting here is to introduce the core of Bioperl and show you ways to expand your new-found skills.
+*Note* This [HOWTO](/howtos/index.html) does not discuss a very nice module that's designed for beginners, [Bio::Perl](https://metacpan.org/pod/Bio::Perl). The reason is that though this is an excellent introductory tool, it is not object-oriented and can't be extended. What we're attempting here is to introduce the core of Bioperl and show you ways to expand your new-found skills.
 
 ### Installing Bioperl
 
@@ -172,7 +172,7 @@ print $seq_obj->seq();
 
 ### Writing a sequence to a file
 
-This next example will show how two objects can work together to create a sequence file. We already have a Sequence object, `$seq_obj`, and we will create an additional object whose responsibility it is to read from and write to files. This object is the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) object, where IO stands for Input/Output. By using in this manner you will be able to get input and make output for all of the sequence file formats supported by Bioperl (the [SeqIO HOWTO](SeqIO_HOWTO.html) has a complete list of supported formats). The way you create objects is very similar to the way we used `new()` to create a [Bio::Seq](https://metacpan.org/pod/Bio::Seq), or sequence, object:
+This next example will show how two objects can work together to create a sequence file. We already have a Sequence object, `$seq_obj`, and we will create an additional object whose responsibility it is to read from and write to files. This object is the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) object, where *IO* stands for Input/Output. By using in this manner you will be able to get input and make output for all of the sequence file formats supported by Bioperl (the [SeqIO HOWTO](SeqIO_HOWTO.html) has a complete list of supported formats). The way you create objects is very similar to the way we used `new()` to create a [Bio::Seq](https://metacpan.org/pod/Bio::Seq), or sequence, object:
 
 ```perl
 use Bio::SeqIO;
@@ -212,7 +212,7 @@ You should create a file called *sequence.fasta* that looks like this:
 aaaatgggggggggggccccgtt
 ```
 
-Let's demonstrate the intelligence of the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) - the example below shows what is created when the argument to `-format` is set to *genbank* instead of *fasta*:
+Let's demonstrate the intelligence of [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) - the example below shows what is created when the argument to `-format` is set to *genbank* instead of *fasta*:
 
 ```
 LOCUS       #12345                    23 bp    dna     linear   UNK
@@ -254,7 +254,7 @@ $seq_obj = $seqio_obj->next_seq;
 
 Here we've used the `next_seq()` method of the object. When you use, or call, `next_seq()` the object will get the next available sequence, in this case the first sequence in the file that was just opened. The Sequence object that's created, `$seq_obj`, is functionally identical to the Sequence object we created manually in our first example. This is another idiom that's used frequently in Bioperl, the *next_something* method. You'll come across the same idea in the `next_aln` method of reading and writing alignment files and the `next_hit` method of reading the output of sequence comparison programs such as [BLAST](http://en.wikipedia.org/wiki/BLAST) and [HMMER](http://hmmer.janelia.org).
 
-If there were multiple sequences in the input file you could just continue to call `next_seq()` in some loop, and SeqIO would retrieve the Seq objects, one by one, until none were left:
+If there were multiple sequences in the input file you could just continue to call `next_seq()` in a loop, and SeqIO would retrieve the Seq objects, one by one, until none were left, starting with the 1st sequence in the file:
 
 ```perl
 while ( $seq_obj = $seqio_obj->next_seq ) {
@@ -265,7 +265,7 @@ while ( $seq_obj = $seqio_obj->next_seq ) {
 
 Do you have to supply a `-format` argument when you are reading from a file, as we did? Not necessarily, but it's the safe thing to do. If you don't give a format then the SeqIO object will try to determine the format from the file suffix or extension (and a list of the file extensions is in the [SeqIO HOWTO](SeqIO_HOWTO.html). In fact, the suffix *fasta* is one that SeqIO understands, so `-format` is unnecessary above. Without a known suffix SeqIO will attempt to guess the format based on the file's contents but there's no guarantee that it can guess correctly for every single format.
 
-It may be useful to tell SeqIO the alphabet of the input, using the `-alphabet` argument. What this does is to tell SeqIO not to try to determine the alphabet (*dna*, *rna*, *protein*). This helps because Bioperl may guess incorrectly (for example, Bioperl is going to guess that the protein sequence `MGGGGTCAATT` is DNA). There may also be odd characters present in the sequence that SeqIO objects to (e.g. "`-~?`"). Set `-alphabet` to a value when reading sequences and SeqIO will not attempt to guess the alphabet of those sequences or validate the sequences.
+It may be useful to tell SeqIO the alphabet of the input, using the `-alphabet` argument. What this does is to tell SeqIO not to try to determine the alphabet (*dna*, *rna*, *protein*). This helps because Bioperl may guess incorrectly (for example, Bioperl is going to guess that the protein sequence `MGGGGTCAATT` is DNA). There may also be odd characters present in the sequence that SeqIO objects to (e.g. `-~?`). Set `-alphabet` to a value when reading sequences and SeqIO will not attempt to guess the alphabet of those sequences or validate the sequences.
 
 ### Retrieving a sequence from a database
 
@@ -293,11 +293,11 @@ $db_obj = Bio::DB::GenBank->new;
 $seq_obj = $db_obj->get_Seq_by_id(2);
 ```
 
-The argument passed to the `get_Seq_by_id` method is an identifier, 2, a Genbank GI number. You could also use the `get_Seq_by_acc` method with an accession number (e.g. A12345) or `get_Seq_by_version` using a versioned accession number (e.g. A12345.2). Make sure to use the proper identifier for the method you use, the methods are not interchangeable.
+The argument passed to the `get_Seq_by_id` method is an identifier, *2*, a Genbank GI number. You could also use the `get_Seq_by_acc` method with an accession number (e.g. A12345) or `get_Seq_by_version` using a versioned accession number (e.g. A12345.2). Make sure to use the proper identifier for the method you use, the methods are not interchangeable.
 
 ### Retrieving multiple sequences from a database
 
-There are more sophisticated ways to query Genbank than this. This next example attempts to do something biological, using the module [Bio::DB::Query::GenBank](https://metacpan.org/pod/Bio::DB::Query::GenBank). Want all Arabidopsis topoisomerases from Genbank Nucleotide? This would be a reasonable first attempt:
+There are more sophisticated ways to query Genbank than this. This next example attempts to do something biological, using the module [Bio::DB::Query::GenBank](https://metacpan.org/pod/Bio::DB::Query::GenBank). Want all *Arabidopsis* topoisomerases from Genbank Nucleotide? This would be a reasonable first attempt:
 
 ```perl
 use Bio::DB::Query::GenBank;
@@ -306,6 +306,8 @@ $query = "Arabidopsis[ORGN] AND topoisomerase[TITL] and 0:3000[SLEN]";
 $query_obj = Bio::DB::Query::GenBank->new(-db => 'nucleotide', 
                                           -query => $query );
 ```
+
+The length is limited by `0:3000[SLEN]`, don't want to download genomes! 
 
 *Note* This capability to query by string and field is only available for [GenBank as of Bioperl version 1.5, queries to other databases, like Swissprot or EMBL, are limited to identifiers and accessions.
 
