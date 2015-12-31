@@ -33,7 +33,7 @@ Table 1. Revision History
 Creating OBDA-Compliant Indexed Sequence Files
 ----------------------------------------------
 
-[Bio::DB::Flat](https://metacpan.org/pod/Bio::DB::Flat) has the same functionality as the various [Bio::Index](http://search.cpan.org/search?query=Bio::Index) modules. The main reason to use it is if you want to use the BioSequence Registry system (see the [OBDA  HOWTO](OBDA.html)), or if you want to share the same indexed files among scripts written in other languages, such as those written with [BioJava](http://biojava.org) or [BioPython](http://biopython.org) or [BioRuby](http://bioruby.org).
+[Bio::DB::Flat](https://metacpan.org/pod/Bio::DB::Flat) has the same functionality as the various [Bio::Index](http://search.cpan.org/search?query=Bio::Index) modules. The main reason to use it is if you want to use the BioSequence Registry system (see the [OBDA  HOWTO](OBDA_HOWTO.html)), or if you want to share the same indexed files among scripts written in other languages, such as those written with [BioJava](http://biojava.org) or [BioPython](http://biopython.org) or [BioRuby](http://bioruby.org).
 
 There are four steps to creating a database:
 
@@ -170,6 +170,6 @@ my $gi_seq = $db->get_Seq_by_secondary("GI",443893);
 More Information
 ----------------
 
-For more information on using your indexed flat files please see the [OBDA  HOWTO](OBDA.html).
+For more information on using your indexed flat files please see the [OBDA  HOWTO](OBDA_HOWTO.html).
 
 

@@ -883,7 +883,7 @@ print $seq_obj->seq;
 
 This script indexes the *genome.fa* file, then retrieves a sub-sequence of CHROMOSOME_I, starting at 11250 and ending at 11333. One can also specify what ids can be used as keys, just as in [Bio::Index::Fasta](https://metacpan.org/pod/Bio::Index::Fasta).
 
-There's a bit more information on indexing in [HOWTO:Local_Databases](Local_Databases.html).
+There's a bit more information on indexing in [HOWTO:Local_Databases](Local_Databases_HOWTO.html).
 
 ### Running applications: Searching for genes in genomic DNA
 

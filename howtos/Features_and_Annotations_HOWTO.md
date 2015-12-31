@@ -75,7 +75,7 @@ disparate objects, such as two different kinds of SeqFeatures. You may also want
 
 SeqFeatures and Annotations will make the most sense if you're already somewhat
 familiar with BioPerl and its objects. The reader is referred to
-the [Beginners HOWTO](Beginners.html), [SeqIO HOWTO](SeqIO_HOWTO.html), and the [SearchIO HOWTO](SearchIO_HOWTO.html) for more information on these topics. Here's a bit of code, to summarize:
+the [Beginners HOWTO](Beginners_HOWTO.html), [SeqIO HOWTO](SeqIO_HOWTO.html), and the [SearchIO HOWTO](SearchIO_HOWTO.html) for more information on these topics. Here's a bit of code, to summarize:
 
 ```perl
 # BAB55667.gb is a Genbank file, and Bioperl knows that it
@@ -815,7 +815,7 @@ Additional Information
 ----------------------
 
 If you would like to learn about representing sequences and features in
-graphical form take a look at the [Graphics HOWTO](Graphics.html). If you have questions or comments that aren't addressed herein then write the Bioperl community at bioperl-l@bioperl.org.
+graphical form take a look at the [Graphics HOWTO](Graphics_HOWTO.html). If you have questions or comments that aren't addressed herein then write the Bioperl community at bioperl-l@bioperl.org.
 
 Acknowledgements
 ----------------

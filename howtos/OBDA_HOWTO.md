@@ -146,7 +146,7 @@ If you are using the `biofetch` protocol, you're all set. You can start reading 
 
 For the `flat` protocol, you will need to create and initialize a local database:
 
-* [Flat Databases HOWTO](OBDA_Flat_databases.html)
+* [Flat Databases HOWTO](OBDA_Flat_databases_HOWTO.html)
 
 Once the flat database is created you can configure your seqdatabase.ini file. Let's say that you have used the `bioflat_index.pl` script to create the flat database and a new directory called `ppp` has been created in your `/home/sally/bioinf/` directory (and the `ppp/` directory contains the `config.dat` file). Your `sequence.ini` entry should contain these lines:
 

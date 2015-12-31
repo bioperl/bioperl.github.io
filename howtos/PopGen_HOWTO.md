@@ -32,7 +32,7 @@ We have aimed to build a set of modules that can be used as part of an automated
 
 To see results of using these tools see Stajich and Hahn [[1](#bibkey_perlymorphism)] using `tajima_D`, Hahn et al [[2](#bibkey_hahn2004)] using `composite_LD`, and Rockman et al [[3](#bibkey_rockman2003)] using `F[st]`.
 
-This document will be split up into sections which describe the data objects for representing populations, tests you can perform using these objects, a coalescent implementation, and objects for performing sequence distance based calculations. A full treatment of the Bioperl interface to the PAML suite [[4](#bibkey_paml)] is covered in the [PAML HOWTO](PAML.html) and objects and data pertinent to phylogenetic data manipulation are covered in the [Trees HOWTO](Trees.html).
+This document will be split up into sections which describe the data objects for representing populations, tests you can perform using these objects, a coalescent implementation, and objects for performing sequence distance based calculations. A full treatment of the Bioperl interface to the PAML suite [[4](#bibkey_paml)] is covered in the [PAML HOWTO](PAML_HOWTO.html) and objects and data pertinent to phylogenetic data manipulation are covered in the [Trees HOWTO](Trees_HOWTO.html).
 
 The Bio::PopGen Objects
 -----------------------

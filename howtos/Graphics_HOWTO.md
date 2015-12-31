@@ -43,7 +43,7 @@ This HOWTO describes the [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics)
 
 The [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) module was designed to solve these problems. In addition, using the [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) module (part of BioPerl) and the GBrowse program (available from http://www.gmod.org) you can create interactive web pages to explore your data.
 
-This document takes you through a few common applications of Bio::Graphics in a cookbook fashion. Advanced users might be interested in the [Custom Glyph HOWTO](Glyphs.html), which explains how to extend Bio::Graphics using custom glyphs.
+This document takes you through a few common applications of Bio::Graphics in a cookbook fashion. Advanced users might be interested in the [Custom Glyph HOWTO](Glyphs_HOWTO.html), which explains how to extend Bio::Graphics using custom glyphs.
 
 Preliminaries
 -------------

@@ -5,7 +5,7 @@ layout: howto
 
 The API described here for refers to the version currently found in as a separate release on CPAN. It is not compatible with the experimental API used in older BioPerl releases.
 
-Also see the [EUtilities Web Service HOWTO](EUtilities_Web_Service.html).
+Also see the [EUtilities Web Service HOWTO](EUtilities_Web_Service_HOWTO.html).
 
 Authors
 =======
@@ -891,6 +891,6 @@ $eutil->print_all;
 References / See Also
 =====================
 
-- [HOWTO:EUtilities Web Service](EUtilities_Web_Service.html) - more info about the SOAP interface
+- [HOWTO:EUtilities Web Service](EUtilities_Web_Service_HOWTO.html) - more info about the SOAP interface
 - The official [NCBI EUtilities Help manual](http://www.ncbi.nlm.nih.gov/books/NBK25501/)
 

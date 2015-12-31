@@ -13,7 +13,7 @@ This is a HOWTO that talks about using Bioperl to create local sequence database
 
 ### Introduction
 
-Bioperl offers many ways to retrieve sequences from online databases like NCBI and Swissprot but there may be times when you want build local databases for fast, secure retrieval. This HOWTO discusses the different Bioperl modules you might use. Also see [OBDA Flat databases HOWTO](OBDA_Flat_databases.html).
+Bioperl offers many ways to retrieve sequences from online databases like NCBI and Swissprot but there may be times when you want build local databases for fast, secure retrieval. This HOWTO discusses the different Bioperl modules you might use. Also see [OBDA Flat databases HOWTO](OBDA_Flat_databases_HOWTO.html).
 
 ### Bio::Index
 
