@@ -3,6 +3,8 @@ title: "Advanced BioPerl HOWTO"
 layout: howto
 ---
 
+This page discusses code design, for anyone contributing to Bioperl. Also see the [Best Practices HOWTO](Best_Practices_HOWTO.html) and the [Using Git HOWTO](Using_Git_HOWTO.html).
+
 Extending the toolkit
 ---------------------
 
