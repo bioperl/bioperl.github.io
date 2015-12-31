@@ -26,19 +26,28 @@
       <script type="text/javascript">
         $("#searchbtn").click(function(){
           var search_output = '';
-          var regex = new RegExp($("#searchterm").val(), "i");
-          // The _site/search.json file is created from the search.json template,
-          // the JSON must be valid, otherwise this method fails without an error
-          $.getJSON('search.json', function(data) {
+          // Use JQuery's trim() for portability
+          var query = $.trim( $("#searchterm").val() );
+          var regex = new RegExp(query, "i");
+          // The _site/search.json file is created using the search.json Liquid template,
+          // and it's this resulting file that's used for the search. If the JSON is not 
+          // valid the getJSON() method fails without an error.
+          $.getJSON('/search.json', function(data) {
             $.each(data, function(key, val) {
               // console.log("Title is [" + val.title + "], URL is [" + val.href + "]");
               if ( regex.test(val.content) || regex.test(val.title) ) {
                 // console.log("Match to [" + val.title + "]");
-                search_output += '<p><a href="' + val.href + '">' + val.title + '</a></p>';
+                search_output += '<a href="' + val.href + '">' + val.title + '</a><br>';
               };
             });
             // console.log("Output is [" + search_output + "]");
-            $('.trigger').html(search_output);
+            var search_result = '';
+            if ( search_output == '' ) {
+              search_result = '<div style="font-size:14px;"><u>No matches to "' + query + '"</u>';
+            } else {
+              search_result = '<div style="font-size:14px; line-height: 25px;"><u>Matches to "' + query + '"</u><br><div style="font-style: italic">' + search_output + '</div></div>';
+            }
+            $('.trigger').html(search_result);
           });
         });
       </script>
