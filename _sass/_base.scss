@@ -213,8 +213,10 @@ tbody tr:nth-child(odd) {
     }
 }
 
+// "inline-block" draws the box around the text
 .boxed {
     border: 1px solid lavender;
     padding: 10px;
     display: inline-block;
+    background: #CDDCF1;
 }
