@@ -304,4 +304,4 @@ the bugs and their resolution. Bug reports can be submitted via the web:
 
 -   All the general documentation about a module should be placed before any code, and each method should have its own documentation just before the method code.
 - Use `podchecker` to check your POD syntax
-- If using Emacs, use the [bioperl.lisp](Emacs "wikilink") macros - there is a standard boilerplate you can follow.'
+- If using Emacs, use the [bioperl.lisp](https://github.com/bioperl/bioperl-live/blob/master/ide/bioperl.lisp) template - there is a standard boilerplate you can follow.

@@ -90,6 +90,8 @@ BioPerl is a pretty diverse collection of modules which has grown from the direc
 
 We always need people to help fix bugs - check the [GitHub bug tracking system](https://github.com/bioperl/bioperl-live/issues). Submitting bugs in the documentation and code is very helpful as has been said about open source software ["Given enough eyeballs, all bugs are shallow"](https://en.wikipedia.org/wiki/Cathedral_and_the_Bazaar).
 
+There's plenty of developer documentation as well, see the [Using Git HOWTO](/howtos/Using_Git_HOWTO.html), the [Advanced BioPerl HOWTO](/howtos/Advanced_BioPerl_HOWTO.html), and [Best Practices HOWTO](/howtos/Best_Practices_HOWTO.html).
+
 ### I've got an idea for a module how do I contribute it?
 
 Post your idea on the [bioperl-l mailing list](http://lists.open-bio.org/mailman/listinfo/bioperl-l). If you have written it already, or if you have been thinking about the API already, post the API, ideally with usage documentation, e.g., the POD that would normally go with each method, and some usage examples, e.g., what would otherwise go into the synopsis section of the module's POD.
@@ -100,7 +102,7 @@ Once you completed gathering feedback and incorporating into your module as appr
 
 Post your idea to the [bioperl-l mailing list](http://lists.open-bio.org/mailman/listinfo/bioperl-l). If it is a really new idea consider taking us through your thought process. We'll help you tease out the necessary information such as what methods you'll want and how it can interact with other BioPerl modules. If it is a port of something you've already worked on, give us a summary of the current methods. Make sure there is an interface to the module, not just an implementation and make sure there will be a set of tests that will be in the `t/` directory to insure that your module is tested. 
 
-If you have a suggested patch and/or code enhancement you can submit it to the [GitHub tracking system](https://github.com/bioperl/bioperl-live/issues). See also [Advanced BioPerl](/howtos/Advanced_BioPerl_HOWTO.html) for more information.
+If you have a suggested patch and/or code enhancement you can submit it to the [GitHub tracking system](https://github.com/bioperl/bioperl-live/issues). See the [Using Git HOWTO](Using_Git_HOWTO.html) for more information.
 
 ### Why can't I easily get a list of all the methods a object can call?
 
