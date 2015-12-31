@@ -511,7 +511,7 @@ Note that newer versions of io_lib no longer support ABI sequences unless the St
 
 ### What is bioperl-db?
 
-The [BioPerl db](https://github.com/bioperl/bioperl-db) package contains interfaces and adaptors that work with a [BioSQL](https://en.wikipedia.org/wiki/BioSQL) database to serialize and de-serialize Bioperl objects. We *strongly recommend you use the [Git version](https://github.com/bioperl/bioperl-db) with the latest [biosql-schema](http://biosql.org).
+The [BioPerl db](https://github.com/bioperl/bioperl-db) package contains interfaces and adaptors that work with a [BioSQL](http://biosql.org) database to serialize and de-serialize Bioperl objects. We *strongly* recommend you use the [Git version](https://github.com/bioperl/bioperl-db) with the latest [biosql-schema](http://biosql.org).
 
 ### What is bioperl-network?
 
