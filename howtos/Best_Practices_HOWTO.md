@@ -106,7 +106,7 @@ sub barfoo {
 }
 ```
 
--   The use of `AUTOLOAD` is controversial for most core BioPerl developers but has been used for [bioperl-run](Run_package "wikilink")
+-   The use of `AUTOLOAD` is controversial for most core BioPerl developers but has been used for [bioperl-run](https://github.com/bioperl/bioperl-run)
 -   See the links http://thread.gmane.org/gmane.comp.lang.perl.bio.general/394/focus=397 and http://thread.gmane.org/gmane.comp.lang.perl.bio.general/3927/focus=3927 for the mail list threads concerning the use of `AUTOLOAD` in BioPerl.
 -   In short, it is highly recommended not to use `AUTOLOAD` in the core modules unless absolutely necessary, primarily for performance reasons but also because the `UNIVERSAL` method `$self->can()` will not work for `AUTOLOAD`'ed methods.
 -   As an alternative, especially for Run wrappers, the use of `_set_from_args()` is recommended, most likely in combination with `_setparams`:
