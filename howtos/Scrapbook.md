@@ -548,78 +548,54 @@ See [Species_names_from_accession_numbers](#Species_names_from_accession_numbers
 
 ### Adding_a_DNA_track<a name="Adding_a_DNA_track"></a>
 
-The hack
---------
+**The hack**
 
 I thought this was helpful, since the only DNA track example documentation I could find was in the POD of bioperl-live (not on search.cpan.org yet). Thoughts? --[Jhannah](User:Jhannah "wikilink") 02:48, 13 May 2008 (UTC)
 
-The script
-----------
+**The script**
 
 ```perl
-
 use strict;
 use Bio::Graphics;
 use Bio::SeqFeature::Generic;
 
-# 
-
-    ------------------------------------------------------------------------
-
+# -------------------------------------
 # Configure these... ( name start end )
-
 my @stuff = qw(
-
   thing1  2  6
   thing2 14 10
   thing3 12 16
   thing4 18 22
-
 );
 my $seq = 'ACGGTCGATCGATCGATCGATCGTACGATCG';
-
-# 
-
-    ------------------------------------------------------------------------
+# --------------------------------------
 
 my $panel = Bio::Graphics::Panel->new(
-
   -length => length($seq),         # bp
   -width  => length($seq) * 7,     # pixels
-
 );
 
 # Add the arrow at the top.
-
 my $full_length = Bio::SeqFeature::Generic->new(
-
   -start => 1,
   -end   => length($seq),
-
 );
 $panel->add_track($full_length,
-
   -glyph     => 'arrow',
   -tick      => 2,
   -fgcolor   => 'black',
   -northeast => 1,
-
 );
 
 # Data track...
-
 my $track = $panel->add_track(
-
   -glyph    => 'generic',
   -stranded => 1,
   -label    => 1,
-
 );
 
 # Add each feature to the data track.
-
 while (@stuff) {
-
   my ($name, $start, $end) = splice @stuff, 0, 3;
   my $feature = Bio::SeqFeature::Generic->new(
      -strand       => $start < $end ? 1 : -1,
@@ -628,31 +604,20 @@ while (@stuff) {
      -end          => $end,
   );
   $track->add_feature($feature);
-
 }
 
 # Add the DNA track to the bottom.
-
-my $dna = Bio::PrimarySeq->new( -seq =>
-$seq );
-my $feature = Bio::SeqFeature::Generic->new( -start =>
-1, -end =>
-length($seq) );
+my $dna = Bio::PrimarySeq->new( -seq => $seq );
+my $feature = Bio::SeqFeature::Generic->new( -start => 1, -end => length($seq) );
 $feature->attach_seq($dna);
-$panel->add_track( $feature, -glyph =>
-'dna' );
+$panel->add_track( $feature, -glyph => 'dna' );
 
 # Send to a .png file.
-
 print $panel->png;
-
 ```
 
 Output:
-
-![](Bio Graphics Glyph dna.png "Bio Graphics Glyph dna.png")
-
-
+[Bio Graphics Glyph dna.png](Bio Graphics Glyph dna.png)
 
 
 ### Drawing_with_multiple_glyphs_in_a_single_track<a name="Drawing_with_multiple_glyphs_in_a_single_track"></a>
@@ -663,7 +628,7 @@ Output:
 
 ***Matthew Betts*** asks:
 
-*Has any one tried to draw secondary structure with , i.e. two different types of glyph with different colours on the same track?*
+*Has any one tried to draw secondary structure with [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics), i.e. two different types of glyph with different colours on the same track?*
 
 ------------------------------------------------------------------------
 
@@ -672,26 +637,20 @@ Output:
 *If you want to put more than one glyph and/or more than one color in a track, it is fairly easy. You just need to provide a callback for each option when you create the track, like this:*
 
 ```perl
-
 $panel->add_track($features_array_ref,
-
                  -glyph       => sub { #code to set the glyph according the attributes of the feature  },
                  -bgcolor     => sub { #code to set the color },
                  -fgcolor     => 'black',
                ...etc...
-
 );
-
 ```
 
-*For more information, see the *
+*For more information, see the Graphics HOWTO*
 
 Matthew implements:
 
 ```perl
-
 $panel->add_track(
-
           '-bgcolor' => sub {
            my($feature) = @_;
                $feature->display_name eq 'strand' ? 'cyan' : 'magenta';
@@ -700,29 +659,23 @@ $panel->add_track(
                my($feature) = @_;
                $feature->display_name eq 'strand' ? 1 : 0;
           },
-
 );
-
 ```
-
 
 
 ### Simple_graphical_alignment_overview<a name="Simple_graphical_alignment_overview"></a>
 
-The hack
---------
+**The hack**
 
 **From [Christopher Fields](Christopher_Fields "wikilink")**
 
-A simple alignment overview plotter (requires , , and bioperl-live). This takes alignment data and prints out the sequences in blocks with dotted lines indicating gaps.
+A simple alignment overview plotter (requires [GD::SVG](https://metacpan.org/pod/GD::SVG), [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics), and [bioperl-live](https://github.com/bioperl/bioperl-live)). This takes alignment data and prints out the sequences in blocks with dotted lines indicating gaps.
 
-To change to PNG output, delete/comment the `-image_class` parameter passed to the instance and change the last line to `print $panel->png`.
+To change to PNG output, delete/comment the `-image_class` parameter passed to the [Bio::Graphics::Panel](https://metacpan.org/pod/Bio::Graphics::Panel) instance and change the last line to `print $panel->png`.
 
-The script
-----------
+**The script**
 
 ```perl
-
 #!/usr/bin/perl
 
 use strict;
@@ -732,29 +685,23 @@ use Bio::SeqFeature::Generic;
 
 my $file = shift or die "Usage: render_alignment.pl <clustalw file> ";
 
-my $aio = Bio::AlignIO->new(-file =>
-$file,
-
+my $aio = Bio::AlignIO->new(-file => $file,
                            -format => 'clustalw') or die "parse failed";
 
 my $aln = $aio->next_aln() or die "no alignment";
 
 my $panel = Bio::Graphics::Panel->new(
-
    -image_class => 'SVG',
    -length    => $aln->length,
    -width     => 800,
    -pad_left  => 150,
    -pad_right => 10,
-
 );
 
 my $full_length = Bio::SeqFeature::Generic->new(
-
    -start        => 1,
    -end          => $aln->length,
    -display_name => 'clustalw alignment',
-
 );
 $panel->add_track($full_length,
 
@@ -766,7 +713,6 @@ $panel->add_track($full_length,
                 );
 
 my $track = $panel->add_track(
-
                              -glyph       => 'segments',
                              -label       => 1,
                              -connector   => 'dashed',
@@ -776,7 +722,6 @@ my $track = $panel->add_track(
                             );
 
 for my $seqobj ($aln->each_seq) {
-
    my $seq = $seqobj->seq;
    my @seqs;
    # get alignment positions for seqs
@@ -789,20 +734,16 @@ for my $seqobj ($aln->each_seq) {
        Bio::SeqFeature::Generic->new(-start => pos($seq)-length($1)+1,
                                      -end => pos($seq),
                                      -sequence => $1), 'EXPAND');
-                                                                  
+
    }
    $track->add_feature($feature);
-
 }
 
 print $panel->svg;
-
 ```
 
 **Fig. 1: Graphical alignment output**
-
-![](Align.jpg "Align.jpg")
-
+[Align.jpg](Align.jpg)
 
 
 
