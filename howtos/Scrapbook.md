@@ -428,10 +428,9 @@ See [HOWTO:Getting_Genomic_Sequences](Getting_Genomic_Sequences.html)
 
 ### Human_genomic_coordinates_and_sequence<a name="Human_genomic_coordinates_and_sequence"></a>
 
--   '' Note that the first script doesn't get it quite right, but it stays within BioPerl. Replace `get_genomic_sequence()` with the [second version](#DTRT "wikilink") to get the exact solution. This requires `[Bio::EnsEMBL](https://metacpan.org/pod/Bio::EnsEMBL)` tools;
-see link below. --[Ed.](User:Majensen "wikilink")''
+-   *Note that the first script doesn't get it quite right, but it stays within BioPerl. Replace `get_genomic_sequence()` with the [second version](#DTRT "wikilink") to get the exact solution. This requires `[Bio::EnsEMBL](https://metacpan.org/pod/Bio::EnsEMBL)` tools; see link below. --[Ed.](User:Majensen "wikilink")*
 
-**[Emanuele Osimo](User:Emos "wikilink")**, after working hard with , says:
+**[Emanuele Osimo](User:Emos "wikilink")**, after working hard with HOWTO Getting Genomic Sequences, says:
 
 *The script works fine, but gives me the wrong coordinates...there are two different sets of coordinates. The first is called "NC_000001.10 Genome Reference Consortium Human Build 37 (GRCh37), Primary_Assembly", and is the one I need, and the second one is called just "NT_004610.19" and it's the one that the script prints. Do you know how to make the script print the "right" coordinates (at least,the ones I need)?*
 
@@ -444,7 +443,6 @@ Below is a script that fetches chromosomal coordinates based on a geneID, and us
 ------------------------------------------------------------------------
 
 ```perl
-
 use strict;
 use Bio::DB::EntrezGene;
 use Bio::WebAgent;
@@ -459,45 +457,35 @@ my $db = new Bio::DB::EntrezGene;
 my ($chr,$start, $end, $info);
 my @geneids = (842, 843, 844);
 for my $geneid ( @geneids ) {
-
-   ($chr,$start, $end, $info) = genome_coords($geneid, $db, $ua); 
+   ($chr,$start, $end, $info) = genome_coords($geneid, $db, $ua);
    my $seq_obj = get_genomic_sequence($chr, $start, $end);
    print $seq_obj->seq; # or whatever you want
-
 }
 
 sub genome_coords {
-
    my ($id, $db, $ua) = @_;
    my $seq = $db->get_Seq_by_id($id);
    my $ac = $seq->annotation;
     for my $ann ($ac->get_Annotations('dblink')) {
-    if ($ann->database eq 'UCSC') 
-    {
-        my $resp = $ua->get($ann->url);
-        my ($chr, $start, $end, $info) = $resp->content =~ m{position=chr([0-9]+):([0-9]+)-([0-9]+)
-                                                                 \&.*\&refGene.*?\">(.*?)`</A>`}gx;
-
-```
-
-```perl
-
-            # break above is a <perl ></ perl> wiki parser workaround...
-        return unless $chr;
-        return ($chr, $start, $end, $info);
+      if ($ann->database eq 'UCSC')
+      {
+          my $resp = $ua->get($ann->url);
+          my ($chr, $start, $end, $info) =
+              $resp->content =~ m{position=chr([0-9]+):([0-9]+)-([0-9]+)
+                                  \&.*\&refGene.*?\">(.*?)`</A>`}gx;
+          return unless $chr;
+          return ($chr, $start, $end, $info);
+      }
     }
-    }
-   return; # parse error, no UCSC link on page 
-
+   return; # parse error, no UCSC link on page
 }
 
 sub get_genomic_sequence {
-
    my ($chr, $start, $end) = @_;
    my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
                       -db    => 'nucleotide',
                       -rettype => 'gb');
-   
+
    my $strand = $start > $end ? 2 : 1;
    my $acc = sprintf("NC_%06d", $chr); # standard locations for current hum genome build
                                        # NC_000022 is X, NC_000023 is Y. NCC_1701 is the Enterprise.
@@ -506,38 +494,34 @@ sub get_genomic_sequence {
                 -seq_stop  => $end,
                 -strand    => $strand);
    my $seq = $fetcher->get_Response->content;
+
    # there must be a better way than below, but oh well...
    if ($seq) {
-   my ($fh, $fn) = Bio::Root::IO::tempfile();
-   print $fh $seq;
-   close $fh;
-   my $seqio = Bio::SeqIO->new(-file=>$fn, -format=>'genbank');
-   return $seqio->next_seq;
+     my ($fh, $fn) = Bio::Root::IO::tempfile();
+     print $fh $seq;
+     close $fh;
+     my $seqio = Bio::SeqIO->new(-file=>$fn, -format=>'genbank');
+     return $seqio->next_seq;
    }
    return;
-
 }
-
 ```
 
 *--[Ed.](User:Majensen "wikilink")*
 
-<span id='DTRT'></span> **[Emanuele](User:Emos "wikilink")** submits:
+**[Emanuele](User:Emos "wikilink")** submits:
 
 *I discovered that the coupling of the two subs that Mark posted doesn't get the right results. I think this is because one gets the coordinates with RefSeq build 36.3, the other with build 37. I found that coupling the first sub, genome_coords, with the [Bio::EnsEMBL::Registry](https://metacpan.org/pod/Bio::EnsEMBL::Registry) fetch by region API is a lot better, and it actually generates sequences that contain the genes.*
 
-Here is a modified `get_genomic_sequence`, based on EO's script. This requires `[Bio::EnsEMBL::](https://metacpan.org/pod/Bio::EnsEMBL::)*`;
-get it [here](http://www.ensembl.org/info/docs/api/api_installation.html), and see the core API docs [here](http://www.ensembl.org/info/docs/Pdoc/ensembl/index.html):
+Here is a modified `get_genomic_sequence`, based on EO's script. This requires Bio::EnsEMBL::\*; get it [here](http://www.ensembl.org/info/docs/api/api_installation.html), and see the core API docs [here](http://www.ensembl.org/info/docs/Pdoc/ensembl/index.html):
 
 ```perl
-
 use Bio::EnsEMBL::Slice;
 use Bio::EnsEMBL::Registry;
 
 # returns a Bio::EnsEMBL::Gene
 
 sub get_genomic_sequence {
-
  my ($chr, $start, $end) = @_;
 
  my $registry = 'Bio::EnsEMBL::Registry';
@@ -549,11 +533,8 @@ sub get_genomic_sequence {
 
  my $slice = $slice_adaptor->fetch_by_region( 'chromosome', $chr, $start, $end );
  return $slice;
-
 }
-
 ```
-
 
 
 ### Species_names_from_accession_numbers<a name="Species_names_from_accession_numbers"></a>
