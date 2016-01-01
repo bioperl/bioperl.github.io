@@ -51,7 +51,7 @@ Table 1. AlignIO input formats
 
 The emboss format refers to the output of the water, needle, matcher, stretcher, merger, and supermatcher applications. See <http://emboss.sourceforge.net>.
 
-Unlike [SeqIO](https://metacpan.org/pod/Bio::SeqIO) cannot create output files in every format. [AlignIO](https://metacpan.org/pod/Bio::AlignIO) currently supports output in these formats:
+[Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) reads many formats but does not write in every format (the same is true for [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO)). [AlignIO](https://metacpan.org/pod/Bio::AlignIO) currently supports output in these formats:
 
 -   fasta
 -   mase
@@ -64,7 +64,7 @@ Unlike [SeqIO](https://metacpan.org/pod/Bio::SeqIO) cannot create output files i
 -   XMFA
 -   metafasta
 
-Another significant difference between and is that handles IO for only a single alignment at a time but handles IO for multiple sequences in a single stream. Syntax for AlignIO is similar to that of SeqIO:
+The basic syntax for AlignIO is similar to that of SeqIO:
 
 ```perl
 use Bio::AlignIO;
@@ -80,9 +80,9 @@ while ( my $aln = $in->next_aln ) {
 }
 ```
 
-The returned object, `$aln`, is a [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) object rather than a [Bio::Seq](https://metacpan.org/pod/Bio::Seq) object.
+The returned object, `$aln`, is a [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object rather than a [Bio::Seq](https://metacpan.org/pod/Bio::Seq) object.
 
-[Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO)also supports the tied filehandle syntax described above for [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO).
+[Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO)also supports the tied filehandle syntax described for [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO).
 
 ### SimpleAlign
 
