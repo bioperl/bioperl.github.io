@@ -45,7 +45,7 @@ foreach my $n (@nodes) {
 
 ------------------------------------------------------------------------
 
--   Another approach, using of [G. Valiente](User:Valiente "wikilink"). If the internal intervening nodes are labeled (have a non-empty `id()` property), they will also appear in the output.
+-   Another approach, using [Bio::Tree::Compatible](https://metacpan.org/pod/Bio::Tree::Compatible) of [G. Valiente](User:Valiente "wikilink"). If the internal intervening nodes are labeled (have a non-empty `id()` property), they will also appear in the output.
 
 ```perl
 
@@ -55,16 +55,13 @@ use Bio::Tree::Compatible;
 my $tio = Bio::TreeIO->new(-format=>'newick',-fh=>\*DATA);
 while (my $t = $tio->next_tree) {
 
- map { 
-     print "(",join(',',@{$_}),")
-
-"
-
- } values %{Bio::Tree::Compatible::cluster_representation( $t ) };
-
+ map {
+     print "(",join(',',@{$_}),")\n"
+     } values %{Bio::Tree::Compatible::cluster_representation( $t ) };
 }
 
-__DATA__ (((A:5,B:5):2,(C:4,D:4):1):3,E:10);
+__DATA__
+(((A:5,B:5):2,(C:4,D:4):1):3,E:10);
 (((A:5,B:5)x:2,(C:4,D:4)y:1)z:3,E:10)r;
 
 ```
@@ -72,12 +69,11 @@ __DATA__ (((A:5,B:5):2,(C:4,D:4):1):3,E:10);
 --[*MAJ*](User:Majensen "wikilink")
 
 
-
 ### Poor_man%27s_bootstrap<a name="Poor_man%27s_bootstrap"></a>
 
 (*see the bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-June/030247.html)*)
 
--   *As [Russell](User:Russell_Smithies "wikilink") often says, sometimes Perl can do the job by itself. However, if you want to bootstrap sequences from an alignment, have a look at ... --[Ed.](User:Majensen "wikilink")*
+-   *As [Russell](User:Russell_Smithies "wikilink") often says, sometimes Perl can do the job by itself. However, if you want to bootstrap sequences from an alignment, have a look at [Bio::Align::Utilities](https://metacpan.org/pod/Bio::Align::Utilities)... --[Ed.](User:Majensen "wikilink")*
 
 ***Shalabh Sharma*** asks
 
@@ -92,9 +88,7 @@ from ***[Mark Jensen](User:Majensen "wikilink")***:
 *If you trust `rand()`...*
 
 ```perl
-
 # open your file into $my_infile, then
-
 @lines = <$my_infile>;
 
 my $num_samps = 10;
@@ -102,16 +96,12 @@ my $sample_size_pc = 0.25;
 my @samples;
 
 for (1..$num_samps) {
-
    push @samples = [map { int( @lines * rand ) } ( 0..int($sample_size_pc * @lines) ) ];
-
 }
 
 # now, do something, fr'instance
-
 my @sample_pc;
 foreach (@samples) {
-
    my $pct=0;
    foreach my $line (@lines[ @$_ ]) {
        @a = split(/\s+/,$line);
@@ -119,18 +109,15 @@ foreach (@samples) {
    }
    $pct /= @$_;
    push @sample_pc, $pct;
-
 }
 
 # etc...
-
 ```
-
 
 
 ### Site_entropy_in_an_alignment<a name="Site_entropy_in_an_alignment"></a>
 
-(see bioperl-l discussion [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028517.html), and see also [Site frequencies in an alignment](Site_frequencies_in_an_alignment "wikilink"))
+(see bioperl-l discussion [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028517.html), and see also [Site frequencies in an alignment](#Site_frequencies_in_an_alignment))
 
 ***Cláudio Sampaio*** asks
 
@@ -141,17 +128,15 @@ from ***[Mark Jensen](User:Majensen "wikilink")***:
 *If you have a [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object prepared -- maybe from*
 
 ```perl
-
 $alnio = new Bio::AlignIO(-format=>'fasta', -file=>'your.fas');
 $aln = $alnio->next_aln;
-
 ```
 
 *try the following function, as*
 
 ```perl
-
 $entropies = entropy_by_column( $aln )
+
 =head2 entropy_by_column
 Title   : entropy_by_column
 Usage   : entropy_by_column( $aln )
@@ -160,6 +145,7 @@ Example :
 Returns : hashref of the form { $column_number => $entropy, ... }
 Args    : a Bio::SimpleAlign object
 =cut
+
 sub entropy_by_column {
    my ($aln) = @_;
    my (%ent);
@@ -174,6 +160,7 @@ sub entropy_by_column {
    }
   return [%ent];
 }
+
 =head2 entropy
 Title   : entropy
 Usage   : entropy( @numbers )
@@ -184,6 +171,7 @@ Example : entropy ( 1, 1, 1 )  # returns 1.09861228866811 = log(1/3)
 Returns : Shannon entropy or undef if entropy undefined;
 Args    : an array
 =cut
+
 use List::Util qw(sum);
 sub entropy {
    @a = grep {$_} @_;
@@ -193,34 +181,28 @@ sub entropy {
    $_ /= $t foreach @a;
    return sum(map { -$_*log($_) } grep {$_} @a);
 }
-
 ```
-
 
 
 ### Site_frequencies_in_an_alignment<a name="Site_frequencies_in_an_alignment"></a>
 
--   *So, here's one reason for the Scrapbook. You say, "why write something I already sort of wrote?" So today I came to the Scrapbook to cannibalize [Site entropy in an alignment](Site_entropy_in_an_alignment "wikilink"), to get it to squirt out the actual frequencies of each nucleotide at each site. The key here is the round-trip: a new scrap for you, based on the mods. --[Ed.](User:Majensen "wikilink")*
+-   *So, here's one reason for the Scrapbook. You say, "why write something I already sort of wrote?" So today I came to the Scrapbook to cannibalize [Site entropy in an alignment](#Site_entropy_in_an_alignment), to get it to squirt out the actual frequencies of each nucleotide at each site. The key here is the round-trip: a new scrap for you, based on the mods. --[Ed.](User:Majensen "wikilink")*
 
 *To get an array of hashes of hashes containing the frequencies of each residue at each site of an alignment:*
 
 ```perl
-
 $freqs = freqs_by_column($aln);
-
 ```
 
 ```perl
 
 =head2 freqs_by_column
-
 Title   : freqs_by_column
 Usage   : freqs_by_column( $aln )
 Function: returns the freqs for each column in an alignment
 Example :
 Returns : hashref of the form { $column_number => {'A'=>$afreq,...}, ... }
 Args    : a Bio::SimpleAlign object
-
 =cut
 
 sub freqs_by_column {
@@ -239,17 +221,14 @@ sub freqs_by_column {
 }
 
 =head2 freqs
-
 Title   : freqs
 Usage   : freqs( \%ntct )
 Function: returns the site frequencies of nts in an aligment
 Returns : hashref of freqs: { A => 0.5, G => 0.5 }
 Args    : hashref of nt counts { A => 100, G => 100 }
-
 =cut
 
 sub freqs {
-
    my $ntct = shift;
    my $t = eval join('+', values %$ntct);
    my @a = qw( A T G C );
@@ -259,13 +238,10 @@ sub freqs {
    my %ret;
    @ret{@a} = @f;
    return { %ret}
-
 }
-
 ```
 
 *but don't expect to set any speed records.*
-
 
 
 
