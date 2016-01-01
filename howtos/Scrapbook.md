@@ -261,10 +261,9 @@ sub freqs {
 
 ***[Mark Jensen](User:Majensen "wikilink") replies:***
 
-'' is nicely generalized to allow different 'namespaces' for the different identifiers used on different sequences. You can choose the type of identifier you want (gi, in your case) by using *`get_Seq_by_acc()`* as follows (this actually works on my machine):''
+[Bio::DB::Flat](https://metacpan.org/pod/Bio::DB::Flat) is nicely generalized to allow different 'namespaces' for the different identifiers used on different sequences. You can choose the type of identifier you want (gi, in your case) by using *`get_Seq_by_acc()`* as follows (this actually works on my machine):
 
 ```perl
-
 $db = Bio::DB::Flat->new(-directory  => "$ENV{HOME}/scratch",
    -dbname     => 'mydb',
    -format     => 'genbank',
@@ -272,11 +271,9 @@ $db = Bio::DB::Flat->new(-directory  => "$ENV{HOME}/scratch",
    -write_flag => 1);
 $db->build_index("$ENV{HOME}/scratch/plastid1.rna.gbff");
 $seq = $db->get_Seq_by_acc('GI' => 71025988);
-
 ```
 
-''If you want to get by accession number, use *`get_Seq_by_acc('ACC' => $accno)`*, etc.''
-
+If you want to get by accession number, use *`get_Seq_by_acc('ACC' => $accno)`*, etc.
 
 
 ### ACE_file_Q%26D_filtering<a name="ACE_file_Q%26D_filtering"></a>
@@ -294,49 +291,53 @@ from ***Abhi Pratap***:
 *Here's how I've been doing it:*
 
 ```perl
-
 my $infile = "454Contigs.ace";
 my $parser = new Bio::Assembly::IO(-file   => $infile ,-format => "ace") or die $!;
 my $assembly = $parser->next_assembly;
+
 # to work with a named contig
 my @wanted_id = ("Contig100");
-my ($contig) = $assembly->select_contigs(@wanted_id) or die $!; 
+my ($contig) = $assembly->select_contigs(@wanted_id) or die $!;
+
 #get the consensus
-my $consensus = $contig->get_consensus_sequence(); 
+my $consensus = $contig->get_consensus_sequence();
+
 #get the consensus qualities
 my @quality_values  = @{$contig->get_consensus_quality()->qual()};
-
 ```
 
 *[Eds.](User:Majensen "wikilink") note*: ACE file *writing* is another matter--but with solutions around the corner. See the rest of the [discussion](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028844.html).
-
-
 
 
 ### BioSQL<a name="BioSQL"></a>
 
 [BioSQL](http://biosql.org) is a part of the [OBDA](OBDA "wikilink") standard and was developed as a common sequence database schema for the different language projects within the [Open Bioinformatics Foundation](Open_Bioinformatics_Foundation "wikilink").
 
-The [BioPerl](BioPerl "wikilink") client implementation is [bioperl-db](BioPerl_db "wikilink"). It provides an [Object-Relational Mapping (ORM)](wp:Object-relational_mapping "wikilink") for various [BioPerl](BioPerl "wikilink") objects, such as [[Bio::SeqI](https://metacpan.org/pod/Bio::SeqI)](Module:[Bio::SeqI](https://metacpan.org/pod/Bio::SeqI) "wikilink"). Here is a simple example:
+The [BioPerl](https://bioperl.github.io) client implementation is [bioperl-db](https://github.com/bioperl/bioperl-db). It provides an [Object-Relational Mapping (ORM)](wp:Object-relational_mapping "wikilink") for various BioPerl objects, such as [Bio::SeqI](https://metacpan.org/pod/Bio::SeqI). Here is a simple example:
 
 ```perl
-
 #!/usr/bin/perl
 use strict;
 use Bio::Seq;
 use Bio::DB::BioDB;
+
 # create a database adaptor, actual parameters depend on your local database installation, here postgresql
 my $dbadp = Bio::DB::BioDB->new(-database => 'biosql',
                                -user => 'biosql',
                                -dbname => 'biosql',
                                -host => 'localhost',
                                -driver => 'Pg');
+
 my $adp = $dbadp->get_object_adaptor("Bio::SeqI");
+
 my $acc = "XP_000001"; # just a dummy
+
 my $seq = Bio::Seq->new(-accession_number => $acc,
                         -namespace => 'swissprot',
                         -version   => $ver);
+
 my $dbseq = $adp->find_by_unique_key($seq);
+
 my $feat = Bio::SeqFeature::Generic->new(-primary_tag => $primary_tag,
                                         -strand => 1,
                                         -start => 100,
@@ -344,14 +345,12 @@ my $feat = Bio::SeqFeature::Generic->new(-primary_tag => $primary_tag,
                                         -source_tag => 'blat');                                                          
 $dbseq->add_SeqFeature($feat);
 $dbseq->store;
-
 ```
-
 
 
 ### Species_names_from_accession_numbers<a name="Species_names_from_accession_numbers"></a>
 
--   *A scrap, showing how you can profitably combine "elink" and "esummary" --[Ed.](User:Majensen "wikilink")*
+-   *A [Bio::DB::EUtilities](https://metacpan.org/pod/Bio::DB::EUtilities) scrap, showing how you can profitably combine "elink" and "esummary" --[Ed.](User:Majensen "wikilink")*
 
 **Bhakti Dwivedi** wonders:
 
@@ -359,7 +358,7 @@ $dbseq->store;
 
 ------------------------------------------------------------------------
 
-The following scrap (with portions suspiciously reminiscent of <HOWTO:EUtilities>) demonstrates how you might do this:
+The following scrap (with portions suspiciously reminiscent of HOWTO:EUtilities) demonstrates how you might do this:
 
 ```perl
 
@@ -368,9 +367,7 @@ use Bio::DB::EUtilities;
 my (%taxa, @taxa);
 my (%names, %idmap);
 
-# these are protein ids;
-nuc ids will work by changing -dbfrom =>
-'nucleotide',
+# these are protein ids; nuc ids will work by changing -dbfrom => 'nucleotide',
 # (probably)
 
 my @ids = qw(1621261 89318838 68536103 20807972 730439);
@@ -384,52 +381,36 @@ my $factory = Bio::DB::EUtilities->new(-eutil =>
                                       -id => \@ids);
 
 # iterate through the LinkSet objects
-
 while (my $ds = $factory->next_LinkSet) {
-
    $taxa{($ds->get_submitted_ids)[0]} = ($ds->get_ids)[0]
-
 }
 
 @taxa = @taxa{@ids};
 
-$factory = Bio::DB::EUtilities->new(-eutil =>
-'esummary',
-
+$factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
        -db    => 'taxonomy',
        -id    => \@taxa );
 
 while (local $_ = $factory->next_DocSum) {
-
-   $names{($_->get_contents_by_name('TaxId'))[0]} = 
-
-($_->get_contents_by_name('ScientificName'))\[0\];
+   $names{($_->get_contents_by_name('TaxId'))[0]} =
+    ($_->get_contents_by_name('ScientificName'))[0];
 }
 
 foreach (@ids) {
-
    $idmap{$_} = $names{$taxa{$_}};
-
 }
 
 # %idmap is
-# 1621261 =>
-'Mycobacterium tuberculosis H37Rv'
-# 20807972 =>
-'Thermoanaerobacter tengcongensis MB4'
-# 68536103 =>
-'Corynebacterium jeikeium K411'
-# 730439 =>
-'Bacillus caldolyticus'
-# 89318838 =>
-undef (this record has been removed from the db)
+# 1621261 => 'Mycobacterium tuberculosis H37Rv'
+# 20807972 => 'Thermoanaerobacter tengcongensis MB4'
+# 68536103 => 'Corynebacterium jeikeium K411'
+# 730439 => 'Bacillus caldolyticus'
+# 89318838 => undef (this record has been removed from the db)
 
 1;
-
 ```
 
 *--[maj](User:Majensen "wikilink")*
-
 
 
 
