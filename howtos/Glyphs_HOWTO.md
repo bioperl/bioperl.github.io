@@ -29,7 +29,7 @@ Revision History
 Abstract
 --------
 
-This [HOWTO](http://www.bioperl.org/wiki/HOWTO) describes how to extend the [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) module with custom glyphs. Custom glyphs can be used to display sequence features that have special display needs, including quantitative data, images, and spectrographs. For background information, please see [HOWTO:Graphics](BioGraphics_HOWTO.html).
+This [HOWTO](/howtos/index.html) describes how to extend the [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) module with custom glyphs. Custom glyphs can be used to display sequence features that have special display needs, including quantitative data, images, and spectrographs. For background information, please see [HOWTO:Graphics](BioGraphics_HOWTO.html).
 
 Introduction
 ------------
