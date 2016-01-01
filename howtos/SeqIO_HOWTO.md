@@ -604,4 +604,4 @@ timethis(1, sub {
             (warning: too few iterations for a reliable count)
 ```
 
-See the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more discussion.
+See the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more discussion on *Customizing Sequence Object Construction*.

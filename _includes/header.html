@@ -45,7 +45,8 @@
             if ( search_output == '' ) {
               search_result = '<div style="font-size:14px;"><u>No matches to "' + query + '"</u>';
             } else {
-              search_result = '<div style="font-size:14px; line-height: 25px;"><u>Matches to "' + query + '"</u><br><div style="font-style: italic">' + search_output + '</div></div>';
+              search_result = '<div style="font-size:14px; line-height: 25px;"><u>Matches to "' + 
+                              query + '"</u><br><div class="boxed">' + search_output + '</div></div>';
             }
             $('.trigger').html(search_result);
           });

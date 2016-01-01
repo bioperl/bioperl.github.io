@@ -82,7 +82,7 @@ while ( my $aln = $in->next_aln ) {
 
 The returned object, `$aln`, is a [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object rather than a [Bio::Seq](https://metacpan.org/pod/Bio::Seq) object.
 
-[Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO)also supports the tied filehandle syntax described for [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO).
+[Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) also supports the tied filehandle syntax described for [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO).
 
 ## SimpleAlign
 
