@@ -3,17 +3,17 @@ title: "AlignIO and SimpleAlign HOWTO"
 layout: howto
 ---
 
-### Authors
+## Authors
 
 Brian Osborne *briano at bioteam.net*
 
 Peter Schattner
 
-### Abstract
+## Abstract
 
 This is a HOWTO that talks about using [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) and [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign)) to create and analyze alignments. It also discusses how to run various applications that create alignment files. See the [list of alignment formats](/formats/alignment_formats/index.html) for details on each format.
 
-### AlignIO
+## AlignIO
 
 Data files storing multiple sequence alignments appear in varied formats and is the Bioperl object for conversion of alignment files. AlignIO is patterned on the object and its commands have many of the same names as the commands in . Just as in the object can be created with `-file` and `-format` options:
 
@@ -25,27 +25,27 @@ use Bio::AlignIO; my $io = Bio::AlignIO->new(
 
 If the `-format` argument isn't used then Bioperl will try and determine the format based on the file's suffix, in a case-insensitive manner. Here is the current set of input formats:
 
-| Format    | Suffixes                      | Comment     |
+| [Format](/formats/alignment_formats/Format_multiple_alignment_format.html)    | Suffixes                      | Comment     |
 |-----------|-------------------------------|-------------|
 | bl2seq    |                               |             |
-| clustalw  | `aln`                         |             |
+| [ClustalW](/formats/alignment_formats/clustalw_multiple_alignment_format.html)  | `aln`                         |             |
 | emboss    | `water needle`                |             |
-| fasta     | `fasta fast seq fa fsa nt aa` |             |
-| maf       | `maf`                         |             |
-| mase      |                               | Seaview     |
-| mega      | `meg ega`                     |             |
-| meme      | `meme`                        |             |
+| [fasta](/formats/alignment_formats/FASTA_multiple_alignment_format.html)     | `fasta fast seq fa fsa nt aa` |             |
+| [maf](/formats/alignment_formats/MAF_multiple_alignment_format.html)       | `maf`                         |             |
+| [mase](/formats/alignment_formats/Mase_multiple_alignment_format.html)      |                               | Seaview     |
+| [mega](/formats/alignment_formats/MEGA_multiple_alignment_format.html)      | `meg ega`                     |             |
+| [meme](/formats/alignment_formats/MEME_multiple_alignment_format.html)      | `meme`                        |             |
 | metafasta |                               |             |
-| msf       | `msf pileup gcg`              | GCG         |
-| nexus     | `nexus nex`                   |             |
+| [msf](/formats/alignment_formats/MSF_multiple_alignment_format.html)       | `msf pileup gcg`              | GCG         |
+| [nexus](/formats/alignment_formats/NEXUS_multiple_alignment_format.html)     | `nexus nex`                   |             |
 | pfam      | `pfam pfm`                    | Pfam        |
-| phylip    | `phylip phlp phyl phy ph`     | interleaved |
-| po        |                               | POA         |
-| prodom    |                               |             |
+| [phylip](/formats/alignment_formats/PHYLIP_multiple_alignment_format.html)    | `phylip phlp phyl phy ph`     | interleaved |
+| [po](/formats/alignment_formats/PO_multiple_alignment_format.html)        |                               | POA         |
+| [prodom](/formats/alignment_formats/Prodom_multiple_alignment_format.html)    |                               |             |
 | psi       | `psi`                         | PSI-BLAST   |
-| selex     | `selex slx selx slex sx`      | HMMER       |
-| stockholm | `stk`                         | Rfam, Pfam  |
-| XMFA      | `xmfa`                        |             |
+| [selex](/formats/alignment_formats/SELEX_multiple_alignment_format.html)     | `selex slx selx slex sx`      | HMMER       |
+| [stockholm](/formats/alignment_formats/Stockholm_multiple_alignment_format.html) | `stk`                         | Rfam, Pfam  |
+| [XMFA](/formats/alignment_formats/XMFA_multiple_alignment_format.html)      | `xmfa`                        |             |
 | arp       | `arp`                         | Arlequin    |
 Table 1. AlignIO input formats
 
@@ -84,7 +84,7 @@ The returned object, `$aln`, is a [Bio::SimpleAlign](https://metacpan.org/pod/Bi
 
 [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO)also supports the tied filehandle syntax described for [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO).
 
-### SimpleAlign
+## SimpleAlign
 
 Once one has identified a set of similar sequences, one often needs to create an alignment of those sequences.
 
@@ -121,7 +121,7 @@ $pos = $aln->column_from_residue_number($seqname, 14);
 
 ```
 
-### Aligning 2 sequences with Blast using bl2seq and AlignIO
+## Aligning 2 sequences with Blast using bl2seq and AlignIO
 
 As an alternative to Smith-Waterman, two sequences can also be aligned in Bioperl using the `bl2seq` option of Blast within the object. To get an alignment - in the form of a object - using `bl2seq`, you need to parse the bl2seq report with the file format reader as follows:
 
@@ -136,7 +136,7 @@ $str = Bio::AlignIO->new(-file => 'bl2seq.out',
 $aln = $str->next_aln();
 ```
 
-### Aligning multiple sequences with Clustalw.pm and TCoffee.pm
+## Aligning multiple sequences with Clustalw.pm and TCoffee.pm
 
 For aligning multiple sequences (i.e. two or more), Bioperl offers a perl interface to the `clustalw`, `muscle`, and `tcoffee` programs. TCoffee is a more recent program - derived from clustalw - which has been shown to produce better results for local MSA.
 
@@ -164,7 +164,7 @@ $aln = $factory->align($seq_array_ref);
 
 Clustalw.pm and TCoffee.pm can also align two (sub)alignments to each other or add a sequence to a previously created alignment by using the `profile_align()` method. For further details on the required syntax and options for the profile_align() method, the user is referred to [Bio::Tools::Run::Alignment::Clustalw](https://metacpan.org/pod/Bio::Tools::Run::Alignment::Clustalw) and [Bio::Tools::Run::Alignment::TCoffee](https://metacpan.org/pod/Bio::Tools::Run::Alignment::TCoffee). The user is also encouraged to examine the script *clustalw.pl* in the *examples/align* directory.
 
-### Manipulating clusters of sequences Cluster and ClusterIO
+## Manipulating clusters of sequences Cluster and ClusterIO
 
 Sequence alignments are not the only examples in which one might want to manipulate a group of sequences together. Such groups of related sequences are generally referred to as clusters. Examples include Unigene clusters and gene clusters resulting from clustering algorithms being applied to microarray data.
 
