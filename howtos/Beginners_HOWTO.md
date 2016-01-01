@@ -25,7 +25,7 @@ One of the challenging aspects of learning a new skill is learning the jargon, a
 
 *Note* This [HOWTO](/howtos/index.html) does not discuss a very nice module that's designed for beginners, [Bio::Perl](https://metacpan.org/pod/Bio::Perl). The reason is that though this is an excellent introductory tool, it is not object-oriented and can't be extended. What we're attempting here is to introduce the core of Bioperl and show you ways to expand your new-found skills.
 
-### Installing Bioperl
+## Installing Bioperl
 
 Start at [Installing Bioperl](/INSTALL.html). Many of the letters to the bioperl-l mailing list concern problems with installation, and there is a set of concerns that come up repeatedly:
 
@@ -35,7 +35,7 @@ Start at [Installing Bioperl](/INSTALL.html). Many of the letters to the bioperl
 
 - Seeing messages like `Tests Failed`. If you see an error during installation consider whether this problem is going to affect your use of Bioperl. There are roughly 1000 modules in Bioperl, and ten times that many tests are run during the installation. If there's a complaint about GD it's only relevant if you want to use the modules, if you see an error about some XML parser it's only going to affect you if you're reading XML files.
 
-### Getting Assistance
+## Getting Assistance
 
 You may run into problems installing Bioperl or writing scripts using Bioperl. If you need assistance the way to get it is to mail bioperl-l@bioperl.org. There are many helpful people who regularly read this list but if you want their advice it's best to give sufficient detail.
 
@@ -49,7 +49,7 @@ Please include:
 
 Every once in a while a message will appear in `bioperl-l` coming from someone in distress that goes unanswered. The explanation is usually that the person neglected to include 1 or more of the details above, usually the script or the error messages.
 
-### Perl Itself
+## Perl Itself
 
 Here are a few things you might want to look at if you want to learn more about Perl:
 
@@ -61,7 +61,7 @@ Here are a few things you might want to look at if you want to learn more about 
 
 `>perldoc Bio::SeqIO`
 
-### Writing a script
+## Writing a script
 
 Sometimes the trickiest part is this step, writing something and getting it to run, so this section attempts to address some of the more common tribulations.
 
@@ -105,7 +105,7 @@ And make this the first line of the script:
 
 `#!/bin/perl`
 
-### Creating a sequence, and an Object
+## Creating a sequence, and an Object
 
 Our first script will create a sequence. Well, not just a sequence, you will be creating a *sequence object*, since Bioperl is written in an object-oriented way. Why be object-oriented? Why introduce these odd or intrusive notions into software that should be 'biological' or 'intuitive? The reason is that thinking in terms of modules or objects turns out to be the most flexible, and ultimately the simplest, way to deal with data as complex as biological data. Once you get over your initial skepticism, and have written a few scripts, you will find this idea of an object becoming a bit more natural.
 
@@ -170,7 +170,7 @@ print $seq_obj->seq();
 
 *aaaatgggggggggggccccgtt*, *#12345*, and *example 1* are called "arguments" in programming jargon. You could say that this example shows how to pass arguments to the `new()` method.
 
-### Writing a sequence to a file
+## Writing a sequence to a file
 
 This next example will show how two objects can work together to create a sequence file. We already have a Sequence object, `$seq_obj`, and we will create an additional object whose responsibility it is to read from and write to files. This object is the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) object, where *IO* stands for Input/Output. By using in this manner you will be able to get input and make output for all of the sequence file formats supported by Bioperl (the [SeqIO HOWTO](SeqIO_HOWTO.html) has a complete list of supported formats). The way you create objects is very similar to the way we used `new()` to create a [Bio::Seq](https://metacpan.org/pod/Bio::Seq), or sequence, object:
 
@@ -224,7 +224,7 @@ ORIGIN       1 aaaatggggg ggggggcccc gtt
 //
 ```
 
-### Retrieving a sequence from a file
+## Retrieving a sequence from a file
 
 One beginner mistake is to not use [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) when working with sequence files. This is understandable in some respects. You may have read about Perl's `open()` function, and Bioperl's way of retrieving sequences may look overly complicated, at first. But don't use `open()`! Using `open()` immediately forces you to do the parsing of the sequence file and this can get complicated very quickly. Trust the [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO) object, it's built to open and parse all the common sequence formats, it can read and write to files, and it's built to operate with all the other Bioperl modules that you will want to use.
 
@@ -267,7 +267,7 @@ Do you have to supply a `-format` argument when you are reading from a file, as 
 
 It may be useful to tell SeqIO the alphabet of the input, using the `-alphabet` argument. What this does is to tell SeqIO not to try to determine the alphabet (*dna*, *rna*, *protein*). This helps because Bioperl may guess incorrectly (for example, Bioperl is going to guess that the protein sequence `MGGGGTCAATT` is DNA). There may also be odd characters present in the sequence that SeqIO objects to (e.g. `-~?`). Set `-alphabet` to a value when reading sequences and SeqIO will not attempt to guess the alphabet of those sequences or validate the sequences.
 
-### Retrieving a sequence from a database
+## Retrieving a sequence from a database
 
 One of the strengths of Bioperl is that it allows you to retrieve sequences from all sorts of sources, files, remote databases, local databases, regardless of their format. Let's use this capability to get a entry from Genbank. What will we retrieve? Again, a Sequence object. Let's choose our module:
 
@@ -295,7 +295,7 @@ $seq_obj = $db_obj->get_Seq_by_id(2);
 
 The argument passed to the `get_Seq_by_id` method is an identifier, *2*, a Genbank GI number. You could also use the `get_Seq_by_acc` method with an accession number (e.g. A12345) or `get_Seq_by_version` using a versioned accession number (e.g. A12345.2). Make sure to use the proper identifier for the method you use, the methods are not interchangeable.
 
-### Retrieving multiple sequences from a database
+## Retrieving multiple sequences from a database
 
 There are more sophisticated ways to query Genbank than this. This next example attempts to do something biological, using the module [Bio::DB::Query::GenBank](https://metacpan.org/pod/Bio::DB::Query::GenBank). Want all *Arabidopsis* topoisomerases from Genbank Nucleotide? This would be a reasonable first attempt:
 
@@ -347,7 +347,7 @@ Notice how carefully separated the responsibilities of each object are in the co
 
 **Note** Be careful what you ask for, many of today's nucleotide database entries are genome-size and you will probably run out of memory if your query happens to match one of these monstrosities. You can use the `SLEN` field to limit the size of the sequences you retrieve.
 
-### The Sequence Object
+## The Sequence Object
 
 There's been a lot of discussion around the Sequence object, and this object has been created in a few different ways, but we haven't shown what it's capable of doing. The table below lists the methods available to you if you have a Sequence object in hand. "Returns" means what the object will give you when you ask it for data. Some methods, such as `seq()`, can be used to get or set values. You're setting when you assign a value, you're getting when you ask the object what values it has. For example, to get or retrieve a value
 
@@ -401,7 +401,7 @@ There are also a number of methods that are concerned with the Features and Anno
 | add_SeqFeature       | annotation array of Annotation objects | get or set            |
 Table 2. Feature and Annotation methods.
 
-### Example Sequence Objects
+## Example Sequence Objects
 
 Let's use some of the methods above and see what they return when the sequence object is obtained from different sources. In the Genbank example we're assuming we've used Genbank to retrieve or create a Sequence object. So this object could have have been retrieved like this:
 
@@ -647,7 +647,7 @@ Table 5. Values from SwissProt.
 
 As in the Genbank example there's information that the Sequence object doesn't supply, and it's all stored in Annotation objects. See the [Feature and Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more.
 
-### Translating
+## Translating
 
 Translation in bioinformatics can mean slightly different things, either translating a nucleotide sequence from start to end or translate the actual coding regions in mRNAs or cDNAs. The Bioperl implementation of sequence translation does both of these.
 
@@ -735,7 +735,7 @@ the sequence *tttttatgccctaggggg* will be translated to `MP`, not `MP*`.
 
 See [Bio::Tools::CodonTable](https://metacpan.org/pod/Bio::Tools::CodonTable) and [Bio::PrimarySeqI](https://metacpan.org/pod/Bio::PrimarySeqI) for more information on translation.
 
-### Obtaining basic sequence statistics
+## Obtaining basic sequence statistics
 
 In addition to the methods directly available in the Seq object, Bioperl provides various helper objects to determine additional information about a sequence. For example, the [Bio::Tools::SeqStats](https://metacpan.org/pod/Bio::Tools::SeqStats) object provides methods for obtaining the molecular weight of the sequence as well the number of occurrences of each of the component residues (bases for a nucleic acid or amino acids for a protein.) For nucleic acids, also returns counts of the number of codons used. For example:
 
@@ -752,7 +752,7 @@ Note: sometimes sequences will contain ambiguous codes. For this reason, `get_mo
 
 The SeqWords object is similar to SeqStats and provides methods for calculating frequencies of "words" (e.g. tetramers or hexamers) within the sequence. See [Bio::Tools::SeqStats](https://metacpan.org/pod/Bio::Tools::SeqStats) and [Bio::Tools::SeqWords](https://metacpan.org/pod/Bio::Tools::SeqWords) for more information.
 
-### Running applications: BLAST
+## Running applications: BLAST
 
 **This section is outdated, please see [HOWTO:BlastPlus](BlastPlus_HOWTO.html). BLAST is no longer supported by NCBI, it has been superceded by BLAST+.**
 
@@ -806,7 +806,7 @@ Sometimes you'll see errors when you try to use that have nothing to do with Bio
 
 Bioperl enables you to run a wide variety of bioinformatics programs but in order to do so, in most cases, you will need to install the accessory bioperl-run package. In addition there is no guarantee that there is a corresponding parser for the program that you wish to run, but parsers have been built for the most popular programs. You can find the bioperl-run package on the download page.
 
-### Indexing for Fast Retrieval
+## Indexing for Fast Retrieval
 
 One of the under-appreciated features of Bioperl is its ability to index sequence files. The idea is that you would create some sequence file locally and create an index file for it that enables you to retrieve sequences from the sequence file. Why would you want to do this? Speed, for one. Retrieving sequences from local, indexed sequence files is much faster than using the module used above that retrieves from a remote database. It's also much faster than using SeqIO, in part because SeqIO is stepping through a file, one sequence at a time, starting at the beginning of the file. Flexibility is another reason. What if you'd created your own collection of sequences, not found in a public database? By indexing this collection you'll get fast access to your sequences.
 
@@ -885,7 +885,7 @@ This script indexes the *genome.fa* file, then retrieves a sub-sequence of CHROM
 
 There's a bit more information on indexing in [HOWTO:Local_Databases](Local_Databases_HOWTO.html).
 
-### Running applications: Searching for genes in genomic DNA
+## Running applications: Searching for genes in genomic DNA
 
 Parsers for widely used gene prediction programs - Genscan, Sim4, Genemark, Grail, ESTScan and MZEF - are available in Bioperl. The interfaces for these parsers are all similar. The syntax is relatively self-explanatory, see [Bio::Tools::Genscan](https://metacpan.org/pod/Bio::Tools::Genscan), [Bio::Tools::Genemark](https://metacpan.org/pod/Bio::Tools::Genemark), [Bio::Tools::Grail](https://metacpan.org/pod/Bio::Tools::Grail), [Bio::Tools::ESTScan](https://metacpan.org/pod/Bio::Tools::ESTScan), [Bio::Tools::MZEF](https://metacpan.org/pod/Bio::Tools::MZEF), and [Bio::Tools::Sim4::Results](https://metacpan.org/pod/Bio::Tools::Sim4::Results) for further details. Here are some examples on how to use these modules.
 
@@ -941,7 +941,7 @@ $seq = $seqio->next_seq; while( $feat = $parser->next_feature ) {
 }
 ```
 
-### Running applications: Using EMBOSS applications with Bioperl
+## Running applications: Using EMBOSS applications with Bioperl
 
 EMBOSS is an extensive collection of sequence analysis programs written in the C programming language (http://emboss.sourceforge.net/). There are a number of algorithms in EMBOSS that are not found in Bioperl (e.g. calculating DNA melting temperature, finding repeats, identifying prospective antigenic sites) so if you cannot find the function you want in Bioperl you might be able to find it in EMBOSS. The Bioperl code that runs EMBOSS programs is [Bio::Factory::EMBOSS](https://metacpan.org/pod/Bio::Factory::EMBOSS).
 
@@ -988,7 +988,7 @@ my $align_io = Bio::AlignIO->new(-format => $alignio_fmt,
                                  -file => $outfile);
 ```
 
-### Code to query bibliographic databases
+## Code to query bibliographic databases
 
 [Bio::Biblio](https://metacpan.org/pod/Bio::Biblio) objects are used to query bibliographic databases, such as MEDLINE. The associated modules are built to work with OpenBQS-compatible databases (see http://www.ebi.ac.uk/~senger/openbqs). A object can execute a query like:
 
@@ -1002,7 +1002,7 @@ while ( $collection->has_next ) {
 
 See [Bio::Biblio](https://metacpan.org/pod/Bio::Biblio), the *scripts/biblio/biblio.PLS* script, or the *examples/biblio/biblio_examples.pl* script for more information.
 
-### More on Bioperl
+## More on Bioperl
 
 Perhaps this article has gotten you interested in learning a bit more about Bioperl. Here are some other things you might want to look at:
 
@@ -1012,7 +1012,7 @@ Perhaps this article has gotten you interested in learning a bit more about Biop
 
 -   Bioperl scripts. You'll find them in the *scripts/* directory and in the *examples/* directory of the Bioperl package. The former contains more carefully written and documented scripts that can be installed along with Bioperl. You should feel free to contribute scripts to either of these directories.
 
-### Perl's Documentation System
+## Perl's Documentation System
 
 The documentation for Perl is available using a system known as [POD](http://perldoc.perl.org/perlpod.html), which stands for Plain Old Documentation. You can access this built-in documentation by using the `perldoc` command. To view information on how to use `perldoc`, type the following at the command line:
 
@@ -1026,11 +1026,11 @@ Read about any module, including any of the Bioperl modules:
 
 `>perldoc Bio::SeqIO`
 
-### The Basics of Perl Objects
+## The Basics of Perl Objects
 
 Object-oriented programming (OOP) is a software engineering technique for modularizing code. The difference between object-oriented programming and procedural programming can be simply illustrated.
 
-#### A Simple Procedural Example
+### A Simple Procedural Example
 
 Assume that we have a DNA sequence stored in the scalar variable `$sequence`. We'd like to generate the reverse complement of this sequence and store it in `$reverse_complement`. Shown below is the procedural Perl technique of using a function, or sub-routine, to operate on this scalar data:
 
@@ -1042,7 +1042,7 @@ $reverse_complement = revcom( $sequence );
 
 The hallmark of a procedural program is that data and functions to operate on that data are kept separate. In order to generate the reverse complement of a DNA sequence, we need to call a function that operates on that DNA sequence.
 
-#### A Simple Object-Oriented Example
+### A Simple Object-Oriented Example
 
 Shown below is the object-oriented way of generating the reverse complement of a DNA sequence:
 
@@ -1052,7 +1052,7 @@ $reversed_obj = $seq_obj->revcom;
 
 The main difference between this object-oriented example and the procedural example shown before is that the method for generating the reverse complement, `revcom`, is part of `$seq_obj`. To put it another way, the object `$seq_obj` knows how to calculate and return its reverse complement. Encapsaluting both data and functions into the same construct is the fundamental idea behind object-oriented programming.
 
-#### Terminology
+### Terminology
 
 In the object-oriented example above, `$seq_obj` is called an object, and `revcom` is called a method. An object is a data structure that has both data and methods associated with it. Objects are separated into types called classes, and the class of an object defines both the data that it can hold and the methods that it knows. A specific object that has a defined class is referred to as an instance of that class.
 

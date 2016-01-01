@@ -3,19 +3,19 @@ title: "Restriction Enzyme Analysis HOWTO"
 layout: howto
 ---
 
-### Authors
+## Authors
 
 Peter Schattner, Jason Stajich, Heikki Lehvaslaiho, Brian Osborne, Hilmar Lapp, Chris Dagdigian, Elia Stupka, Ewan Birney.
 
-### Abstract
+## Abstract
 
 This is a HOWTO that talks about using the Bioperl Bio::Restriction modules to do *in silico* restriction enzyme analysis on nucleotide sequences.
 
-### Introduction
+## Introduction
 
 A common sequence analysis task for nucleic acid sequences is locating restriction enzyme cutting sites. Bioperl provides the  [Bio::Restriction::Enzyme](https://metacpan.org/pod/Bio::Restriction::Enzyme), [Bio::Restriction::EnzymeCollection](https://metacpan.org/pod/Bio::Restriction::EnzymeCollection), and [Bio::Restriction::Analysis](https://metacpan.org/pod/Bio::Restriction::Analysis) objects for this purpose. These modules replace the older module Bio::Tools::RestrictionEnzyme.
 
-### Making a collection of restriction enzymes
+## Making a collection of restriction enzymes
 
 A new collection of enzyme objects would be defined like this:
 
@@ -42,7 +42,7 @@ There are other methods that can be used to select sets of enzyme objects, such 
 my $ecori_enzyme = $all_collection->get_enzyme('EcoRI');
 ```
 
-### Cutting with restriction enzymes
+## Cutting with restriction enzymes
 
 ```perl
 # get a DNA sequence from somewhere
@@ -80,7 +80,7 @@ my $rebase_collection = $re_io->read;
 
 A REBASE file in the correct format can be found at ftp://ftp.neb.com/pub/rebase - it will have a name like *withrefm.512*.
 
-### Custom restriction enzymes
+## Custom restriction enzymes
 
 You can also create your own enzymes, like this:
 

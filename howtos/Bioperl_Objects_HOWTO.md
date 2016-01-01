@@ -3,15 +3,15 @@ title: "BioPerl Objects HOWTO"
 layout: howto
 ---
 
-### Authors
+## Authors
 
 Peter Schattner
 
-### Abstract
+## Abstract
 
 This is a HOWTO that talks about many of the common and uncommon Bioperl objects that represent sequences.
 
-### Brief descriptions
+## Brief descriptions
 
 This section describes various Bioperl sequence objects. Many people using Bioperl will never know, or need to know, what kind of sequence object they are using. This is because the [Bio::SeqIO](http://metacpan.org/pod/Bio::SeqIO) module creates exactly the right type of object when given a file or a filehandle or a string.
 
@@ -37,7 +37,7 @@ A [Bio::LiveSeq::IO::BioPerl](http://metacpan.org/pod/Bio%3A%3ALiveSeq%3A%3AIO%3
 
 [Bio::SeqI](http://metacpan.org/pod/Bio%3A%3ASeqI) objects are Seq "interface objects". They are used to ensure bioperl's compatibility with other software packages. SeqI and other interface objects are not likely to be relevant to the casual Bioperl user.
 
-### LargeSeq
+## LargeSeq
 
 Very large sequences present special problems to automated sequence-annotation storage and retrieval projects. Bioperl's LargeSeq object addresses this situation.
 
@@ -59,7 +59,7 @@ $lots_of_data = $pseq->seq();  # NOT OK for a large LargeSeq object
 
 See [Bio::Seq::LargeSeqI](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3ALargeSeqI) for more.
 
-### LiveSeq
+## LiveSeq
 
 Data files with sequences that are frequently being updated present special problems to automated sequence-annotation storage and retrieval projects. Bioperl's [Bio::LiveSeq](http://search.cpan.org/search?query=Bio::LiveSeq) objects are designed to address this situation.
 
@@ -77,7 +77,7 @@ $maxstart = $gene->maxtranscript->start;
 
 See [Bio::LiveSeq::IO::BioPerl](http://metacpan.org/pod/Bio%3A%3ALiveSeq%3A%3AIO%3A%3ABioPerl) for more details.
 
-### Mutator and Mutation
+## Mutator and Mutation
 
 A Mutation object allows for a basic description of a sequence change in the DNA sequence of a gene. The Mutator object takes in mutations, applies them to a LiveSeq gene and returns a set of Bio::Variation objects describing the net effect of the mutation on the gene at the DNA, RNA and protein level.
 
@@ -103,7 +103,7 @@ $DNA_re_changes eq $RNA_re_changes or print "Different!\n";
 
 For a complete working script, see the change\_gene.pl script in the examples/liveseq directory. For more details on the use of these objects see [Bio::LiveSeq::Mutator](http://metacpan.org/pod/Bio%3A%3ALiveSeq%3A%3AMutator) and [Bio::LiveSeq::Mutation](http://metacpan.org/pod/Bio%3A%3ALiveSeq%3A%3AMutation) as well as the original documentation for the "Computational Mutation Expression Toolkit" project ( <http://www.ebi.ac.uk/mutations/toolkit/> ).
 
-### SeqWithQuality
+## SeqWithQuality
 
 [Bio::Seq::SeqWithQuality](http://metacpan.org/pod/Bio::Seq::SeqWithQuality) objects are used to describe sequences with very specific annotations - that is, base quality annotations. Base quality information is important for documenting the reliability of base calls, typically made by sequencing machines. The quality data is contained within a [Bio::Seq::PrimaryQual](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3APrimaryQual) object.
 
@@ -143,7 +143,7 @@ $swqobj->qual(); # the quality of the SeqWithQuality object
 
 See [Bio::Seq::SeqWithQuality](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3ASeqWithQuality) for a detailed description of the methods, [Bio::Seq::PrimaryQual](http://metacpan.org/pod/Bio%3A%3ASeq%3A%3APrimaryQual), and [Bio::SeqIO::phd](http://metacpan.org/pod/Bio%3A%3ASeqIO%3A%3Aphd).
 
-### GFF and Bio:DB:GFF
+## GFF and Bio:DB:GFF
 
 Another format for transmitting machine-readable sequence-feature data is the Genome Feature Format (GFF). This file type is well suited to sequence annotation because it allows the ability to describe entries in terms of parent-child relationships (see <http://www.sanger.ac.uk/software/GFF> for details). Bioperl includes a parser for converting between GFF files and SeqFeature objects. Typical syntax looks like:
 
@@ -158,7 +158,7 @@ $gffio->close();
 
 Further information can be found at [Bio::Tools::GFF](http://metacpan.org/pod/Bio%3A%3ATools%3A%3AGFF). Also see *examples/tools/gff2ps.pl*, *examples/tools/gb_to_gff.pl*, and the scripts in *scripts/Bio-DB-GFF*. Note: this module shouldn't be confused with the module [Bio::DB::GFF](http://metacpan.org/pod/Bio%3A%3ADB%3A%3AGFF) which is for implementing relational databases when using bioperl-db.
 
-### [Bio::Structure](http://search.cpan.org/search?query=Bio::Structure) and [Bio::Structure::IO](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AIO)
+## [Bio::Structure](http://search.cpan.org/search?query=Bio::Structure) and [Bio::Structure::IO](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AIO)
 
 A Structure object can be created from one or more 3D structures represented in Protein Data Bank, or pdb, format (see <http://www.pdb.org> for details).
 
@@ -197,7 +197,7 @@ for my $chain ($struc->get_chains) {
 
 See [Bio::Structure::IO](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AIO), [Bio::Structure::Entry](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AEntry), [Bio::Structure::Model](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AModel), [Bio::Structure::Chain](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AChain), [Bio::Structure::Residue](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AResidue), [Bio::Structure::Atom](http://metacpan.org/pod/Bio%3A%3AStructure%3A%3AAtom) and the *examples/structure* directory for more information.
 
-### [Bio::Map::MapI](http://metacpan.org/pod/Bio::Map::MapI) and [Bio::MapIO](http://metacpan.org/pod/Bio::MapIO)
+## [Bio::Map::MapI](http://metacpan.org/pod/Bio::Map::MapI) and [Bio::MapIO](http://metacpan.org/pod/Bio::MapIO)
 
 These are objects for manipulating genetic maps. Bioperl Map objects can be used to describe any type of biological map data including genetic maps, STS maps etc. Map I/O is performed with the MapIO object which works in a similar manner to the SeqIO, SearchIO and similar I/O objects described previously. In principle, Map I/O with various map data formats can be performed. However currently only mapmaker format is supported. Manipulation of genetic map data with Bioperl Map objects might look like this:
 

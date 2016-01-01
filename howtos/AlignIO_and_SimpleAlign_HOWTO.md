@@ -25,7 +25,7 @@ use Bio::AlignIO; my $io = Bio::AlignIO->new(
 
 If the `-format` argument isn't used then Bioperl will try and determine the format based on the file's suffix, in a case-insensitive manner. Here is the current set of input formats:
 
-| [Format](/formats/alignment_formats/Format_multiple_alignment_format.html)    | Suffixes                      | Comment     |
+| [Format](/formats/alignment_formats/index.html)    | Suffixes                      | Comment     |
 |-----------|-------------------------------|-------------|
 | bl2seq    |                               |             |
 | [ClustalW](/formats/alignment_formats/clustalw_multiple_alignment_format.html)  | `aln`                         |             |
@@ -94,7 +94,7 @@ Some of the manipulations possible with include:
 
 * `slice()` : Obtaining an alignment `slice`, that is, a subalignment inclusive of specified start and end columns. Sequences with no residues in the slice are excluded from the new alignment and a warning is printed.
 * `column_from_residue_number()` : Finding column in an alignment where a specified residue of a specified sequence is located.
-* `consensus_string()` : Making a consensus string. This method includes an optional threshold parameter, so that positions in the alignment with lower percent-identity than the threshold are marked by "?"'s in the consensus
+* `consensus_string()` : Making a consensus string. This method includes an optional threshold parameter, so that positions in the alignment with lower percent-identity than the threshold are marked by *?* in the consensus
 * `percentage_identity()` : A fast method for calculating the average percentage identity of the alignment
 * `consensus_iupac()` : Making a consensus using IUPAC ambiguity codes from DNA and RNA.  
 

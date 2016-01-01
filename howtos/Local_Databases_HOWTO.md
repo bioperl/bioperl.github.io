@@ -3,21 +3,21 @@ title: "Local Databases HOWTO"
 layout: howto
 ---
 
-### Authors
+## Authors
 
 Brian Osborne *briano at bioteam.net*
 
 Peter Schattner
 
-### Abstract
+## Abstract
 
 This is a HOWTO that talks about using Bioperl to create local sequence databases for fast retrieval.
 
-### Introduction
+## Introduction
 
 Bioperl offers many ways to retrieve sequences from online databases like NCBI and Swissprot but there may be times when you want build local databases for fast, secure retrieval. This HOWTO discusses the different Bioperl modules you might use. Also see [OBDA Flat databases HOWTO](OBDA_Flat_databases_HOWTO.html).
 
-### Bio::Index
+## Bio::Index
 
 The following sequence data formats are supported by [Bio::Index*](http://search.cpan.org/search?query=Bio::Index): 
 
@@ -76,7 +76,7 @@ for my $id (@ARGV) {
 
 To facilitate the creation and use of more complex or flexible indexing systems, the Bioperl distribution includes two sample scripts in the *scripts/index* directory, *bp_index.PLS* and *bp_fetch.PLS*. These scripts can be used as templates to develop customized local data-file indexing systems.
 
-### Bio::DB::Fasta
+## Bio::DB::Fasta
 
 Bioperl also supplies as a means to index and query Fasta format files. It's similar in spirit to [Bio::Index*](http://search.cpan.org/search?query=Bio::Index) but has additional methods and has the ability to retrieve subsequences, great for long sequences:
 
@@ -109,7 +109,7 @@ my $length   = $db->length($id);
 
 See [Bio::DB::Fasta](https://metacpan.org/pod/Bio::DB::Fasta) for more information.
 
-### Indexing using a specific substring
+## Indexing using a specific substring
 
 Both modules also offer the user the ability to designate a specific string within the fasta header as the desired id, such as the gi number within the string *gi|4556644|gb|X45555*. Consider the following fasta-formatted sequence, in *test.fa*:
 
@@ -185,6 +185,6 @@ sub make_my_id {
 
 ```
 
-### Storing sequences in a relational database
+## Storing sequences in a relational database
 
 The core Bioperl package does not support accessing sequences and data stored in relational databases but this capability is available in the [Bioperl-db](https://github.com/bioperl/bioperl-db) package.

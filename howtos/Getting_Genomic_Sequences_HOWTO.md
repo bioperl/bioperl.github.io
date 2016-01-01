@@ -3,27 +3,27 @@ title: "Getting Genomic Sequences HOWTO"
 layout: howto
 ---
 
-### Authors
+## Authors
 
 Brian Osborne *briano at bioteam.net*
 
 Chris Fields
 
-### Copyright
+## Copyright
 
 This document is copyright Brian Osborne. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.perl.com/pub/language/misc/Artistic.html).
 
-### Abstract
+## Abstract
 
 This is a HOWTO that talks about using Bioperl and tools related to Bioperl to get genomic sequence. There are a few different approaches, one uses files that you'll download to your own computer to query locally, others use remote, programmable interfaces or [APIs](http://en.wikipedia.org/wiki/Application_programming_interface). You should also see the [EUtils Cookbook](EUtilities_Cookbook.html).
 
-### Using local Genbank and Entrez Gene files
+## Using local Genbank and Entrez Gene files
 
 You can download chromosomal, nucleotide files in [FASTA format](http://www.bioperl.org/wiki/FASTA_sequence_format) from [NCBI genomes](ftp://ftp.ncbi.nih.gov/genomes/) and get gene position data from [Entrez Gene](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene) (see [Using Bio::DB::EntrezGene to get genomic coordinates](#Using_Bio::DB::EntrezGene_to_get_genomic_coordinates)), then create indices of the fasta files using . There is an example script, *scripts/extract_genes.pl*, that shows how this could be done. The query terms are limited to Gene id's in this example since the positional data is taken from Entrez Gene's gene2accession file.
 
 Requirement: BioPerl.
 
-### Using the Perl API at ENSEMBL
+## Using the Perl API at ENSEMBL
 
 You can connect remotely to the [ENSEMBL](http://ensembl.org) database and query it using any name or identifier that's understood by [ENSEMBL](http://ensembl.org).
 
@@ -83,7 +83,7 @@ for my $gene (@{$gene_adaptor->fetch_all_by_external_name($identifier)}) {
 
 You also have the option of using raw [SQL](http://en.wikipedia.org/wiki/Sql) when using the ENSEMBL API, the result is that this is a very powerful API for analyzing genomic data.
 
-#### Notes on this example
+### Notes on this example
 
 - This bit of code has *not been extensively tested*
 
@@ -99,7 +99,7 @@ You also have the option of using raw [SQL](http://en.wikipedia.org/wiki/Sql) wh
        mysql> show databases;
 ```
 
-### Using Bio::DB::EUtilities to get genomic coordinates
+## Using Bio::DB::EUtilities to get genomic coordinates
 
 It's easy to get the coordinates of a given gene using EUtilities. The following code uses EUtilities' esearch to obtain a list of ids, and esummary to obtain the data which is then used to calculate the coordinates. It also allows to selected extra flanking sequences (on both 5' and 3' ends).
 
@@ -162,7 +162,7 @@ while (my $docsum = $summaries->next_DocSum) {
 }
 ```
 
-### Using Bio::DB::EntrezGene to get genomic coordinates<a name="Using_Bio::DB::EntrezGene_to_get_genomic_coordinates"></a>
+## Using Bio::DB::EntrezGene to get genomic coordinates<a name="Using_Bio::DB::EntrezGene_to_get_genomic_coordinates"></a>
 
 You can get the coordinates of a given gene from Entrez Gene using the [Bio::DB::EntrezGene](https://metacpan.org/pod/Bio::DB::EntrezGene) module. This involves examining the Annotations associated with the gene (see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more information on Annotations) and finding the one labelled *Evidence Viewer*, the data is found in a [URL](http://en.wikipedia.org/wiki/Url). The only identifier that the NCBI Entrez Gene API can use is a `Gene id`, formerly known as a LocusLink id.
 
@@ -197,7 +197,7 @@ This data is found in a [Bio::Annotation::DBLink](https://metacpan.org/pod/Bio::
 
 Once you have the coordinates you can use them to retrieve a sub-sequence either by using a local indexed file (e.g. [Bio::DB::Fasta](https://metacpan.org/pod/Bio::DB::Fasta)) or by retrieving the sequence from a remote database (e.g. [Bio::DB::GenBank](https://metacpan.org/pod/Bio::DB::GenBank), [Bio::DB::RefSeq](https://metacpan.org/pod/Bio::DB::RefSeq) and using `subseq` or `trunc` from [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq) or [Bio::PrimarySeqI](https://metacpan.org/pod/Bio::PrimarySeqI) (the first approach will give you the best performance).
 
-### Using Bio::DB::GenBank when you have genomic coordinates to get a Seq object
+## Using Bio::DB::GenBank when you have genomic coordinates to get a Seq object
 
 Once you have the coordinates, sequences can be easily pulled from [Genbank](https://en.wikipedia.org/wiki/GenBank), complete with Genbank's annotation.
 
@@ -275,6 +275,6 @@ for my $seq (@seqs) {
 }
 ```
 
-### Using Bio::DB::EUtilities to get raw GenBank-formatted sequence
+## Using Bio::DB::EUtilities to get raw GenBank-formatted sequence
 
 The [EUtilities Cookbook](EUtilities_Cookbook.html) has two examples on how to retrieve the sequence for a gene region using esummary information.
