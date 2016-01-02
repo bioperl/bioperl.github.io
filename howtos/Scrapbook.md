@@ -2192,16 +2192,13 @@ Detecting Paired End reads. This doesn't really use BioPerl but I had a hard tim
 Updated to streamline it and also because it was pointed out that in Casava1.8 there can be alternatives to the 1/2 pairing, e.g., 1/3, which would indicate that the multiplex tags are present somewhere (but not in the query fastq file) --[Lskatz](User:Lskatz "wikilink") 18:05, 8 July 2014 (UTC)
 
 ```perl
-
 # See whether a fastq file is paired end or not. It must be in a velvet-style shuffled format.
 # In other words, the left and right sides of a pair follow each other in the file.
 # params: fastq file and settings
 # fastq file can be gzip'd
 # settings: checkFirst is an integer to check the first X deflines
 # TODO just extract IDs and send them to the other _sub()
-
 sub is_fastqPE($;$){
-
  my($fastq,$settings)=@_;
 
  # if checkFirst is undef or 0, this will cause it to check at least the first 20 entries.
@@ -2235,8 +2232,9 @@ sub is_fastqPE($;$){
 
  return $is_pairedEnd;
 
-} sub _is_fastqPESra{
+}
 
+sub _is_fastqPESra{
  my($defline,$settings)=@_;
  my @defline=@$defline; # don't overwrite $defline by mistake
 
@@ -2254,11 +2252,9 @@ sub is_fastqPE($;$){
    }
  }
  return 1;
-
 }
 
 sub _is_fastqPECasava18{
-
  my($defline,$settings)=@_;
  my @defline=@$defline;
 
@@ -2276,13 +2272,10 @@ sub _is_fastqPECasava18{
    }
  }
  return 1;
-
 }
 
 # This format is basically whether the ends of the defline alternate 1 and 2.
-
 sub _is_fastqPECasava17{
-
  my($defline,$settings)=@_;
  my @defline=@$defline;
  for(my $i=0;$i<@defline-1;$i++){
@@ -2307,11 +2300,8 @@ sub _is_fastqPECasava17{
  }
 
  return 1;
-
 }
-
 ```
-
 
 
 ### Removing_sequencing_adapters<a name="Removing_sequencing_adapters"></a>
@@ -2324,23 +2314,22 @@ These code excerpts are from a prototype sequence pre-processing pipeline, and t
 
 ------------------------------------------------------------------------
 
-Before we start with the Bioperl, we align all of the good quality sequence (some.fasta) with the sequencing adapter (adapter.fasta) and output the alignments. <bash> needle -gapopen 100 -gapextend 10 -auto -asequence adapter.fasta -bsequence stdin -outfile stdout <
-some.fasta >
-lots_of.aln </bash> We don't want any gaps, and Needle doesn't support ungapped alignments, so we set the gap penalties as high as possible. Note that we don't use Water, because we want to extract the sequence before the adapter, and so need the full sequences in the alignment output.
+Before we start with the Bioperl, we align all of the good quality sequence (some.fasta) with the sequencing adapter (adapter.fasta) and output the alignments.
+
+```
+needle -gapopen 100 -gapextend 10 -auto -asequence adapter.fasta -bsequence stdin -outfile stdout < some.fasta > lots_of.aln
+```
+
+We don't want any gaps, and Needle doesn't support ungapped alignments, so we set the gap penalties as high as possible. Note that we don't use Water, because we want to extract the sequence before the adapter, and so need the full sequences in the alignment output.
 
 Now we have our alignments we can pipe them into our adapter removal script.
 
 ```perl
-
 use Bio::AlignIO;
 
-my $aln_in = Bio::AlignIO->new(-fh =>
-\*STDIN, -format =>
-'emboss');
-\# clustalw format is a handy alternative for readability
+my $aln_in = Bio::AlignIO->new(-fh => \*STDIN, -format => 'emboss'); # clustalw format is a handy alternative for readability
 
 while ( my $aln = $aln_in->next_aln ) {
-
    # Get the coordinates of the start and end of the sequence and adapter in the alignment
    my $r1 = Bio::Range->new(   -start=>    $aln->column_from_residue_number( $aln->get_seq_by_pos(1)->display_id, "1" ),
                    -end=>      $aln->column_from_residue_number( $aln->get_seq_by_pos(1)->display_id, $aln->select(1,1)->no_residues ),
@@ -2350,7 +2339,7 @@ while ( my $aln = $aln_in->next_aln ) {
                    -strand=>   +1);
    my ($start, $end, $strand) = $r1->intersection($r2);            # Coordinates where the sequence and adapter align
    my $aln2 = $aln->slice($start, $end);                   # Get the alignment slice
-   
+
    # Neither Emboss nor Bio::Align::PairwiseStatistics offer a suitable scoring method for adapter removal, so here is one I made earlier
    my @seq1 = split ("", $aln2->get_seq_by_pos(1)->seq);
    my @seq2 = split ("", $aln2->get_seq_by_pos(2)->seq);
@@ -2366,7 +2355,7 @@ while ( my $aln = $aln_in->next_aln ) {
        if ($seq1[$pos] eq "-" || $seq2[$pos] eq "-") { $gaps ++; } # Gaps
    }
    my $mismatch_rate = $mismatches / $aln2->length;
-   
+
    # Now we have some alignment stats we can do something with the sequence
    if ($score >= 4 && $mismatch_rate <= 0.1 && $gaps <= 1 && $start >= 2)  # If the adapter sequence match is good enough...
    {
@@ -2376,9 +2365,7 @@ while ( my $aln = $aln_in->next_aln ) {
    {
        process_seq($aln->get_seq_by_pos(2));               # Just do something with the sequence
    }
-
 }
-
 ```
 
 Once we have trimmed the adapter from our sequences we can pass them on to the next stage of the processing pipeline.
@@ -2396,13 +2383,11 @@ Issues aside, this approach does seem to work, and performance is adequate.
 --[Giles.weaver](User:Giles.weaver "wikilink") 13:23, 8 July 2009 (UTC)
 
 
-
 ### Splitting_MiSeq_lane<a name="Splitting_MiSeq_lane"></a>
 
 This is a script for splitting a full lane from a multiplexed MiSeq run into individual tags.
 
 ```perl
-
 #!/usr/bin/env perl
 # Author: Lee Katz <lkatz@cdc.gov>
 # Enteric Diseases Laboratory Branch, CDC
@@ -2410,32 +2395,24 @@ This is a script for splitting a full lane from a multiplexed MiSeq run into ind
 use LKUtils qw/logmsg/;
 use strict;
 use warnings;
-use <Data::Dumper>;
+use Data::Dumper;
 use Getopt::Long;
 
 my $settings={};
 exit(main());
 
 sub main{
-
  die usage() if(@ARGV<1);
  GetOptions($settings,qw(infile=s outdir=s));
- my $infile=$$settings{infile} or die "Error: need input Illumina file
-
-".usage();
-
- my $outdir=$$settings{outdir} or die "Error: need output directory 
-
-".usage();
+ my $infile=$$settings{infile} or die "Error: need input Illumina file\n".usage();
+ my $outdir=$$settings{outdir} or die "Error: need output directory \n".usage();
 
  splitFastqFile($infile,$outdir,$settings);
 
  return 0;
-
 }
 
 sub splitFastqFile{
-
  my($infile,$outdir,$settings)=@_;
 
  # open files
@@ -2446,12 +2423,9 @@ sub splitFastqFile{
  my $currId;
  my $i=0;
  open(IN,'<',$infile) or die "Could not open fastq file $infile because $!";
- while(my $fastqEntry=`<IN>`){
-   $fastqEntry.=`<IN>` for(1..3); # each entry is 4 lines total
-   my($currId,$seq,undef,$qlt)=split(/
-
-/,$fastqEntry);
-
+ while(my $fastqEntry=<IN>){
+   $fastqEntry.=<IN> for(1..3); # each entry is 4 lines total
+   my($currId,$seq,undef,$qlt)=split(/\n/,$fastqEntry);
    my($part1,$part2)=split(/\s+/,$currId);
    my($instrument,$runId,$flowCellId,$lane,$tile,$x,$y)=split(/:/,$part1);
    my($ReadNum,$FilterFlag,undef,$SampleNumber)=split(/:/,$part2);
@@ -2463,21 +2437,16 @@ sub splitFastqFile{
  close IN;
 
  close($fh{$_}) for(keys(%fh));
-
 }
 
 sub usage{
-
  "Given a fastq file of reads, split the fastq file into files.
  Usage: perl $0 -i illumina.fastq -o outputdir
  -i illumina.fastq
    e.g. from a miseq
  "
-
 }
-
 ```
-
 
 
 
@@ -2498,23 +2467,19 @@ The second subroutine calculates the Tm of short sequences by running the oligot
 The third subroutine calculates the Tm of longer sequences using a method derived from one of the test scripts in the Primer 3 package.
 
 ```perl
-
 package Primer;
 use IPC::Open3;
 
 sub calc_oligo_tm {
-
    my ($class, $sequence) = @_;
 
    my ($tm, $errors);
    if (length($sequence) >= 32) { ($tm, $errors) = $class->_calc_long_oligo_tm ($sequence); }
    else { ($tm, $errors) = $class->_run_oligotm ($sequence); }
    return ($tm, $errors);
-
 }
 
 sub _run_oligotm {
-
    my ($class, $sequence) = @_;
 
    my $command = "oligotm -tp 1 -sc 1 $sequence";
@@ -2526,11 +2491,9 @@ sub _run_oligotm {
    while (`<ERRFH>`) { $errors .= $_;}
    chomp $tm;
    return ($tm, $errors);
-
 }
 
 sub _calc_long_oligo_tm {
-
    my ($class, $sequence) = @_;
    # This code based on Test script from primer3
 
@@ -2547,30 +2510,25 @@ sub _calc_long_oligo_tm {
    my $errors = "hopefully none";
 
    return ($tm, $errors);
-
 }
-
 ```
 
-Primer 3 can be obtained [here](http://primer3.sourceforge.net/). If you are running a Debian based Linux distribution such as Ubuntu you can install it by typing: <bash> sudo apt-get install primer3 </bash>
+Primer 3 can be obtained [here](http://primer3.sourceforge.net/). If you are running a Debian based Linux distribution such as Ubuntu you can install it by typing: `sudo apt-get install primer3`
 
 --[Giles.weaver](User:Giles.weaver "wikilink") 19:14, 14 April 2010 (UTC)
-
 
 
 ### Degenerate_primers<a name="Degenerate_primers"></a>
 
 *These code snippets were designed to be called from an external package.*
 
-This subroutine demonstrates how to return each of the oligomers present in a degenerate primer. It takes the sequence string of the degenerate primer and returns the oligomers that match the sequence string in an array. This can be used in conjunction with the snippets [here](http://www.bioperl.org/wiki/Calculating_primer_melting_temperatures) to calculate the Tm (melting temperature) mean and Tm range of degenerate primers.
+This subroutine demonstrates how to return each of the oligomers present in a degenerate primer. It takes the sequence string of the degenerate primer and returns the oligomers that match the sequence string in an array. This can be used in conjunction with the snippets [here](#Calculating_primer_melting_temperatures) to calculate the Tm (melting temperature) mean and Tm range of degenerate primers.
 
 ```perl
-
 package Primer;
 use Bio::Tools::IUPAC;
 
 sub find_degenerates {
-
    my ($class, $sequence) = @_;
    my $seq_obj = Bio::Seq->new(-seq => $sequence, -alphabet => 'dna');
    my $stream  = Bio::Tools::IUPAC->new(-seq => $seq_obj);
@@ -2578,30 +2536,23 @@ sub find_degenerates {
    my @oligomers;
    while (my $uniqueseq = $stream->next_seq()) { push @oligomers, $uniqueseq->seq; }
    return @oligomers;
-
 }
-
 ```
 
 This subroutine produces pattern strings that can be used to search within files or a database (such as [BioSQL](http://www.biosql.org)) for sequences that match a degenerate primer. It takes the primer as a sequence object and returns two patterns, one for each strand.
 
 ```perl
-
 package Primer;
 use Bio::Tools::SeqPattern;
 
 sub generate_primer_search_patterns {
-
    my ($class, $seqobj) = @_;
    my $pattern = Bio::Tools::SeqPattern->new(-SEQ =>$seqobj->seq, -TYPE =>'Dna');
    return ($pattern->expand, $pattern->revcom(1)->expand);
-
 }
-
 ```
 
 --[Giles.weaver](User:Giles.weaver "wikilink") 19:36, 14 April 2010 (UTC)
-
 
 
 
