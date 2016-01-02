@@ -1385,13 +1385,10 @@ Sorry if someone already wrote this kind of script... I couldn't find one like i
 I updated my script. There are two major things in this that I think I updated over time which is error reporting and also the ability to concatenate an entire xmfa into a fasta alignment. Some people in my lab wanted to view a MAUVE alignment in MEGA, which prompted this. --[Lskatz](User:Lskatz "wikilink") 20:10, 3 August 2012 (UTC)
 
 The newest version of the script will be at [my github page](https://github.com/lskatz/lskScripts) but I will leave this version here for posterity. --[Lskatz](User:Lskatz "wikilink") 14:39, 29 December 2014 (UTC)
-`    https://github.com/lskatz/lskScripts`
+`https://github.com/lskatz/lskScripts`
 
 ```perl
-
 #!/usr/bin/env perl
-
-<!-- -->
 
 # Converts an alignment to another alignment format
 # Run with no arguments or with -h for help.
@@ -1408,32 +1405,23 @@ sub logmsg{print "@_ ";};
 exit(main());
 
 sub main{
-
  my $settings={};
  die usage() if(@ARGV<1);
  GetOptions($settings,qw(infile=s ginformat=s outfile=s format=s concatenateAlignment linker=s));
  die usage() if($$settings{help});
 
- my $infile=$$settings{infile} or die "Error: Need infile param:
-
-".usage();
-
- my $outfile=$$settings{outfile} or die "Error: Need outfile param:
-
-".usage();
-
+ my $infile=$$settings{infile} or die "Error: Need infile param:\n".usage();
+ my $outfile=$$settings{outfile} or die "Error: Need outfile param:\n".usage();
  $$settings{outfileformat}=$$settings{format} || "fasta";
  $$settings{linker}||="";
 
  convertAln($infile,$outfile,$settings);
- 
+
  logmsg "Output is now in $outfile";
  return 0;
-
 }
 
 sub convertAln{
-
  my($infile,$outfile,$settings)=@_;
  $$settings{infileFormat}=$$settings{ginformat}||guess_format($infile,$settings);
  my $numAlns;
@@ -1444,11 +1432,9 @@ sub convertAln{
  }
  logmsg "Finished converting $infile to $outfile ($numAlns alignments)";
  return $numAlns;
-
 }
 
 sub convertAlnToDir{
-
  my($infile,$outdir,$settings)=@_;
  $outdir=~s/\/+$//; # remove the trailing slash
  logmsg "Converting $infile ($$settings{infileFormat}) to a directory $outdir ($$settings{outfileformat})";
@@ -1461,11 +1447,9 @@ sub convertAlnToDir{
    $out->write_aln($aln);
  }
  return $alnCounter;
-
 }
 
 sub convertAlnToFile{
-
  my($infile,$outfile,$settings)=@_;
  logmsg "Converting $infile ($$settings{infileFormat}) to file $outfile";
  my $in=Bio::AlignIO->new(-file=>$infile,-format=>$$settings{infileFormat});
@@ -1504,11 +1488,9 @@ sub convertAlnToFile{
    }
  }
  return $alnCounter;
-
 }
 
 sub findAllUniqueIdsInAln{
-
  my($infile,$settings)=@_;
  logmsg "Finding all expected sequence IDs";
  my %genome;
@@ -1519,11 +1501,9 @@ sub findAllUniqueIdsInAln{
    }
  }
  return keys(%genome);
-
 }
 
 sub guess_format{
-
  my ($filename,$settings)=@_;
  for my $format (qw(pfam xmfa selex fasta stockholm prodom clustalw msf mase bl2seq nexus phylip)){
    eval{
@@ -1537,13 +1517,10 @@ sub guess_format{
    }
    return $format;
  }
- die "Could not guess the format of $filename
-
-";
+ die "Could not guess the format of $filename\n";
 }
 
 sub usage{
-
  "Converts an alignment to another alignment format.
  $0 -i alignmentfile -o outputPrefix [-f outputformat]
  -i the alignment file to input
@@ -1559,33 +1536,26 @@ sub usage{
    Default is no linker but a useful linker could be NNNNNNNNNN
  -h this helpful menu
  ";
-
 }
-
 ```
-
-<category:IO/Scrapbook>
 
 
 ### Converting_FASTQ_to_FASTA_QUAL_files<a name="Converting_FASTQ_to_FASTA_QUAL_files"></a>
 
 I came up with a script to accompany Minimo, which is a nice assembler that can be fed by Illumina reads (but it doesn't read FASTQ). Therefore there needs to be a fast way to convert FASTQ to FASTA/QUAL. This script is multithreaded and works best as you approach the number of CPUs you have. It is untested on non-threaded installations of Perl.
 
-There is a method to perform the opposite operation: <http://www.bioperl.org/wiki/Merging_separate_sequence_and_quality_files_to_FASTQ>
+There is a method to perform the opposite operation: [Merging separate sequence and quality files to FASTQ](#Merging_separate_sequence_and_quality_files_to_FASTQ)
 
-`   Usage: $0 -i inputFastqFile [-n numCpus -q outputQualfile -f outputFastaFile]`
+`Usage: $0 -i inputFastqFile [-n numCpus -q outputQualfile -f outputFastaFile]`
 
 ```perl
-
 #!/usr/bin/env perl
 # Author: Lee Katz
-
-<!-- -->
 
 # Convert a fastq to a fasta/qual combo using BioPerl, with some Linux commands
 
 use Bio::Perl;
-use <Data::Dumper>;
+use Data::Dumper;
 use strict;
 use warnings;
 use threads;
@@ -1595,13 +1565,11 @@ use Getopt::Long;
 my $settings={};
 
 $|=1;
-my %numSequences;
-\# static for a subroutine
+my %numSequences; # static for a subroutine
 
 exit(main());
 
 sub main{
-
  die("Usage: $0 -i inputFastqFile [-n numCpus -q outputQualfile -f outputFastaFile]") if(@ARGV<1);
 
  GetOptions($settings,('numCpus=s','input=s','qualOut=s','fastaOut=s'));
@@ -1620,18 +1588,14 @@ sub main{
  joinFastqFiles(\@subfile,$file);
 
  return 0;
-
 }
 
 sub convert{
-
  my($file,$outfasta,$outqual)=@_;
 
  my $numSequences=numSequences($file);
  my $reportEvery=int($numSequences/100) || 1;
- print "$numSequences sequences to convert in $file
-
-";
+ print "$numSequences sequences to convert in $file\n";
 
  my $in=Bio::SeqIO->new(-file=>$file,-format=>"fastq-illumina");
  my $seqOut=Bio::SeqIO->new(-file=>">$outfasta",-format=>"fasta");
@@ -1647,35 +1611,28 @@ sub convert{
      print "$percentDone%..";
    }
  }
- print "Done with subfile $file.
-
-";
-
+ print "Done with subfile $file.\n";
  return 1;
-
 }
 
 sub joinFastqFiles{
-
  my($subfile,$outfileBasename)=@_;
  my($command,$subfasta,$subqual);
- 
+
  # fasta
  $subfasta.="$_.fasta " for(@$subfile);
  $command="cat $subfasta > $outfileBasename.fasta";
  system($command);
- 
+
  # qual
  $subqual.="$_.qual " for (@$subfile);
  $command="cat $subqual > $outfileBasename.qual";
  system($command);
- 
- return 1;
 
+ return 1;
 }
 
 sub splitFastq{
-
  my($file,$numCpus)=@_;
  my $prefix="FQ"; # for fastq
  my $numSequences=numSequences($file);
@@ -1686,39 +1643,29 @@ sub splitFastq{
  system("split -l $numLinesPerFile $file 'tmp/FQ'");
 
  return glob("tmp/FQ*");
-
 }
 
 # use Linux to find the number of sequences quickly, but cache the value because it is still a slow process
 # This should probably changed to \`wc -l\`/4 but I don't have time to test the change
 # TODO for anyone reading this: please change this method to wc -l divided by 4.
-
 sub numSequences{
-
  my $file=shift;
  return $numSequences{$file} if($numSequences{$file});
-``  my $num=`grep -c '^\@' $file`;
-``
+ my $num=`grep -c '^\@' $file`;
  chomp($num);
  $numSequences{$file}=$num;
  return $num;
-
 }
-
 ```
-
-<category:IO/Scrapbook>
 
 
 ### Getting_Fasta_sequences_from_a_GFF<a name="Getting_Fasta_sequences_from_a_GFF"></a>
 
 Some have whimpered, *"How do I get a fasta file of the features in this GFF?"*... Well, assuming your GFF file fits into memory (and assuming you have the appropriate fasta file to hand), here's how:
 
-A script I like to call 'gff2fasta'
------------------------------------
+A script I like to call `gff2fasta`
 
 ```perl
-
 #!/usr/bin/perl -w
 
 use strict;
@@ -1726,83 +1673,59 @@ use Bio::SeqIO;
 
 my $verbose = 0;
 
-# 1.  read in gff
+# read in gff
 
 warn "reading GFF ";
 
 my %gff;
 
 open GFF, '<', 'my.gff3'
-
- or die "fail
-
-";
+  or die "fail\n";
 
 while(<GFF>){
-
  my ($seqid, undef, undef, $start, $end,
      undef, undef, undef, $attrs) = split;
- 
- push @{$gff{$seqid}}, [$start, $end, $attrs];
 
+ push @{$gff{$seqid}}, [$start, $end, $attrs];
 }
 
-warn "OK ";
+warn "OK\n";
 
-# 1.  Do the fasta
+# Do the fasta
 
 my $seqio = Bio::SeqIO->
-
  new( -file => 'my.fa',
       -format => 'fasta' )
- or die "double fail
-
-";
+ or die "double fail\n";
 
 while(my $sobj = $seqio->next_seq){
-
  my $seqid = $sobj->id;
- 
+
  unless(defined($gff{$seqid})){
-   warn "no features for $seqid
-
-";
-
+   warn "no features for $seqid\n";
    next;
  }
- 
+
  my $seq = $sobj->seq;
- 
+
  for(@{$gff{$seqid}}){
-   my ($start, $end, $attrs) = @$_;
-   
-   warn join("\t", $start, $end, $attrs), "
-
-"
-
+   my ($start, $end, $attrs) = @$_;   
+   warn join("\t", $start, $end, $attrs), "\n"
      if $verbose > 0;
-   
+
    my %attrs = split(/=|;/, $attrs);
-   
+
    print ">$seqid-". $attrs{"ID"}.
-     "/$start-$end (". ($end-$start+1). ")
+     "/$start-$end (". ($end-$start+1). ")\n";
 
-";
-
-   print substr($seq, $start, $end-$start+1), "
-
-";
-
+   print substr($seq, $start, $end-$start+1), "\n";
  }
- 
- #exit;
 
+ #exit;
 }
 
-warn "OK ";
-
+warn "OK\n";
 ```
-
 
 
 ### Merging_separate_sequence_and_quality_files_to_FASTQ<a name="Merging_separate_sequence_and_quality_files_to_FASTQ"></a>
@@ -1818,7 +1741,6 @@ warn "OK ";
 -   *Almost, as Dan discovered, producing the following scrap (with a nod to **Phillip San Miguel**):*
 
 ```perl
-
 #!/usr/bin/perl -w
 
 use strict;
@@ -1829,46 +1751,37 @@ use Bio::Seq::Quality;
 use Getopt::Long;
 
 die "pass a fasta and a fasta-quality file "
-
  unless @ARGV;
 
 my ($seq_infile,$qual_infile)
-
  = (scalar @ARGV == 1) ?($ARGV[0], "$ARGV[0].qual") : @ARGV;
 
-# 1.  Create input objects for both a seq (fasta) and qual file
+# Create input objects for both a seq (fasta) and qual file
 
 my $in_seq_obj =
-
  Bio::SeqIO->new( -file   => $seq_infile,
           -format => 'fasta',
         );
 
 my $in_qual_obj =
-
  Bio::SeqIO->new( -file   => $qual_infile,
           -format => 'qual',
         );
 
 my $out_fastq_obj =
-
  Bio::SeqIO->new( -format => 'fastq'
         );
 
 while (1){
-
  ## create objects for both a seq and its associated qual
  my $seq_obj  = $in_seq_obj->next_seq || last;
  my $qual_obj = $in_qual_obj->next_seq;
- 
- die "foo!
 
-"
-
+ die "foo!\n"
    unless
      $seq_obj->id eq
    $qual_obj->id;
- 
+
  ## Here we use seq and qual object methods feed info for new BSQ
  ## object.
  my $bsq_obj =
@@ -1877,16 +1790,13 @@ while (1){
         -seq  => $seq_obj->seq,
         -qual => $qual_obj->qual,
       );
- 
+
  ## and print it out.
  $out_fastq_obj->write_fastq($bsq_obj);
-
 }
-
 ```
 
-For more information, see .
-
+For more information, see [Bio::Seq::Quality](https://metacpan.org/pod/Bio::Seq::Quality).
 
 
 ### Parsing_BLAST_HSPs<a name="Parsing_BLAST_HSPs"></a>
@@ -1895,16 +1805,16 @@ For more information, see .
 
 The key to parsing any external program report is knowing where (i.e., in what BioPerl object) the stuff you want lives. This info can be tricky to find, though walking through the code to find it is an excellent exercise for learning how BioPerl is structured.
 
-[Below](#scrap "wikilink") is some code to get BLAST high-scoring pairs from a BLAST report. Here is the basic BP-object structure:
+[Below](#scrap) is some code to get BLAST high-scoring pairs from a BLAST report. Here is the basic BP-object structure:
 
-`$report (is-a ``, which contains`
-` $result (is-a ``, which contains`
-`   $hit (is-a ``, which contains`
-`     $hsp (is-a ``)`
+- $report is-a [Bio::SearchIO::blast](https://metacpan.org/pod/Bio::SearchIO::blast), which contains
+  - $result is-a [Bio::Search::Result::BlastResult](https://metacpan.org/pod/Bio::Search::Result::BlastResult), which contains
+    - $hit is-a [Bio::Search::Hit::BlastHit](https://metacpan.org/pod/Bio::Search::Hit::BlastHit), which contains
+      - $hsp is-a [Bio::Search::HSP::GenericHSP](https://metacpan.org/pod/Bio::Search::HSP::GenericHSP)
 
 As a professor (David Wollkind) of mine once said (while teaching the chain rule), you have to peel away the players until you find the one with the ball.
 
-Note there are many accessors on the object though which the interesting stuff can be obtained.
+Note there are many accessors on the [Bio::Search::HSP::GenericHSP](https://metacpan.org/pod/Bio::Search::HSP::GenericHSP) object though which the interesting stuff can be obtained.
 
 The scrap uses `blastn` to align two sequences. Get the standalone BLAST programs from [NCBI](ftp://ftp.ncbi.nih.gov/blast/executables/LATEST/) (they don't come with BioPerl!).
 
@@ -1912,59 +1822,37 @@ The scrap uses `blastn` to align two sequences. Get the standalone BLAST program
 
 ------------------------------------------------------------------------
 
-<span id='scrap'></span>
-
+<a name='scrap'></a>
 ```perl
-
 #!/usr/bin/perl -w
+
 use strict;
 use Bio::SeqIO;
 use Bio::Tools::Run::StandAloneBlast;
 my $query1_in  = Bio::SeqIO->newFh ( -file   => "mus-betaglobin-bh0.fas",
                    -format => 'fasta' );
-my $query1 = <$query1_in>; 
-my $query2_in  = Bio::SeqIO->newFh ( -file   => "mus-betaglobin-bh3.fas", 
+my $query1 = <$query1_in>;
+my $query2_in  = Bio::SeqIO->newFh ( -file   => "mus-betaglobin-bh3.fas",
                      -format => 'fasta' );
-my $query2 = <$query2_in>; 
+my $query2 = <$query2_in>;
+
 $factory = Bio::Tools::Run::StandAloneBlast->new('program'  => 'blastn');
 $report = $factory->bl2seq($query1, $query2);
+
 while (my $result = $report->next_result) {
-   print "Query: ".$result->query_name."
-
-";
-
+   print "Query: ".$result->query_name."\n";
    while (my $hit = $result->next_hit) {
-   while ($hsp = $hit->next_hsp) {
-       print $hsp->algorithm, ": identity ", 100*$hsp->frac_identical, "\%, rank ", $hsp->rank, " (E:", $hsp->evalue, ")
-
-";
-
-       printf("%7s: %s
-
-", "subj", $hsp->query_string);
-
-       printf("%7s: %s
-
-", "", $hsp->homology_string);
-
-       printf("%7s: %s
-
-", "hom", $hsp->hit_string);
-
-       print "
-
-";
-
-   }
-   print "
-
-";
-
+     while ($hsp = $hit->next_hsp) {
+         print $hsp->algorithm, ": identity ", 100*$hsp->frac_identical, "\%, rank ", $hsp->rank, " (E:", $hsp->evalue, ")\n";
+         printf("%7s: %s\n", "subj", $hsp->query_string);
+         printf("%7s: %s\n", "", $hsp->homology_string);
+         printf("%7s: %s\n", "hom", $hsp->hit_string);
+         print "\n";
+     }
+     print "\n";
    }
 }
-
 ```
-
 
 
 ### Parsing_BLAST_results_into_per-query_files<a name="Parsing_BLAST_results_into_per-query_files"></a>
@@ -1973,14 +1861,13 @@ while (my $result = $report->next_result) {
 
 **Tim Kohler** asks:
 
-''When I use to BLAST one fasta file including different sequences, I get a BLAST output with many queries, each having several hits / sbjcts. My problem is how to parse *all* hits of *one* query into a single new file. And this for all the queries I have in my BLAST output file.''
+*When I use [Bio::Tools::Run::StandAloneBlast](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlast) to BLAST one fasta file including different sequences, I get a BLAST output with many queries, each having several hits / sbjcts. My problem is how to parse **all** hits of **one** query into a single new file. And this for all the queries I have in my BLAST output file.*
 
 ------------------------------------------------------------------------
 
 If you have your multiple-query blast report file, you can sort and output separate files like so:
 
 ```perl
-
 use Bio::Search::Result::BlastResult;
 use Bio::SearchIO;
 
@@ -1989,20 +1876,15 @@ blast);
 my $result = $report->next_result;
 my %hits_by_query;
 while (my $hit = $result->next_hit) {
-
  push @{$hits_by_query{$hit->name}}, $hit;
-
 }
 
 foreach my $qid ( keys %hits_by_query ) {
-
  my $result = Bio::Search::Result::BlastResult->new();
  $result->add_hit($_) for ( @{$hits_by_query{$qid}} );
  my $blio = Bio::SearchIO->new( -file => ">$qid\.bls", -format=>'blast' );
  $blio->write_result($result);
-
 }
-
 ```
 
 *--[Ed.](Mark_Jensen "wikilink")*
@@ -2012,108 +1894,89 @@ foreach my $qid ( keys %hits_by_query ) {
 [Russell](User:Russell_Smithies "wikilink") also had a solution, but we'll let him pare it down for the scrapbook!
 
 
-
 ### Preparing_contigs_for_GenBank_submission<a name="Preparing_contigs_for_GenBank_submission"></a>
 
 *(see bioperl-l thread starting [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-September/028303.html))*
 
--   The key issue in this scrap is how creating a GenBank record for a persisted object is not quite as simple as reading from the DB and writing to SeqIO. Read on for the particulars (responses are from [Jason Stajich](#JS "wikilink") and [Don Gilbert](#DG "wikilink")). --[*Ed.*](User:Majensen "wikilink")
+-   The key issue in this scrap is how creating a GenBank record for a [Bio::DB::GFF](https://metacpan.org/pod/Bio::DB::GFF) persisted object is not quite as simple as reading from the DB and writing to SeqIO. Read on for the particulars (responses are from [Jason Stajich](#JS "wikilink") and [Don Gilbert](#DG "wikilink")). --[*Ed.*](User:Majensen "wikilink")
 
 ***Erich Schwarz*** discusses contig submissions sans Sequin:
 
-*I have newly sequenced contigs, with CDS predictions, loaded loaded into a MySQL database via . I'd like to export each contig, with its annotated CDSes, into a single GenBank-formatted record for each contig.*
+*I have newly sequenced contigs, with CDS predictions, loaded loaded into a MySQL database via [Bio::DB::GFF](https://metacpan.org/pod/Bio::DB::GFF). I'd like to export each contig, with its annotated CDSes, into a single GenBank-formatted record for each contig.*
 
 and notes the following:
 
 *I came up with code that would let me export protein translations of the contigs' CDSes in GenBank format...*
 
 ```perl
-
 use strict;
 use warnings;
 use Bio::Seq;
 use Bio::SeqIO;
 use Bio::DB::GFF;
 
-my $query_database = $ARGV\[0\];
+my $query_database = $ARGV[0];
 my $dna = q{};
-my $db = Bio::DB::GFF->new( -dsn =>
-$query_database);
+my $db = Bio::DB::GFF->new( -dsn => $query_database);
 
 my $gb_file = 'example.gb';
-my $seq_out = Bio::SeqIO->new( -file =>
-">$gb_file", -format =>
-'genbank');
+my $seq_out = Bio::SeqIO->new( -file => ">$gb_file", -format => 'genbank');
 
 my @contigs = sort
-
              map { $_->display_id }
              $db->features( -types => 'contig:assembly' );
 
 foreach my $contig (@contigs) {
-
    my $segment1 = $db->segment($contig);
    my @p_txs = $segment1->features('processed_transcript');
    foreach my $p_t (sort @p_txs) {
        $dna = q{};
        my @CDSes = $p_t->CDS;
        my $cds_name = $CDSes[0]->display_id();
-       foreach my $cds (@CDSes) { 
+       foreach my $cds (@CDSes) {
            # $cds->seq == Bio::PrimarySeq, *not* plain nt seq.!
            $dna = $dna . $cds->seq->seq;
        }
-       my $full_cds = Bio::Seq->new( -display_id => $cds_name, 
+       my $full_cds = Bio::Seq->new( -display_id => $cds_name,
                                      -seq => $dna, );
        my $prot = $full_cds->translate;
        $seq_out->write_seq($prot);
    }
-
 }
-
 ```
 
 *Returning to this, I tried using `$db->get_Seq_by_id($contig)` to give me a [Bio::Seq](https://metacpan.org/pod/Bio::Seq) object for each contig (which I could then output into GenBank form), but that proved futile.*
 
 ------------------------------------------------------------------------
 
-<span id='JS'></span> ***[Jason Stajich](User:Jason "wikilink")*** provides some details:
+***[Jason Stajich](User:Jason "wikilink")*** provides some details:
 
 *If you want to get a specific segment you just do what you already have in your code:*
 
 ```perl
-
 my $segment = $db->segment($contig_name);
-
 ```
 
 *Or you can iterate through all the features - depends on how you named your segments/contigs/chromsomes, I named mine "contig:scaffold" for type:source:*
 
 ```perl
-
 my $iterator = $dbh->get_seq_stream(-type=>'scaffold');
 while (my $s = $iterator->next_seq) {
-
 ...
-
 }
-
 ```
 
 *Now you* should *be able to pass this segment object to*
 
 ```perl
-
 $seqio->write_seq($segment);
-
 ```
 
-*However, doesn't implement the whole API so you probably have to create your own sequence and move the features over:*
+*However, [Bio::DB::GFF::Feature](https://metacpan.org/pod/Bio::DB::GFF::Feature) doesn't implement the whole [Bio::SeqI](https://metacpan.org/pod/Bio::SeqI) API so you probably have to create your own sequence and move the features over:*
 
 ```perl
-
 my $iterator = $dbh->get_seq_stream(-type=>'scaffold');
 while (my $s = $iterator->next_seq) {
-
  my $seq = Bio::Seq->new();
  $seq->primary_seq($s->seq);
  for my $feature ( $s->features('processed_transcript') ) {
@@ -2131,29 +1994,26 @@ while (my $s = $iterator->next_seq) {
    $seq->add_SeqFeature($f);
  }
  $out->write_seq($seq);
-
 }
-
 ```
 
 *I suspect you'll have to edit the feature objects some to a) remove the ones you don't want to output, b) add additional info like translation frame..., c) add in other annotation information that may or may not be encoded as tag/values that \[NCBI requires\].*
 
 ------------------------------------------------------------------------
 
-<span id='DG'></span> ***Don Gilbert*** suggests persisting in Chado rather than [Bio::DB::GFF:](https://metacpan.org/pod/Bio::DB::GFF:)
+***Don Gilbert*** suggests persisting in Chado rather than [Bio::DB::GFF](https://metacpan.org/pod/Bio::DB::GFF):
 
-*If the database to Genbank submission route doesn't get you where you want, you can also look at storing your data in a GMOD Chado database, then using Bulkfiles to produce the Genbank Submission file set.*
+*If the [Bio::DB::GFF](https://metacpan.org/pod/Bio::DB::GFF) database to Genbank submission route doesn't get you where you want, you can also look at storing your data in a GMOD Chado database, then using Bulkfiles to produce the Genbank Submission file set.*
 
 *Find a GenBank Submit output from Chado dbs in this [tool release](http://eugenes.org/gmod/GMODTools/)*
 
-      GMODTools-1.2b.zip      20-Jun-2008 
+      GMODTools-1.2b.zip      20-Jun-2008
 
 *adding (in progress) \[the\] Genbank Submission table writer, `bulkfiles -format=genbanktbl`, with output suited to submit to NCBI per [these specifications](http://www.ncbi.nlm.nih.gov/Genbank/eukaryotic_genome_submission.html)*
 
 *See also [the GMODTools wiki](http://gmod.org/wiki/GMODTools) and [this test case](http://gmod.org/wiki/GMODTools_TestCase) with genbank-submit output.*
 
 ------------------------------------------------------------------------
-
 
 
 
