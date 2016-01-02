@@ -3587,9 +3587,7 @@ sub check_match {
 ------------------------------------------------------------------------
 
 ```perl
-
 sub perm2 {
-
    my @a = split('',shift);
    my @i = (0..$#a);
    my @j = @i;
@@ -3598,115 +3596,86 @@ sub perm2 {
        push @r, splice(@i, rand($_+1),1);
    } reverse @j;
    return join('',@a[@r]);
-
 }
-
 ```
-
 
 
 ### Handy_progress_monitor<a name="Handy_progress_monitor"></a>
 
-__TOC__
-
-Mark's monitor
---------------
+#### Mark's monitor
 
 Here's a useful little device for monitoring progess as a large number of things (sequences, e.g.) are being stepped through. It's written as a configurator that returns an iterator. Call the iterator on every pass through the loop, it will know when to do the right thing. The callback allows you to get fancy if desired. --[*MAJ*](User:Majensen "wikilink")
 
 ```perl
-
 # dodot() args --
-# $every : hashref of { $modulus =>
-$symbol, ... }
-# (i.e., "every $modulus things, print $symbol...")
-# $title : print (or whatever) this on the first call
-# $callback : do this every $modulus things:
-# $callback->($current_symbol, $current_modulus, $current_count_of_things
-# 
+#  $every : hashref of { $modulus => $symbol, ... }
+#  (i.e., "every $modulus things, print $symbol...")
+#  $title : print (or whatever) this on the first call
+#  $callback : do this every $modulus things:
+#    $callback->($current_symbol, $current_modulus, $current_count_of_things
+#
 
 sub dodot {
-
    my ($every, $title, $callback) = @_;
    my $i=0;
    my @every = sort {$b<=>$a} keys %$every;
    $callback||= sub { print STDERR shift() };
    return sub {
-   $i++;
-   $callback->("$title
-
-") if ($title && ($i==1));
-
-   for (@every) {
-       unless ($i % $_) {
-       $callback->($every->{$_},$_,$i);
-       last;
-       }
+     $i++;
+     $callback->("$title\n") if ($title && ($i==1));
+     for (@every) {
+         unless ($i % $_) {
+           $callback->($every->{$_},$_,$i);
+           last;
+         }
+     };
    };
-   };
-
 }
-
 ```
 
 Use it like so:
 
 ```perl
-
-my $dot = dodot( { 10 =>
-'.',
-
-            100   => '|',
-            1000  => '@' },
-        'Enormo' );
+my $dot = dodot( { 10 => '.',
+                   100   => '|',
+                   1000  => '@' },
+                 'Enormo' );
 
 while (my $seq = $seqio->next_seq) {
-
    # doing doing doing...
    $dot->();
-
 }
-
 ```
 
 to produce something like:
 
-`Enormo`
-`.........|.........|.........|.........|.........|.........|.........|.........|.........|....`
-`.....@.........|.........|.........|.........|.........|.........|.........|.........|........`
-`.|.........@.........|.........|.........|.........|.........|`
+    Enormo
+    .........|.........|.........|.........|.........|.........|.........|.........|.........|....
+    .....@.........|.........|.........|.........|.........|.........|.........|.........|........
+    .|.........@.........|.........|.........|.........|.........|
 
 For nice linebreaks, try
 
 ```perl
-
-my $dot = dodot( { 10 =>
-'.',
-
-            100   => '|',
-            701   => "
-
-",
-
-            1000  => '@' },
-        'Enormo');
-
+my $dot = dodot( { 10 => '.',
+                   100   => '|',
+                   701   => "\n",
+                   1000  => '@' },
+                 'Enormo');
 ```
 
 to get
 
-`Enormo`
-`.........|.........|.........|.........|.........|.........|.........|`
-`.........|.........|.........@.........|.........|.........|.........|`
-`.........|.........|.........|.........|.........|.........@.........|`
-`.........|.........|.........|.........|`
+    Enormo
+    .........|.........|.........|.........|.........|.........|.........|
+    .........|.........|.........@.........|.........|.........|.........|
+    .........|.........|.........|.........|.........|.........@.........|
+    .........|.........|.........|.........|
 
 To start over for a new routine, just create a new iterator:
 
 ```perl
-
 sub validate {
-
    my @seqs = @_;
    my $vdot = dodot( { 500 => '.' }, 'validating' );
    while ($_ = $seqio->next_seq) {
@@ -3714,11 +3683,9 @@ sub validate {
       # validate validate validate
    }
    return @valid;
-
 }
 
 sub preprocess {
-
    my @seqs = @_;
    my $pdot = dodot( { 500 => '.' }, 'preprocessing');
    while ($_ = $seqio->next_seq) {
@@ -3726,31 +3693,27 @@ sub preprocess {
       # preprocess preprocess preprocess
    }
    return @processed;
-
 }
 
-# 1.  main
-
-... my $aln = $alnio->next_aln;
+## main
+...
+my $aln = $alnio->next_aln;
 my @valid_processed = preprocess( validate($aln->each_seq) );
 ...
-
 ```
 
-Russell's monitor
------------------
+#### Russell's monitor
 
 Here's the monitor I use. Gives a "wget"-like progress display with percentage of the job remaining.
 
-```perl sub progress_bar {
-
+```perl
+sub progress_bar {
    my ( $got, $total, $width, $char ) = @_;
    $width ||= 25; $char ||= '=';
    my $num_width = length $total;
    sprintf "|%-${width}s| Processed %${num_width}s rows of %s (%.2f%%)\r",
        $char x (($width-1)*$got/$total). '>',
        $got + 1, $total, 100*$got/+$total;
-
 }
 
 # as an example of how it's used,
@@ -3759,30 +3722,23 @@ Here's the monitor I use. Gives a "wget"-like progress display with percentage o
 
 $mass_count = keys (%mass_data);
 $mass_num = 0;
-foreach $mass (sort {$a <=>
-$b} (keys %mass_data)){
-
+foreach $mass (sort {$a <=> $b} (keys %mass_data)){
    # do stuff with your data
    $t2mdata .= pack("f",$mass);
 
    # show progress
    print progress_bar( $mass_num++, $mass_count, 25, '=' );
-
 }
-
 ```
 
-[Term::ProgressBar](https://metacpan.org/pod/Term::ProgressBar)
------------------
+#### [Term::ProgressBar](https://metacpan.org/pod/Term::ProgressBar)
 
 Or use a cpan module that you can use as simple or as complex as you want.
 
 ```perl
-
 use Term::ProgressBar;
 my $max = 10;
 my $progressBar = Term::ProgressBar->new(
-
      {
          name            => 'Running Test',
          count           => $max,
@@ -3793,47 +3749,35 @@ my $progressBar = Term::ProgressBar->new(
    );
 
 for my $i (1..$max){
-
    $progressBar->update ($i);
    sleep 1;
-
 }
-
 ```
 
 [CPAN](http://search.cpan.org/~fluffy/Term-ProgressBar-2.09/lib/Term/ProgressBar.pm)
 
 
-
 ### Hash_key_at_the_max_value<a name="Hash_key_at_the_max_value"></a>
 
 ```perl
-
-(sort {$h{$b} <=>
-$h{$a} keys %h)\[0\]
-
+(sort {$h{$b} <=> $h{$a} keys %h)[0]
 ```
 
 *or*
 
 ```perl
-
 use List::Util;
 $h{ max values %h };
-
 ```
 
 *All keys having max value:*
 
 ```perl
-
-my $max = \[sort {$b<=>$a} values %h\]->\[0\];
+my $max = [sort {$b<=>$a} values %h]->[0];
 map { ($h{$_} == $max) ? $_ : () } keys %h;
-
 ```
 
 --[*MAJ*](User:Majensen "wikilink")
-
 
 
 ### Poor_man%27s_bootstrap<a name="Poor_man%27s_bootstrap"></a>
@@ -3849,74 +3793,64 @@ See [Suffix_trees_from_thin_air](#Suffix_trees_from_thin_air)
 Recursively:
 
 ```perl
+dohash( %h, sub { print "$_[0] " } );
 
-dohash( %h, sub { print "$_\[0\] " } );
-
-sub dohash { my ($h, $callback) = @_;
-map { ref $$h{$_} ? dohash($$h{$_},$callback) : $callback->($$h{$_}) } keys %$h ;
-return;
+sub dohash {
+  my ($h, $callback) = @_;
+  map { ref $$h{$_} ? dohash($$h{$_},$callback) : $callback->($$h{$_}) } keys %$h ;
+  return;
 }
-
 ```
 
 A depth-first iterator:
 
 ```perl
-
-$it_d = make_depth_iterator( %h, sub { print "$_\[0\] " } );
+$it_d = make_depth_iterator( %h, sub { print "$_[0]\n" } );
 while ($it_d->()) {1;}
 
 sub make_depth_iterator {
-
    my ($h, $callback) = @_;
    my @stack = shift;
    return sub {
-   while (@stack) {
-       my $v = pop @stack;
-       while (ref($v)) {
-       push @stack, values %$v;
-       $v = pop @stack;
-       }
-       return undef unless $v;
-       return $callback->($v);
+     while (@stack) {
+         my $v = pop @stack;
+         while (ref($v)) {
+           push @stack, values %$v;
+           $v = pop @stack;
+         }
+         return undef unless $v;
+         return $callback->($v);
+     }
+     return;
    }
-   return;
-   }
-
 }
-
 ```
 
 A breadth-first iterator:
 
 ```perl
-
-$it_b = make_breadth_iterator( %h, sub { print "$_\[0\] " } );
+$it_b = make_breadth_iterator( %h, sub { print "$_[0]\n " } );
 while ($it_b->()) {1};
 
 sub make_breadth_iterator {
-
    my ($h, $callback) = @_;
    my @queue = shift;
    return sub {
-   while (@queue) {
-       my $v = shift @queue;
-       while (ref($v)) {
-       push @queue, values %$v;
-       $v = shift @queue;
-       }
-       return undef unless $v;
-       return $callback->($v);
+     while (@queue) {
+         my $v = shift @queue;
+         while (ref($v)) {
+           push @queue, values %$v;
+           $v = shift @queue;
+         }
+         return undef unless $v;
+         return $callback->($v);
+     }
+     return;
    }
-   return;
-   }
-
 }
-
 ```
 
 --[*MAJ*](User:Majensen "wikilink")
-
 
 
 
