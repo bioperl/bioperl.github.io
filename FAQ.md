@@ -485,9 +485,9 @@ Use [BlastPlus](/howtos/BlastPlus_HOWTO.html).
 
 [bioperl-run](https://github.com/bioperl/bioperl-run) is the package with *application wrappers*.
 
-### I'm trying to run  and I'm seeing error messages like `Can't locate Bio/Tools/Run/WrapperBase.pm` - how do I fix this?
+### I'm trying to run  and I'm seeing error messages like `Can't locate Bio/Tools/Run/WrapperBase.pm`.
 
-This file is missing in version 1.2. Install the latest BioPerl.
+This file is missing in version 1.2. [Install](INSTALL.html) the latest BioPerl.
 
 Other BioPerl packages
 ----------------------
