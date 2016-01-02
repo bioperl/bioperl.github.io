@@ -2574,54 +2574,50 @@ sub generate_primer_search_patterns {
 
 ------------------------------------------------------------------------
 
-***[Chris Fields](User:cjfields "wikilink")*** suggests (with [comment](#comment "wikilink")):
+***[Chris Fields](User:cjfields "wikilink")*** suggests (with [comment](#comment)):
 
 *The NSE (Name.version/start-end) is used to distinguish the sequences from one another, so if each sequence has one or more unique accession/version/start/end there should be no replacement (and no warning).*
 
 ```perl
-
 use Bio::LocatableSeq;
 use Bio::SimpleAlign;
 use Bio::AlignIO;
 
 my $aln = Bio::SimpleAlign->new();
-my $out = Bio::AlignIO->new(-format =>
-'clustalw');
+my $out = Bio::AlignIO->new(-format => 'clustalw');
 
 for my $v (1..10) {
-
     my $ls = Bio::LocatableSeq->new(-id => 'ABCD1234',
                                     -version => $v,
                                     -alphabet => 'dna',
                                     -seq => '--atg---gta--');
     $aln->add_seq($ls);
-
-} $out->write_aln($aln);
-
+}
+$out->write_aln($aln);
 ```
 
 with output...
 
-`CLUSTAL W(1.81) multiple sequence alignment`
-`ABCD1234.1/1-6         --atg---gta--`
-`ABCD1234.2/1-6         --atg---gta--`
-`ABCD1234.3/1-6         --atg---gta--`
-`ABCD1234.4/1-6         --atg---gta--`
-`ABCD1234.5/1-6         --atg---gta--`
-`ABCD1234.6/1-6         --atg---gta--`
-`ABCD1234.7/1-6         --atg---gta--`
-`ABCD1234.8/1-6         --atg---gta--`
-`ABCD1234.9/1-6         --atg---gta--`
-`ABCD1234.10/1-6        --atg---gta--`
-`                         ***   ***`
+```
+CLUSTAL W(1.81) multiple sequence alignment
+ABCD1234.1/1-6         --atg---gta--
+ABCD1234.2/1-6         --atg---gta--
+ABCD1234.3/1-6         --atg---gta--
+ABCD1234.4/1-6         --atg---gta--
+ABCD1234.5/1-6         --atg---gta--
+ABCD1234.6/1-6         --atg---gta--
+ABCD1234.7/1-6         --atg---gta--
+ABCD1234.8/1-6         --atg---gta--
+ABCD1234.9/1-6         --atg---gta--
+ABCD1234.10/1-6        --atg---gta--
+                         ***   ***
+```
 
-and <span id='comment'></span> comments:
+and <a id='comment'></a> comments:
 
 *If you think about it that's a feature. Any single sequence that appears in an alignment more than once is either (1) matching multiple regions (i.e. repeats, motifs, etc) so the location varies, or (2) the sequence was modified so the version changes (the last one is fairly new). Beyond that one has to question the logic of including multiple copies of exactly the same sequence record in a multiple alignment, so unless additional information distinguishing the potential duplicates is provided we assume unintentional (and erroneous) duplication and punt.*
 
 *Weighing the options I would rather have the warning indicating a problem than nothing at all.*
-
-
 
 
 ### Extracting_sequence_in_the_neighborhood_of_a_feature<a name="Extracting_sequence_in_the_neighborhood_of_a_feature"></a>
@@ -2641,27 +2637,21 @@ and <span id='comment'></span> comments:
 -   [Jason Stajich](User:Jason "wikilink") made a technical change and kibbitzed in consideration of strandedness. The hybrid scrap is below --[*Ed.*](User:Majensen "wikilink")
 
 ```perl
-
 my $gb = new Bio::DB::GenBank;
 $entry = $gb->get_Seq_by_id($id);
 my $promotor;
 foreach my $f ($entry->all_SeqFeatures()) {
-
    if ($f->primary_tag eq 'CDS') {
       if( $f->strand < 0 ) {
           $promotor = $entry->trunc($f->end+1, $f->end + 2000)->revcom;
-      } 
+      }
       else {   
           $promotor = $entry->trunc($f->start - 2000, $f->start -1);
       }
-   $out->write_seq($promotor);
+      $out->write_seq($promotor);
    }
-
 }
-
 ```
-
-
 
 
 ### Lee_Katz_detectPeReads<a name="Lee_Katz_detectPeReads"></a>
@@ -2670,47 +2660,47 @@ See [Lee_Katz_detectPeReads](#Lee_Katz_detectPeReads)
 
 ### Merge_gapped_sequences_across_a_common_region<a name="Merge_gapped_sequences_across_a_common_region"></a>
 
+See discussion thread [here](http://bioperl.org/pipermail/bioperl-l/2010-January/032002.html).
+
 '''[Albert Vilella](User:Avilella "wikilink") ''' sez: *I basically want to start with something like this:*
 
-`seq1.123     QWERTYUIOPASDFGHJKLZXCVBNM`
-`seq2.234     QWERTYU-------------------`
-`seq2.345     ----------ASDFGH----------`
-`seq2.456     -------------------ZXCVBNM`
+    seq1.123     QWERTYUIOPASDFGHJKLZXCVBNM
+    seq2.234     QWERTYU-------------------
+    seq2.345     ----------ASDFGH----------
+    seq2.456     -------------------ZXCVBNM
 
 *and end with something like this:*
 
-`seq1.123     QWERTYUIOPASDFGHJKLZXCVBNM`
-`seq2.mrg     QWERTYU---ASDFGH---ZXCVBNM`
+    seq1.123     QWERTYUIOPASDFGHJKLZXCVBNM
+    seq2.mrg     QWERTYU---ASDFGH---ZXCVBNM
 
 ------------------------------------------------------------------------
 
 Here's one of my favorite tricks for this: XOR mask on gap symbol. Fast! --*[ed.](User:Majensen "wikilink")*
 
 ```perl
-
 use Bio::SeqIO;
 use Bio::Seq;
 use strict;
 
-my $seqio = Bio::SeqIO->new( -fh =>
-\*DATA );
+my $seqio = Bio::SeqIO->new( -fh => \*DATA );
 
 my $acc = $seqio->next_seq->seq ^ '-';
 while ($_ = $seqio->next_seq ) {
-
    $acc ^= ($_->seq ^ '-');
-
-} my $mrg = Bio::Seq->new( -id =>
-'merged',
-
+}
+my $mrg = Bio::Seq->new( -id => 'merged',
    -seq => $acc ^ '-' );
-
 1;
 
-__END__ >seq2.234 QWERTYU------------------- >seq2.345 ----------ASDFGH---------- >seq2.456 -------------------ZXCVBNM
-
+__END__
+>seq2.234
+QWERTYU-------------------
+>seq2.345
+----------ASDFGH----------
+>seq2.456
+-------------------ZXCVBNM
 ```
-
 
 
 ### Removing_sequencing_adapters<a name="Removing_sequencing_adapters"></a>
@@ -2730,6 +2720,8 @@ See [Poor_man%27s_bootstrap](#Poor_man%27s_bootstrap)
 
 ### Random_sequence_generation<a name="Random_sequence_generation"></a>
 
+See discussion thread [here](http://bioperl.org/pipermail/bioperl-l/2009-June/030374.html).
+
 -   *...or "Sequence Surprise" --[Ed.](User:Majensen "wikilink")*
 
 **Roger Hall** asks:
@@ -2738,33 +2730,26 @@ See [Poor_man%27s_bootstrap](#Poor_man%27s_bootstrap)
 
 ------------------------------------------------------------------------
 
-**[Bruno Vecchi](User:brunov "wikilink")** actually supplies some code (with a little cheat from `[List::Utils](https://metacpan.org/pod/List::Utils)`) :
+**[Bruno Vecchi](User:brunov "wikilink")** actually supplies some code (with a little cheat from [List::Util](https://metacpan.org/pod/List::Util)) :
 
 ```perl
-
 #!perl
-
 use List::Util qw(shuffle);
 use Bio::SeqIO;
 
 my ($seqfile, $number) = @ARGV;
 
-my $in = Bio::SeqIO->new(-file =>
-$seqfile);
-my $fh = Bio::SeqIO->newFh(-format =>
-'fasta');
+my $in = Bio::SeqIO->new(-file => $seqfile);
+my $fh = Bio::SeqIO->newFh(-format => 'fasta');
 
 my $seq = $in->next_seq;
 my @chars = split '', $seq->seq;
 
 for my $i (1 .. $number) {
-
    @chars = shuffle @chars;
    my $new_seq = Bio::Seq->new(-id => $i, -seq => join '', @chars);
    print $fh $new_seq;
-
 }
-
 ```
 
 *You can use it like this from the command line (assuming you want 20 output sequences):*
@@ -2785,7 +2770,6 @@ from **["Big Dave" Messina](User:Dave_Messina "wikilink")**:
 
 
 
-
 ## Strings_and_RegExps
 
 ### Counting_k-mers_in_large_sets_of_large_sequences<a name="Counting_k-mers_in_large_sets_of_large_sequences"></a>
@@ -2794,7 +2778,7 @@ See [Counting_k-mers_in_large_sets_of_large_sequences](#Counting_k-mers_in_large
 
 ### Finding_homopolymer_stretches_in_contigs<a name="Finding_homopolymer_stretches_in_contigs"></a>
 
-*(see bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028895.html), and the scrap [Regular expressions and Repeats](Regular_expressions_and_Repeats "wikilink"))*
+*(see bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028895.html), and the scrap [Regular expressions and Repeats](#Regular_expressions_and_Repeats))*
 
 ***Abhi Pratap*** asks:
 
@@ -2807,18 +2791,13 @@ from ***[Hekki Levaslaiho](User:heikki "wikilink")***:
 *If you can load the sequence strings into memory, I'd use a regular expression to detect the homopolymers and the use the pos function to find the location of hits:*
 
 ```perl
-
 $s = "AGGGGGGGAAAAACGATCGGGGGGGTGTGGGGGCCCCCGTG";
 $min = 4;
 while ( $s =~ /(A{$min,}|T{$min,}|G{$min,}|C{$min,})/g) {
    $end = pos($s);
    $start = $end - length($1) + 1;
-   print "$start, $end, $1 
-
-";
-
+   print "$start, $end, $1 \n";
 }
-
 ```
 
 ------------------------------------------------------------------------
@@ -2827,17 +2806,16 @@ one-liner from ***Russell Smithies***:
 
 *You can also use the built-in regex variables and back-references to get the positions of the matches:*
 
-```perl print join(", ", $-\[0\], $+\[0\], $&)," " while ( $s =~ /(\[ACGT\])1{$min,}/g);
+```perl
+print join(", ", $-\[0\], $+\[0\], $&),"\n" while ( $s =~ /(\[ACGT\])1{$min,}/g);
 ```
-
 
 
 ### Getting_all_k-mer_combinations_of_residues<a name="Getting_all_k-mer_combinations_of_residues"></a>
 
-(See the bioperl-l thread beginning [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-December/028762.html). See also [*Counting k-mers in large sets of large sequences*](Counting_k-mers_in_large_sets_of_large_sequences "wikilink").)
+(See the bioperl-l thread beginning [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-December/028762.html). See also [*Counting k-mers in large sets of large sequences*](#Counting_k-mers_in_large_sets_of_large_sequences).)
 
-Question
-========
+#### Question
 
 ***Marco Blanchette*** asks:
 
@@ -2845,15 +2823,11 @@ Question
 
 ...and receives replies from [Michael Eisen](#ME "wikilink"), [Jamie Estill](#JE "wikilink"), [Dave Messina](#DM "wikilink"), [Mark Jensen](#MAJ "wikilink"), Chris Fields ([\#CF1](#CF1 "wikilink"), [\#CF2](#CF2 "wikilink")), [Diego Riaño-Pachón](#DRP "wikilink"), [Malcolm Cook](#MEC "wikilink"), [Russell Smithies](#RS "wikilink"), [Heikki](#HL "wikilink"), and [Jay Hannah](#JH "wikilink"):
 
-  
-
-version 1 (***Michael Eisen***)
--------------------------------
+#### version 1 (***Michael Eisen***)
 
 <span id='ME'></span>
 
 ```perl
-
 #!/usr/bin/perl
 #
 $k = shift;
@@ -2874,25 +2848,19 @@ for $i (1..$k-1)
 }
 foreach $w (@words)
 {
-    print "$w
-
-";
-
+    print "$w\n";
 }
-
 ```
 
-version 2 (***Jamie Estill***)
-------------------------------
+#### version 2 (***Jamie Estill***)
 
 <span id='JE'></span>
 
 *SeqIO works great for this. I've used something like the following. This is part of a larger program, so some of this not relevant to what you need ...*
 
 ```perl
-
 $fasta_in = "your_file.fasta";
-$k = 3; 
+$k = 3;
 my $in_seq_num = 0;
 my $inseq = Bio::SeqIO->new( -file => "<$fasta_in",
                 -format => 'fasta');
@@ -2900,65 +2868,35 @@ my $inseq = Bio::SeqIO->new( -file => "<$fasta_in",
    $in_seq_num++;
    if ($in_seq_num == 2) {
        print "\a";
-       die "Input file should be a single sequence record
-
-";
-
+       die "Input file should be a single sequence record\n";
    }
    # Calculate base cooridate data
    my $seq_len = $seq->length();
    my $max_start = $seq->length() - $k;
    # Print some summary data
-   print STDERR "
-
-============================== " if $verbose;
-
-   print STDERR "SEQ LEN: $seq_len
-
-" if $verbose;
-
-   print STDERR "MAX START: $max_start
-
-" if $verbose;
-
-   print STDERR "==============================
-
-" if $verbose;
-
+   print STDERR "\n==============================\n" if $verbose;
+   print STDERR "SEQ LEN: $seq_len\n" if $verbose;
+   print STDERR "MAX START: $max_start\n" if $verbose;
+   print STDERR "==============================\n" if $verbose;
    # CREATE FASTA FILE OF ALL K LENGTH OLIGOS
    # IN THE INPUT SEQUENCE
-   print STDERR "Creating oligo fasta file
-
-" if $verbose;
-
+   print STDERR "Creating oligo fasta file\n" if $verbose;
    open (FASTAOUT, ">$temp_fasta") ||
-       die "Can not open temp fasta file:
-$temp_fasta
-
-";
-
+       die "Can not open temp fasta file:\n$temp_fasta\n";
    for $i (0..$max_start) {
        $start_pos = $i + 1;
        $end_pos = $start_pos + $k - 1;
        my $oligo = $seq->subseq($start_pos, $end_pos);
        # Set counts array to zero
        $counts[$i] = 0;       
-       print FASTAOUT ">$start_pos
-
-";
-
-       print FASTAOUT "$oligo
-
-";
-
+       print FASTAOUT ">$start_pos\n";
+       print FASTAOUT "$oligo\n";
    }
    close (FASTAOUT);
 }
-
 ```
 
-version 3 (***Dave Messina***)
-------------------------------
+#### version 3 (***Dave Messina***)
 
 <span id='DM'></span>
 
@@ -2967,7 +2905,6 @@ version 3 (***Dave Messina***)
 *Here's some code to generate and print all possible nmers. I'm really just using the module* [Math::Combinatorics](https://metacpan.org/pod/Math::Combinatorics) *to do all the dirty work here, so probably won't be as fast as if you wrote a custom recursive function as you suggest.*
 
 ```perl
-
 #!/usr/local/bin/perl
 use strict;
 use warnings;
@@ -2993,24 +2930,18 @@ sub generate_possible_kmers {
        while ( my @y = $p->next_string ) {
          print join('', @y), ' ';
          $i++;
-         if (($i % $words_per_row) == 0) { print "
-
-";
-}
-
+         if (($i % $words_per_row) == 0) { print "\n";
+          }
        }
   }
 }
-
 ```
 
-version 4 (***Mark Jensen***)
------------------------------
+#### version 4 (***Mark Jensen***)
 
 <span id='MAJ'></span> ***[Mark Jensen](User:Majensen "wikilink")*** fires off: *A little sloppy, but it recurses and is general---*
 
 ```perl
-
 # ex...
 @combs = doit(3, [ qw( A T G C ) ]);
 1;
@@ -3032,20 +2963,17 @@ sub doit_guts {
         }
     }
 }
-
 ```
 
-version 5 (***Chris Fields***)
-------------------------------
+#### version 5 (***Chris Fields***)
 
 <span id='CF1'></span>***[Chris Fields](User:Cjfields "wikilink")*** comments:
 
-*To add to the pile:* 'Mark Jason Dominus (mjd) tackles this problem in Higher-Order Perl using iterators, which also allows other nifty bits like 'give variants of A(CTG)T(TGA)', where anything in parentheses are wild-cards. The nice advantage of the iterator approach is you don't tank memory for long strings. Furthermore, as a bonus, you can now download the book for free:'' [1](http://hop.perl.plover.com/book/) *The relevant chapter is here (p. 135):* [2](http://hop.perl.plover.com/book/pdf/04Iterators.pdf)
+*To add to the pile:* Mark Jason Dominus (mjd) tackles this problem in Higher-Order Perl using iterators, which also allows other nifty bits like 'give variants of A(CTG)T(TGA)', where anything in parentheses are wild-cards. The nice advantage of the iterator approach is you don't tank memory for long strings. Furthermore, as a bonus, you can now download the book for free: [1](http://hop.perl.plover.com/book/) *The relevant chapter is here (p. 135):* [2](http://hop.perl.plover.com/book/pdf/04Iterators.pdf)
 
 Here is the example code:
 
 ```perl
-
 #!/usr/bin/perl -w
 
 use strict;
@@ -3057,13 +2985,10 @@ my $string = 'A(CT)G(AC)';
 my $it = make_genes($string);
 
 while (my $new = NEXTVAL($it) ) {
-
    say $new;
-
 }
 
 sub make_genes {
-
    my $pat = shift;
    my @tokens = split /[()]/, $pat;
    for (my $i = 1; $i < @tokens; $i += 2) {
@@ -3089,42 +3014,43 @@ sub make_genes {
        $FINISHED = 1 unless $finished_incrementing;
        return $result;
    }
-
 }
 
 sub NEXTVAL { $_\[0\]->() }
-
 ```
 
-version 6 (***Diego Riaño-Pachón***)
-------------------------------------
+#### version 6 (***Diego Riaño-Pachón***)
 
 <span id='DRP'></span>***Diego Riaño-Pachón*** offers:
 
 *Just another option: why not just counting? Any DNA sequence is a number in base four (4),isn't it? So you have to count from zero to the number (in base 4) that you want.*
 
 ```perl
-
 ############################################################################################
-##DNA word can be represented as base 4 numbers, 
+##DNA word can be represented as base 4 numbers,
 ##this is an idea from Ingo Dreyer, I just implemented it in Perl
 ##The following hashes help in doing the transcoding from and to base 4
 ############################################################################################
+
 use Math::BigInt;
 use Math::BaseArith;
+
 my %transcoded_nt;
 $transcoded_nt{'A'}=0;
 $transcoded_nt{'C'}=1;
 $transcoded_nt{'G'}=2;
 $transcoded_nt{'T'}=3;
+
 my %transcode_base4;
 $transcode_base4{0}='A';
 $transcode_base4{1}='C';
 $transcode_base4{2}='G';
 $transcode_base4{3}='T';
+
 my @alphabet=sort keys %transcoded_nt;
 my $lengthalph=scalar(@alphabet);
 my $x= Math::BigInt->new($lengthalph);
+
 my $number_of_words=$x->bpow(scalar(keys %matrix));
 foreach my $i (0..$number_of_words-1){
  my @base_four_word= encode($i,[4,4,4,4,4,4,4,4,4,4,4]);
@@ -3133,79 +3059,73 @@ foreach my $i (0..$number_of_words-1){
   $transcoded_word=~s/$position/$val/g;
  }
 }
-
 ```
 
-version 7 (***Malcolm Cook***)
-------------------------------
+#### version 7 (***Malcolm Cook***)
 
 <span id='MEC'></span>***[Malcolm Cook](User:malcook "wikilink")*** gives it a bash:
 
 *just to round things out.... here's a quick bash script that does the same...*
 
-<bash>
-
+```bash
 #!/bin/bash
-
-k=$1 s=$( printf "%${k}s" );
-\# a string with $k blanks s=${s// /{A,T,G,C}};
-\# substitute '{A,T,G,C}' for each of the k blanks echo 'kmers using bash to expand:' $s >
-/dev/stderr bash -c "echo $s";
-\# let brace expanion of inferior bash compute the cross product </bash>
+k=$1
+s=$( printf "%${k}s" ); # a string with $k blanks
+s=${s// /{A,T,G,C}}; # substitute '{A,T,G,C}' for each of the k blanks
+echo 'kmers using bash to expand:' $s > /dev/stderr
+bash -c "echo $s"; # let brace expanion of inferior bash compute the cross product
+```
 
 oh... and... if you need the results in a perl array, and you're running under some unix, try the even terser:
 
 ```perl
-
 #!/usr/bin/env perl
-
 my $k = shift;
-my @kmer = split / /, \`echo @{\['{A,T,G,C}' x $k\]}\`;
-
+my @kmer = split / /, `echo @{['{A,T,G,C}' x $k]}`;
 ```
 
-finally (?|!), here's a perl one-liner that outputs one kmer per line, with switches for the length, $k, and the alphabet, $a: <bash> perl -se '$,=" ";
-print split / /, qx/echo @{\["{$a}" x $k\]}/;' -- -k=4 -a='A,T,G,C' </bash>
+finally (?|!), here's a perl one-liner that outputs one kmer per line, with switches for the length, $k, and the alphabet, $a:
 
-version 8 (***Russell Smithies***)
-----------------------------------
+```bash
+perl -se '$,=" "; print split / /, qx/echo @{["{$a}" x $k]}/;' -- -k=4 -a='A,T,G,C'
+```
+
+#### version 8 (***Russell Smithies***)
 
 <span id='RS'></span>***Russell Smithies*** parries with an elegant:
 
 *recursive use of map:*
 
-`print "[", join(", ", @$_), "]`
+```perl
+print "[", join(", ", @$_), "]\n" for
+permute([ qw( A T G C ) ],[ qw( A T G C ) ],[ qw( A T G C ) ],[ qw( A T G C ) ]);
 
-" for
+sub permute {
+  my $last = pop @_;
+  unless (@_) {
+    return map [$_], @$last;
+  }
+  return map { my $left = $_; map [@$left, $_], @$last } permute(@_);
+}
+```
 
-`permute([ qw( A T G C ) ],[ qw( A T G C ) ],[ qw( A T G C ) ],[ qw( A T G C ) ]); `
-`sub permute {`
-`  my $last = pop @_;`
-`  unless (@_) {`
-`    return map [$_], @$last;`
-`  }`
-`  return map { my $left = $_; map [@$left, $_], @$last } permute(@_);`
-`} `
-
-version 9 (***Chris Fields***)
-------------------------------
+#### version 9 (***Chris Fields***)
 
 <span id='CF2'></span>***[Chris Fields](User:Cjfields "wikilink")*** delivers this coup de grâce :
 
 *Perl 6 (20 random 20-mers):*
 
 `use v6;`
-`say [~] `<A T G C>`.pick(20, :repl) for 1..20;`
+
+`say [~] <A T G C>.pick(20, :repl) for 1..20;`
 
 By the way, this works with the latest [Rakudo](http://www.perlfoundation.org/perl6/index.cgi?rakudo). --[Chris Fields](User:Cjfields "wikilink") 01:29, 6 January 2009 (UTC)
 
-Heikki's favorites
-------------------
+#### Heikki's favorites
 
 <span id='HL'></span>from ***[Heikki Lehvaslaiho](User:heikki "wikilink")***: *Thank you for everyone for these entertaining entries. In my books, Michel Eisen's version wins with sheer clarity. Recursion is always recommendable, too. Below are cleaned versions of these two. Feel free to improve them further.*
 
 ```perl
-
 #!/usr/bin/env perl
 use warnings;
 use strict;
@@ -3228,14 +3148,10 @@ sub kmers ($;$) {
 my $k = shift;
 die "positive integer needed as the argument!"
     unless $k > 0 and $k =~ /^\d$/;
-map {print "$_
-
-"} kmers($k);
-
+map {print "$_\n"} kmers($k);
 ```
 
 ```perl
-
 #!/usr/bin/env perl
 use warnings;
 use strict;
@@ -3259,19 +3175,14 @@ sub kmers ($;$) {
 my $k = shift;
 die "positive integer needed as the argument!"
      unless $k =~ /^\d$/;
-map {print "$_
-
-"} kmers($k);
-
+map {print "$_\n"} kmers($k);
 ```
 
-version 10 (***Jay Hannah***)
------------------------------
+#### version 10 (***Jay Hannah***)
 
 <span id="JH"></span>Here's an alternate to version 5. I think versions 5 and 10 are the only ones that use iterators, which is mandatory for extremely large sets so you don't waste / run out of memory. Using arrays "every possible DNA strand of lengths 1 to 14 would require 5GB of memory"! In contrast, iterators consume only a trivial amount of memory. --[Jhannah](User:Jhannah "wikilink") 13:56, 20 February 2009 (UTC)
 
 ```perl
-
 =head2 gen_permutate
 
 An iterator for all possible DNA sequences between lengths $min and $max.
@@ -3279,19 +3190,15 @@ An iterator for all possible DNA sequences between lengths $min and $max.
  my @DNA = qw/A C T G/;
  my $seq = gen_permutate(3, 4, @DNA);
  while ( my $strand = $seq->() ) {
-    print "$strand
-
-";
-
+    print "$strand\n";
  }
 
-` # `[`http://www.perl.com/pub/a/2005/06/16/iterators.html`](http://www.perl.com/pub/a/2005/06/16/iterators.html)
- # Modified by jhannah
+# http://www.perl.com/pub/a/2005/06/16/iterators.html
+# Modified by jhannah
 
 =cut
 
 sub gen_permutate {
-
   my ($min, $max, @list) = @_;
   my @curr = ($#list) x ($min - 1);
 
@@ -3308,46 +3215,38 @@ sub gen_permutate {
       return undef if @curr > $max;
       return join '', map { $list[ $_ ] } @curr;
   };
-
 }
-
 ```
 
-version 11 ***( Ian Korf)***
-----------------------------
+#### version 11 ***( Ian Korf)***
 
 *(from an email to [Russell Smithies](User:Russell_Smithies "wikilink"))*
 This isn't the prettiest way, but it might be the most efficient. The strategy is based on the idea that you can't get much faster than a hard-coded loop.
 
 ```perl
-
 foreach $c1 (@alphabet) {
-
     foreach $c2 (@alphabet) {
          foreach $c3 (@alphabet) {
              $h{"$c1$c2$c3"} = 1;
          }
     }
-
-} ```
+}
+```
 
 The `kmer()` function below simply builds up the same code for any k and any alphabet, executes it, and returns a reference to a hash. I don't use this method myself because when I work with k-mers, I tend to work in C, and then I use an iterative numeric method.
 
 ```perl
-
 @alphabet = qw(A C G T);
 $kmers = kmer(3, @alphabet);
 
 sub kmer {
-
    ($k, $a) = @_;
    for (1..$k) {$w .= "\$c$_"}
    for (1..$k) {$code .= "for \$c$_ (\@\$a) {"}
    eval $code . "\$h{\"$w\"} = 1" . "}" x $k;
    \%h;
-
-} ```
-
+}
+```
 
 
 ### Merge_gapped_sequences_across_a_common_region<a name="Merge_gapped_sequences_across_a_common_region"></a>
