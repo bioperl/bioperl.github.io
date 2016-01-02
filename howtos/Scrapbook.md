@@ -753,20 +753,16 @@ print $panel->svg;
 
 ### Counting_k-mers_in_large_sets_of_large_sequences<a name="Counting_k-mers_in_large_sets_of_large_sequences"></a>
 
-(This is the fruit of two scraps, [*Getting all k-mer combinations of residues*](Getting_all_k-mer_combinations_of_residues "wikilink") and [*Sharing large arrays among multiple threads*](Sharing_large_arrays_among_multiple_threads "wikilink"))
+(This is the fruit of two scraps, [*Getting all k-mer combinations of residues*](#Getting_all_k-mer_combinations_of_residues) and [*Sharing large arrays among multiple threads*](#Sharing_large_arrays_among_multiple_threads))
 
 ***[Marco Blanchette](User:Mblanche "wikilink")*** contributes the following scripts. [Script 1](#script1 "wikilink") (`countKmer.pl`) processes a (possibly very) large sequence file using multiple threads, to return the frequency distribution of <i>k</i>-mers of arbitrary length <i>k</i>. [Script 2](#script2 "wikilink") (`sampleAndCountKmer.pl`) does the same thing, if desired, or will randomly sample the sequences (with or without replacement) to return an empirical frequency distribution of <i>k</i>-mers. The user can also specify whether to count just presence/absence of a <i>k</i>-mer in a sequence, or to return a complete frequency distribution.
 
-<span id='script1'></span>
-
-Script 1 (`countKmer.pl`)
--------------------------
+**Script 1 (`countKmer.pl`)**
 
 ```perl
-
 #!/usr/local/bin/perl
 # countKmer.pl take a series of fasta files and count all the occurrence of all the
-# possible kmers in each files. It's a multi-threaded scripts that treat multiple files 
+# possible kmers in each files. It's a multi-threaded scripts that treat multiple files
 # asynchronously
 
 use strict;
@@ -774,19 +770,24 @@ use warnings;
 use Getopt::Std;
 use threads;
 use Thread::Queue;
+
 our ($opt_k,$opt_m,$opt_p);
 our $SEP="\t";
 MAIN:{
   init();
-  
+
   my $q = Thread::Queue->new;
   $q->enqueue(@ARGV);
+
   my $num_workers = @ARGV < $opt_p ? @ARGV : $opt_p; # no need to be wasteful :)
+
   for (1 .. $num_workers) {
     threads->new(\&worker, $q);
   }
+
   $_->join for threads->list;
 }
+
 sub worker {
   my $queue = shift;
   while (my $filename = $queue->dequeue_nb) {
@@ -794,33 +795,29 @@ sub worker {
   }
   return(0);
 }
+
 sub processFile {
   my $file = shift;
+
   #generate all possible word for a k-mer (define at run time by $opt_k)
-  print STDERR "Generating all the posible sequences $opt_k long
-
-";
-
+  print STDERR "Generating all the possible sequences $opt_k long\n";
   my $kmer_p = kmer_generator($opt_k);
-  
-  print STDERR "Counting the number of $opt_k nt long kmers in $file
 
-";
-
+  print STDERR "Counting the number of $opt_k nt long kmers in $file\n";
   loadSeq($file,$kmer_p);
+
   ##print out the hits
   printHits($kmer_p,$file);
 }
+
 sub loadSeq {
   my $file = shift;
   my $kmer_p = shift;
-  open FH, "$file" || die "Can't open file $file
 
-";
-
+  open FH, "$file" || die "Can't open file $file\n";
   my $f=0;
   my $seq;
-  while(`<FH>`){
+  while(<FH>){
     if(/^>/){
       countKmer(\$seq,$kmer_p) if $seq;
       $seq='';
@@ -835,11 +832,13 @@ sub loadSeq {
   close FH;
   return(0);
 }
+
 sub countKmer {
   my $seq_p = shift;
   my $kmer_p = shift;
   my $k = $opt_k;
   my %beenThere;
+
   for (my $i=0;$i <= length(${$seq_p})-$k;$i++){
     my $w = substr(${$seq_p},$i,$k);
     unless ($opt_m){
@@ -853,34 +852,32 @@ sub countKmer {
   }
   return(0);
 }
+
 sub printHits {
   my $kmer_p=shift;
   my $file = shift;
+
   ##print out the hits
   my ($dir,$pre,$suf) = ($file =~ /(^.+\/|^)(.+)\.(.+$)/);
-  open OUT, ">$pre.hits" || die "Can't create file $pre.hits
-
-";
-
-  print OUT join($SEP, $_, $kmer_p->{$_}), "
-
-" for sort keys %{$kmer_p};
-
+  open OUT, ">$pre.hits" || die "Can't create file $pre.hits\n";
+  print OUT join($SEP, $_, $kmer_p->{$_}), "\n" for sort keys %{$kmer_p};
   close OUT;
-  
+
   return(0);
 }
+
 sub kmer_generator {
   my $k = shift;
   my $kmer_p;
+
   my @bases = ('A','C','G','T');
   my @words = @bases;
-  
+
   for (my $i=1;$i<$k;$i++){
     my @newwords;
     foreach my $w (@words){
       foreach my $b (@bases){
-   push (@newwords,$w.$b);
+        push (@newwords,$w.$b);
       }
     }
     undef @words;
@@ -889,45 +886,19 @@ sub kmer_generator {
   map{ $kmer_p->{$_}=0} @words;
   return($kmer_p);
 }
+
 sub init {
   getopts("p:k:m");
   unless (@ARGV){
-    print("
-
-Usage: countKmer.pl \[-k 6 -p 4 -m\] sequence_1.fa \[sequence_2.fa ...\] ",
-
-     "\tFor each possible words in the kmer of lenght -k,
-
-",
-
-     "\tcount the number of time they are found in the fasta sequence file
-
-",
-
-     "\t-k\tsize of the kmer to analyze. Default 6
-
-",
-
-     "\t-m\twill count all possible kmer per sequences.
-
-",
-
-     "\t\tDefault: only one kmer is counted per sequence entries
-
-",
-
-     "\t-p\tThe number of jobs to process simultaneoulsy. Normally, the number of available processors
-
-",
-
-     "\t\tDefault: 4
-
-",
-
-     "
-
-",
-
+    print("\nUsage: countKmer.pl [-k 6 -p 4 -m] sequence_1.fa [sequence_2.fa ...]\n",
+     "\tFor each possible words in the kmer of lenght -k,\n",
+     "\tcount the number of time they are found in the fasta sequence file\n",
+     "\t-k\tsize of the kmer to analyze. Default 6\n",
+     "\t-m\twill count all possible kmer per sequences.\n",
+     "\t\tDefault: only one kmer is counted per sequence entries\n",
+     "\t-p\tThe number of jobs to process simultaneoulsy. Normally, the number of available processors\n",
+     "\t\tDefault: 4\n",
+     "\n",
      );
     exit(1)
   }
@@ -935,98 +906,96 @@ Usage: countKmer.pl \[-k 6 -p 4 -m\] sequence_1.fa \[sequence_2.fa ...\] ",
   $opt_p=4 unless $opt_p;
   return(0);
 }
-
 ```
 
-<span id='script2'></span>
-
-Script 2 (`sampleAndCountKmer.pl`)
-----------------------------------
+**Script 2 (`sampleAndCountKmer.pl`)**
 
 ```perl
-
 #!/usr/local/bin/perl
-# sampleAndCountKmer.pl is a bootstrapping procedure that sample a list of sequences a 
-# certain number of time and return the count of each kmer in each sampling. Again this 
+# sampleAndCountKmer.pl is a bootstrapping procedure that sample a list of sequences a
+# certain number of time and return the count of each kmer in each sampling. Again this
 # is a mutli-threaded scripts that will count multiple samples asynchronously
+
 use strict;
 use warnings;
 use Getopt::Std;
 use threads;
 use threads::shared;
 use Thread::Queue;
+
 our ($opt_f,$opt_k,$opt_m,$opt_p,$opt_s,$opt_n,$opt_w,$opt_v);
 our $SEP="\t";
+
 MAIN:{
   init();
   my $file = $opt_f;
   my $seq_p = loadSeq($opt_f);
-  
+
   #create the final result hash with shared arrays at each kmers.
   my $res = &share({});
   $res = kmer_generator($opt_k);
   $res->{$_} = &share([]) for keys %{$res};
+
   my $q = Thread::Queue->new;
   $q->enqueue(1..$opt_n);
+
   my $num_workers = $opt_p; # no need to be wasteful :)
-  
+
   for (1 .. $num_workers) {
     threads->new(\&worker, $q, $seq_p, $res, $_);
   }
+
   for (threads->list){
     $_->join;
   }
+
   ##Now, need to deconvolute the arrays containing all the counts for all kmers
   ##and spit out a table of count for all the samples
-  
-  print(join ("$SEP",$_,@{$res->{$_}}),"
 
-") for keys %$res;
+  print(join ("$SEP",$_,@{$res->{$_}}),"\n") for keys %$res;
 
-  print STDERR "all done!
-
-" if $opt_v;
-
+  print STDERR "all done!\n" if $opt_v;
 }
+
 sub worker {
   my $queue = shift;
   my $seq_p = shift;
   my $res = shift;
   my $t_id = shift;
-  
+
   while (my $q_id = $queue->dequeue_nb) {
     processSeq($q_id,$seq_p,$res);
   }
   return(0);
 }
+
 sub processSeq {
   my $q_id = shift;
   my $seq_p = shift;
   my $res = shift;
+
   #generate all possible word for a k-mer (define at run time by $opt_k)
-  print STDERR "Generating all the posible sequences $opt_k nucleotid long kmer for sample $q_id
-
-" if $opt_v;
-
+  print STDERR "Generating all the posible sequences $opt_k nucleotid long kmer for sample $q_id\n" if $opt_v;
   my $kmer_p = kmer_generator($opt_k);
-  
+
   #randomly sample the sequences
   my $sample = sampleSeq($seq_p,$q_id);
+
   #counting the number of kmers in the sample seq
-  print STDERR "Counting the number of $opt_k nt long kmers in the $q_id sample
-
-" if $opt_v;
-
+  print STDERR "Counting the number of $opt_k nt long kmers in the $q_id sample\n" if $opt_v;
   map{  countKmer($_,$kmer_p) } @{$sample};
+
   #put the hits in the final result kmer;
   map { push @{$res->{$_}}, $kmer_p->{$_} } keys %{$res};
   return(0);
 }
+
 sub sampleSeq {
   my $seq_p = shift;
   my $q_id = shift;
   my $sample_size = $opt_s;
-  #create a list of $sample_size items of randomly selected position in @seqs 
+
+  #create a list of $sample_size items of randomly selected position in @seqs
   my @lines;
   unless ($opt_w){
     ##Sampling with replacement
@@ -1041,25 +1010,22 @@ sub sampleSeq {
     }
     @lines = keys %lines;
   }
-  
-  print STDERR "Sampling $sample_size items for the sample $q_id
 
-" if $opt_v;
-
+  print STDERR "Sampling $sample_size items for the sample $q_id\n" if $opt_v;
   my @sample =  map { $seq_p->[$_] } @lines;
+
   return(\@sample);
 }
+
 sub loadSeq {
   my $file = shift;
   my $seq_p;
-  
-  open FH, "$file" || die "Can't open file $file
 
-";
-
+  open FH, "$file" || die "Can't open file $file\n";
   my $f=0;
   my $seq;
-  while(`<FH>`){
+
+  while(<FH>){
     if(/^>/){
       push @{$seq_p}, $seq if $seq;
       $seq='';
@@ -1073,11 +1039,12 @@ sub loadSeq {
   close FH;
  return($seq_p);
 }
+
 sub countKmer {
   my $seq = shift;
   my $kmer_p = shift;
   my $k = $opt_k;
-  
+
   my %beenThere;
   for (my $i=0;$i <= length($seq)-$k;$i++){
     my $w = substr($seq,$i,$k);
@@ -1092,35 +1059,32 @@ sub countKmer {
   }
   return(0);
 }
+
 sub printHits {
   my $kmer_p=shift;
   my $file = shift;
+
   ##print out the hits
   my ($dir,$pre,$suf) = ($file =~ /(^.+\/|^)(.+)\.(.+$)/);
-  open OUT, ">$pre.hits" || die "Can't create file $pre.hits
-
-";
-
-  print OUT join($SEP, $_, $kmer_p->{$_}), "
-
-" for keys %{$kmer_p};
-
+  open OUT, ">$pre.hits" || die "Can't create file $pre.hits\n";
+  print OUT join($SEP, $_, $kmer_p->{$_}), "\n" for keys %{$kmer_p};
   close OUT;
-  
+
   return(0);
 }
+
 sub kmer_generator {
   my $k = shift;
   my $q_id=shift;
   my $kmer_p;
   my @bases = ('A','C','G','T');
   my @words = @bases;
-  
+
   for (my $i=1;$i<$k;$i++){
     my @newwords;
     foreach my $w (@words){
       foreach my $b (@bases){
-   push (@newwords,$w.$b);
+        push (@newwords,$w.$b);
       }
     }
     undef @words;
@@ -1129,61 +1093,23 @@ sub kmer_generator {
   map{ $kmer_p->{$_}=0} @words;
   return($kmer_p);
 }
+
 sub init {
   getopts("f:p:k:s:n:mwv");
   unless ($opt_f){
-   print("
-
-Usage:tsampleAndCountKmer.pl \[-k 6 -p 4 -s 100000 -n 1000 -m -w\] -f sequence.fa ",
-
-     "\twill return a table of counts for each k-mers of length -k
-
-",
-
-     "\t-f\tFasta database. Required
-
-",
-
-     "\t-k\tsize of the k-mer to analyze. Default 6
-
-",
-
-     "\t-m\twill count all possible k-mer per sequence.
-
-",
-
-     "\t\tDefault: only one k-mer is counted per sequence entries
-
-",
-
-     "\t-s number of sequences to sample. Default: 100,000 sequences
-
-",
-
-     "\t-n number of times to repeat the sampling/counting procedures. Default: 1000 times
-
-",
-
-     "\t-w Sample without replacment: Default: with replacement
-
-",
-
-     "\t-p\tThe number of jobs to process simultaneoulsy. Normally, the number of available processors
-
-",
-
-     "\t\tDefault: 4
-
-",
-
-     "\t-v Run in verbrose mode. Spits out a lot of infomation. Default: quiet
-
-",
-
-     "
-
-",
-
+   print("\nUsage:tsampleAndCountKmer.pl [-k 6 -p 4 -s 100000 -n 1000 -m -w] -f sequence.fa\n",
+     "\twill return a table of counts for each k-mers of length -k\n",
+     "\t-f\tFasta database. Required\n",
+     "\t-k\tsize of the k-mer to analyze. Default 6\n",
+     "\t-m\twill count all possible k-mer per sequence.\n",
+     "\t\tDefault: only one k-mer is counted per sequence entries\n",
+     "\t-s number of sequences to sample. Default: 100,000 sequences\n",
+     "\t-n number of times to repeat the sampling/counting procedures. Default: 1000 times\n",
+     "\t-w Sample without replacment: Default: with replacement\n",
+     "\t-p\tThe number of jobs to process simultaneoulsy. Normally, the number of available processors\n",
+     "\t\tDefault: 4\n",
+     "\t-v Run in verbrose mode. Spits out a lot of infomation. Default: quiet\n",
+     "\n",
      );
     exit(1)
   }
@@ -1193,14 +1119,12 @@ Usage:tsampleAndCountKmer.pl \[-k 6 -p 4 -s 100000 -n 1000 -m -w\] -f sequence.f
   $opt_n=1000 unless $opt_n;
   return(0);
 }
-
 ```
-
 
 
 ### Sharing_large_arrays_among_multiple_threads<a name="Sharing_large_arrays_among_multiple_threads"></a>
 
-(See the bioperl-l discussion <http://lists.open-bio.org/pipermail/bioperl-l/2008-December/028777.html>. See also [*Counting k-mers in large sets of large sequences*](Counting_k-mers_in_large_sets_of_large_sequences "wikilink").)
+(See the bioperl-l discussion <http://lists.open-bio.org/pipermail/bioperl-l/2008-December/028777.html>. See also [*Counting k-mers in large sets of large sequences*](#Counting_k-mers_in_large_sets_of_large_sequences).)
 
 ***Marco Blanchette*** poses:
 
@@ -1210,174 +1134,181 @@ Usage:tsampleAndCountKmer.pl \[-k 6 -p 4 -s 100000 -n 1000 -m -w\] -f sequence.f
 
 ------------------------------------------------------------------------
 
-<span id="JC"></span>'**'Jonathan Crabtree** responds:
+**Jonathan Crabtree** responds:
 
-''Here is a short test program, which runs correctly on perl 5.8.8 and may help to illustrate how the Perl *`[threads::shared](https://metacpan.org/pod/threads::shared)`* module expects you to create and share nested data structures. You have to manually share any nested references and I think that the order in which the sharing calls are made may also be significant:''
+*Here is a short test program, which runs correctly on perl 5.8.8 and may help to illustrate how the Perl [threads::shared](https://metacpan.org/pod/threads::shared) module expects you to create and share nested data structures. You have to manually share any nested references and I think that the order in which the sharing calls are made may also be significant:*
 
 ```perl
-
 #!/usr/bin/perl
+
 use strict;
 use warnings;
 use threads;
 use threads::shared;
+
 # threads::shared test/demo program
-# creates a shared 2-dimensional array and checks that it can be seen
-in a thread
+# creates a shared 2-dimensional array and checks that it can be seen in a thread
 # tested in perl v5.8.8 built for i486-linux-gnu-thread-multi
+
 ## ----------------------------------------
 ## globals
 ## ----------------------------------------
+
 # set the width and height of the 2d array to this value:
 my $ARRAY_SIZE = 10;
+
 ## ----------------------------------------
 ## main program
 ## ----------------------------------------
+
 # calls to &share take place in here, so a shared value is returned
 my $array = &make_shared_array();
+
 # print array contents before running thread
-print "shared array before running thread:
-
-";
-
+print "shared array before running thread:\n";
 &check_and_print_array($array);
+
 # run thread
 my $thr = threads->create(\&do_the_job, $array);
-my $retval = $thr->join();
-print "join() returned: $retval
 
-";
+my $retval = $thr->join();
+print "join() returned: $retval\n";
 
 # print array contents after running thread
-print "shared array after running thread:
-
-";
-
+print "shared array after running thread:\n";
 &check_and_print_array($array);
+
 exit(0);
+
 ## ----------------------------------------
 ## subroutines
 ## ----------------------------------------
+
 sub make_shared_array {
     # outermost array object must be made shared first
     my $a = &share([]);
     for (my $i = 0;$i < $ARRAY_SIZE;++$i) {
-# each of the rows must be explicitly shared
-my $row = &share([]);
-# and then added to the containing array
-$a->[$i] = $row;
-# assign each cell a unique integer for verification purposes
-my $base = $i * $ARRAY_SIZE;
-for (my $j = 0;$j < $ARRAY_SIZE;++$j) {
-    $row->[$j] = $base + $j;
-}
+      # each of the rows must be explicitly shared
+      my $row = &share([]);
+      # and then added to the containing array
+      $a->[$i] = $row;
+      # assign each cell a unique integer for verification purposes
+      my $base = $i * $ARRAY_SIZE;
+      for (my $j = 0;$j < $ARRAY_SIZE;++$j) {
+          $row->[$j] = $base + $j;
+      }
     }
     return $a;
 }
+
 # print out the array, checking that its dimensions match what we expect
 sub check_and_print_array {
     my $arr = shift;
     die "not an array" if ((ref $arr) ne 'ARRAY');
     my $nr = scalar(@$arr);
     die "wrong number of rows in array" if ($nr != $ARRAY_SIZE);
+
     for (my $i = 0;$i < $nr;++$i) {
-my $row = $arr->[$i];
-die "row $i not an array" if ((ref $row) ne 'ARRAY');
-my $nc = scalar(@$row);
-die "wrong number of columns in row $i" if ($nc != $ARRAY_SIZE);
-for (my $j = 0;$j < $nc;++$j) {
-    my $val = $row->[$j];
-    printf("%10s", $val);
-}
-print "
+      my $row = $arr->[$i];
+      die "row $i not an array" if ((ref $row) ne 'ARRAY');
+      my $nc = scalar(@$row);
+      die "wrong number of columns in row $i" if ($nc != $ARRAY_SIZE);
 
-";
+      for (my $j = 0;$j < $nc;++$j) {
+          my $val = $row->[$j];
+          printf("%10s", $val);
+      }
 
+      print "\n";
     }
 }
+
 # work to execute in the thread
 sub do_the_job {
     my $var = shift;
+
     # print the array once more in the thread
-    print "shared array in thread:
-
-";
-
+    print "shared array in thread:\n";
     &check_and_print_array($var);
+
     return "do_the_job returned ok";
 }
-
 ```
 
 *When I run it (on Ubuntu) the output looks like this:*
 
 **`shared` `array` `before` `running` `thread:`**
-`        0         1         2         3         4         5         6`
-`       7         8         9`
-`       10        11        12        13        14        15        16`
-`      17        18        19`
-`       20        21        22        23        24        25        26`
-`      27        28        29`
-`       30        31        32        33        34        35        36`
-`      37        38        39`
-`       40        41        42        43        44        45        46`
-`      47        48        49`
-`       50        51        52        53        54        55        56`
-`      57        58        59`
-`       60        61        62        63        64        65        66`
-`      67        68        69`
-`       70        71        72        73        74        75        76`
-`      77        78        79`
-`       80        81        82        83        84        85        86`
-`      87        88        89`
-`       90        91        92        93        94        95        96`
-`      97        98        99`
+```
+0         1         2         3         4         5         6
+7         8         9
+10        11        12        13        14        15        16
+17        18        19
+20        21        22        23        24        25        26
+27        28        29
+30        31        32        33        34        35        36
+37        38        39
+40        41        42        43        44        45        46
+47        48        49
+50        51        52        53        54        55        56
+57        58        59
+60        61        62        63        64        65        66
+67        68        69
+70        71        72        73        74        75        76
+77        78        79
+80        81        82        83        84        85        86
+87        88        89
+90        91        92        93        94        95        96
+97        98        99
+```
 **`shared` `array` `in` `thread:`**
-`        0         1         2         3         4         5         6`
-`       7         8         9`
-`       10        11        12        13        14        15        16`
-`      17        18        19`
-`       20        21        22        23        24        25        26`
-`      27        28        29`
-`       30        31        32        33        34        35        36`
-`      37        38        39`
-`       40        41        42        43        44        45        46`
-`      47        48        49`
-`       50        51        52        53        54        55        56`
-`      57        58        59`
-`       60        61        62        63        64        65        66`
-`      67        68        69`
-`       70        71        72        73        74        75        76`
-`      77        78        79`
-`       80        81        82        83        84        85        86`
-`      87        88        89`
-`       90        91        92        93        94        95        96`
-`      97        98        99`
+```
+0         1         2         3         4         5         6
+7         8         9
+10        11        12        13        14        15        16
+17        18        19
+20        21        22        23        24        25        26
+27        28        29
+30        31        32        33        34        35        36
+37        38        39
+40        41        42        43        44        45        46
+47        48        49
+50        51        52        53        54        55        56
+57        58        59
+60        61        62        63        64        65        66
+67        68        69
+70        71        72        73        74        75        76
+77        78        79
+80        81        82        83        84        85        86
+87        88        89
+90        91        92        93        94        95        96
+97        98        99
+```
 `join() returned: do_the_job returned ok`
 **`shared` `array` `after` `running` `thread:`**
-`        0         1         2         3         4         5         6`
-`       7         8         9`
-`       10        11        12        13        14        15        16`
-`      17        18        19`
-`       20        21        22        23        24        25        26`
-`      27        28        29`
-`       30        31        32        33        34        35        36`
-`      37        38        39`
-`       40        41        42        43        44        45        46`
-`      47        48        49`
-`       50        51        52        53        54        55        56`
-`      57        58        59`
-`       60        61        62        63        64        65        66`
-`      67        68        69`
-`       70        71        72        73        74        75        76`
-`      77        78        79`
-`       80        81        82        83        84        85        86`
-`      87        88        89`
-`       90        91        92        93        94        95        96`
-`      97        98        99`
+```
+0         1         2         3         4         5         6
+7         8         9
+10        11        12        13        14        15        16
+17        18        19
+20        21        22        23        24        25        26
+27        28        29
+30        31        32        33        34        35        36
+37        38        39
+40        41        42        43        44        45        46
+47        48        49
+50        51        52        53        54        55        56
+57        58        59
+60        61        62        63        64        65        66
+67        68        69
+70        71        72        73        74        75        76
+77        78        79
+80        81        82        83        84        85        86
+87        88        89
+90        91        92        93        94        95        96
+97        98        99
+```
 
 *I haven't verified that doing this actually yields the memory savings you're looking for, but I don't see why it shouldn't.*
-
 
 
 
