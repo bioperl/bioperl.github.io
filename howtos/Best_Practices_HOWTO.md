@@ -14,7 +14,7 @@ Style
 -   Driver modules which are loaded dynamically from a "deployer" module are all lower case, e.g. `Bio::SeqIO::genbank`
 -   Use blessed hashes for class fields
 -   Use a combined getter/setter accessor function for each class field
--   Parse potentially large input files "on-demand" rather than reading all in at once into memory (e.g. make use of [Bio::PullParserI](http://metacpan.org/pod/Bio::PullParserI))
+-   Parse potentially large input files "on-demand" rather than reading all in at once into memory (e.g. make use of [Bio::PullParserI](https://metacpan.org/pod/Bio::PullParserI))
 
 Coding
 ======
@@ -206,7 +206,7 @@ Testing
 -   Every module must have tests
 -   Test scripts should be named `t/Module.t`
 -   Test data files go in `t/data/` in the version control repository
--   Use [Bio::Root::Test](http://metacpan.org/pod/Bio::Root::Test) to write your test script. See the [HOWTO:Writing_BioPerl_Tests](Writing_BioPerl_Tests_HOWTO.html) for details.
+-   Use [Bio::Root::Test](https://metacpan.org/pod/Bio::Root::Test) to write your test script. See the [HOWTO:Writing_BioPerl_Tests](Writing_BioPerl_Tests_HOWTO.html) for details.
 -   Before committing changes to the version control repository, make sure that the relevant test script passes:
 
 Do this once, answering 'no' to script installation:

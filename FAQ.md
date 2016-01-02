@@ -29,7 +29,7 @@ perl -MBio::Root::Version -e
     'printf "%vd\n", $Bio::Root::Version::VERSION'
 ```
 
-Printing the version number can be done on any module in BioPerl (and should be consistent) so for example, printing out the version number of [Bio::SeqIO](https://metacpan.org/pod/Bio::Root::SeqIO), which is different from the overall Bioperl version number.
+Printing the version number can be done on any module in BioPerl (and should be consistent) so for example, printing out the version number of [Bio::SeqIO](https://metacpan.org/pod/Bio::SeqIO), which is different from the overall Bioperl version number.
 
 ```perl 
 perl -MBio::SeqIO -e 'printf "%vd ", $Bio::SeqIO::VERSION' 
@@ -40,7 +40,7 @@ BioPerl in General
 
 ### What is BioPerl?
 
-BioPerl is a toolkit of perl modules useful in building [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) solutions in [Perl](http://perl.org). It is built in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner so that many modules depend on each other to achieve a task. The collection of modules in the [bioperl-live](https://github.com/bioperl/bioperl-live) repository consist of the core of the functionality of bioperl. Additionally auxiliary modules for creating persistent storage in [RDMBS](https://en.wikipedia.org/wiki/RDMBS) ([bioperl-db](https://github.com/bioperl/bioperl-db)) and running and parsing the results from hundreds of [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) applications ([bioperl-run](https://github.com/bioperl/bioperl-run)) are all available in our [Git](https://en.wikipedia.org/wiki/Using_Git) repository.
+BioPerl is a toolkit of perl modules useful in building [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) solutions in [Perl](http://perl.org). It is built in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner so that many modules depend on each other to achieve a task. The collection of modules in the [bioperl-live](https://github.com/bioperl/bioperl-live) repository consist of the core of the functionality of bioperl. Additionally auxiliary modules for creating persistent storage in [RDMBS](https://en.wikipedia.org/wiki/RDMBS) ([bioperl-db](https://github.com/bioperl/bioperl-db)) and running and parsing the results from hundreds of [bioinformatics](https://en.wikipedia.org/wiki/bioinformatics) applications ([bioperl-run](https://github.com/bioperl/bioperl-run)) are all available in our [Git](https://en.wikipedia.org/wiki/Git) repository.
 
 Some early articles about BioPerl:
 
@@ -102,7 +102,7 @@ Once you completed gathering feedback and incorporating into your module as appr
 
 Post your idea to the [bioperl-l mailing list](http://lists.open-bio.org/mailman/listinfo/bioperl-l). If it is a really new idea consider taking us through your thought process. We'll help you tease out the necessary information such as what methods you'll want and how it can interact with other BioPerl modules. If it is a port of something you've already worked on, give us a summary of the current methods. Make sure there is an interface to the module, not just an implementation and make sure there will be a set of tests that will be in the `t/` directory to insure that your module is tested. 
 
-If you have a suggested patch and/or code enhancement you can submit it to the [GitHub tracking system](https://github.com/bioperl/bioperl-live/issues). See the [Using Git HOWTO](Using_Git_HOWTO.html) for more information.
+If you have a suggested patch and/or code enhancement you can submit it to the [GitHub tracking system](https://github.com/bioperl/bioperl-live/issues). See the [Using Git HOWTO](/howtos/Using_Git_HOWTO.html) for more information.
 
 ### Why can't I easily get a list of all the methods a object can call?
 
@@ -495,8 +495,6 @@ Other BioPerl packages
 ### What is bioperl-ext?
 
 [bioperl-ext](https://github.com/bioperl/bioperl-ext) is a package of code for C-extensions (hence the 'ext') to BioPerl. These include interfacing to the [staden](http://staden.sourceforge.net/) IO library (the `io_lib` library) for reading in [chromatogram](https://en.wikipedia.org/wiki/chromatogram) files and which is a [Smith-Waterman](https://en.wikipedia.org/wiki/Smith_waterman) implementation.
-
-It is likely that functionality within bioperl-ext will eventually be replaced by the [BioLib](http://biolib.open-bio.org/wiki/Main_Page) initiative.
 
 ### bioperl-ext won't compile the staden IO lib part - what do I do?
 

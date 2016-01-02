@@ -10,7 +10,7 @@ Extending the toolkit
 
 Sometimes a function doesn't quite work they way you want for your special question or environment. You don't want to re-write the module (although discussion of that in the next section) and just want to override the function in the context of your script. This is actually quite easy to do in Perl. For example, say you wanted to parse multiple sequence alignment files where the alignments contain letters (DNA or protein residues), gaps (dashes), and additionally numbers for representing another feature in the sequence like intron phases.
 
-Here is the function as defined in [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
+Here is the function as defined in [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq).
 
 ```perl
 sub validate_seq {
@@ -29,7 +29,7 @@ sub validate_seq {
 
 And `$MATCHPATTERN` is defined as `$MATCHPATTERN = 'A-Za-z-.*?';`.
 
-However we would like to additionally support numbers, and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](http://metacpan.org/pod/Bio::LocatableSeq) objects, which are extensions of [Bio::PrimarySeq](http://metacpan.org/pod/Bio::PrimarySeq).
+However we would like to additionally support numbers, and we really only want to support this in the context of alignments. Sequences in alignments are not [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq) objects but [Bio::LocatableSeq](https://metacpan.org/pod/Bio::LocatableSeq) objects, which are extensions of [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq).
 
 ```perl
 sub Bio::LocatableSeq::validate_seq {
@@ -52,7 +52,7 @@ Often the toolkit has a set of functionality that supports what the authors need
 
 These fall under the namespace since they are for sequence reading and writing. The convention is to be able to iterate through all the sequences in a file or data stream with the `next_seq()` method. If one wanted to write sequences the method `write_seq` accepts sequence objects and writes them out to the filehandle.
 
-Let's pretend the new format is called *Jenny's simple format*, or *jsf* for short. [Choosing a module name](Choosing_a_module_name) can be important but this three letter [acronym](https://en.wikipedia.org/wiki/acronym) should suffice. Like all format modules, the *jsf* module file should be located in a directory called SeqIO which itself is in a directory called *Bio* - so the file would be called *Bio/SeqIO/jsf.pm*. Let's assume the format is simple. Here is an example of the format we'll write a parser for:
+Let's pretend the new format is called *Jenny's simple format*, or *jsf* for short. Choosing a module name can be important but this three letter [acronym](https://en.wikipedia.org/wiki/acronym) should suffice. Like all format modules, the *jsf* module file should be located in a directory called SeqIO which itself is in a directory called *Bio* - so the file would be called *Bio/SeqIO/jsf.pm*. Let's assume the format is simple. Here is an example of the format we'll write a parser for:
 
 ```
 JSF: ID=N0001 DESC="Sampled from compost" SEQ=CCCCCGGGGGGTTTTTAAAAA 
@@ -156,7 +156,7 @@ When you want to get involved, hopefully it will be because you want to extend s
 Designing Good Tests
 --------------------
 
-Sadly, you might think that you have written good code, but you don't know that until you manage to test it! The [CPAN](http://metacpan.org/pod/CPAN) style perl modules have a wonderful test suite system (delve around into the *t/* directories) and we have extended the [makefile](https://en.wikipedia.org/wiki/Makefile) system so that the test script which you write to test the module can be part of the *t/* system from the start. Once a test is in the *t/* system it will be run millions of times worldwide when BioPerl is downloaded, providing incredible and continual [regression testing](https://en.wikipedia.org/wiki/Regression_testing) of your module.
+Sadly, you might think that you have written good code, but you don't know that until you manage to test it! The [CPAN](https://metacpan.org/pod/CPAN) style perl modules have a wonderful test suite system (delve around into the *t/* directories) and we have extended the [makefile](https://en.wikipedia.org/wiki/Makefile) system so that the test script which you write to test the module can be part of the *t/* system from the start. Once a test is in the *t/* system it will be run millions of times worldwide when BioPerl is downloaded, providing incredible and continual [regression testing](https://en.wikipedia.org/wiki/Regression_testing) of your module.
 
 Writing POD documentation
 -------------------------
@@ -181,7 +181,7 @@ Most authors have also documented their methods. The typical approach is to give
 The  Object
 ----------
 
-All objects in BioPerl should inherit from [Bio::Root::Root](http://metacpan.org/pod/Bio::Root::Root), except for interfaces. The BioPerl root object allows a number of very useful concepts to be provided. In particular.
+All objects in BioPerl should inherit from [Bio::Root::Root](https://metacpan.org/pod/Bio::Root::Root), except for interfaces. The BioPerl root object allows a number of very useful concepts to be provided. In particular.
 
 ### Exceptions, warning, and debugging
 
@@ -195,11 +195,11 @@ Finally, the `debug()` method prints messages to `STDERR` when the `verbose` fla
 
 BioPerl root object have some helper methods, in particular `_rearrange()` to help functions which take hash inputs. This allows one to specify named arguments as a hash and map them to the expected input parameters specified by an array.
 
-You can go to [Bio::Root::Root](http://metacpan.org/pod/Bio::Root::Root) for more information. There are also a number of useful example scripts in the *examples/root* directory.
+You can go to [Bio::Root::Root](https://metacpan.org/pod/Bio::Root::Root) for more information. There are also a number of useful example scripts in the *examples/root* directory.
 
 ### Using the Root object
 
-To use the root object, the object has to inherit from it. This means the `@ISA` array should have [Bio::Root::Root](http://metacpan.org/pod/Bio::Root::Root) in it and that the module has a use `Bio::Root::Root`. The root object provides a top level `new` function. You should inherit from this new method by calling the `new()` method of the superclass which is accessible by using `SUPER`. This is called chaining the constructors and allows a child class to utilize the initialization procedure of the superclass in addition to executing its own. This is a very powerful technique and allows BioPerl to behave in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner.
+To use the root object, the object has to inherit from it. This means the `@ISA` array should have [Bio::Root::Root](https://metacpan.org/pod/Bio::Root::Root) in it and that the module has a use `Bio::Root::Root`. The root object provides a top level `new` function. You should inherit from this new method by calling the `new()` method of the superclass which is accessible by using `SUPER`. This is called chaining the constructors and allows a child class to utilize the initialization procedure of the superclass in addition to executing its own. This is a very powerful technique and allows BioPerl to behave in an [object-oriented](https://en.wikipedia.org/wiki/Object_oriented) manner.
 
 The full code is given below for a basic skeleton object that uses BioPerl:
 

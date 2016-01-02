@@ -340,7 +340,7 @@ sub draw_component {
 1;
 ```
 
-This class inherits from [Bio::Graphics::Glyph::hourglass](https://metacpan.org/pod/Bio::Graphics::Glyph::hourglass), allowing us to build on the previous drawing code without duplicating it. We define a constant `ARROW_LENGTH` corresponding to the length of the arrow to draw to the right.
+This class inherits from `Bio::Graphics::Glyph::hourglass`, allowing us to build on the previous drawing code without duplicating it. We define a constant `ARROW_LENGTH` corresponding to the length of the arrow to draw to the right.
 
 We now override the `draw_component()` method. The first thing we want to do is to invoke the old hourglass drawing code, which we do by calling `$self->SUPER::draw_component()` with our argument list. The SUPER:: notation tells Perl that we intend to call our inherited (superclass's) method. This will draw the old hourglass.
 
@@ -654,7 +654,7 @@ sub draw_component {
 1;
 ```
 
-The new glyph is named "multihourglass". Its definition is **exactly** the same as the original hourglass glyph, with one critical change: Instead of inheriting from [Bio::Graphics::Glyph::box](https://metacpan.org/pod/Bio::Graphics::Glyph::box), it inherits from [Bio::Graphics::Glyph::segments](https://metacpan.org/pod/Bio::Graphics::Glyph::segmentsf).
+The new glyph is named "multihourglass". Its definition is **exactly** the same as the original hourglass glyph, with one critical change: Instead of inheriting from [Bio::Graphics::Glyph::box](https://metacpan.org/pod/Bio::Graphics::Glyph::box), it inherits from [Bio::Graphics::Glyph::segments](https://metacpan.org/pod/Bio::Graphics::Glyph::segments).
 
 To exercise the new glyph, we can use the script shown in Example 10.
 

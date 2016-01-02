@@ -18,7 +18,7 @@ This document is copyright Torsten Seemann, 2005. It can be copied and distribut
 Revisions
 ---------
 
--   First draft - [Tseemann](http://www.bioperl.org/wiki/User:Tseemann) 02:50, 29 December 2005 (EST)
+-   First draft - Tseemann
 
 Introduction
 ------------
@@ -28,15 +28,9 @@ This HOWTO describes the steps you should take to get your patch (enhancement or
 Step by Step
 ------------
 
-### Get the latest version from Subversion
+### Get the latest version from GitHub
 
-You should ensure you are using the latest developer version of BioPerl - this means checking out [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live) (or the appropriate repository) from Subversion. Here are [instructions on how to do this](http://www.bioperl.org/wiki/Using_Subversion#Checking_out_code_from_the_repository_with_a_developer_account). This is important because the change you want to make may have already been made!
-
-```
-mkdir -p ~/src/bioperl
-cd ~/src/bioperl
-svn co svn://code.open-bio.org/bioperl/bioperl-live/trunk bioperl-live
-```
+You should ensure you are using the latest developer version of BioPerl - this means checking out bioperl-live from GitHub. Here are [instructions on how to do this](INSTALL.html). This is important because the change you want to make may have already been made!
 
 ### Back up the original file
 
@@ -99,11 +93,11 @@ diff -Bub t/fasta.t.orig          t/fasta.t          > /tmp/fasta.t.diff
 
 ### Submit the patch
 
-First read about [Bugs](http://www.bioperl.org/wiki/Bugs) then log into the [Issues](https://github.com/bioperl/bioperl-live/issues) page of bioperl-live on Github. Submit a new feature request, and attach `/tmp/fasta.pm.diff` and `/tmp/fasta.t.diff` to your bug submission. Make sure you write a clear and concise description for the feature request.
+Log into the [Issues](https://github.com/bioperl/bioperl-live/issues) page of bioperl-live on Github. Submit a new feature request, and attach `/tmp/fasta.pm.diff` and `/tmp/fasta.t.diff` to your bug submission. Make sure you write a clear and concise description for the feature request.
 
 ### The waiting game
 
-Eventually your bug submission will be processed and assimilated into [bioperl-live](http://www.bioperl.org/wiki/Bioperl-live) (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list](http://www.bioperl.org/wiki/Mailing_lists) which most BioPerl developers read.
+Eventually your bug submission will be processed and assimilated into bioperl-live (assuming it wasn't rejected). A notification will be sent to you, and to the [bioperl-guts-l mailing list, which most BioPerl developers read.
 
 `while true; do echo "Waiting..."; sleep 3600; done`
 
@@ -116,14 +110,10 @@ Don't forget to regularly update your Git version of BioPerl!
 Conclusion
 ----------
 
-It takes a little bit of effort to submit a patch to BioPerl but you are rewarded with that warm fuzzy feeling that giving back to your community provides. If the patch showed BioPerl aptitude, there's a good chance that you will be invited to [become a BioPerl developer](http://www.bioperl.org/wiki/Becoming_a_developer) via your own [developer account](http://www.bioperl.org/wiki/Using_CVS#Checking_out_code_from_the_repository_with_a_developer_account).
+It takes a little bit of effort to submit a patch to BioPerl but you are rewarded with that warm fuzzy feeling that giving back to your community provides.
 
 Further reading
 ---------------
 
--   [Advanced BioPerl](http://www.bioperl.org/wiki/Advanced_BioPerl)
--   [Project priority list](http://www.bioperl.org/wiki/Project_priority_list)
--   [Orphan modules](http://www.bioperl.org/wiki/Orphan_modules)
--   [Becoming a developer](http://www.bioperl.org/wiki/Becoming_a_developer)
--   [Using Subversion](http://www.bioperl.org/wiki/Using_Subversion)
--   [Mailing lists](http://www.bioperl.org/wiki/Mailing_lists)
+-   [Advanced BioPerl](/howtos/Advanced_BioPerl_HOWTO.html)
+-   [Using Git](/howtos/Using_Git_HOWTO.html)

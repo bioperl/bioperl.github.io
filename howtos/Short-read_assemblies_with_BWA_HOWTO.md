@@ -36,7 +36,7 @@ Dependencies and Installation
 Like all run wrappers, these modules need the underlying programs to work; visit the links above to acquire them.
 
 Also, the [Bio::DB::Sam](https://metacpan.org/pod/Bio::DB::Sam)
-modules must be installed on your system. These are _not_ BioPerl modules. (They were written by a core developer, though, so they're all right.) You can get them on [CPAN](http://metacpan.org).
+modules must be installed on your system. These are _not_ BioPerl modules. (They were written by a core developer, though, so they're all right.) You can get them on [CPAN](https://metacpan.org).
 
 Creating an Assembly
 --------------------

@@ -178,7 +178,7 @@ Please note that the models underlying PAML 3.14 have changed some from PAML 3.1
 Accessing Tree data
 -------------------
 
-First we'll just descibe how to access data for a topology for a single model or where NSsites=0. In this case we'll just want to get the tree(s) associated with a given result. In this code we loop through all the [Bio::Tree::Trees](https://metacpan.org/pod/Bio::Tree::Trees) associated with the result.
+First we'll just descibe how to access data for a topology for a single model or where NSsites=0. In this case we'll just want to get the tree(s) associated with a given result. In this code we loop through all the [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree) associated with the result.
 
 ```perl
 use Bio::Tools::Phylo::PAML::Result;

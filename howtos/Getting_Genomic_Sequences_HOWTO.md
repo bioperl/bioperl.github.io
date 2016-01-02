@@ -15,7 +15,7 @@ This document is copyright Brian Osborne. It can be copied and distributed under
 
 ## Abstract
 
-This is a HOWTO that talks about using Bioperl and tools related to Bioperl to get genomic sequence. There are a few different approaches, one uses files that you'll download to your own computer to query locally, others use remote, programmable interfaces or [APIs](http://en.wikipedia.org/wiki/Application_programming_interface). You should also see the [EUtils Cookbook](EUtilities_Cookbook.html).
+This is a HOWTO that talks about using Bioperl and tools related to Bioperl to get genomic sequence. There are a few different approaches, one uses files that you'll download to your own computer to query locally, others use remote, programmable interfaces or [APIs](http://en.wikipedia.org/wiki/Application_programming_interface). You should also see the [EUtils Cookbook](EUtilities_Cookbook_HOWTO.html).
 
 ## Using local Genbank and Entrez Gene files
 
@@ -277,4 +277,4 @@ for my $seq (@seqs) {
 
 ## Using Bio::DB::EUtilities to get raw GenBank-formatted sequence
 
-The [EUtilities Cookbook](EUtilities_Cookbook.html) has two examples on how to retrieve the sequence for a gene region using esummary information.
+The [EUtilities Cookbook](EUtilities_Cookbook_HOWTO.html) has two examples on how to retrieve the sequence for a gene region using esummary information.

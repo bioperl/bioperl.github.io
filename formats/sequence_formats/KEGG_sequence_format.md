@@ -6,7 +6,7 @@ layout: default
 Description
 -----------
 
-This is the [KEGG](http://www.kegg.com) "flat" format. KEGG format.
+This is the [KEGG](http://www.kegg.org) "flat" format. KEGG format.
 
 Example
 -------

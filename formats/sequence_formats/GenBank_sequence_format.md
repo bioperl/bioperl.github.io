@@ -8,7 +8,7 @@ Decription
 
 The GenBank sequence format is a rich format for storing sequences and associated annotations. It shares a feature table vocabulary and format with the EMBL and DDJB formats. NCBI provide a more [detailed example](http://www.ncbi.nlm.nih.gov/Sitemap/samplerecord.html).
 
-This file format can be parsed by the system using the module [Bio::SeqIO::genbank](http://metacpan.org/pod/Bio::SeqIO::genbank).
+This file format can be parsed by the system using the module [Bio::SeqIO::genbank](https://metacpan.org/pod/Bio::SeqIO::genbank).
 
 Example
 -------

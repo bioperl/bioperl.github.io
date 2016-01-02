@@ -28,7 +28,7 @@ If the `-format` argument isn't used then Bioperl will try and determine the for
 | [Format](/formats/alignment_formats/index.html)    | Suffixes                      | Comment     |
 |-----------|-------------------------------|-------------|
 | bl2seq    |                               |             |
-| [ClustalW](/formats/alignment_formats/clustalw_multiple_alignment_format.html)  | `aln`                         |             |
+| [ClustalW](/formats/alignment_formats/ClustalW_multiple_alignment_format.html)  | `aln`                         |             |
 | emboss    | `water needle`                |             |
 | [fasta](/formats/alignment_formats/FASTA_multiple_alignment_format.html)     | `fasta fast seq fa fsa nt aa` |             |
 | [maf](/formats/alignment_formats/MAF_multiple_alignment_format.html)       | `maf`                         |             |

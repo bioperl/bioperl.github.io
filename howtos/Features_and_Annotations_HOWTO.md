@@ -35,7 +35,7 @@ maps, a sequence may have a sub-sequence which itself possesses some
 characteristic, an experimental observation may be associated with a literature
 reference, and so on.
 
-This HOWTO describes aspects of Bioperl's approach. The problem is how to create software that accepts, analyzes, and displays any and all of this sequence annotation with the required attention to detail yet remains flexible and easy to use. The general names for the modules or objects that serve these purposes in Bioperl are [Bio::SeqFeature](http://search.cpan.org/search?query= Bio::SeqFeature) and [Bio::Annotation](http://search.cpan.org/search?query= Bio::Annotation).
+This HOWTO describes aspects of Bioperl's approach. The problem is how to create software that accepts, analyzes, and displays any and all of this sequence annotation with the required attention to detail yet remains flexible and easy to use. The general names for the modules or objects that serve these purposes in Bioperl are [Bio::SeqFeature](http://search.cpan.org/search?query= Bio::SeqFeature) and [Bio::Annotation](http://search.cpan.org/search?query= Bio::AnnotationI).
 
 The HOWTO will discuss these objects and the differences between them. There's
 also discussion of how to get useful data from these objects and the basics of
@@ -67,7 +67,7 @@ A [Bio::SeqFeature](http://search.cpan.org/search?query=Bio::SeqFeature) object 
 
 ### Annotations
 
-An [Bio::Annotation](http://search.cpan.org/search?query=Bio::Annotation) object is also associated with a sequence as you'd expect but it does not have a location on the sequence, it's associated with an entire sequence. This is one of the important differences between a SeqFeature and an Annotation. Annotations also can't have SeqFeatures, which makes sense since SeqFeature objects must have locations. The relative simplicity of the Annotation has made it amenable to the creation of a useful set of Annotation objects, each devoted to a particular kind of fact or observation.
+An [Bio::Annotation](http://search.cpan.org/search?query=Bio::AnnotationI) object is also associated with a sequence as you'd expect but it does not have a location on the sequence, it's associated with an entire sequence. This is one of the important differences between a SeqFeature and an Annotation. Annotations also can't have SeqFeatures, which makes sense since SeqFeature objects must have locations. The relative simplicity of the Annotation has made it amenable to the creation of a useful set of Annotation objects, each devoted to a particular kind of fact or observation.
 
 Locations were discussed, above. Describing locations can be complicated in
 certain situations, say when some feature is located on different sequences with varying degrees of precision. One location could also be shared between
@@ -442,14 +442,14 @@ Getting the Annotations
 -----------------------
 
 There's still quite a bit of data left in our Genbank files that's not in
-SeqFeature objects, and much of it is parsed into [Bio::Annotation](http://search.cpan.org/search?query=Bio::Annotation) objects. Annotations, if you recall, are those values that are assigned to a sequence that have no specific location on that sequence. In order to get access to these objects we will get an [Bio::AnnotationCollection](https://metacpan.org/pod/Bio::AnnotationCollectionI) object, which is exactly what it sounds like:
+SeqFeature objects, and much of it is parsed into [Bio::Annotation](http://search.cpan.org/search?query=Bio::AnnotationI) objects. Annotations, if you recall, are those values that are assigned to a sequence that have no specific location on that sequence. In order to get access to these objects we will get an [Bio::AnnotationCollection](https://metacpan.org/pod/Bio::AnnotationCollectionI) object, which is exactly what it sounds like:
 
 ```perl
 my $io = Bio::SeqIO->new(-file => $file, -format => "genbank" );
 my $seq_obj = $io->next_seq; my $anno_collection = $seq_obj->annotation;
 ```
 
-Now we can access each [Bio::Annotation](https://metacpan.org/pod/Bio::Annotation) in the [Bio::AnnotationCollection](https://metacpan.org/pod/Bio::AnnotationCollectionI) object. The Annotation objects can be retrieved in arrays:
+Now we can access each [Bio::Annotation](https://metacpan.org/pod/Bio::AnnotationI) in the [Bio::AnnotationCollection](https://metacpan.org/pod/Bio::AnnotationCollectionI) object. The Annotation objects can be retrieved in arrays:
 
 ```perl
 for my $key ( $anno_collection->get_all_annotation_keys ) {

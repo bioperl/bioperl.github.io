@@ -20,7 +20,7 @@ Sendu Bala
 Introduction
 ============
 
-The BioPerl developers are currently switching from using the [Test](http://search.cpan.org/search?query=Test) module to the more current [Test::More](https://metacpan.org/pod/Test::More&mode=all), accessed via [Bio::Root::Test](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-live/trunk/Bio/Root/Test.pm). This is meant to be a general guide on how to write BioPerl-related regression tests using [Test::More](https://metacpan.org/pod/Test::More&mode=all) (and possibly other modules related to test writing that we may include in the future, which can have additional sections added as needed).
+The BioPerl developers are currently switching from using the [Test](http://search.cpan.org/search?query=Test) module to the more current [Test::More](https://metacpan.org/pod/Test::More), accessed via [Bio::Root::Test](http://code.open-bio.org/svnweb/index.cgi/bioperl/view/bioperl-live/trunk/Bio/Root/Test.pm). This is meant to be a general guide on how to write BioPerl-related regression tests using [Test::More](https://metacpan.org/pod/Test::More) (and possibly other modules related to test writing that we may include in the future, which can have additional sections added as needed).
 
 Some guidelines
 ===============
@@ -35,7 +35,7 @@ Using Bio::Root::Test
 The `BEGIN` block
 -----------------
 
-Since BioPerl still supports Perl 5.6.1 (which doesn't include [Test::More](https://metacpan.org/pod/Test::More&mode=all) in the core modules), we must run a quick check for the presence of the module and load it if it is absent. We include a local copy of [Test::More](https://metacpan.org/pod/Test::More&mode=all) within the BioPerl distribution (in `t/lib`) just in case. Likewise for [Test::Exception](https://metacpan.org/pod/Test::Exception&mode=all) and [Test::Warn](https://metacpan.org/pod/Test::Warn&mode=all).
+Since BioPerl still supports Perl 5.6.1 (which doesn't include [Test::More](https://metacpan.org/pod/Test::More) in the core modules), we must run a quick check for the presence of the module and load it if it is absent. We include a local copy of [Test::More](https://metacpan.org/pod/Test::More) within the BioPerl distribution (in `t/lib`) just in case. Likewise for [Test::Exception](https://metacpan.org/pod/Test::Exception) and [Test::Warn](https://metacpan.org/pod/Test::Warn).
 
 We also like to skip all tests if they all require external modules that haven't been installed, or internet access when the user hasn't enabled network tests.
 
@@ -109,10 +109,10 @@ ok -s $output_file;
 # once you're done, don't try and delete $output_file yourself
 ```
 
-Using [Test::More](https://metacpan.org/pod/Test::More&mode=all) with BioPerl via [Bio::Root::Test](https://metacpan.org/pod/Bio::Root::Test)
+Using [Test::More](https://metacpan.org/pod/Test::More) with BioPerl via [Bio::Root::Test](https://metacpan.org/pod/Bio::Root::Test)
 =======================
 
-This is a general guideline on how to use [Test::More](https://metacpan.org/pod/Test::More&mode=all) with BioPerl. You are not bound to using this format and may very well find a more suitable (possibly much better) style for writing your own tests. If so, please add it here. However, note that currently Bio::Root::Test only supports [Test::More](https://metacpan.org/pod/Test::More&mode=all).
+This is a general guideline on how to use [Test::More](https://metacpan.org/pod/Test::More) with BioPerl. You are not bound to using this format and may very well find a more suitable (possibly much better) style for writing your own tests. If so, please add it here. However, note that currently Bio::Root::Test only supports [Test::More](https://metacpan.org/pod/Test::More).
 
 Module tests
 ------------
@@ -192,18 +192,18 @@ my @methods = qw(get_Seq_by_id get_Stream_by_id);
 can_ok($testobj, @methods);
 ```
 
-Significant differences between [Test](http://search.cpan.org/search?query=Test) and [Test::More](https://metacpan.org/pod/Test::More&mode=all)
+Significant differences between [Test](http://search.cpan.org/search?query=Test) and [Test::More](https://metacpan.org/pod/Test::More)
 ---------------------------------------------------
 
 When either converting tests over from [Test](http://search.cpan.org/search?query=Test) or writing new tests based on older Test code, take note of some small gotchas that occur.
 
-For instance, descriptive messages passed as an additional argument to `ok()` in [Test](https://metacpan.org/pod/Test&mode=all) are diagnostic in nature (show up on failure).
+For instance, descriptive messages passed as an additional argument to `ok()` in [Test](https://metacpan.org/pod/Test) are diagnostic in nature (show up on failure).
 
 ```perl
 ok($value, 12, "$value not okay");
 ```
 
-With [Test::More](https://metacpan.org/pod/Test::More&mode=all) you can have both descriptive messages (always displayed, normally to describe the test in some way) and optional user-based diagnostic messages (appear during the test run, which do not interfere with tests). The above could be the following in [Test::More](https://metacpan.org/pod/Test::More&mode=all), with an added descriptive message:
+With [Test::More](https://metacpan.org/pod/Test::More) you can have both descriptive messages (always displayed, normally to describe the test in some way) and optional user-based diagnostic messages (appear during the test run, which do not interfere with tests). The above could be the following in [Test::More](https://metacpan.org/pod/Test::More), with an added descriptive message:
 
 ```perl
 ok($value, "Total sequences in SeqIO stream") || diag("$value not okay");
@@ -255,7 +255,7 @@ cmp_deeply($h1, $h2);
 Skipping tests
 --------------
 
-Skipped tests require the use of a `SKIP:{}` block. When a skip statement is encountered it will skip the listed number of tests to the end of the block. Note that this assumes you have checked to make sure the number of skipped tests matches those expected. If the planned tests do not match then [Test::Harness](https://metacpan.org/pod/Test::Harness&mode=all) will indicate a failure.
+Skipped tests require the use of a `SKIP:{}` block. When a skip statement is encountered it will skip the listed number of tests to the end of the block. Note that this assumes you have checked to make sure the number of skipped tests matches those expected. If the planned tests do not match then [Test::Harness](https://metacpan.org/pod/Test::Harness) will indicate a failure.
 
 ```perl
 SKIP: {
@@ -298,7 +298,7 @@ SKIP: {
 
 ```
 
-It is possible to nest `SKIP:{}` blocks if needed. See the [Test::More](https://metacpan.org/pod/Test::More&mode=all) documentation for more details.
+It is possible to nest `SKIP:{}` blocks if needed. See the [Test::More](https://metacpan.org/pod/Test::More) documentation for more details.
 
 TODO tests
 ----------
@@ -314,10 +314,10 @@ TODO: {
 }
 ```
 
-Using [Test::Exception](https://metacpan.org/pod/Test::Exception&mode=all) with BioPerl
+Using [Test::Exception](https://metacpan.org/pod/Test::Exception) with BioPerl
 ==================
 
-Along with [Test::More](https://metacpan.org/pod/Test::More&mode=all), Bio::Root::Test also loads [Test::Exception](https://metacpan.org/pod/Test::Exception&mode=all). This module provides a number of useful methods. From its synopsis:
+Along with [Test::More](https://metacpan.org/pod/Test::More), Bio::Root::Test also loads [Test::Exception](https://metacpan.org/pod/Test::Exception). This module provides a number of useful methods. From its synopsis:
 
 ```perl
 # Check that something died
@@ -340,7 +340,7 @@ like $@, 'what the stringified exception should look like';
 lives_and { is $foo->method, 42 } 'method is 42';
 ```
 
-Using [Test::Warn](https://metacpan.org/pod/Test::Warn&mode=all) with BioPerl
+Using [Test::Warn](https://metacpan.org/pod/Test::Warn) with BioPerl
 ==================
 
 Bio::Root::Test loads a special version of Test::Warn that can cope with Bioperl's warnings. You can use Test::Warn syntax as normal, though note the following:

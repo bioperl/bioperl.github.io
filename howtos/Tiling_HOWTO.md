@@ -6,7 +6,7 @@ layout: howto
 Abstract
 --------
 
-A detailed description of the [Bio::Search::Tiling](https://metacpan.org/pod/Bio::Search::Tiling) namespace, including how-tos for the application of [Bio::Search::Tiling::MapTiling](https://metacpan.org/pod/Bio::Search::Tiling::MapTiling) to obtain global alignment statistics from BLAST-type search reports parsed by [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO).
+A detailed description of the [Bio::Search::Tiling](https://metacpan.org/pod/Bio::Search::Tiling::TilingI) namespace, including how-tos for the application of [Bio::Search::Tiling::MapTiling](https://metacpan.org/pod/Bio::Search::Tiling::MapTiling) to obtain global alignment statistics from BLAST-type search reports parsed by [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO).
 
 [Quick Link](#tiling-your-searches-with-biosearchtilingmaptiling) to user tips.
 

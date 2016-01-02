@@ -36,7 +36,7 @@ SoapEU requires CPAN modules [XML::Twig](https://metacpan.org/pod/XML::Twig) and
 Overview
 --------
 
-SoapEU is intended to provide all the functionality currently available in (see [the EUtilities Cookbook](http://bioperl.github.io/howtos/EUtilities_Cookbook.html) for many examples and use cases). It provides an extensive and extensible backend for adapting the SOAP responses into appropriate and familiar BioPerl objects and iterators.
+SoapEU is intended to provide all the functionality currently available in (see [the EUtilities Cookbook](http://bioperl.github.io/howtos/EUtilities_Cookbook_HOWTO.html) for many examples and use cases). It provides an extensive and extensible backend for adapting the SOAP responses into appropriate and familiar BioPerl objects and iterators.
 
 The mantra is
 

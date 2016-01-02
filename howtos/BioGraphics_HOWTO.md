@@ -48,7 +48,7 @@ This document takes you through a few common applications of Bio::Graphics in a 
 Preliminaries
 -------------
 
-Bio::Graphics is dependent on [GD](https://metacpan.org/pod/Bio::GD), a Perl module for generating bitmapped graphics written by the author. GD in turn is dependent on [libgd](http://www.boutell.com/gd), a C library written by Thomas Boutell, formerly also of [Cold Spring Harbor Laboratory](http://www.cshl.org). To use [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) you must have both these software libraries installed.
+Bio::Graphics is dependent on [GD](https://metacpan.org/pod/GD), a Perl module for generating bitmapped graphics written by the author. GD in turn is dependent on [libgd](http://www.boutell.com/gd), a C library written by Thomas Boutell, formerly also of [Cold Spring Harbor Laboratory](http://www.cshl.org). To use [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics) you must have both these software libraries installed.
 
 If you are on a Linux system, you might already have GD installed. To verify, run the following command:
 
