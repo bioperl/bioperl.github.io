@@ -31,8 +31,8 @@ General coding practices
 Error handling and debugging
 ----------------------------
 
--   Use `$self->throw()` instead of `die() / confess()`
--   Use `$self->warn()` instead of `warn() / carp() / cluck()`
+-   Use `$self->throw()` instead of `die()` or `confess()`
+-   Use `$self->warn()` instead of `warn()` or `carp()` or `cluck()`
 -   Use `$self->debug()` instead of `print STDERR "...."`
 
 I/O and cross-platform
