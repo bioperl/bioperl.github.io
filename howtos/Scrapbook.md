@@ -3257,47 +3257,45 @@ See [Merge_gapped_sequences_across_a_common_region](#Merge_gapped_sequences_acro
 
 *By [Brian](User:Brian "wikilink") --[Ed.](User:Majensen "wikilink")*
 
-How do I find an iteration of any sequence of a specific length?
-----------------------------------------------------------------
+**How do I find an iteration of any sequence of a specific length?**
 
 So `/(QA)+/` will match one or more iterations of QA but what if you want to match any repeat of length 2?
 
-Try ```perl /(..)1+/ ```
+Try `/(..)1+/`
 
 Then `$1` will tell you what the repeat was, `length($&)/2` will tell you the number of repeats.
 
-How do I find some sequence flanked by homopolymers of a given length?
-----------------------------------------------------------------------
+**How do I find some sequence flanked by homopolymers of a given length?**
 
 For example, to find **FAFCRCFCFAFAFCRF** flanked by *n* number of Q, e.g.:
 
-  AGTWRWDFDQQQQQQQQFAFCRCFCFAFAFCRFQQQQQQQQQQQQQ
+    AGTWRWDFDQQQQQQQQFAFCRCFCFAFAFCRFQQQQQQQQQQQQQ
 
-The regular expression would be something like ```perl /(Q{$n,})(\[^Q\]{$x,})(Q{$n,})/ ```
+The regular expression would be something like
+```perl
+/(Q{$n,})([^Q]{$x,})(Q{$n,})/
+```
 
 Example:
+```bash
+perl -e '$n=5; $x=9; $_= "AGTWRWDFDQQQQQQQQFAFCRCFCFAFAFCRFQQQQQQQQQQQQQ"; print "$1|$2|$3\n" if /(Q{$n,})([^Q]{$x,})(Q{$n,})/;'
+```
 
-`perl -e '$n=5; $x=9; $_= "AGTWRWDFDQQQQQQQQFAFCRCFCFAFAFCRFQQQQQQQQQQQQQ"; print "$1|$2|$3`
+    QQQQQQQQ|FAFCRCFCFAFAFCRF|QQQQQQQQQQQQQ|
 
-" if /(Q{$n,})(\[^Q\]{$x,})(Q{$n,})/;'
-
-`QQQQQQQQ|FAFCRCFCFAFAFCRF|QQQQQQQQQQQQQ|`
-
-How do I find any homopolymer flanked on both sides by the same amino acid?
----------------------------------------------------------------------------
+**How do I find any homopolymer flanked on both sides by the same amino acid?**
 
 For example, **HTTTTTTTTTTH** or **TGGGGGGGGGGGT**.
 
-```perl /(.)\[^1\]+1/ ```
+`perl /(.)[^\1]+\1/`
 
 In action:
 
-perl -e '$_ = "HTTH"; print "|$1|
-
-" if /((.)\[^2\]+2)/;'
+```bash
+perl -e '$_ = "HTTH"; print "|$1|\n" if /((.)[^\2]+\2)/;'
+```
 
 Note that the "homopolymer" could have a length of **1**!
-
 
 
 ### Suffix_trees_from_thin_air<a name="Suffix_trees_from_thin_air"></a>
@@ -3313,55 +3311,45 @@ I took the original routine and BioPerled it up a little:
 -   *My little "improvement" getting rid of the original `END` value was too clever by half, as pointed out by [Aaron](Aaron_Mackey "wikilink"). That leads to hammering of complete words by later suffixes, or of suffixes by later short words. So, I revert to Ian's original... --[Ed.](User:Majensen "wikilink")*
 
 ```perl
-
 package Suftree;
 use strict;
 
 sub new {
-
    my $class = shift;
    my @words = @_;
    my $self = {};
    bless($self, $class);
    $self->readDictionary(@words);
    return $self;
-
 }
 
 sub readDictionary {
-
    my $self = shift;
    my @words = @_;
    my %D;
    my $i = 0;
    for (@words) {
-   chomp;
-   my $a = $_;
-   my $string = join(`*`,` `map` `{` `"\{'${_}'\}"` `}` `split(`*`,$a)).'{END}';
-   eval "\$D$string = 1";  # <<===  cool way to make a suffix tree!
+     chomp;
+     my $a = $_;
+     my $string = join('', map { "\{'${_}'\}" } split('',$a)).'{END}';
+     eval "\$D$string = 1";  # <<===  cool way to make a suffix tree!
    }
    $self->dict(\%D);
-
 }
 
 sub dict {
-
    my $self = shift;
    return $self->{_dict} = shift if (@_);
    return $self->{_dict};
-
 }
 
 # more to come...
-
 ```
 
 -   *[Aaron](Aaron_Mackey "wikilink") also notes that there ain't no suffixes in this suffix tree, but that `$i=0` looks suspicious. Hmm. So could replace `readDictionary` above with the following*
 
 ```perl
-
 sub readDictionary {
-
    my $self = shift;
    my @words = @_;
    my %D;
@@ -3369,85 +3357,77 @@ sub readDictionary {
    chomp;
    my @a = '*'.split('');
        while ( shift @a ) {
-       my $string = join('', map { "\{'${_}'\}" } @a).'{END}';
-       eval "\$D$string = 1";  # <<===  cool way to make a suffix tree!
+         my $string = join('', map { "\{'${_}'\}" } @a).'{END}';
+         eval "\$D$string = 1";  # <<===  cool way to make a suffix tree!
        }
    }
    $self->dict(\%D);
-
 }
-
 ```
 
 -   *Now all the recursive search business below is moot, which I suppose is the point of a suffix tree anyway. --[Ed.](User:Majensen "wikilink")*
 
-### Left-end search
+#### Left-end search
 
-Observe the method `readDictionary` for the trick. Here, Ian builds a hash of hash of ... assignments as a string[\*\*](#fn "wikilink"), then `eval`s it. He is really leveraging Perl's automatic reference creation to cause Perl to build the entire data structure internally. Brilliant! But in that very thing lies dormant the seed of cruft...
+Observe the method `readDictionary` for the trick. Here, Ian builds a hash of hash of ... assignments as a string[\*\*](#fn), then `eval`s it. He is really leveraging Perl's automatic reference creation to cause Perl to build the entire data structure internally. Brilliant! But in that very thing lies dormant the seed of cruft...
 
 Here are two search methods off the `Suftree` object:
 
 ```perl
-
 package Suftree;
 use strict;
 
-# return -1 if $str DNE in dict;
-0 if substring exists;
+# return -1 if $str DNE in dict; 0 if substring exists;
+
 # 1 if whole word is present
 
 sub search {
-
    my $self = shift;
    my $str = shift;
-   my $l = join(`*`,` `map` `{` `"\{'${_}'\}"` `}` `split(`*`,$str));
+   my $l = join('', map { "\{'${_}'\}" } split('',$str));
    if (eval "exists \$self->dict->$l") {
-   return 1 if eval "exists \$self->dict->$l->\{END\}";
-   return 0;
+     return 1 if eval "exists \$self->dict->$l->\{END\}";
+     return 0;
    }
    return -1;
-
 }
 
 sub search2 {
-
    my $self = shift;
    my $str = shift;
    my $d = $self->dict;
    for (split('',$str)) {
-   last if !defined($d = $$d{$_});
+     last if !defined($d = $$d{$_});
    }
    for ($d) {
-   !defined && do {return -1};
-       grep(/END/,keys %$d) && do {return 1};
-   return 1;
+     !defined && do {return -1};
+     grep(/END/,keys %$d) && do {return 1};
+     return 1;
    }
-
 }
-
 ```
 
 Both return the right thing. `search()` is cool, it uses an `eval ''string''` trick too, while `search2()` looks like somebody's `C` homework. But suppose we do
 
 ```perl
-
 use Suftree;
 use strict;
 
 my $D = Suftree->new(<DATA>);
 
-print $D->search('AGGA');
-\#returns 0 print $D->search('AAGGAGGGTAAAAATGA');
-\#returns 1 print $D->search('CGGA');
-\#returns -1, but look out!
+print $D->search('AGGA'); #returns 0
+print $D->search('AAGGAGGGTAAAAATGA'); #returns 1
+print $D->search('CGGA'); #returns -1, but look out!
 
-print $D->search2('AGGA');
-\#returns 0 print $D->search2('AAGGAGGGTAAAAATGA');
-\#returns 1 print $D->search2('CGGA');
-\#returns -1
+print $D->search2('AGGA'); #returns 0
+print $D->search2('AAGGAGGGTAAAAATGA'); #returns 1 print $D->search2('CGGA'); #returns -1
 
-__DATA__ AAGGAGGTAAAAATGA AAGGAGGTAAAATGA AGGAGGTAAAAATGA ATGGAGGTAAAAATGA AAGGAGGGTAAAAATGA
-
+__DATA__
+AAGGAGGTAAAAATGA
+AAGGAGGTAAAATGA
+AGGAGGTAAAAATGA
+ATGGAGGTAAAAATGA
+AAGGAGGGTAAAAATGA
 ```
 
 In the failed search, ` $D->search('CGGA') `, the `eval`ed string in the lookup is
@@ -3457,6 +3437,7 @@ In the failed search, ` $D->search('CGGA') `, the `eval`ed string in the lookup 
 What does Perl do? It creates
 
 `$D->dict->{C}`
+
 `$D->dict->{C}->{G}`
 
 and
@@ -3469,78 +3450,69 @@ before it finds out that
 
 does not exist. These extra refs are unfortunately now stored in the dictionary, and, e.g., `$D->search('CG')` will be successful, but not reflect the data. `search2()` avoids this by explicitly checking the existence of each branch, and jumping from the loop when the branch DNE.
 
-### Unconstrained search
+#### Unconstrained search
 
 -   *Can use the second form of `readDictionary` above, and use `search2()`, or...*
-
-<!-- -->
 
 -   *Courtesy of [Russell](User:Russell_Smithies "wikilink") --[Ed.](User:Majensen "wikilink")*
 
 Using a recursive approach, we can check for the presence of any substring in the dictionary.
 
-`$D->recurse_search('C');     # returns -1`
-`$D->recurse_search('GGTA');  # returns 0`
-`$D->recurse_search('ATGA');  # returns 1`
+```perl
+$D->recurse_search('C');     # returns -1
+$D->recurse_search('GGTA');  # returns 0
+$D->recurse_search('ATGA');  # returns 1
+```
 
 ```perl
-
 package Suftree;
 use strict
 
-# returns -1: not found;
-0: internal substring;
-1: right-end anchored substring
+# returns -1: not found; 0: internal substring; 1: right-end anchored substring
 
-sub recurse_search{ my $self = shift;
-my $str = shift;
-_recurse_hash($self,$self->dict,0,$str);
+sub recurse_search{
+  my $self = shift;
+  my $str = shift;
+  _recurse_hash($self,$self->dict,0,$str);
 }
 
 sub _recurse_hash {
-
    my ($self, $hash, $depth, $str) = @_;
    my $ret;
    $ret = $self->search2_hash($str, $hash);
    return $ret unless $ret < 0;
    for my $k (keys %$hash) {
-   $ret = _recurse_hash($self,$$hash{$k},$depth+1,$str);
-   return $ret unless $ret < 0;
+     $ret = _recurse_hash($self,$$hash{$k},$depth+1,$str);
+     return $ret unless $ret < 0;
    }
    return -1;
-
 }
 
 sub search2_hash {
-
    my $self = shift;
    my $str = shift;
    my $d = shift;
    for (split('',$str)) {
-   last if !defined($d = $$d{$_});
+     last if !defined($d = $$d{$_});
    }
    for ($d) {
-   !defined && do {return -1};
-   ref($d) && do { return 0 };
-   return 1;
+     !defined && do {return -1};
+     ref($d) && do { return 0 };
+     return 1;
    }
-
 }
-
 ```
 
-### Footnote
+*Footnote*
 
-<span id=fn></span>
+<a name='fn'></a>
 
--   *\*\*I compacted the original code using `join` and `map`.*
-
+-   \*\**I compacted the original code using `join` and `map`.*
 
 
 ### Tricking_the_perl_regex_engine_to_get_suboptimal_matches<a name="Tricking_the_perl_regex_engine_to_get_suboptimal_matches"></a>
 
-The Hack
---------
+#### The Hack
 
 This trick is discussed more extensively in [Mastering Regular Expressions](http://oreilly.com/catalog/9780596528126/index.html) by Jeffrey Friedl. This is something I raised on the mail list at one point;
 we can probably wrap this up into a method somewhere (probably something curried).
@@ -3549,40 +3521,31 @@ Essentially you have to embed code into the regex and trick the parser into back
 
 The following demo script is a slight modification of one I used which checks the consensus string from the input alignment (in aligned FASTA format here), extracts the alignment slice using that match, then spits the alignment out to STDOUT in clustalw format. This should work for perl 5.8 and up, but it's only been tested on perl 5.10. You should be able to use this to fit what you want.
 
-How it works
-------------
+#### How it works
 
 The beginning regex match actually succeeds (matches the first 18-21 characters) thus setting `$1`. This gets passed to the code block that follows to be evaluated, passing the string out to the subroutine to be tested and returned if a match is present. Successful matches are then passed to the array with relevant information to be iterated over later. The last `(?!)` is the part that fails, causing the engine to backtrack and attempt the match again.
 
 Note that we never use the full match, we only attempt matching once per iteration in the `while` loop.
 
-The script
-----------
+#### The script
 
 ```perl
-
 use strict;
 use warnings;
 use Bio::AlignIO;
 
-my $file = shift;
-\# or $ARGV\[0\]
+my $file = shift; # or $ARGV\[0\]
 
 # there is a bug, likely in Bio::Root::IO, where passing the filename directly
 # to AlignIO causes parsing issues and (with some AlignIO formats) segfaults
 
-my $in = Bio::AlignIO->new(-file =>
-$file,
-
+my $in = Bio::AlignIO->new(-file => $file,
                            -format => 'fasta');
 
-my $out = Bio::AlignIO->new(-fh =>
-\*STDOUT,
-
+my $out = Bio::AlignIO->new(-fh => \*STDOUT,
                            -format => 'clustalw');
 
 while (my $aln = $in->next_aln) {
-
    my $c = $aln->consensus_string(100);
    my @matches;
    # note this match actually fails
@@ -3601,20 +3564,15 @@ while (my $aln = $in->next_aln) {
        my $newaln = $aln->slice($st, $end);
        $out->write_aln($newaln);
    }
-
 }
 
 sub check_match {
-
     my $match = shift;
     return unless $match;
     my $ct = $match =~ tr/?/?/;
     return $match if $ct <= 4;
-
 }
-
 ```
-
 
 
 
