@@ -9,7 +9,7 @@ Peter Schattner, Jason Stajich, Heikki Lehvaslaiho, Brian Osborne, Hilmar Lapp, 
 
 ## Abstract
 
-This is a HOWTO that talks about using the Bioperl Bio::Restriction modules to do *in silico* restriction enzyme analysis on nucleotide sequences.
+This is a [HOWTO](/howtos/index.html) that talks about using the Bioperl Bio::Restriction modules to do *in silico* restriction enzyme analysis on nucleotide sequences.
 
 ## Introduction
 

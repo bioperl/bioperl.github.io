@@ -11,7 +11,7 @@ Peter Schattner
 
 ## Abstract
 
-This is a HOWTO that talks about using Bioperl to create local sequence databases for fast retrieval.
+This is a [HOWTO](/howtos/index.html) that talks about using Bioperl to create local sequence databases for fast retrieval.
 
 ## Introduction
 

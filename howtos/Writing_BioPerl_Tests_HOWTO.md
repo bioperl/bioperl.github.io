@@ -6,7 +6,7 @@ layout: howto
 Abstract
 ========
 
-This is a quick HOWTO on writing tests for old and new BioPerl code.
+This is a quick [HOWTO](/howtos/index.html) on writing tests for old and new BioPerl code.
 
 Authors
 =======

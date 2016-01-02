@@ -17,7 +17,7 @@ This document is copyright Brian Osborne. It can be copied and distributed under
 Abstract
 --------
 
-This is a HOWTO that explains how to use the SeqFeature and Annotation objects of Bioperl.
+This is a [HOWTO](/howtos/index.html) that explains how to use the SeqFeature and Annotation objects of Bioperl.
 
 Introduction
 ------------

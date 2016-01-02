@@ -3,7 +3,7 @@ title: "SeqIO HOWTO"
 layout: howto
 ---
 
-This HOWTO will teach you about the system for reading and writing sequences of various formats. See the [list of sequence formats](/formats/sequence_formats/index.html) for details on each format.
+This [HOWTO](/howtos/index.html) will teach you about the system for reading and writing sequences of various formats. See the [list of sequence formats](/formats/sequence_formats/index.html) for details on each format.
 
 Authors
 -------

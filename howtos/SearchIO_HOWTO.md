@@ -6,7 +6,7 @@ layout: howto
 Abstract
 --------
 
-This is a HOWTO about the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) system, how to use it, and how one goes about writing new adaptors to different output formats. We will also describe how the modules work for outputting various formats from [Bio::Search](http://search.cpan.org/search?query=Bio::Search) objects.
+This is a [HOWTO](/howtos/index.html) about the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) system, how to use it, and how one goes about writing new adaptors to different output formats. We will also describe how the modules work for outputting various formats from [Bio::Search](http://search.cpan.org/search?query=Bio::Search) objects.
 
 ### Authors
 

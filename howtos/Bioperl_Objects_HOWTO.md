@@ -9,7 +9,7 @@ Peter Schattner
 
 ## Abstract
 
-This is a HOWTO that talks about many of the common and uncommon Bioperl objects that represent sequences.
+This is a [HOWTO](/howtos/index.html) that talks about many of the common and uncommon Bioperl objects that represent sequences.
 
 ## Brief descriptions
 

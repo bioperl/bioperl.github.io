@@ -23,7 +23,7 @@ Revisions
 Introduction
 ------------
 
-This HOWTO describes the steps you should take to get your patch (enhancement or bug fix) accepted into BioPerl, from checking out the latest version to creating a diff file and submitting it to Bugzilla.
+This [HOWTO](/howtos/index.html) describes the steps you should take to get your patch (enhancement or bug fix) accepted into BioPerl, from checking out the latest version to creating a diff file and submitting it to Bugzilla.
 
 Step by Step
 ------------

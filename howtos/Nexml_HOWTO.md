@@ -6,7 +6,7 @@ layout: howto
 Abstract
 --------
 
-This is a HOWTO about the [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) module, and how to use it to read and write complete Nexml documents. We will also describe how the [Bio::SeqIO::nexml](https://metacpan.org/pod/Bio::SeqIO::nexml), [Bio::AlignIO::nexml](https://metacpan.org/pod/Bio::AlignIO::nexml), and [Bio::TreeIO::nexml](https://metacpan.org/pod/Bio::TreeIO::nexml) modules work for outputting individual data types (e.g. just trees) to Nexml.
+This is a [HOWTO](/howtos/index.html) about the [Bio::NexmlIO](https://metacpan.org/pod/Bio::NexmlIO) module, and how to use it to read and write complete Nexml documents. We will also describe how the [Bio::SeqIO::nexml](https://metacpan.org/pod/Bio::SeqIO::nexml), [Bio::AlignIO::nexml](https://metacpan.org/pod/Bio::AlignIO::nexml), and [Bio::TreeIO::nexml](https://metacpan.org/pod/Bio::TreeIO::nexml) modules work for outputting individual data types (e.g. just trees) to Nexml.
 
 Author
 ------

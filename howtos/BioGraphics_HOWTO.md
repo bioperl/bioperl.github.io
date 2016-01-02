@@ -29,7 +29,7 @@ Revision History
 Abstract
 --------
 
-This HOWTO describes how to render sequence data graphically in a horizontal map. It applies to a variety of situations ranging from rendering the feature table of a GenBank entry, to graphing the positions and scores of a BLAST search, to rendering a clone map. It describes the programmatic interface to the module, and discusses how to create dynamic web pages using and the GBrowse package.
+This [HOWTO](/howtos/index.html) describes how to render sequence data graphically in a horizontal map. It applies to a variety of situations ranging from rendering the feature table of a GenBank entry, to graphing the positions and scores of a BLAST search, to rendering a clone map. It describes the programmatic interface to the module, and discusses how to create dynamic web pages using and the GBrowse package.
 
 Introduction
 ------------

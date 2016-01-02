@@ -11,7 +11,7 @@ Peter Schattner
 
 ## Abstract
 
-This is a HOWTO that talks about using [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) and [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign)) to create and analyze alignments. It also discusses how to run various applications that create alignment files. See the [list of alignment formats](/formats/alignment_formats/index.html) for details on each format.
+This is a [HOWTO](/howtos/index.html) that talks about using [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) and [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign)) to create and analyze alignments. It also discusses how to run various applications that create alignment files. See the [list of alignment formats](/formats/alignment_formats/index.html) for details on each format.
 
 ## AlignIO
 
