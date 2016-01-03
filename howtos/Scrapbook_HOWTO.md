@@ -19,7 +19,7 @@ If you're looking for an answer and don't see it here, try the [HOWTOs](/howtos/
 
 ### Finding_all_clades_represented_in_a_tree<a name="Finding_all_clades_represented_in_a_tree"></a>
 
--   Here is a scrap that will return all clades (i.e., maximal sets of leaf/tip taxa descended from a given single node) in a tree, inspired by a question on [Evoldir](http://evol.mcmaster.ca/evoldir.html). Other approaches? --[*Ed.*](User:Majensen "wikilink")
+-   Here is a scrap that will return all clades (i.e., maximal sets of leaf/tip taxa descended from a given single node) in a tree, inspired by a question on [Evoldir](http://evol.mcmaster.ca/evoldir.html). Other approaches? -- *Ed.*
 
 ```perl
 
@@ -45,35 +45,36 @@ foreach my $n (@nodes) {
 
 ------------------------------------------------------------------------
 
--   Another approach, using [Bio::Tree::Compatible](https://metacpan.org/pod/Bio::Tree::Compatible) of [G. Valiente](User:Valiente "wikilink"). If the internal intervening nodes are labeled (have a non-empty `id()` property), they will also appear in the output.
+-   Another approach, using [Bio::Tree::Compatible](https://metacpan.org/pod/Bio::Tree::Compatible) of G. Valiente. If the internal intervening nodes are labeled (have a non-empty `id()` property), they will also appear in the output.
 
 ```perl
 
 use Bio::TreeIO;
 use Bio::Tree::Compatible;
 
-my $tio = Bio::TreeIO->new(-format=>'newick',-fh=>\*DATA);
+my $tio = Bio::TreeIO->new(-format=>'newick',-file => $file);
 while (my $t = $tio->next_tree) {
 
  map {
      print "(",join(',',@{$_}),")\n"
      } values %{Bio::Tree::Compatible::cluster_representation( $t ) };
 }
-
-__DATA__
-(((A:5,B:5):2,(C:4,D:4):1):3,E:10);
-(((A:5,B:5)x:2,(C:4,D:4)y:1)z:3,E:10)r;
-
 ```
 
---[*MAJ*](User:Majensen "wikilink")
+File content:
+```
+(((A:5,B:5):2,(C:4,D:4):1):3,E:10);
+(((A:5,B:5)x:2,(C:4,D:4)y:1)z:3,E:10)r;
+```
+
+--*MAJ*
 
 
-### Poor_man's_bootstrap<a name="Poor_man's_bootstrap"></a>
+### Poor_man's_bootstrap
 
 (*see the bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-June/030247.html)*)
 
--   *As [Russell](User:Russell_Smithies "wikilink") often says, sometimes Perl can do the job by itself. However, if you want to bootstrap sequences from an alignment, have a look at [Bio::Align::Utilities](https://metacpan.org/pod/Bio::Align::Utilities)... --[Ed.](User:Majensen "wikilink")*
+-   *As Russell often says, sometimes Perl can do the job by itself. However, if you want to bootstrap sequences from an alignment, have a look at [Bio::Align::Utilities](https://metacpan.org/pod/Bio::Align::Utilities)... --Ed.*
 
 ***Shalabh Sharma*** asks
 
@@ -81,7 +82,7 @@ __DATA__
 
 ------------------------------------------------------------------------
 
-from ***[Mark Jensen](User:Majensen "wikilink")***:
+from ***Mark Jensen***:
 
 -   To subsample lines from a file with replacement:
 
@@ -115,17 +116,17 @@ foreach (@samples) {
 ```
 
 
-### Site_entropy_in_an_alignment<a name="Site_entropy_in_an_alignment"></a>
+### Site_entropy_in_an_alignment
 
-(see bioperl-l discussion [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028517.html), and see also [Site frequencies in an alignment](#Site_frequencies_in_an_alignment))
+(see bioperl-l discussion [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-November/028517.html)).
 
-***Cláudio Sampaio*** asks
+***Claudio Sampaio*** asks
 
 *How to get the entropy of each nucleotide of an alignment?*
 
-from ***[Mark Jensen](User:Majensen "wikilink")***:
+from ***Mark Jensen***:
 
-*If you have a [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object prepared -- maybe from*
+*If you have a [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object prepared*
 
 ```perl
 $alnio = new Bio::AlignIO(-format=>'fasta', -file=>'your.fas');
@@ -184,9 +185,7 @@ sub entropy {
 ```
 
 
-### Site_frequencies_in_an_alignment<a name="Site_frequencies_in_an_alignment"></a>
-
--   *So, here's one reason for the Scrapbook. You say, "why write something I already sort of wrote?" So today I came to the Scrapbook to cannibalize [Site entropy in an alignment](#Site_entropy_in_an_alignment), to get it to squirt out the actual frequencies of each nucleotide at each site. The key here is the round-trip: a new scrap for you, based on the mods. --[Ed.](User:Majensen "wikilink")*
+### Site_frequencies_in_an_alignment
 
 *To get an array of hashes of hashes containing the frequencies of each residue at each site of an alignment:*
 
@@ -243,23 +242,21 @@ sub freqs {
 
 *but don't expect to set any speed records.*
 
-
-
 # D
 
 ## Databasing
 
-### Accessing_GB_flat_files_by_GI<a name="Accessing_GB_flat_files_by_GI"></a>
+### Accessing_GB_flat_files_by_GI
 
 *(see bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028982.html).)*
 
-***Jarod Pardon (云 何)*** asks:
+***Jarod Pardon*** asks:
 
 *I have some sequence databases such as RefSeq in flat GenPept/GenBank format. There is a list of GI numbers and I want to extract the sequence from the database according to the GI number.*
 
 ------------------------------------------------------------------------
 
-***[Mark Jensen](User:Majensen "wikilink") replies:***
+***Mark Jensen replies:***
 
 [Bio::DB::Flat](https://metacpan.org/pod/Bio::DB::Flat) is nicely generalized to allow different 'namespaces' for the different identifiers used on different sequences. You can choose the type of identifier you want (gi, in your case) by using *`get_Seq_by_acc()`* as follows (this actually works on my machine):
 
@@ -276,7 +273,7 @@ $seq = $db->get_Seq_by_acc('GI' => 71025988);
 If you want to get by accession number, use *`get_Seq_by_acc('ACC' => $accno)`*, etc.
 
 
-### ACE_file_Q&D_filtering<a name="ACE_file_Q&D_filtering"></a>
+### ACE_file_Q&D_filtering
 
 (see the [thread](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028844.html) on bioperl-l)
 
@@ -306,10 +303,10 @@ my $consensus = $contig->get_consensus_sequence();
 my @quality_values  = @{$contig->get_consensus_quality()->qual()};
 ```
 
-*[Eds.](User:Majensen "wikilink") note*: ACE file *writing* is another matter--but with solutions around the corner. See the rest of the [discussion](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028844.html).
+*Eds. note*: ACE file *writing* is another matter--but with solutions around the corner. See the rest of the [discussion](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028844.html).
 
 
-### BioSQL<a name="BioSQL"></a>
+### BioSQL
 
 [BioSQL](http://biosql.org) is a part of the [OBDA](http://obda.open-bio.org/) standard and was developed as a common sequence database schema for the different language projects within the [Open Bioinformatics Foundation](http://www.open-bio.org/wiki/Main_Page).
 
@@ -348,9 +345,9 @@ $dbseq->store;
 ```
 
 
-### Species_names_from_accession_numbers<a name="Species_names_from_accession_numbers"></a>
+### Species_names_from_accession_numbers
 
--   *A [Bio::DB::EUtilities](https://metacpan.org/pod/Bio::DB::EUtilities) scrap, showing how you can profitably combine "elink" and "esummary" --[Ed.](User:Majensen "wikilink")*
+-   *A [Bio::DB::EUtilities](https://metacpan.org/pod/Bio::DB::EUtilities) scrap, showing how you can profitably combine "elink" and "esummary" --Ed.*
 
 **Bhakti Dwivedi** wonders:
 
@@ -409,27 +406,25 @@ foreach (@ids) {
 1;
 ```
 
-*--[maj](User:Majensen "wikilink")*
-
-
+*--maj*
 
 # F
 
 ## Fetching
 
-### HOWTO:EUtilities_Cookbook<a name="HOWTO:EUtilities_Cookbook"></a>
+### HOWTO:EUtilities_Cookbook
 
 See [HOWTO:EUtilities_Cookbook](/howtos/EUtilities_Cookbook_HOWTO.html)
 
-### HOWTO:Getting_Genomic_Sequences<a name="HOWTO:Getting_Genomic_Sequences"></a>
+### HOWTO:Getting_Genomic_Sequences
 
 See [HOWTO:Getting_Genomic_Sequences](/howtos/EUtilities_Cookbook_HOWTO.html)
 
-### Human_genomic_coordinates_and_sequence<a name="Human_genomic_coordinates_and_sequence"></a>
+### Human_genomic_coordinates_and_sequence
 
--   *Note that the first script doesn't get it quite right, but it stays within BioPerl. Replace `get_genomic_sequence()` with the [second version](#DTRT "wikilink") to get the exact solution. This requires `[Bio::EnsEMBL](https://metacpan.org/pod/Bio::EnsEMBL)` tools; see link below. --[Ed.](User:Majensen "wikilink")*
+-   *Note that the first script doesn't get it quite right, but it stays within BioPerl. Replace `get_genomic_sequence()` with the [second version](#DTRT "wikilink") to get the exact solution. This requires `[Bio::EnsEMBL](https://metacpan.org/pod/Bio::EnsEMBL)` tools; see link below. --Ed.*
 
-**[Emanuele Osimo](User:Emos "wikilink")**, after working hard with [HOWTO Getting Genomic Sequences](/howtos/Getting_Genomic_Sequences_HOWTO.html), says:
+**Emanuele Osimo**, after working hard with [HOWTO Getting Genomic Sequences](/howtos/Getting_Genomic_Sequences_HOWTO.html), says:
 
 *The script works fine, but gives me the wrong coordinates...there are two different sets of coordinates. The first is called "NC_000001.10 Genome Reference Consortium Human Build 37 (GRCh37), Primary_Assembly", and is the one I need, and the second one is called just "NT_004610.19" and it's the one that the script prints. Do you know how to make the script print the "right" coordinates (at least,the ones I need)?*
 
@@ -506,14 +501,13 @@ sub get_genomic_sequence {
 }
 ```
 
-*--[Ed.](User:Majensen "wikilink")*
+*--Ed.*
 
-<span id='DTRT'></span>
-**[Emanuele](User:Emos "wikilink")** submits:
+**Emanuele** submits:
 
 *I discovered that the coupling of the two subs that Mark posted doesn't get the right results. I think this is because one gets the coordinates with RefSeq build 36.3, the other with build 37. I found that coupling the first sub, genome_coords, with the [Bio::EnsEMBL::Registry](https://metacpan.org/pod/Bio::EnsEMBL::Registry) fetch by region API is a lot better, and it actually generates sequences that contain the genes.*
 
-Here is a modified `get_genomic_sequence`, based on EO's script. This requires Bio::EnsEMBL::\*; get it [here](http://www.ensembl.org/info/docs/api/api_installation.html), and see the core API docs [here](http://www.ensembl.org/info/docs/Pdoc/ensembl/index.html):
+Here is a modified `get_genomic_sequence`, based on EO's script. This requires Bio::EnsEMBL::*; get it [here](http://www.ensembl.org/info/docs/api/api_installation.html), and see the core API docs [here](http://www.ensembl.org/info/docs/Pdoc/ensembl/index.html):
 
 ```perl
 use Bio::EnsEMBL::Slice;
@@ -537,20 +531,15 @@ sub get_genomic_sequence {
 ```
 
 
-### Species_names_from_accession_numbers<a name="Species_names_from_accession_numbers"></a>
-
-See [Species_names_from_accession_numbers](#Species_names_from_accession_numbers)
-
-
 # G
 
 ## Graphics
 
-### Adding_a_DNA_track<a name="Adding_a_DNA_track"></a>
+### Adding_a_DNA_track
 
 **The hack**
 
-I thought this was helpful, since the only DNA track example documentation I could find was in the POD of bioperl-live (not on search.cpan.org yet). Thoughts? --[Jhannah](User:Jhannah "wikilink") 02:48, 13 May 2008 (UTC)
+I thought this was helpful, since the only DNA track example documentation I could find was in the POD of bioperl-live (not on search.cpan.org yet). Thoughts? --Jhannah 02:48, 13 May 2008 (UTC)
 
 **The script**
 
@@ -621,11 +610,11 @@ Output:
 ![Bio_Graphics_Glyph_dna.png](/howtos/Bio_Graphics_Glyph_dna.png)
 
 
-### Drawing_with_multiple_glyphs_in_a_single_track<a name="Drawing_with_multiple_glyphs_in_a_single_track"></a>
+### Drawing_with_multiple_glyphs_in_a_single_track
 
 *(see the bioperl-l thread starting [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-August/028096.html))*
 
--   Don't neglect your anonymous functions. --[*Ed.*](User:Majensen "wikilink")
+-   Don't neglect your anonymous functions. --*Ed.*
 
 ***Matthew Betts*** asks:
 
@@ -664,11 +653,11 @@ $panel->add_track(
 ```
 
 
-### Simple_graphical_alignment_overview<a name="Simple_graphical_alignment_overview"></a>
+### Simple_graphical_alignment_overview
 
 **The hack**
 
-**From [Christopher Fields](Christopher_Fields "wikilink")**
+**From Christopher Fields**
 
 A simple alignment overview plotter (requires [GD::SVG](https://metacpan.org/pod/GD::SVG), [Bio::Graphics](https://metacpan.org/pod/Bio::Graphics), and [bioperl-live](https://github.com/bioperl/bioperl-live)). This takes alignment data and prints out the sequences in blocks with dotted lines indicating gaps.
 
@@ -747,17 +736,15 @@ print $panel->svg;
 
 ![Align.jpg](/howtos/Align.jpg)
 
-
-
 # H
 
 ## Hugeness_Issues
 
-### Counting_k-mers_in_large_sets_of_large_sequences<a name="Counting_k-mers_in_large_sets_of_large_sequences"></a>
+### Counting_k-mers_in_large_sets_of_large_sequences
 
 (This is the fruit of two scraps, [*Getting all k-mer combinations of residues*](#Getting_all_k-mer_combinations_of_residues) and [*Sharing large arrays among multiple threads*](#Sharing_large_arrays_among_multiple_threads))
 
-***[Marco Blanchette](User:Mblanche "wikilink")*** contributes the following scripts. [Script 1](#script1) (`countKmer.pl`) processes a (possibly very) large sequence file using multiple threads, to return the frequency distribution of <i>k</i>-mers of arbitrary length <i>k</i>. [Script 2](#script2) (`sampleAndCountKmer.pl`) does the same thing, if desired, or will randomly sample the sequences (with or without replacement) to return an empirical frequency distribution of <i>k</i>-mers. The user can also specify whether to count just presence/absence of a <i>k</i>-mer in a sequence, or to return a complete frequency distribution.
+***Marco Blanchette*** contributes the following scripts. [Script 1](#script1) (`countKmer.pl`) processes a (possibly very) large sequence file using multiple threads, to return the frequency distribution of <i>k</i>-mers of arbitrary length <i>k</i>. [Script 2](#script2) (`sampleAndCountKmer.pl`) does the same thing, if desired, or will randomly sample the sequences (with or without replacement) to return an empirical frequency distribution of <i>k</i>-mers. The user can also specify whether to count just presence/absence of a <i>k</i>-mer in a sequence, or to return a complete frequency distribution.
 
 <a name="script1"></a>
 **Script 1 (`countKmer.pl`)**
@@ -1126,15 +1113,15 @@ sub init {
 ```
 
 
-### Sharing_large_arrays_among_multiple_threads<a name="Sharing_large_arrays_among_multiple_threads"></a>
+### Sharing_large_arrays_among_multiple_threads
 
 (See the bioperl-l discussion <http://lists.open-bio.org/pipermail/bioperl-l/2008-December/028777.html>. See also [*Counting k-mers in large sets of large sequences*](#Counting_k-mers_in_large_sets_of_large_sequences).)
 
 ***Marco Blanchette*** poses:
 
-''I am using the Perl threads utility to successfully multi threads several of my computing jobs on my workstation. My current problem is that I need to perform multiple processes using the same humongous array (more than 2 × 10<sup>6</sup> items). My problem is that the computing time for each iteration is not very long but I have a lot of iterations to do and every time a thread is created I am passing the huge array to the function and a fresh copy of the array is created. Thus, there is a huge amount of wasted resources (time and memory) use to create these data structures that are used by each threads but not modified.
+''I am using the Perl threads utility to successfully multi threads several of my computing jobs on my workstation. My current problem is that I need to perform multiple processes using the same humongous array (more than 2 X 10<sup>6</sup> items). My problem is that the computing time for each iteration is not very long but I have a lot of iterations to do and every time a thread is created I am passing the huge array to the function and a fresh copy of the array is created. Thus, there is a huge amount of wasted resources (time and memory) use to create these data structures that are used by each threads but not modified.
 
-''The logical alternative is to use shared memory where all thread would have access to the same copy of the huge array. In principle Perl provide such a mechanism through the module *`[threads::shared](https://metacpan.org/pod/threads::shared)`* but I am unable to understand how to use the shared variables. Anyone has experience to share on [threads::shared](https://metacpan.org/pod/threads::shared)?''
+''The logical alternative is to use shared memory where all thread would have access to the same copy of the huge array. In principle Perl provide such a mechanism through the module ([threads::shared](https://metacpan.org/pod/threads::shared)) but I am unable to understand how to use the shared variables. Anyone has experience to share on [threads::shared](https://metacpan.org/pod/threads::shared)?''
 
 ------------------------------------------------------------------------
 
@@ -1320,13 +1307,11 @@ sub do_the_job {
 
 *I haven't verified that doing this actually yields the memory savings you're looking for, but I don't see why it shouldn't.*
 
-
-
 # I
 
 ## IO
 
-### Chromosomes_from_an_.agp_file_plus_contigs<a name="Chromosomes_from_an_.agp_file_plus_contigs"></a>
+### Chromosomes_from_an_.agp_file_plus_contigs
 
 (see bioperl-l here http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028884.html and here http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028887.html)
 
@@ -1386,16 +1371,15 @@ Russell adds: * Please excuse my hacky use of substrings but this .agp file had 
 ```
 
 
-### Converting_alignment_files<a name="Converting_alignment_files"></a>
+### Converting_alignment_files
 
 This script will convert an alignment file to another alignment file format. I use it to convert Mauve xmfa output to a directory of fasta alignments, but it is useful for converting fasta to clw or other formats.
 
-Sorry if someone already wrote this kind of script... I couldn't find one like it right away, so I made it and thought I should contribute. --[Lskatz](User:Lskatz "wikilink") 18:24, 21 February 2012 (UTC)
+Sorry if someone already wrote this kind of script... I couldn't find one like it right away, so I made it and thought I should contribute. --Lskatz 18:24, 21 February 2012 (UTC)
 
-I updated my script. There are two major things in this that I think I updated over time which is error reporting and also the ability to concatenate an entire xmfa into a fasta alignment. Some people in my lab wanted to view a MAUVE alignment in MEGA, which prompted this. --[Lskatz](User:Lskatz "wikilink") 20:10, 3 August 2012 (UTC)
+I updated my script. There are two major things in this that I think I updated over time which is error reporting and also the ability to concatenate an entire xmfa into a fasta alignment. Some people in my lab wanted to view a MAUVE alignment in MEGA, which prompted this. --Lskatz 20:10, 3 August 2012 (UTC)
 
-The newest version of the script will be at [my github page](https://github.com/lskatz/lskScripts) but I will leave this version here for posterity. --[Lskatz](User:Lskatz "wikilink") 14:39, 29 December 2014 (UTC)
-`https://github.com/lskatz/lskScripts`
+The newest version of the script will be at [my github page](https://github.com/lskatz/lskScripts) but I will leave this version here for posterity. --Lskatz 14:39, 29 December 2014 (UTC) https://github.com/lskatz/lskScripts
 
 ```perl
 #!/usr/bin/env perl
@@ -1550,7 +1534,7 @@ sub usage{
 ```
 
 
-### Converting_FASTQ_to_FASTA_QUAL_files<a name="Converting_FASTQ_to_FASTA_QUAL_files"></a>
+### Converting_FASTQ_to_FASTA_QUAL_files
 
 I came up with a script to accompany Minimo, which is a nice assembler that can be fed by Illumina reads (but it doesn't read FASTQ). Therefore there needs to be a fast way to convert FASTQ to FASTA/QUAL. This script is multithreaded and works best as you approach the number of CPUs you have. It is untested on non-threaded installations of Perl.
 
@@ -1669,7 +1653,7 @@ sub numSequences{
 ```
 
 
-### Getting_Fasta_sequences_from_a_GFF<a name="Getting_Fasta_sequences_from_a_GFF"></a>
+### Getting_Fasta_sequences_from_a_GFF
 
 Some have whimpered, *"How do I get a fasta file of the features in this GFF?"*... Well, assuming your GFF file fits into memory (and assuming you have the appropriate fasta file to hand), here's how:
 
@@ -1738,11 +1722,11 @@ warn "OK\n";
 ```
 
 
-### Merging_separate_sequence_and_quality_files_to_FASTQ<a name="Merging_separate_sequence_and_quality_files_to_FASTQ"></a>
+### Merging_separate_sequence_and_quality_files_to_FASTQ
 
 *(see the bioperl-l thread starting [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-April/029765.html) , and also look at [this](http://bioperl.org/pipermail/bioperl-l/2008-July/028013.html) for the hard way)*
 
-***[Dan Bolser](User:DanBolser "wikilink")*** opines:
+***Dan Bolser*** opines:
 
 *I have a 'fasta quality file' and a fasta file, and I would like to output a fastq file...I get the feeling that this should be a one-liner.*
 
@@ -1809,7 +1793,7 @@ while (1){
 For more information, see [Bio::Seq::Quality](https://metacpan.org/pod/Bio::Seq::Quality).
 
 
-### Parsing_BLAST_HSPs<a name="Parsing_BLAST_HSPs"></a>
+### Parsing_BLAST_HSPs
 
 (*see bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-March/029550.html)*)
 
@@ -1828,7 +1812,7 @@ Note there are many accessors on the [Bio::Search::HSP::GenericHSP](https://meta
 
 The scrap uses `blastn` to align two sequences. Get the standalone BLAST programs from [NCBI](ftp://ftp.ncbi.nih.gov/blast/executables/LATEST/) (they don't come with BioPerl!).
 
---[*MAJ*](User:Majensen "wikilink")
+--*MAJ*
 
 <a name='scrap'></a>
 
@@ -1864,7 +1848,7 @@ while (my $result = $report->next_result) {
 ```
 
 
-### Parsing_BLAST_results_into_per-query_files<a name="Parsing_BLAST_results_into_per-query_files"></a>
+### Parsing_BLAST_results_into_per-query_files
 
 -   *Remember that can write as well as read. --[Ed.](Mark_Jensen "wikilink")*
 
@@ -1896,18 +1880,18 @@ foreach my $qid ( keys %hits_by_query ) {
 }
 ```
 
-*--[Ed.](Mark_Jensen "wikilink")*
+*--Ed.*
 
 ------------------------------------------------------------------------
 
-[Russell](User:Russell_Smithies "wikilink") also had a solution, but we'll let him pare it down for the scrapbook!
+Russell also had a solution, but we'll let him pare it down for the scrapbook!
 
 
-### Preparing_contigs_for_GenBank_submission<a name="Preparing_contigs_for_GenBank_submission"></a>
+### Preparing_contigs_for_GenBank_submission
 
 *(see bioperl-l thread starting [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-September/028303.html))*
 
--   The key issue in this scrap is how creating a GenBank record for a [Bio::DB::GFF](https://metacpan.org/pod/Bio::DB::GFF) persisted object is not quite as simple as reading from the DB and writing to SeqIO. Read on for the particulars (responses are from [Jason Stajich](#JS "wikilink") and [Don Gilbert](#DG "wikilink")). --[*Ed.*](User:Majensen "wikilink")
+-   The key issue in this scrap is how creating a GenBank record for a [Bio::DB::GFF](https://metacpan.org/pod/Bio::DB::GFF) persisted object is not quite as simple as reading from the DB and writing to SeqIO. Read on for the particulars (responses are from Jason Stajich and Don Gilbert). --*Ed.*
 
 ***Erich Schwarz*** discusses contig submissions sans Sequin:
 
@@ -1958,7 +1942,7 @@ foreach my $contig (@contigs) {
 
 ------------------------------------------------------------------------
 
-***[Jason Stajich](User:Jason "wikilink")*** provides some details:
+***Jason Stajich*** provides some details:
 
 *If you want to get a specific segment you just do what you already have in your code:*
 
@@ -2006,7 +1990,7 @@ while (my $s = $iterator->next_seq) {
 }
 ```
 
-*I suspect you'll have to edit the feature objects some to a) remove the ones you don't want to output, b) add additional info like translation frame..., c) add in other annotation information that may or may not be encoded as tag/values that \[NCBI requires\].*
+*I suspect you'll have to edit the feature objects some to a) remove the ones you don't want to output, b) add additional info like translation frame..., c) add in other annotation information that may or may not be encoded as tag/values that NCBI requires.*
 
 ------------------------------------------------------------------------
 
@@ -2018,7 +2002,7 @@ while (my $s = $iterator->next_seq) {
 
       GMODTools-1.2b.zip      20-Jun-2008
 
-*adding (in progress) \[the\] Genbank Submission table writer, `bulkfiles -format=genbanktbl`, with output suited to submit to NCBI per [these specifications](http://www.ncbi.nlm.nih.gov/Genbank/eukaryotic_genome_submission.html)*
+*adding (in progress) the Genbank Submission table writer, `bulkfiles -format=genbanktbl`, with output suited to submit to NCBI per [these specifications](http://www.ncbi.nlm.nih.gov/Genbank/eukaryotic_genome_submission.html)*
 
 *See also [the GMODTools wiki](http://gmod.org/wiki/GMODTools) and [this test case](http://gmod.org/wiki/GMODTools_TestCase) with genbank-submit output.*
 
@@ -2030,7 +2014,7 @@ while (my $s = $iterator->next_seq) {
 
 ## Metadata
 
-### Features_vs._Annotations<a name="Features_vs._Annotations"></a>
+### Features_vs._Annotations
 
 (*see bioperl-l thread [here][bioperl-l-029644]*)
 
@@ -2087,7 +2071,7 @@ Output:
 Bio::Annotation::Collection
 ```
 
-#### The Response<a name="response"></a>
+#### The Response
 
 - *This is a mash-up of the responses from Chris and Hilmar, with some expansion and elision by your humble scribe. Please follow the [thread][bioperl-l-029644] for the verbatim responses in context. Also, see the much more detailed [Feature-Annotation HOWTO](/howtos/Features_and_Annotations_HOWTO.html).*
 
@@ -2143,13 +2127,13 @@ As Hilmar states:
 
   - *[SeqFeature::Generic](https://metacpan.org/pod/SeqFeature::Generic) has indeed two mechanisms to store annotation, the tag system and the annotation collection. This is because it inherits from `SeqFeatureI` (which brings in the tag/value annotation) and from `AnnotatableI` (which brings in `annotation()`).*
 
-    *I agree this can be confusing from a user's perspective. As a rule of thumb, `SeqIO` parsers will almost universally populate only the tag/ value system, because typically they will (or should) assume not more than that the feature object they are dealing with is a `SeqFeatureI`*.
+  *I agree this can be confusing from a user's perspective. As a rule of thumb, `SeqIO` parsers will almost universally populate only the tag/ value system, because typically they will (or should) assume not more than that the feature object they are dealing with is a `SeqFeatureI`*.
 
-    *Once you have the feature objects in your hands, you can add to either tag/values or `annotation()` to your heart's content. Just be aware that nearly all `SeqIO` writers won't use the `annotation()` collection when you pass the sequence back to them since typically they won't really know what to do with feature annotation that isn't tag/value (unlike as for sequence annotation).*
+  *Once you have the feature objects in your hands, you can add to either tag/values or `annotation()` to your heart's content. Just be aware that nearly all `SeqIO` writers won't use the `annotation()` collection when you pass the sequence back to them since typically they won't really know what to do with feature annotation that isn't tag/value (unlike as for sequence annotation).*
 
-    *If in your code you want to treat tag/value annotation in the same way as (i.e., as if it were part of) the annotation that's in the annotation collection then use [Bio::SeqFeature::AnnotationAdaptor](https://metacpan.org/pod/Bio::SeqFeature::AnnotationAdaptor). That's in fact what [BioPerl db](http://www.bioperl.org/wiki/BioPerl_db) does to ensure that all annotation gets serialized to the database no matter where it is.*
+  *If in your code you want to treat tag/value annotation in the same way as (i.e., as if it were part of) the annotation that's in the annotation collection then use [Bio::SeqFeature::AnnotationAdaptor](https://metacpan.org/pod/Bio::SeqFeature::AnnotationAdaptor). That's in fact what [BioPerl db](http://www.bioperl.org/wiki/BioPerl_db) does to ensure that all annotation gets serialized to the database no matter where it is.*
 
-    ***[However,] unless expressly told otherwise in a parser documentation, a sequence you get back from one of the `SeqIO` parsers (which is where most people will get them from) will not have `$feat->annotation()` populated***.
+*However, unless expressly told otherwise in a parser documentation, a sequence you get back from one of the `SeqIO` parsers (which is where most people will get them from) will not have `$feat->annotation()` populated*.
 
 **The Best of Both Worlds : [Bio::SeqFeature::AnnotationAdaptor](https://metacpan.org/pod/Bio::SeqFeature::AnnotationAdaptor)**
 
@@ -2165,17 +2149,17 @@ $anncoll->feature($feat);
 }
 ```
 
-The description of [SeqFeature::AnnotationAdaptor](https://metacpan.org/pod/SeqFeature::AnnotationAdaptor) from its POD summarizes its `raison d'être`, and conveys another important distinction between [Bio::SeqFeatureI](https://metacpan.org/pod/Bio::SeqFeatureI) and [Bio::AnnotationCollectionI:](https://metacpan.org/pod/Bio::AnnotationCollectionI:)
+The description of [SeqFeature::AnnotationAdaptor](https://metacpan.org/pod/SeqFeature::AnnotationAdaptor) from its POD summarizes its `raison d'etre`, and conveys another important distinction between [Bio::SeqFeatureI](https://metacpan.org/pod/Bio::SeqFeatureI) and [Bio::AnnotationCollectionI:](https://metacpan.org/pod/Bio::AnnotationCollectionI:)
 
   * [Bio::SeqFeatureI](https://metacpan.org/pod/Bio::SeqFeatureI) defines light-weight annotation of features through tag/value pairs. Conversely, [Bio::AnnotationCollectionI](https://metacpan.org/pod/Bio::AnnotationCollectionI) together with [Bio::AnnotationI](https://metacpan.org/pod/Bio::AnnotationI) defines an annotation bag, which is better typed, but more heavy-weight because it contains every single piece of annotation as objects. The frequently used base implementation of [Bio::SeqFeatureI](https://metacpan.org/pod/Bio::SeqFeatureI), [Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic), defines an additional slot for AnnotationCollectionI-compliant annotation.
 
-    This adaptor provides a [Bio::AnnotationCollectionI](https://metacpan.org/pod/Bio::AnnotationCollectionI) compliant, unified, and integrated view on the annotation of [Bio::SeqFeatureI](https://metacpan.org/pod/Bio::SeqFeatureI) objects, including tag/value pairs, and annotation through the `annotation()` method, if the object supports it. Code using this adaptor does not need to worry about the different ways of possibly annotating a SeqFeatureI object, but can instead assume that it strictly follows the AnnotationCollectionI scheme. The price to pay is that retrieving and adding annotation will always use objects instead of light-weight tag/value pairs.
+  This adaptor provides a [Bio::AnnotationCollectionI](https://metacpan.org/pod/Bio::AnnotationCollectionI) compliant, unified, and integrated view on the annotation of [Bio::SeqFeatureI](https://metacpan.org/pod/Bio::SeqFeatureI) objects, including tag/value pairs, and annotation through the `annotation()` method, if the object supports it. Code using this adaptor does not need to worry about the different ways of possibly annotating a SeqFeatureI object, but can instead assume that it strictly follows the AnnotationCollectionI scheme. The price to pay is that retrieving and adding annotation will always use objects instead of light-weight tag/value pairs.
 
-    In other words, this adaptor allows us to keep the best of both worlds. If you create tens of thousands of feature objects, and your only annotation is tag/value pairs, you are best off using the features' native tag/value system. If you create a smaller number of features, but with rich and typed annotation mixed with tag/value pairs, this adaptor may be for you. Since its implementation is by double- composition, you only need to create one instance of the adaptor. In order to transparently annotate a feature object, set the feature using the `feature()` method. Every annotation you add will be added to the feature object, and hence will not be lost when you set `feature()` to the next object.
+  In other words, this adaptor allows us to keep the best of both worlds. If you create tens of thousands of feature objects, and your only annotation is tag/value pairs, you are best off using the features' native tag/value system. If you create a smaller number of features, but with rich and typed annotation mixed with tag/value pairs, this adaptor may be for you. Since its implementation is by double- composition, you only need to create one instance of the adaptor. In order to transparently annotate a feature object, set the feature using the `feature()` method. Every annotation you add will be added to the feature object, and hence will not be lost when you set `feature()` to the next object.
 
 See the [thread][bioperl-l-029644] for a nice extended metaphor involving [Reese's Peanut Butter Cups](http://en.wikipedia.org/wiki/Reese's_peanut_butter_cups). This shouldn't, of course, be construed as an endorsement for them. (Extended metaphors, that is.)
 
-**A History of BioPerl Annotation (Chris Fields)**<a name="history"></a>
+**A History of BioPerl Annotation (Chris Fields)**
 
 To go over why things were set up this way (and then reverted), is a bit of a history lesson. I believe prior to 1.5.0, [Bio::SeqFeature::Generic](https://metacpan.org/pod/Bio::SeqFeature::Generic) stored most second-class data (dbxrefs, simple secondary tags, etc) as simple untyped text via tags but also allowed a [Bio::Annotation::Collection](https://metacpan.org/pod/Bio::Annotation::Collection). Therefore one effectively gets a mixed bag of first-class untyped data like `display_id` and `primary_tag`, untyped tagged text, and 'typed' [Bio::AnnotationI](https://metacpan.org/pod/Bio::AnnotationI) objects.
 
@@ -2185,21 +2169,19 @@ As there were collisions between SeqFeature-like 'tag' methods and CollectionI-l
 
 Now, layer in the fact that many of these (very dramatic) code changes were literally introduced just prior to the 1.5.0 release, AFAIK w/o much code review, and contained additional unwanted changes such as operator overloading and so on. Very little discussion about this occurred on list until after the changes were introduced (a good argument for small commits). Some very good arguments against this were made, including other lightweight implementations. Lots of angry devs!
 
-Though the intentions were noble we ended up with a mess. I yanked these out a couple of years ago frankly out of frustration with the overloading issues: see [Feature Annotation rollback](http://www.bioperl.org/wiki/Feature_Annotation_rollback).
+Though the intentions were noble we ended up with a mess. I yanked these out a couple of years ago frankly out of frustration with the overloading issues.
 
 [bioperl-l-029644]: http://lists.open-bio.org/pipermail/bioperl-l/2009-March/029644.html
-
-
 
 # N
 
 ## Nextgen_Sequencing
 
-### Lee_Katz_detectPeReads<a name="Lee_Katz_detectPeReads"></a>
+### Lee_Katz_detectPeReads
 
-Detecting Paired End reads. This doesn't really use BioPerl but I had a hard time finding a subroutine for this and wanted to share with the community. Any additions are welcome. --[Lskatz](User:Lskatz "wikilink") 19:45, 19 June 2014 (UTC)
+Detecting Paired End reads. This doesn't really use BioPerl but I had a hard time finding a subroutine for this and wanted to share with the community. Any additions are welcome. --Lskatz 19:45, 19 June 2014 (UTC)
 
-Updated to streamline it and also because it was pointed out that in Casava1.8 there can be alternatives to the 1/2 pairing, e.g., 1/3, which would indicate that the multiplex tags are present somewhere (but not in the query fastq file) --[Lskatz](User:Lskatz "wikilink") 18:05, 8 July 2014 (UTC)
+Updated to streamline it and also because it was pointed out that in Casava1.8 there can be alternatives to the 1/2 pairing, e.g., 1/3, which would indicate that the multiplex tags are present somewhere (but not in the query fastq file) --Lskatz 18:05, 8 July 2014 (UTC)
 
 ```perl
 # See whether a fastq file is paired end or not. It must be in a velvet-style shuffled format.
@@ -2314,7 +2296,7 @@ sub _is_fastqPECasava17{
 ```
 
 
-### Removing_sequencing_adapters<a name="Removing_sequencing_adapters"></a>
+### Removing_sequencing_adapters
 
 *(See the bioperl-l threads [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-June/030265.html) and [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-July/030404.html) for discussion on next-gen modules)*
 
@@ -2390,10 +2372,10 @@ The main issues with this approach are:
 
 Issues aside, this approach does seem to work, and performance is adequate.
 
---[Giles.weaver](User:Giles.weaver "wikilink") 13:23, 8 July 2009 (UTC)
+--Giles.weaver 13:23, 8 July 2009 (UTC)
 
 
-### Splitting_MiSeq_lane<a name="Splitting_MiSeq_lane"></a>
+### Splitting_MiSeq_lane
 
 This is a script for splitting a full lane from a multiplexed MiSeq run into individual tags.
 
@@ -2464,7 +2446,7 @@ sub usage{
 
 ## PCR_Primers
 
-### Calculating_primer_melting_temperatures<a name="Calculating_primer_melting_temperatures"></a>
+### Calculating_primer_melting_temperatures
 
 These code snippets demonstrate a way to calculate the melting temperature (Tm) of PCR primers (or other DNA). *This code is designed to be called from an external package.*
 
@@ -2525,10 +2507,10 @@ sub _calc_long_oligo_tm {
 
 Primer 3 can be obtained [here](http://primer3.sourceforge.net/). If you are running a Debian based Linux distribution such as Ubuntu you can install it by typing: `sudo apt-get install primer3`
 
---[Giles.weaver](User:Giles.weaver "wikilink") 19:14, 14 April 2010 (UTC)
+--Giles.weaver 19:14, 14 April 2010 (UTC)
 
 
-### Degenerate_primers<a name="Degenerate_primers"></a>
+### Degenerate_primers
 
 *These code snippets were designed to be called from an external package.*
 
@@ -2562,15 +2544,13 @@ sub generate_primer_search_patterns {
 }
 ```
 
---[Giles.weaver](User:Giles.weaver "wikilink") 19:36, 14 April 2010 (UTC)
-
-
+--Giles.weaver 19:36, 14 April 2010 (UTC)
 
 # S
 
 ## Sequence_Manipulations
 
-### Adding_duplicate_sequences_to_an_alignment_object<a name="Adding_duplicate_sequences_to_an_alignment_object"></a>
+### Adding_duplicate_sequences_to_an_alignment_object
 
 *(see bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-February/029248.html))*
 
@@ -2584,7 +2564,7 @@ sub generate_primer_search_patterns {
 
 ------------------------------------------------------------------------
 
-***[Chris Fields](User:cjfields "wikilink")*** suggests (with [comment](#comment)):
+***Chris Fields*** suggests:
 
 *The NSE (Name.version/start-end) is used to distinguish the sequences from one another, so if each sequence has one or more unique accession/version/start/end there should be no replacement (and no warning).*
 
@@ -2623,14 +2603,14 @@ ABCD1234.10/1-6        --atg---gta--
                          ***   ***
 ```
 
-and <a id='comment'></a> comments:
+and comments:
 
 *If you think about it that's a feature. Any single sequence that appears in an alignment more than once is either (1) matching multiple regions (i.e. repeats, motifs, etc) so the location varies, or (2) the sequence was modified so the version changes (the last one is fairly new). Beyond that one has to question the logic of including multiple copies of exactly the same sequence record in a multiple alignment, so unless additional information distinguishing the potential duplicates is provided we assume unintentional (and erroneous) duplication and punt.*
 
 *Weighing the options I would rather have the warning indicating a problem than nothing at all.*
 
 
-### Extracting_sequence_in_the_neighborhood_of_a_feature<a name="Extracting_sequence_in_the_neighborhood_of_a_feature"></a>
+### Extracting_sequence_in_the_neighborhood_of_a_feature
 
 *(see the bioperl-l thread starting [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-July/027885.html))*
 
@@ -2644,7 +2624,7 @@ and <a id='comment'></a> comments:
 
 *Get the start point for a Sequence Feature and request a subseq of the main object that starts 2000 above that.*
 
--   [Jason Stajich](User:Jason "wikilink") made a technical change and kibbitzed in consideration of strandedness. The hybrid scrap is below --[*Ed.*](User:Majensen "wikilink")
+-   Jason Stajich made a technical change and kibbitzed in consideration of strandedness. The hybrid scrap is below --*Ed.*
 
 ```perl
 my $gb = new Bio::DB::GenBank;
@@ -2664,15 +2644,14 @@ foreach my $f ($entry->all_SeqFeatures()) {
 ```
 
 
-### Lee_Katz_detectPeReads<a name="Lee_Katz_detectPeReads"></a>
+### Lee_Katz_detectPeReads
 
-See [Lee_Katz_detectPeReads](#Lee_Katz_detectPeReads)
 
-### Merge_gapped_sequences_across_a_common_region<a name="Merge_gapped_sequences_across_a_common_region"></a>
+### Merge_gapped_sequences_across_a_common_region
 
 See discussion thread [here](http://bioperl.org/pipermail/bioperl-l/2010-January/032002.html).
 
-'''[Albert Vilella](User:Avilella "wikilink") ''' sez: *I basically want to start with something like this:*
+'''Albert Vilella''' sez: *I basically want to start with something like this:*
 
     seq1.123     QWERTYUIOPASDFGHJKLZXCVBNM
     seq2.234     QWERTYU-------------------
@@ -2686,7 +2665,7 @@ See discussion thread [here](http://bioperl.org/pipermail/bioperl-l/2010-January
 
 ------------------------------------------------------------------------
 
-Here's one of my favorite tricks for this: XOR mask on gap symbol. Fast! --*[ed.](User:Majensen "wikilink")*
+Here's one of my favorite tricks for this: XOR mask on gap symbol. Fast! --*ed.*
 
 ```perl
 use Bio::SeqIO;
@@ -2713,26 +2692,13 @@ QWERTYU-------------------
 ```
 
 
-### Removing_sequencing_adapters<a name="Removing_sequencing_adapters"></a>
-
-See [Removing_sequencing_adapters](#Removing_sequencing_adapters)
-
-### Splitting_MiSeq_lane<a name="Splitting_MiSeq_lane"></a>
-
-See [Splitting_MiSeq_lane](#Splitting_MiSeq_lane)
-
-
 ## Simulation
 
-### Poor_man's_bootstrap<a name="Poor_man's_bootstrap"></a>
-
-See [Poor_man's_bootstrap](#Poor_man's_bootstrap)
-
-### Random_sequence_generation<a name="Random_sequence_generation"></a>
+### Random_sequence_generation
 
 See discussion thread [here](http://bioperl.org/pipermail/bioperl-l/2009-June/030374.html).
 
--   *...or "Sequence Surprise" --[Ed.](User:Majensen "wikilink")*
+-   *...or "Sequence Surprise" --Ed.*
 
 **Roger Hall** asks:
 
@@ -2740,7 +2706,7 @@ See discussion thread [here](http://bioperl.org/pipermail/bioperl-l/2009-June/03
 
 ------------------------------------------------------------------------
 
-**[Bruno Vecchi](User:brunov "wikilink")** actually supplies some code (with a little cheat from [List::Util](https://metacpan.org/pod/List::Util)) :
+**Bruno Vecchi** actually supplies some code (with a little cheat from [List::Util](https://metacpan.org/pod/List::Util)) :
 
 ```perl
 #!perl
@@ -2774,19 +2740,17 @@ from **Aidan Budd**:
 
 -   *Use something external like seq-gen or similar - tools designed for outputing "random" sequences simulated over a tree - one could simply sample a single simulated sequence at random from the output alignment.*
 
-from **["Big Dave" Messina](User:Dave_Messina "wikilink")**:
+from **"Big Dave" Messina**:
 
--   *The Bioperl solution piggybacks on EMBOSS. See [Chris Fields](User:Cjfields "wikilink")' [comment](http://nsaunders.wordpress.com/2007/07/25/howto-generate-random-sequences-using-emboss-and-perl/#comment-11972) on [this post](http://nsaunders.wordpress.com/2007/07/25/howto-generate-random-sequences-using-emboss-and-perl/) from Neil Saunders' blog. You can also do this outside of BioPerl using shuffle from Sean Eddy's SQUID package, available [here](ftp://selab.janelia.org/pub/software/squid/).*
-
-
+-   *The Bioperl solution piggybacks on EMBOSS. See Chris Fields' [comment](http://nsaunders.wordpress.com/2007/07/25/howto-generate-random-sequences-using-emboss-and-perl/#comment-11972) on [this post](http://nsaunders.wordpress.com/2007/07/25/howto-generate-random-sequences-using-emboss-and-perl/) from Neil Saunders' blog. You can also do this outside of BioPerl using shuffle from Sean Eddy's SQUID package, available [here](ftp://selab.janelia.org/pub/software/squid/).*
 
 ## Strings_and_RegExps
 
-### Counting_k-mers_in_large_sets_of_large_sequences<a name="Counting_k-mers_in_large_sets_of_large_sequences"></a>
+### Counting_k-mers_in_large_sets_of_large_sequences
 
 See [Counting_k-mers_in_large_sets_of_large_sequences](#Counting_k-mers_in_large_sets_of_large_sequences)
 
-### Finding_homopolymer_stretches_in_contigs<a name="Finding_homopolymer_stretches_in_contigs"></a>
+### Finding_homopolymer_stretches_in_contigs
 
 *(see bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028895.html), and the scrap [Regular expressions and Repeats](#Regular_expressions_and_Repeats))*
 
@@ -2796,7 +2760,7 @@ See [Counting_k-mers_in_large_sets_of_large_sequences](#Counting_k-mers_in_large
 
 ------------------------------------------------------------------------
 
-from ***[Hekki Levaslaiho](User:heikki "wikilink")***:
+from ***Hekki Levaslaiho***:
 
 *If you can load the sequence strings into memory, I'd use a regular expression to detect the homopolymers and the use the pos function to find the location of hits:*
 
@@ -2821,7 +2785,7 @@ print join(", ", $-[0], $+[0], $&),"\n" while ( $s =~ /([ACGT])\1{$min,}/g);
 ```
 
 
-### Getting_all_k-mer_combinations_of_residues<a name="Getting_all_k-mer_combinations_of_residues"></a>
+### Getting_all_k-mer_combinations_of_residues
 
 (See the bioperl-l thread beginning [here](http://lists.open-bio.org/pipermail/bioperl-l/2008-December/028762.html). See also [*Counting k-mers in large sets of large sequences*](#Counting_k-mers_in_large_sets_of_large_sequences).)
 
@@ -2831,7 +2795,7 @@ print join(", ", $-[0], $+[0], $&),"\n" while ( $s =~ /([ACGT])\1{$min,}/g);
 
 ''Does anyone have a little function that I could use to generate all possible k-mer DNA sequences? For instance all possible 3-mer (AAA, AAT, AAC, AAG, etc...). I need something that I could input the value of k and get all possible sequences... ''
 
-...and receives replies from [Michael Eisen](#ME "wikilink"), [Jamie Estill](#JE "wikilink"), [Dave Messina](#DM "wikilink"), [Mark Jensen](#MAJ "wikilink"), Chris Fields ([#CF1](#CF1 "wikilink"), [#CF2](#CF2 "wikilink")), [Diego Riaño-Pachón](#DRP "wikilink"), [Malcolm Cook](#MEC "wikilink"), [Russell Smithies](#RS "wikilink"), [Heikki](#HL "wikilink"), and [Jay Hannah](#JH "wikilink"):
+...and receives replies from [Michael Eisen](#ME "wikilink"), [Jamie Estill](#JE "wikilink"), [Dave Messina](#DM "wikilink"), [Mark Jensen](#MAJ "wikilink"), Chris Fields ([#CF1](#CF1 "wikilink"), [#CF2](#CF2 "wikilink")), [Diego Riano-Pachon](#DRP "wikilink"), [Malcolm Cook](#MEC "wikilink"), [Russell Smithies](#RS "wikilink"), [Heikki](#HL "wikilink"), and [Jay Hannah](#JH "wikilink"):
 
 #### version 1 (***Michael Eisen***)
 
@@ -2910,7 +2874,7 @@ my $inseq = Bio::SeqIO->new( -file => "<$fasta_in",
 
 <span id='DM'></span>
 
-***[Dave Messina](User:Dave_Messina "wikilink")*** writes:
+***Dave Messina*** writes:
 
 *Here's some code to generate and print all possible nmers. I'm really just using the module* [Math::Combinatorics](https://metacpan.org/pod/Math::Combinatorics) *to do all the dirty work here, so probably won't be as fast as if you wrote a custom recursive function as you suggest.*
 
@@ -2949,7 +2913,7 @@ sub generate_possible_kmers {
 
 #### version 4 (***Mark Jensen***)
 
-<span id='MAJ'></span> ***[Mark Jensen](User:Majensen "wikilink")*** fires off: *A little sloppy, but it recurses and is general---*
+<span id='MAJ'></span> ***Mark Jensen*** fires off: *A little sloppy, but it recurses and is general---*
 
 ```perl
 # ex...
@@ -2977,7 +2941,7 @@ sub doit_guts {
 
 #### version 5 (***Chris Fields***)
 
-<span id='CF1'></span>***[Chris Fields](User:Cjfields "wikilink")*** comments:
+<span id='CF1'></span>***Chris Fields*** comments:
 
 *To add to the pile:* Mark Jason Dominus (mjd) tackles this problem in Higher-Order Perl using iterators, which also allows other nifty bits like 'give variants of A(CTG)T(TGA)', where anything in parentheses are wild-cards. The nice advantage of the iterator approach is you don't tank memory for long strings. Furthermore, as a bonus, you can now download the book for free: [1](http://hop.perl.plover.com/book/) *The relevant chapter is here (p. 135):* [2](http://hop.perl.plover.com/book/pdf/04Iterators.pdf)
 
@@ -3029,9 +2993,9 @@ sub make_genes {
 sub NEXTVAL { $_[0]->() }
 ```
 
-#### version 6 (***Diego Riaño-Pachón***)
+#### version 6 (***Diego Riano-Pachon***)
 
-<span id='DRP'></span>***Diego Riaño-Pachón*** offers:
+<span id='DRP'></span>***Diego Riano-Pachon*** offers:
 
 *Just another option: why not just counting? Any DNA sequence is a number in base four (4),isn't it? So you have to count from zero to the number (in base 4) that you want.*
 
@@ -3073,7 +3037,7 @@ foreach my $i (0..$number_of_words-1){
 
 #### version 7 (***Malcolm Cook***)
 
-<span id='MEC'></span>***[Malcolm Cook](User:malcook "wikilink")*** gives it a bash:
+Malcolm Cook gives it a bash:
 
 *just to round things out.... here's a quick bash script that does the same...*
 
@@ -3102,7 +3066,7 @@ perl -se '$,=" "; print split / /, qx/echo @{["{$a}" x $k]}/;' -- -k=4 -a='A,T,G
 
 #### version 8 (***Russell Smithies***)
 
-<span id='RS'></span>***Russell Smithies*** parries with an elegant:
+Russell Smithies parries with an elegant:
 
 *recursive use of map:*
 
@@ -3121,7 +3085,7 @@ sub permute {
 
 #### version 9 (***Chris Fields***)
 
-<span id='CF2'></span>***[Chris Fields](User:Cjfields "wikilink")*** delivers this coup de grâce :
+Chris Fields delivers this *coup de grace* :
 
 *Perl 6 (20 random 20-mers):*
 
@@ -3129,11 +3093,11 @@ sub permute {
 
 `say [~] <A T G C>.pick(20, :repl) for 1..20;`
 
-By the way, this works with the latest [Rakudo](http://www.perlfoundation.org/perl6/index.cgi?rakudo). --[Chris Fields](User:Cjfields "wikilink") 01:29, 6 January 2009 (UTC)
+By the way, this works with the latest [Rakudo](http://www.perlfoundation.org/perl6/index.cgi?rakudo). -- Chris Fields
 
 #### Heikki's favorites
 
-<span id='HL'></span>from ***[Heikki Lehvaslaiho](User:heikki "wikilink")***: *Thank you for everyone for these entertaining entries. In my books, Michel Eisen's version wins with sheer clarity. Recursion is always recommendable, too. Below are cleaned versions of these two. Feel free to improve them further.*
+Heikki Lehvaslaiho: *Thank you for everyone for these entertaining entries. In my books, Michel Eisen's version wins with sheer clarity. Recursion is always recommendable, too. Below are cleaned versions of these two. Feel free to improve them further.*
 
 ```perl
 #!/usr/bin/env perl
@@ -3190,7 +3154,7 @@ map {print "$_\n"} kmers($k);
 
 #### version 10 (***Jay Hannah***)
 
-<span id="JH"></span>Here's an alternate to version 5. I think versions 5 and 10 are the only ones that use iterators, which is mandatory for extremely large sets so you don't waste / run out of memory. Using arrays "every possible DNA strand of lengths 1 to 14 would require 5GB of memory"! In contrast, iterators consume only a trivial amount of memory. --[Jhannah](User:Jhannah "wikilink") 13:56, 20 February 2009 (UTC)
+Here's an alternate to version 5. I think versions 5 and 10 are the only ones that use iterators, which is mandatory for extremely large sets so you don't waste / run out of memory. Using arrays "every possible DNA strand of lengths 1 to 14 would require 5GB of memory"! In contrast, iterators consume only a trivial amount of memory. --Jhannah 13:56, 20 February 2009 (UTC)
 
 ```perl
 =head2 gen_permutate
@@ -3230,7 +3194,7 @@ sub gen_permutate {
 
 #### version 11 ***( Ian Korf)***
 
-*(from an email to [Russell Smithies](User:Russell_Smithies "wikilink"))*
+*(from an email to Russell Smithies)*
 This isn't the prettiest way, but it might be the most efficient. The strategy is based on the idea that you can't get much faster than a hard-coded loop.
 
 ```perl
@@ -3259,13 +3223,13 @@ sub kmer {
 ```
 
 
-### Merge_gapped_sequences_across_a_common_region<a name="Merge_gapped_sequences_across_a_common_region"></a>
+### Merge_gapped_sequences_across_a_common_region
 
 See [Merge_gapped_sequences_across_a_common_region](#Merge_gapped_sequences_across_a_common_region)
 
-### Regular_expressions_and_Repeats<a name="Regular_expressions_and_Repeats"></a>
+### Regular_expressions_and_Repeats
 
-*By [Brian](User:Brian "wikilink") --[Ed.](User:Majensen "wikilink")*
+*By Brian --Ed.*
 
 **How do I find an iteration of any sequence of a specific length?**
 
@@ -3308,17 +3272,17 @@ perl -e '$_ = "HTTH"; print "|$1|\n" if /((.)[^\2]+\2)/;'
 Note that the "homopolymer" could have a length of **1**!
 
 
-### Suffix_trees_from_thin_air<a name="Suffix_trees_from_thin_air"></a>
+### Suffix_trees_from_thin_air
 
--   *[Russell](User:Russell_Smithies "wikilink") sent me this very cool hack. He found the original version by [Ian Korf](User:Iankorf "wikilink") [here](http://homepage.mac.com/iankorf/unboggle-2004-01-13.tar.gz);
-I couldn't resist hacking it further. --[Ed.](User:Majensen "wikilink")*
+-   *Russell sent me this very cool hack. He found the original version by Ian Korf [here](http://homepage.mac.com/iankorf/unboggle-2004-01-13.tar.gz);
+I couldn't resist hacking it further. --Ed.*
 
 Here's a beautiful use of the `eval ''string''` flavor of `eval`: creating a [suffix tree](https://en.wikipedia.org/wiki/Suffix_tree) from a dictionary of words. The tree lookup seems like falling off a log as well;
 but there's a hidden danger, read on.
 
 I took the original routine and BioPerled it up a little:
 
--   *My little "improvement" getting rid of the original `END` value was too clever by half, as pointed out by [Aaron](Aaron_Mackey "wikilink"). That leads to hammering of complete words by later suffixes, or of suffixes by later short words. So, I revert to Ian's original... --[Ed.](User:Majensen "wikilink")*
+-   *My little "improvement" getting rid of the original `END` value was too clever by half, as pointed out by [Aaron](Aaron_Mackey "wikilink"). That leads to hammering of complete words by later suffixes, or of suffixes by later short words. So, I revert to Ian's original... --Ed.*
 
 ```perl
 package Suftree;
@@ -3356,7 +3320,7 @@ sub dict {
 # more to come...
 ```
 
--   *[Aaron](Aaron_Mackey "wikilink") also notes that there ain't no suffixes in this suffix tree, but that `$i=0` looks suspicious. Hmm. So could replace `readDictionary` above with the following*
+-   *Aaron also notes that there ain't no suffixes in this suffix tree, but that `$i=0` looks suspicious. Hmm. So could replace `readDictionary` above with the following*
 
 ```perl
 sub readDictionary {
@@ -3375,7 +3339,7 @@ sub readDictionary {
 }
 ```
 
--   *Now all the recursive search business below is moot, which I suppose is the point of a suffix tree anyway. --[Ed.](User:Majensen "wikilink")*
+-   *Now all the recursive search business below is moot, which I suppose is the point of a suffix tree anyway. --Ed.*
 
 #### Left-end search
 
@@ -3464,7 +3428,7 @@ does not exist. These extra refs are unfortunately now stored in the dictionary,
 
 -   *Can use the second form of `readDictionary` above, and use `search2()`, or...*
 
--   *Courtesy of [Russell](User:Russell_Smithies "wikilink") --[Ed.](User:Majensen "wikilink")*
+-   *Courtesy of Russell --Ed.*
 
 Using a recursive approach, we can check for the presence of any substring in the dictionary.
 
@@ -3517,10 +3481,10 @@ sub search2_hash {
 
 <a name='fn'></a>
 
--   \*\**I compacted the original code using `join` and `map`.*
+-  *I compacted the original code using `join` and `map`.*
 
 
-### Tricking_the_perl_regex_engine_to_get_suboptimal_matches<a name="Tricking_the_perl_regex_engine_to_get_suboptimal_matches"></a>
+### Tricking_the_perl_regex_engine_to_get_suboptimal_matches
 
 #### The Hack
 
@@ -3590,9 +3554,9 @@ sub check_match {
 
 ## Utilities_and_Doodads
 
-### A_quick_string_randomizer<a name="A_quick_string_randomizer"></a>
+### A_quick_string_randomizer
 
-***[NigelD](User:NigelD "wikilink")*** destroys the competition with the clever use of `splice` to kick out a random member of the ever-shortening original index array, along with a judicious copy and reverse of the index array -[*Ed.*](User:Majensen "wikilink")
+***NigelD*** destroys the competition with the clever use of `splice` to kick out a random member of the ever-shortening original index array, along with a judicious copy and reverse of the index array -*Ed.*
 
 ------------------------------------------------------------------------
 
@@ -3610,11 +3574,11 @@ sub perm2 {
 ```
 
 
-### Handy_progress_monitor<a name="Handy_progress_monitor"></a>
+### Handy_progress_monitor
 
 #### Mark's monitor
 
-Here's a useful little device for monitoring progess as a large number of things (sequences, e.g.) are being stepped through. It's written as a configurator that returns an iterator. Call the iterator on every pass through the loop, it will know when to do the right thing. The callback allows you to get fancy if desired. --[*MAJ*](User:Majensen "wikilink")
+Here's a useful little device for monitoring progess as a large number of things (sequences, e.g.) are being stepped through. It's written as a configurator that returns an iterator. Call the iterator on every pass through the loop, it will know when to do the right thing. The callback allows you to get fancy if desired. --*MAJ*
 
 ```perl
 # dodot() args --
@@ -3767,7 +3731,7 @@ for my $i (1..$max){
 [CPAN](http://search.cpan.org/~fluffy/Term-ProgressBar-2.09/lib/Term/ProgressBar.pm)
 
 
-### Hash_key_at_the_max_value<a name="Hash_key_at_the_max_value"></a>
+### Hash_key_at_the_max_value
 
 ```perl
 (sort {$h{$b} <=> $h{$a} keys %h)[0]
@@ -3787,18 +3751,9 @@ my $max = [sort {$b<=>$a} values %h]->[0];
 map { ($h{$_} == $max) ? $_ : () } keys %h;
 ```
 
---[*MAJ*](User:Majensen "wikilink")
+--*MAJ*
 
-
-### Poor_man's_bootstrap<a name="Poor_man's_bootstrap"></a>
-
-See [Poor_man's_bootstrap](#Poor_man's_bootstrap)
-
-### Suffix_trees_from_thin_air<a name="Suffix_trees_from_thin_air"></a>
-
-See [Suffix_trees_from_thin_air](#Suffix_trees_from_thin_air)
-
-### Traversing_a_hash_structure<a name="Traversing_a_hash_structure"></a>
+### Traversing_a_hash_structure
 
 Recursively:
 
