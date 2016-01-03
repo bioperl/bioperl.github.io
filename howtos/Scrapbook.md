@@ -311,9 +311,9 @@ my @quality_values  = @{$contig->get_consensus_quality()->qual()};
 
 ### BioSQL<a name="BioSQL"></a>
 
-[BioSQL](http://biosql.org) is a part of the [OBDA](OBDA "wikilink") standard and was developed as a common sequence database schema for the different language projects within the [Open Bioinformatics Foundation](Open_Bioinformatics_Foundation "wikilink").
+[BioSQL](http://biosql.org) is a part of the [OBDA](http://obda.open-bio.org/) standard and was developed as a common sequence database schema for the different language projects within the [Open Bioinformatics Foundation](http://www.open-bio.org/wiki/Main_Page).
 
-The [BioPerl](https://bioperl.github.io) client implementation is [bioperl-db](https://github.com/bioperl/bioperl-db). It provides an [Object-Relational Mapping (ORM)](wp:Object-relational_mapping "wikilink") for various BioPerl objects, such as [Bio::SeqI](https://metacpan.org/pod/Bio::SeqI). Here is a simple example:
+The [BioPerl](https://bioperl.github.io) client implementation is [bioperl-db](https://github.com/bioperl/bioperl-db). It provides an [Object-Relational Mapping (ORM)](https://en.wikipedia.org/wiki/Object-relational_mapping) for various BioPerl objects, such as [Bio::SeqI](https://metacpan.org/pod/Bio::SeqI). Here is a simple example:
 
 ```perl
 #!/usr/bin/perl
@@ -508,6 +508,7 @@ sub get_genomic_sequence {
 
 *--[Ed.](User:Majensen "wikilink")*
 
+<span id='DTRT'></span>
 **[Emanuele](User:Emos "wikilink")** submits:
 
 *I discovered that the coupling of the two subs that Mark posted doesn't get the right results. I think this is because one gets the coordinates with RefSeq build 36.3, the other with build 37. I found that coupling the first sub, genome_coords, with the [Bio::EnsEMBL::Registry](https://metacpan.org/pod/Bio::EnsEMBL::Registry) fetch by region API is a lot better, and it actually generates sequences that contain the genes.*
@@ -756,8 +757,9 @@ print $panel->svg;
 
 (This is the fruit of two scraps, [*Getting all k-mer combinations of residues*](#Getting_all_k-mer_combinations_of_residues) and [*Sharing large arrays among multiple threads*](#Sharing_large_arrays_among_multiple_threads))
 
-***[Marco Blanchette](User:Mblanche "wikilink")*** contributes the following scripts. [Script 1](#script1 "wikilink") (`countKmer.pl`) processes a (possibly very) large sequence file using multiple threads, to return the frequency distribution of <i>k</i>-mers of arbitrary length <i>k</i>. [Script 2](#script2 "wikilink") (`sampleAndCountKmer.pl`) does the same thing, if desired, or will randomly sample the sequences (with or without replacement) to return an empirical frequency distribution of <i>k</i>-mers. The user can also specify whether to count just presence/absence of a <i>k</i>-mer in a sequence, or to return a complete frequency distribution.
+***[Marco Blanchette](User:Mblanche "wikilink")*** contributes the following scripts. [Script 1](#script1) (`countKmer.pl`) processes a (possibly very) large sequence file using multiple threads, to return the frequency distribution of <i>k</i>-mers of arbitrary length <i>k</i>. [Script 2](#script2) (`sampleAndCountKmer.pl`) does the same thing, if desired, or will randomly sample the sequences (with or without replacement) to return an empirical frequency distribution of <i>k</i>-mers. The user can also specify whether to count just presence/absence of a <i>k</i>-mer in a sequence, or to return a complete frequency distribution.
 
+<a name="script1"></a>
 **Script 1 (`countKmer.pl`)**
 
 ```perl
@@ -909,6 +911,7 @@ sub init {
 }
 ```
 
+<a name="script2"></a>
 **Script 2 (`sampleAndCountKmer.pl`)**
 
 ```perl
@@ -2828,7 +2831,7 @@ print join(", ", $-[0], $+[0], $&),"\n" while ( $s =~ /([ACGT])\1{$min,}/g);
 
 ''Does anyone have a little function that I could use to generate all possible k-mer DNA sequences? For instance all possible 3-mer (AAA, AAT, AAC, AAG, etc...). I need something that I could input the value of k and get all possible sequences... ''
 
-...and receives replies from [Michael Eisen](#ME "wikilink"), [Jamie Estill](#JE "wikilink"), [Dave Messina](#DM "wikilink"), [Mark Jensen](#MAJ "wikilink"), Chris Fields ([\#CF1](#CF1 "wikilink"), [\#CF2](#CF2 "wikilink")), [Diego Riaño-Pachón](#DRP "wikilink"), [Malcolm Cook](#MEC "wikilink"), [Russell Smithies](#RS "wikilink"), [Heikki](#HL "wikilink"), and [Jay Hannah](#JH "wikilink"):
+...and receives replies from [Michael Eisen](#ME "wikilink"), [Jamie Estill](#JE "wikilink"), [Dave Messina](#DM "wikilink"), [Mark Jensen](#MAJ "wikilink"), Chris Fields ([#CF1](#CF1 "wikilink"), [#CF2](#CF2 "wikilink")), [Diego Riaño-Pachón](#DRP "wikilink"), [Malcolm Cook](#MEC "wikilink"), [Russell Smithies](#RS "wikilink"), [Heikki](#HL "wikilink"), and [Jay Hannah](#JH "wikilink"):
 
 #### version 1 (***Michael Eisen***)
 
@@ -3310,7 +3313,7 @@ Note that the "homopolymer" could have a length of **1**!
 -   *[Russell](User:Russell_Smithies "wikilink") sent me this very cool hack. He found the original version by [Ian Korf](User:Iankorf "wikilink") [here](http://homepage.mac.com/iankorf/unboggle-2004-01-13.tar.gz);
 I couldn't resist hacking it further. --[Ed.](User:Majensen "wikilink")*
 
-Here's a beautiful use of the `eval ''string''` flavor of `eval`: creating a [suffix tree](wp:suffix_tree "wikilink") from a dictionary of words. The tree lookup seems like falling off a log as well;
+Here's a beautiful use of the `eval ''string''` flavor of `eval`: creating a [suffix tree](https://en.wikipedia.org/wiki/Suffix_tree) from a dictionary of words. The tree lookup seems like falling off a log as well;
 but there's a hidden danger, read on.
 
 I took the original routine and BioPerled it up a little:
