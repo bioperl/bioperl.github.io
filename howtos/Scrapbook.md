@@ -616,7 +616,8 @@ print $panel->png;
 ```
 
 Output:
-[Bio Graphics Glyph dna.png](Bio Graphics Glyph dna.png)
+
+![Bio_Graphics_Glyph_dna.png](/howtos/Bio_Graphics_Glyph_dna.png)
 
 
 ### Drawing_with_multiple_glyphs_in_a_single_track<a name="Drawing_with_multiple_glyphs_in_a_single_track"></a>
@@ -742,7 +743,8 @@ print $panel->svg;
 ```
 
 **Fig. 1: Graphical alignment output**
-[Align.jpg](Align.jpg)
+
+![Align.jpg](/howtos/Align.jpg)
 
 
 
