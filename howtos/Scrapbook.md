@@ -69,7 +69,7 @@ __DATA__
 --[*MAJ*](User:Majensen "wikilink")
 
 
-### Poor_man%27s_bootstrap<a name="Poor_man%27s_bootstrap"></a>
+### Poor_man's_bootstrap<a name="Poor_man's_bootstrap"></a>
 
 (*see the bioperl-l thread [here](http://lists.open-bio.org/pipermail/bioperl-l/2009-June/030247.html)*)
 
@@ -276,7 +276,7 @@ $seq = $db->get_Seq_by_acc('GI' => 71025988);
 If you want to get by accession number, use *`get_Seq_by_acc('ACC' => $accno)`*, etc.
 
 
-### ACE_file_Q%26D_filtering<a name="ACE_file_Q%26D_filtering"></a>
+### ACE_file_Q&D_filtering<a name="ACE_file_Q&D_filtering"></a>
 
 (see the [thread](http://lists.open-bio.org/pipermail/bioperl-l/2009-January/028844.html) on bioperl-l)
 
@@ -1236,7 +1236,8 @@ sub do_the_job {
 
 *When I run it (on Ubuntu) the output looks like this:*
 
-**`shared` `array` `before` `running` `thread:`**
+`shared array before running thread:`
+
 ```
 0         1         2         3         4         5         6
 7         8         9
@@ -1259,7 +1260,9 @@ sub do_the_job {
 90        91        92        93        94        95        96
 97        98        99
 ```
-**`shared` `array` `in` `thread:`**
+
+`shared array in thread:`
+
 ```
 0         1         2         3         4         5         6
 7         8         9
@@ -1282,8 +1285,11 @@ sub do_the_job {
 90        91        92        93        94        95        96
 97        98        99
 ```
+
 `join() returned: do_the_job returned ok`
-**`shared` `array` `after` `running` `thread:`**
+
+`shared array after running thread:`
+
 ```
 0         1         2         3         4         5         6
 7         8         9
@@ -1819,9 +1825,8 @@ The scrap uses `blastn` to align two sequences. Get the standalone BLAST program
 
 --[*MAJ*](User:Majensen "wikilink")
 
-------------------------------------------------------------------------
-
 <a name='scrap'></a>
+
 ```perl
 #!/usr/bin/perl -w
 
@@ -1860,7 +1865,7 @@ while (my $result = $report->next_result) {
 
 **Tim Kohler** asks:
 
-*When I use [Bio::Tools::Run::StandAloneBlast](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlast) to BLAST one fasta file including different sequences, I get a BLAST output with many queries, each having several hits / sbjcts. My problem is how to parse **all** hits of **one** query into a single new file. And this for all the queries I have in my BLAST output file.*
+*When I use [Bio::Tools::Run::StandAloneBlast](https://metacpan.org/pod/Bio::Tools::Run::StandAloneBlast) to BLAST one fasta file including different sequences, I get a BLAST output with many queries, each having several hits / sbjcts. My problem is how to parse <strong>all</strong> hits of <strong>one</strong> query into a single new file. And this for all the queries I have in my BLAST output file.*
 
 ------------------------------------------------------------------------
 
@@ -2058,6 +2063,7 @@ exit;
 ```
 
 Output:
+
 ```
 190   255   1
 0
@@ -2162,7 +2168,7 @@ The description of [SeqFeature::AnnotationAdaptor](https://metacpan.org/pod/SeqF
 
     In other words, this adaptor allows us to keep the best of both worlds. If you create tens of thousands of feature objects, and your only annotation is tag/value pairs, you are best off using the features' native tag/value system. If you create a smaller number of features, but with rich and typed annotation mixed with tag/value pairs, this adaptor may be for you. Since its implementation is by double- composition, you only need to create one instance of the adaptor. In order to transparently annotate a feature object, set the feature using the `feature()` method. Every annotation you add will be added to the feature object, and hence will not be lost when you set `feature()` to the next object.
 
-See the [thread][bioperl-l-029644] for a nice extended metaphor involving [Reese's Peanut Butter Cups](http://en.wikipedia.org/wiki/Reese%27s_peanut_butter_cups). This shouldn't, of course, be construed as an endorsement for them. (Extended metaphors, that is.)
+See the [thread][bioperl-l-029644] for a nice extended metaphor involving [Reese's Peanut Butter Cups](http://en.wikipedia.org/wiki/Reese's_peanut_butter_cups). This shouldn't, of course, be construed as an endorsement for them. (Extended metaphors, that is.)
 
 **A History of BioPerl Annotation (Chris Fields)**<a name="history"></a>
 
@@ -2713,9 +2719,9 @@ See [Splitting_MiSeq_lane](#Splitting_MiSeq_lane)
 
 ## Simulation
 
-### Poor_man%27s_bootstrap<a name="Poor_man%27s_bootstrap"></a>
+### Poor_man's_bootstrap<a name="Poor_man's_bootstrap"></a>
 
-See [Poor_man%27s_bootstrap](#Poor_man%27s_bootstrap)
+See [Poor_man's_bootstrap](#Poor_man's_bootstrap)
 
 ### Random_sequence_generation<a name="Random_sequence_generation"></a>
 
@@ -3779,9 +3785,9 @@ map { ($h{$_} == $max) ? $_ : () } keys %h;
 --[*MAJ*](User:Majensen "wikilink")
 
 
-### Poor_man%27s_bootstrap<a name="Poor_man%27s_bootstrap"></a>
+### Poor_man's_bootstrap<a name="Poor_man's_bootstrap"></a>
 
-See [Poor_man%27s_bootstrap](#Poor_man%27s_bootstrap)
+See [Poor_man's_bootstrap](#Poor_man's_bootstrap)
 
 ### Suffix_trees_from_thin_air<a name="Suffix_trees_from_thin_air"></a>
 
