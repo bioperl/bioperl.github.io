@@ -1,25 +1,21 @@
 ---
 ---
-[{% for post in site.posts %}
-{
-"title":"{{ post.title }}",
-"href":"{{ post.url }}",
-"content":"{{ post.content | strip_html | strip_newlines }}",
-"date":{
-	"day":"{{ post.date | date: "%d" }}",
-	"month":"{{ post.date | date: "%B" }}",
-	"year":"{{ post.date | date: "%Y" }}"
-	}
-},
+[{% for post in site.posts %}{
+"title": "{{ post.title }}",
+"href": "{{ post.url }}",
+"content": "{{ post.content | strip_html | strip_newlines | jsonify }}",
+"date":{"day": "{{ post.date | date: "%d" }}",
+"month": "{{ post.date | date: "%B" }}",
+"year": "{{ post.date | date: "%Y" }}"}}
+,
 {% endfor %}
 {% assign is_first = true %}
 {% for page in site.pages %}
-    {% unless page.title %}{% continue %}{% endunless %}
-    {% unless is_first %},{% endunless %}
-    {% assign is_first = false %}
+{% unless page.title %}{% continue %}{% endunless %}
+{% unless is_first %},{% endunless %}
+{% assign is_first = false %}
 {
 "title": {{ page.title | jsonify  }},
-"content": {{ page.content | strip_html | strip_newlines | jsonify  }},
-"href": {{ page.url | jsonify  }}
-}
-{% endfor %}]
+"content": {{ page.content | strip_newlines | strip_html | jsonify }},
+"href": {{ page.url | jsonify }}
+{% endfor %}
