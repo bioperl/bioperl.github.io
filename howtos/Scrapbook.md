@@ -358,10 +358,9 @@ $dbseq->store;
 
 ------------------------------------------------------------------------
 
-The following scrap (with portions suspiciously reminiscent of HOWTO:EUtilities) demonstrates how you might do this:
+The following scrap (with portions suspiciously reminiscent of the [EUtilities HOWTO](/howtos/EUtilities_Cookbook_HOWTO.html)) demonstrates how you might do this:
 
 ```perl
-
 use Bio::DB::EUtilities;
 
 my (%taxa, @taxa);
@@ -420,17 +419,17 @@ foreach (@ids) {
 
 ### HOWTO:EUtilities_Cookbook<a name="HOWTO:EUtilities_Cookbook"></a>
 
-See [HOWTO:EUtilities_Cookbook](EUtilities_Cookbook.html)
+See [HOWTO:EUtilities_Cookbook](/howtos/EUtilities_Cookbook_HOWTO.html)
 
 ### HOWTO:Getting_Genomic_Sequences<a name="HOWTO:Getting_Genomic_Sequences"></a>
 
-See [HOWTO:Getting_Genomic_Sequences](Getting_Genomic_Sequences.html)
+See [HOWTO:Getting_Genomic_Sequences](/howtos/EUtilities_Cookbook_HOWTO.html)
 
 ### Human_genomic_coordinates_and_sequence<a name="Human_genomic_coordinates_and_sequence"></a>
 
 -   *Note that the first script doesn't get it quite right, but it stays within BioPerl. Replace `get_genomic_sequence()` with the [second version](#DTRT "wikilink") to get the exact solution. This requires `[Bio::EnsEMBL](https://metacpan.org/pod/Bio::EnsEMBL)` tools; see link below. --[Ed.](User:Majensen "wikilink")*
 
-**[Emanuele Osimo](User:Emos "wikilink")**, after working hard with HOWTO Getting Genomic Sequences, says:
+**[Emanuele Osimo](User:Emos "wikilink")**, after working hard with [HOWTO Getting Genomic Sequences](/howtos/Getting_Genomic_Sequences_HOWTO.html), says:
 
 *The script works fine, but gives me the wrong coordinates...there are two different sets of coordinates. The first is called "NC_000001.10 Genome Reference Consortium Human Build 37 (GRCh37), Primary_Assembly", and is the one I need, and the second one is called just "NT_004610.19" and it's the one that the script prints. Do you know how to make the script print the "right" coordinates (at least,the ones I need)?*
 
@@ -472,7 +471,7 @@ sub genome_coords {
           my $resp = $ua->get($ann->url);
           my ($chr, $start, $end, $info) =
               $resp->content =~ m{position=chr([0-9]+):([0-9]+)-([0-9]+)
-                                  \&.*\&refGene.*?\">(.*?)`</A>`}gx;
+                                  \&.*\&refGene.*?\">(.*?)</A>}gx;
           return unless $chr;
           return ($chr, $start, $end, $info);
       }
@@ -645,7 +644,7 @@ $panel->add_track($features_array_ref,
 );
 ```
 
-*For more information, see the Graphics HOWTO*
+*For more information, see the [Graphics HOWTO](/howtos/BioGraphics_HOWTO.html)*
 
 Matthew implements:
 
@@ -1476,7 +1475,7 @@ sub convertAlnToFile{
    my $concatAln=Bio::SimpleAlign->new();
    for(@expectedId){
      my $stringfh;
-     open($stringfh, "<", \$alnSequence{$_}) or die "Could not open string for reading: $!";
+     open($stringfh, "<", $alnSequence{$_}) or die "Could not open string for reading: $!";
      my $seq=new Bio::LocatableSeq(-seq=>$alnSequence{$_},-id=>$_); # must be locatableSeq to be added
      $concatAln->add_seq($seq);
    }
@@ -1581,7 +1580,7 @@ sub main{
 
  my @subfile=splitFastq($file,$numCpus);
  for my $f(@subfile){
-   threads->create(\&convert,$f,"$f.fasta","$f.qual");
+   threads->create(&convert,$f,"$f.fasta","$f.qual");
  }
  $_->join for (threads->list);
  # join the sub files together
@@ -1646,7 +1645,7 @@ sub splitFastq{
 }
 
 # use Linux to find the number of sequences quickly, but cache the value because it is still a slow process
-# This should probably changed to \`wc -l\`/4 but I don't have time to test the change
+# This should probably changed to `wc -l`/4 but I don't have time to test the change
 # TODO for anyone reading this: please change this method to wc -l divided by 4.
 sub numSequences{
  my $file=shift;
@@ -2079,7 +2078,7 @@ Bio::Annotation::Collection
 
 #### The Response<a name="response"></a>
 
-- *This is a mash-up of the responses from Chris and Hilmar, with some expansion and elision by your humble scribe. Please follow the [thread][bioperl-l-029644] for the verbatim responses in context. Also, see the much more detailed [Feature-Annotation HOWTO](Feature-Annotation.html).*
+- *This is a mash-up of the responses from Chris and Hilmar, with some expansion and elision by your humble scribe. Please follow the [thread][bioperl-l-029644] for the verbatim responses in context. Also, see the much more detailed [Feature-Annotation HOWTO](/howtos/Features_and_Annotations_HOWTO.html).*
 
 **Features vs. Annotations**
 
@@ -2487,8 +2486,8 @@ sub _run_oligotm {
    close (WTRFH);
 
    my ($tm, $errors);
-   while (`<RDRFH>`) { $tm .= $_;}
-   while (`<ERRFH>`) { $errors .= $_;}
+   while (<RDRFH>) { $tm .= $_;}
+   while (<ERRFH>) { $errors .= $_;}
    chomp $tm;
    return ($tm, $errors);
 }
@@ -2807,7 +2806,7 @@ one-liner from ***Russell Smithies***:
 *You can also use the built-in regex variables and back-references to get the positions of the matches:*
 
 ```perl
-print join(", ", $-\[0\], $+\[0\], $&),"\n" while ( $s =~ /(\[ACGT\])1{$min,}/g);
+print join(", ", $-[0], $+[0], $&),"\n" while ( $s =~ /([ACGT])\1{$min,}/g);
 ```
 
 
@@ -3016,7 +3015,7 @@ sub make_genes {
    }
 }
 
-sub NEXTVAL { $_\[0\]->() }
+sub NEXTVAL { $_[0]->() }
 ```
 
 #### version 6 (***Diego Riaño-Pachón***)
@@ -3534,7 +3533,7 @@ use strict;
 use warnings;
 use Bio::AlignIO;
 
-my $file = shift; # or $ARGV\[0\]
+my $file = shift; # or $ARGV[0]
 
 # there is a bug, likely in Bio::Root::IO, where passing the filename directly
 # to AlignIO causes parsing issues and (with some AlignIO formats) segfaults
@@ -3851,6 +3850,3 @@ sub make_breadth_iterator {
 ```
 
 --[*MAJ*](User:Majensen "wikilink")
-
-
-
