@@ -38,7 +38,7 @@ Error handling and debugging
 I/O and cross-platform
 ----------------------
 
--   Build file paths with `Bio::Root::IO->catfile(@dir)` or `File::Spec->catfile()` instead of `join(\'/\',@dir)`
+-   Build file paths with `Bio::Root::IO->catfile(@dir)` or `File::Spec->catfile()` instead of `join('/',@dir)`
 -   Use `File::Spec` functions for portability across platforms
 -   Use the 3-argument form of `open`, e.g. `open my $FH, '<', 'filename.txt'`
 -   Use lexical auto-vivified file handles rather than globs, e.g. `open my $OUT, '>', 'output.txt'`
@@ -186,7 +186,7 @@ The latter form has undefined behaviour if `bar()` is called in scalar context.
 -   When sorting objects by their method values, use a Schwartzian transformation:
 
 ```perl
-@sorted = map { $_->\[1\] }
+@sorted = map { $_->[1] }
          sort { $a->[0] <=> $b->[0] }
          map { [$_->method(), $_] }
          @unsorted;
@@ -217,7 +217,7 @@ perl Build.PL
 
 Then do this every time you want to run a test script where test.t is the name of the script:
 
-```perl
+```bash
 ./Build test --test_files t/test.t --verbose
 ```
 
