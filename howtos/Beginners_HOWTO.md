@@ -3,7 +3,7 @@ title: "Beginners HOWTO"
 layout: howto
 ---
 
-# Authors
+## Authors
 
 Brian Osborne *briano at bioteam.net*
 
@@ -11,11 +11,11 @@ Brian Osborne *briano at bioteam.net*
 
 This document is copyright Brian Osborne. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.perl.com/pub/language/misc/Artistic.html).
 
-# Abstract
+## Abstract
 
 This is a [HOWTO](/howtos/index.html) that talks about using Bioperl, for biologists who would like to learn more about writing their own bioinformatics scripts using Bioperl. Bioperl is an open source bioinformatics toolkit used by researchers all over the world. If you're looking for a script built to fit your exact needs you may or may not find it in Bioperl (check the [scripts](https://github.com/bioperl/bioperl-live/tree/master/scripts) and [examples](https://github.com/bioperl/bioperl-live/tree/master/examples) directories). What you will find is an extensive set of Perl modules that will enable you to write your own script, and a community of people who are willing to help you.
 
-# Introduction
+## Introduction
 
 If you're a molecular biologist it's likely that you're interested in gene and protein sequences, and you study them in some way on a regular basis. Perhaps you'd like to try your hand at automating some of these tasks, or you're just curious about learning more about the programming side of bioinformatics. In this [HOWTO](/howtos/index.html) you'll see discussions of some of the common uses of Bioperl, like sequence analysis with BLAST and retrieving sequences from public databases. You'll also see how to write Bioperl scripts that chain these tasks together, that's how you'll be able to do really powerful things with Bioperl.
 
