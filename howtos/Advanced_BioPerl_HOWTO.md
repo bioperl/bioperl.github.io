@@ -16,8 +16,8 @@ Here is the function as defined in [Bio::PrimarySeq](https://metacpan.org/pod/Bi
 sub validate_seq {
         my ($self,$seqstr) = @_;
         if( ! defined $seqstr ){ $seqstr = $self->seq(); }
-        return 0 unless( defined $seqstr); 
-        if ((CORE::length($seqstr) > 0) && 
+        return 0 unless( defined $seqstr);
+        if ((CORE::length($seqstr) > 0) &&
            ($seqstr !~ /^([$MATCHPATTERN]+)$/)) {
             $self->warn("seq doesn't validate, mismatch is " .
                         ($seqstr =~ /([^$MATCHPATTERN]+)/g));
@@ -35,7 +35,7 @@ However we would like to additionally support numbers, and we really only want t
 sub Bio::LocatableSeq::validate_seq {
     my ($self,$seqstr) = @_;
     if( ! defined $seqstr ){ $seqstr = $self->seq(); }
-    return 0 unless( defined $seqstr); 
+    return 0 unless( defined $seqstr);
     if((CORE::length($seqstr) > 0) && ($seqstr !~ /^([A-Za-z-.*?0-9]+)$/)) {
         $self->warn("seq doesn't validate, mismatch is " .
                     ($seqstr =~ /([^A-Za-z-.*?0-9]+)/g));
@@ -55,14 +55,14 @@ These fall under the namespace since they are for sequence reading and writing. 
 Let's pretend the new format is called *Jenny's simple format*, or *jsf* for short. Choosing a module name can be important but this three letter [acronym](https://en.wikipedia.org/wiki/acronym) should suffice. Like all format modules, the *jsf* module file should be located in a directory called SeqIO which itself is in a directory called *Bio* - so the file would be called *Bio/SeqIO/jsf.pm*. Let's assume the format is simple. Here is an example of the format we'll write a parser for:
 
 ```
-JSF: ID=N0001 DESC="Sampled from compost" SEQ=CCCCCGGGGGGTTTTTAAAAA 
-JSF: ID=N0002 DESC="Sampled from humanure" SEQ=CCCGCCCCGGCAATTTAGTTT 
+JSF: ID=N0001 DESC="Sampled from compost" SEQ=CCCCCGGGGGGTTTTTAAAAA
+JSF: ID=N0002 DESC="Sampled from humanure" SEQ=CCCGCCCCGGCAATTTAGTTT
 ```
 
 The module to parse this format would look like this:
 
 ```perl
-package Bio::SeqIO::jsf
+package Bio::SeqIO::jsf;
 
 use strict;
 use Bio::SeqIO;
@@ -81,14 +81,14 @@ sub next_seq {
   my $self = shift;
   my ($seqstring, $id, $description);
   # read sequences from the filehandle (Bio::SeqIO sets this up for you)
-  while( $self->_readline ) { 
-    if( m/^JSF: ID=(S+)s+DESC="(.+)" SEQ=(S+)/ ) {
+  while( my $line = $self->_readline ) {
+    if( $line =~ m/^JSF: ID=(\S+)\s+DESC=(.+) SEQ=(\S+)/ ) {
       ($id,$description,$seqstring) = ($1,$2,$3);
       last;
     }
   }
-  return unless defined $id && defined $description; # returns undef 
-  return Bio::Seq->new(-seq         => $seqstring, 
+  return unless defined $id && defined $description; # returns undef
+  return Bio::Seq->new(-seq         => $seqstring,
                        -display_id  => $id,
                        -description => $description);
 }
@@ -100,19 +100,19 @@ And the additional method to write the sequence:
 ```perl
 
 =head2 write_seq
-  
+
 Title   : write_seq
 Usage   : $stream->write_seq(@seq)
 Function: writes each $seq object in @seq to the stream
 Returns : 1 for success and 0 for error
 Args    : array of 1 to n Bio::PrimarySeqI objects
- 
+
 =cut
- 
+
 sub write_seq {
     my ($self,@seq) = @_;
     for my $seq ( @seq ) {
-        $self->_print(sprintf("JSF: ID=%s DESC="%s" SEQ=%s\n"),
+        $self->_print(sprintf("JSF: ID=%s DESC=%s SEQ=%s\n"),
         $seq->display_id, $seq->description, $seq->seq);
     }
 }
@@ -231,7 +231,7 @@ A few general rules, not so rigorously enforced. Please keep in mind these are g
 -  These are normally explicitly defined (i.e. no AUTOLOAD'ed methods, though see [below](Advanced_BioPerl#Notes_on_Accessor_Methods) for a bit of BioPerl controversy regarding the use of AUTOLOAD).
 
 ```perl
-$seq->alphabet; 
+$seq->alphabet;
 $seq->seq;
 ```
 
@@ -239,7 +239,7 @@ $seq->seq;
 - If the method is just a getter/setter for a single object, it's safe to leave it lower-case.
 
 ```perl
-$seq->species; # single Bio::Species 
+$seq->species; # single Bio::Species
 $feature->location; # single Bio::LocationI
 ```
 
@@ -248,9 +248,9 @@ $feature->location; # single Bio::LocationI
 -   If the data is nested (such as `SeqFeatures`) then using a `get_{data}` method should only retrieve the top layer. Methods which retrieve the whole flattened list would use `get_all_{Class}`. Some have used this convention interchangeably (normally not a problem if the data isn't nested).
 
 ```perl
-$collection->get_all_Annotations; 
-# should be a flattened list of Bio::AnnotationI 
-$feature->get_all_annotation_keys; 
+$collection->get_all_Annotations;
+# should be a flattened list of Bio::AnnotationI
+$feature->get_all_annotation_keys;
 # list of scalar data; is it nested?
 ```
 
@@ -261,14 +261,14 @@ $feature->get_all_annotation_keys;
 # ambiguous (dual meaning)
 for my $feat ($obj->each_Feature) {
     ...
-} 
+}
 my @features = $obj->each_Feature;
 
 # more explicit
 while (my $seq = $seqin->next_seq) {
     ...
 }
-# though should it be next_Seq()? oh well... 
+# though should it be next_Seq()? oh well...
 my @features = $obj->get_SeqFeatures;
 ```
 
@@ -312,7 +312,7 @@ eval {
 };
 if( $@ ) {
   # exception was thrown
-  tell_user("Exception was thrown, preventing whatever I wanted to do. 
+  tell_user("Exception was thrown, preventing whatever I wanted to do.
              Actual exception $@");
   exit(0);
 }
