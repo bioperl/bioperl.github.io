@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<section id="blog" class="container">
+    <div class="center">
+        <h2>{{ page.title }}</h2>
+        <p class="lead">
+            {{ page.titlebody }}
+        </p>
+    </div>
+
+    <div class="blog">
+        <div class="row">
+            <div class="col-md-8">
+              <div class="blog-item">
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-2 text-center">
+                        <div class="entry-meta">
+                            <span id="publish_date">{{ page.date | date_to_string }}</span>
+                            <span><i class="fa fa-user"></i> <a href="#">{{ page.author.name }}</a></span>
+                            {% if page.author.twitter %}
+                            <span><i class="fa fa-twitter"></i> <a href="https://www.twitter.com/{{ page.author.twitter }}" target="_blank">{{ page.author.twitter }}</a></span>
+                            {% endif %}
+                            {% if page.author.github %}
+                            <span><i class="fa fa-github"></i> <a href="https://www.github.com/{{ page.author.github }}" target="_blank">{{ page.author.github }}</a></span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-10 blog-content">
+                        <h2>{{ page.subtitle }}</h2>
+                        {{ content }}
+                    </div>
+                  </div>
+              </div><!--/.blog-item-->
+            </div><!--/.col-md-8-->
+            <aside class="col-md-4">
+            </aside>
+        </div><!--/.row-->
+    </div><!--/.blog-->
+</section><!--/#blog-->

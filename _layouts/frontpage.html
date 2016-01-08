@@ -1,0 +1,120 @@
+---
+layout: default
+---
+<section id="feature" >
+    <div class="container">
+        <div class="center wow fadeInDown">
+            <p class="lead">
+                The Bioperl Project is an international association of users &amp; developers of open source Perl tools for bioinformatics, genomics and life science.
+            </p>
+        </div>
+        <div class="row">
+            <div class="features">
+
+                <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="feature-wrap">
+                        <a href="INSTALL.html"><i class="fa fa-laptop"></i></a>
+                        <h2>Installation</h2>
+                        <h3>Instructions and Download</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="feature-wrap">
+                        <a href="/howtos/index.html"><i class="fa fa-list-alt"></i></a>
+                        <a href="#"><h2>Documentation</h2>
+                        <h3>HOWTOs and Scrapbook code</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="feature-wrap">
+                        <a href="Support.html"><i class="fa fa-question-circle"></i></a>
+                        <h2>Support</h2>
+                        <h3>BioPerl Mailing Lists</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="feature-wrap">
+                        <a href="https://github.com/bioperl/bioperl-live/issues"><i class="fa fa-bug"></i></a>
+                        <h2>Issues</h2>
+                        <h3>Submit bugs or enhancement requests to GitHub</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="feature-wrap">
+                        <a href="https://github.com/bioperl"><i class="fa fa-github"></i></a>
+                        <h2>Code</h2>
+                        <h3>BioPerl Packages at GitHub</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="feature-wrap">
+                        <a href="http://www.open-bio.org/wiki/Main_Page"><i class="fa fa-university"></i></a>
+                        <h2>OBF</h2>
+                        <h3>The Open Bioinformatics Foundation</h3>
+                    </div>
+                </div>
+
+            </div>  <!-- .features -->
+        </div>  <!-- .row -->
+    </div>   <!-- .container -->
+</section> <!-- #feature -->
+
+<section id="middle">
+        <div class="center wow fadeInDown">
+            <h2 class="white">Latest News</h2>
+            <p>
+                Posts from the Open Bioinformatics Foundation
+            </p>
+        </div>
+            <div class="col-sm-12 wow fadeInDown">
+                <div class="accordion">
+                    <div class="panel-group" id="accordion1">
+                      {% assign i = 11 %}
+                      {% for post in site.posts limit:5 %}
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ i }}">
+                              {{ post.title }}
+                              <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                          </h3>
+                        </div>
+                        <div id="collapse{{ i }}" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            {{ post.excerpt }}
+                            <a href="{{ post.url }}">Read more</a>
+                          </div>
+                        </div>
+                      </div>
+                      {% capture i %}{{ i | plus:1 }}{% endcapture %}
+                      {% endfor %}
+                    </div><!--/#accordion1-->
+                </div>
+            </div>
+</section><!--/#middle-->
+
+<section id="conatcat-info">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="media contact-info wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="pull-left">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2>Contribute</h2>
+                        <p>
+                            If you are interested in contributing please contact us at <a href="http://lists.open-bio.org/mailman/listinfo/bioperl-l">bioperl-l</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/.container-->
+</section><!--/#conatcat-info-->

@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html>
-
   {% include head.html %}
-
   <body>
-
     {% include header.html %}
-
-    <div id="page-content">
-      <div class="wrapper">
+        <section id="feature" >
+          <div class="container">
         <BR>
         <div class="boxed"><i>{{ page.title }}</i></div>
         <BR>
@@ -16,8 +12,8 @@
         <!-- Begin TOC -->
         <div style="font-size:16px; font-style: italic">
         <div class="boxed">
-        <script src="/assets/jquery-2.1.4.min.js"></script>
-        <script src="/assets/highlight.js/src/highlight.js"></script>
+        <script src="/js/jquery-2.1.4.min.js"></script>
+        <script src="/js/highlight.js/src/highlight.js"></script>
         <!-- From highlight.min.js -->
         <script>hljs.initHighlightingOnLoad();</script>
         <script type="text/javascript">
@@ -39,11 +35,9 @@
         <!-- End TOC -->
         </div>
         <BR>
-
-        {{ content }}
-
-      </div>
-    </div>
+            {{ content }}
+          </div>
+        </section>
 
     {% include footer.html %}
 

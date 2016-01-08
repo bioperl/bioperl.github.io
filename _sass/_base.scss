@@ -8,6 +8,8 @@ dl, dd, ol, ul, figure {
     padding: 0;
 }
 
+
+
 /**
  * Basic styling
  */
@@ -21,6 +23,8 @@ body {
     -webkit-text-size-adjust: 100%;
 }
 
+
+
 /**
  * Set `margin-bottom` to maintain vertical rhythm
  */
@@ -31,6 +35,8 @@ ul, ol, dl, figure,
     margin-bottom: $spacing-unit / 2;
 }
 
+
+
 /**
  * Images
  */
@@ -38,6 +44,8 @@ img {
     max-width: 100%;
     vertical-align: middle;
 }
+
+
 
 /**
  * Figures
@@ -49,6 +57,8 @@ figure > img {
 figcaption {
     font-size: $small-font-size;
 }
+
+
 
 /**
  * Lists
@@ -64,12 +74,16 @@ li {
     }
 }
 
+
+
 /**
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
 }
+
+
 
 /**
  * Links
@@ -88,6 +102,8 @@ a {
     }
 }
 
+
+
 /**
  * Blockquotes
  */
@@ -103,6 +119,8 @@ blockquote {
         margin-bottom: 0;
     }
 }
+
+
 
 /**
  * Code formatting
@@ -130,12 +148,14 @@ pre {
     }
 }
 
+
+
 /**
  * Wrapper
  */
 .wrapper {
-    max-width: -webkit-calc(800px - (#{$spacing-unit} * 2));
-    max-width:         calc(800px - (#{$spacing-unit} * 2));
+    max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
+    max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
     margin-right: auto;
     margin-left: auto;
     padding-right: $spacing-unit;
@@ -143,12 +163,14 @@ pre {
     @extend %clearfix;
 
     @include media-query($on-laptop) {
-        max-width: -webkit-calc(800px - (#{$spacing-unit}));
-        max-width:         calc(800px - (#{$spacing-unit}));
+        max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
+        max-width:         calc(#{$content-width} - (#{$spacing-unit}));
         padding-right: $spacing-unit / 2;
         padding-left: $spacing-unit / 2;
     }
 }
+
+
 
 /**
  * Clearfix
@@ -162,10 +184,13 @@ pre {
     }
 }
 
+
+
 /**
  * Icons
  */
 .icon {
+
     > svg {
         display: inline-block;
         width: 16px;
@@ -176,47 +201,4 @@ pre {
             fill: $grey-color;
         }
     }
-}
-
-/**
- * Tables
- */
-table {
-    border-collapse: collapse;
-    text-align: left;
-    max-width: 100%;
-    font-family: Courier;
-    font-size: 14px;
-}
-th {
-    text-align: left;
-    padding: 7px;
-}
-td {
-    padding: 7px;
-}
-table, th, td {
-    border: 1px solid darkblue;
-}
-// Zebra stripes
-tbody tr:nth-child(odd) {
-   background: $grey-color-light;
-}
-
-.header_table {
-    font-family: Arial;
-    table, th, td, tr {
-        border: none;
-    }
-    tbody: {
-        background: solid white;
-    }
-}
-
-// "inline-block" draws the box around the text
-.boxed {
-    border: 1px solid lavender;
-    padding: 10px;
-    display: inline-block;
-    background: #CDDCF1;
 }

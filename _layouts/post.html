@@ -1,15 +1,80 @@
 ---
 layout: default
 ---
-<div class="post">
+<section id="blog" class="container">
+    <div class="center">
+        <h2>Copyright note</h2>
+        <p class="lead">
+          These contents are not provided by PHP Reboot. PHP Reboot just collect
+          good articles, blogs and tutorials. Contents are copyright material of
+          respective author and/or website where they are originally published.
+          Please follow the link to go to original post.
+        </p>
+    </div>
 
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-  </header>
+    <div class="blog">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-item">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-2 text-center">
+                            <div class="entry-meta">
+                                <span id="publish_date">{{ page.date | date_to_string }}</span>
+                                <span><i class="fa fa-user"></i> <a href="#">{{ page.author.name }}</a></span>
+                                {% if page.author.twitter %}
+                                <span><i class="fa fa-twitter"></i> <a href="https://www.twitter.com/{{ page.author.twitter }}" target="_blank">{{ page.author.twitter }}</a></span>
+                                {% endif %}
+                                {% if page.author.github %}
+                                <span><i class="fa fa-github"></i> <a href="https://www.github.com/{{ page.author.github }}" target="_blank">{{ page.author.github }}</a></span>
+                                {% endif %}
+                                {% if page.author.url %}
+                                <span><i class="fa fa-link"></i><a href="{{ page.author.url }}" target="_blank" rel="nofollow">Original URL</a></span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-10 blog-content">
+                            <h2>{{ page.title }}</h2>
+                            {{ content }}
+                            <!-- Tags could also come here. Commented out for now in favour of aside tags -->
+                            <!--div class="post-tags">
+                                <strong>Tag:</strong> <a href="#">Cool</a> / <a href="#">Creative</a> / <a href="#">Dubttstep</a>
+                            </div-->
+                        </div>
+                    </div>
+                </div><!--/.blog-item-->
 
-  <article class="post-content">
-    {{ content }}
-  </article>
+            </div><!--/.col-md-8-->
 
-</div>
+            <aside class="col-md-4">
+                {% if page.categories %}
+                <div class="widget categories">
+                    <h3>PHP Reboot issue</h3>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="blog_category">
+                                <li><a href="#">{{ page.categories }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--/.categories-->
+                {% endif %}
+
+                {% if page.tags %}
+                <div class="widget tags">
+                    <h3>Categories</h3>
+                    <ul class="tag-cloud">
+                      {% for article_tag in page.tags %}
+                        <li><a class="btn btn-xs btn-primary" href="#">{{ article_tag }}</a></li>
+                      {% endfor %}
+                    </ul>
+                </div><!--/.tags-->
+                {% endif %}
+
+
+            </aside>
+
+        </div><!--/.row-->
+
+     </div><!--/.blog-->
+
+</section><!--/#blog-->
