@@ -2534,6 +2534,35 @@ shortcodes page css
   margin-left: 15px;
 }
 
+/**
+ * Tables
+ */
+table {
+  border-collapse: collapse;
+  text-align: left;
+  max-width: 100%;
+  font-family: Courier;
+  font-size: 14px; }
+
+th {
+  text-align: left;
+  padding: 7px; }
+
+td {
+  padding: 7px; }
+
+table, th, td {
+  border: 1px solid darkblue; }
+
+tbody tr:nth-child(odd) {
+  background: #e8e8e8; }
+
+.header_table {
+  font-family: Arial;
+  tbody-background: solid white; }
+  .header_table table, .header_table th, .header_table td, .header_table tr {
+    border: none; }
+
 .boxed {
   /* border: 1px solid grey; */
   padding: 10px;
