@@ -2570,3 +2570,7 @@ tbody tr:nth-child(odd) {
   background: #E3E3E3;
 }
 
+.boxed_wide {
+  padding: 10px;
+  background: #E3E3E3;
+}
