@@ -4,17 +4,48 @@
             <div class="pull-right">
                 <ul class="social-share">
                     <li><a href="https://twitter.com/bioperl"><i class="fa fa-twitter"></i></a></li>
+                    <li></li>
                     <li><a href="https://github.com/bioperl"><i class="fa fa-github"></i></a></li>
+                    <li></li>
                     <li><a href="https://en.wikipedia.org/wiki/BioPerl"><i class="fa fa-wikipedia-w"></i></a></li>
+                    <li></li>
                 </ul>
-                <!-- search not possible until we make dynamic site. Disabling for now -->
-                <!--
-                div class="search">
+                <!-- search -->
+                
+                <div class="search">
                 <form role="form">
-                    <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                    <input type="text" id="search-form" autocomplete="off" placeholder="Search">
                     <i class="fa fa-search"></i>
                 </form>
-                -->
+                </div>
+                
+                <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+                <script type="text/javascript">
+                $("#search-form").click(function(){
+                    search_output = '<div>';
+                    var regex = new RegExp($("#search-form").val(),"i");
+                    // The JSON must be valid, otherwise this fails without an error
+                    console.log("Regex is [" + regex + "]");
+                    $.getJSON('search.json', function(data) {
+                        $.each(data, function(key, val) {
+                            console.log("Title is [" + val.title + "], URL is [" + val.href + "]");
+                            result = '<div>';
+                            if ( regex.test(val.content) || regex.test(val.title) ) {
+                                console.log("Match to " + val.title);
+                                search_output += "Match to " + val.title;
+                            };
+                        });
+                        search_output += "</div>";
+                        console.log("Output is [" + search_output + "]");
+                        //$("#results").empty();
+                        //$("#results").append("Results for <b>" + q + "</b>");
+                        //$.each(data.query.search, function(i,item){
+                        //$("#results").append(encodeURIComponent(item.title) + "'>" + item.title + "</a>" + item.snippet + "</div>");
+                        //});
+                    });
+                });
+                </script>
+
             </div>
         </div>
     </div>
