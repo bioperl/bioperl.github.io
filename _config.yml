@@ -3,9 +3,9 @@ title: BioPerl
 email: bioperl-l@mailman.open-bio.org
 description: The Bioperl Project is an international association of developers of open source Perl tools for bioinformatics, genomics and life science. It is supported by the <a href='http://www.open-bio.org/wiki/Main_Page'>Open Bioinformatics Foundation</a>.
 baseurl: "http://bioperl.github.io"
-url: "http://bioperl.github.io" # the base hostname & protocol for your site
-#twitter_username: jekyllrb
-#github_username:  jekyll
+url: "http://bioperl.github.io"
+twitter_username: bioperl
+github_username: bioperl
 encoding: UTF-8
 # Build settings
 # converters: kramdown (default), maruku (deprecated), redcarpet, rdiscount
