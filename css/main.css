@@ -1530,7 +1530,7 @@ ul.social_icons li  a i{
 }
 
 .footer {
-  background: none repeat scroll 0 0 #2E2E2E;
+  background: none repeat scroll 0 0 #212121;
   border-top: 5px solid #C52D2F;
   height: 84px;
   margin-top: 110px;
@@ -2512,7 +2512,7 @@ shortcodes page css
   padding-top: 30px;
   padding-bottom: 30px;
   color: #2dcc70;
-  background: #2e2e2e;
+  background: #212121;
 }
 
 #footer a {
