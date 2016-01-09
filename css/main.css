@@ -187,10 +187,11 @@ body > section {
   margin-left: 0;
 }
 
-/* topmost bar of 2 top bars */
+/* topmost bar */
 .top-bar {
-  padding: 10px 0;
+  padding: 20px 0;
   background: #212121;
+  border-top: 10px solid #212121;
   border-bottom: 1px solid #222;
   line-height: 28px;
 }
