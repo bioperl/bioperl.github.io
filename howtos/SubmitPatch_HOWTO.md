@@ -30,7 +30,7 @@ Step by Step
 
 ### Get the latest version from GitHub
 
-You should ensure you are using the latest developer version of BioPerl - this means checking out bioperl-live from GitHub. Here are [instructions on how to do this](INSTALL.html). This is important because the change you want to make may have already been made!
+You should ensure you are using the latest developer version of BioPerl - this means checking out bioperl-live from GitHub. Here are [instructions on how to do this](/INSTALL.html). This is important because the change you want to make may have already been made!
 
 ### Back up the original file
 
