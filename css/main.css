@@ -2630,7 +2630,8 @@ tbody tr:nth-child(odd) {
   /* font */
   color: #212121;
   background: #2dcc70;
-  width: 90%;
+  width: 100%;
+  text-align: center;
 }
 
 
