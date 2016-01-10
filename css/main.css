@@ -2578,7 +2578,6 @@ tbody tr:nth-child(odd) {
 }
 
 /* Customize the Search input */
-
 #custom-search-input{
     /* way too wide!
     border: solid 1px #E4E4E4;
@@ -2624,12 +2623,10 @@ tbody tr:nth-child(odd) {
 
 /* The BioPerl Project ... */
 .navbar-text {
-  /*
-  margin-top: 30px;
-  */
+  margin-top: 0px;
   margin-bottom: 50px;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 5px;
   /* font */
   color: #212121;
   background: #2dcc70;

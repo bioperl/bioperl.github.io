@@ -1,12 +1,16 @@
 ---
 ---
-[{% for post in site.posts %}{
-"title": "{{ post.title }}",
-"href": "{{ post.url }}",
-"content": "{{ post.content | strip_html | strip_newlines | jsonify }}",
-"date":{"day": "{{ post.date | date: "%d" }}",
-"month": "{{ post.date | date: "%B" }}",
-"year": "{{ post.date | date: "%Y" }}"}}
+[
+{% for post in site.posts %}{
+"title": {{ post.title | jsonify}},
+"href": {{ post.url | jsonify}},
+"content": {{ post.content | strip_html | strip_newlines | jsonify }},
+"date":{
+	"day": {{ post.date | date: "%d" | jsonify }},
+	"month": {{ post.date | date: "%B" |jsonify }},
+	"year": {{ post.date | date: "%Y" | jsonify }} 
+	}
+}
 ,
 {% endfor %}
 {% assign is_first = true %}
@@ -18,4 +22,6 @@
 "title": {{ page.title | jsonify  }},
 "content": {{ page.content | strip_newlines | strip_html | jsonify }},
 "href": {{ page.url | jsonify }}
+}
 {% endfor %}
+]
