@@ -189,10 +189,10 @@ body > section {
 
 /* topmost bar */
 .top-bar {
-  padding: 20px 0;
+  padding: 10px 0;
   background: #212121;
   border-top: 10px solid #212121;
-  border-bottom: 1px solid #222;
+  /* border-bottom: 0px solid #222; */
   line-height: 28px;
 }
 
@@ -274,7 +274,7 @@ input.search-form:hover {
   border-radius: 0;
   margin-bottom: 0;
   background: #212121;
-  padding: 15px 0;
+  padding: 3px 0;
   padding-bottom: 0;
 }
 
@@ -2576,3 +2576,49 @@ tbody tr:nth-child(odd) {
   /* green */
   background: #2dcc70;
 }
+
+/* Customize the Search input */
+
+#custom-search-input{
+    /* way too wide!
+    border: solid 1px #E4E4E4;
+    width: 50%;
+    border-radius: 6px;
+    background-color: #fff;
+    padding: 1px;
+    */
+}
+
+#custom-search-input input{
+    /*
+    border: 0;
+    box-shadow: none;
+    height: 30px;
+    */
+}
+
+#custom-search-input button{
+    /* question mark */
+    color: #2dcc;
+    /* background around question mark */
+    background: #2dcc70;
+    /*
+    margin: 2px 0 0 0;
+    box-shadow: none;
+    border: 0;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+    width: 30px;
+    */
+}
+
+#custom-search-input button:hover{
+    border: 1;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 13px;
+}
+

@@ -1,54 +1,50 @@
 <header id="header">
     <div class="top-bar">
         <div class="container">
-
-<a class="pull-left" href="/index.html"><img src="/images/BioPerl-txt.png" alt="BioPerl logo"></a>
-
+            <a class="navbar-brand" href="/index.html"><img src="/images/BioPerl-txt.png" alt="BioPerl logo"></a>
             <div class="pull-right">
                 <ul class="social-share">
                     <li><a href="https://twitter.com/bioperl"><i class="fa fa-twitter"></i></a></li>
-                    <li></li>
                     <li><a href="https://github.com/bioperl"><i class="fa fa-github"></i></a></li>
-                    <li></li>
                     <li><a href="https://en.wikipedia.org/wiki/BioPerl"><i class="fa fa-wikipedia-w"></i></a></li>
-                    <li></li>
                 </ul>
-                <!-- search -->
-                
-                <div class="search">
-                    <form role="form">
-                        <input type="text" id="search-form" autocomplete="off" placeholder="Search">
-                        <i class="fa fa-search"></i>
-                    </form>
-                </div>
-                
-                <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
-                <script type="text/javascript">
-                $("#search-form").click(function(){
-                search_output = '<div>';
-                    var regex = new RegExp($("#search-form").val(),"i");
-                    // The JSON must be valid, otherwise this fails without an error
-                    console.log("Regex is [" + regex + "]");
-                    $.getJSON('search.json', function(data) {
-                    $.each(data, function(key, val) {
-                    console.log("Title is [" + val.title + "], URL is [" + val.href + "]");
-                    result = '<div>';
-                        if ( regex.test(val.content) || regex.test(val.title) ) {
-                        console.log("Match to " + val.title);
-                        search_output += "Match to " + val.title;
-                        };
-                        });
-                    search_output += "</div>";
-                    console.log("Output is [" + search_output + "]");
-                    //$("#results").empty();
-                    //$("#results").append("Results for <b>" + q + "</b>");
-                    //$.each(data.query.search, function(i,item){
-                //$("#results").append(encodeURIComponent(item.title) + "'>" + item.title + "</a>" + item.snippet + "</div>");
-                //});
-                });
-                });
-                </script>
             </div>
         </div>
     </div>
+    <nav class="navbar navbar-inverse" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-right">
+                <!--
+                <ul class="nav navbar-nav">
+                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <i class="fa fa-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/FAQ.html">FAQ</a></li>
+                            <li><a href="/about.html">About This Site</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                -->
+                <div id="custom-search-input">
+                    <div class="input-group col-md-3">
+                        <input type="text" class="form-control input-med" placeholder="Search" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-med" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 </header>
