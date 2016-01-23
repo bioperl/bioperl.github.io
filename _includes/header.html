@@ -14,15 +14,15 @@
     <nav class="navbar navbar-inverse" role="banner">
         <div class="container">
             <div class="collapse navbar-collapse navbar-right">
-                    <!--
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/FAQ.html">FAQ</a></li>
-                            <li><a href="/about.html">About This Site</a></li>
-                        </ul>
-                    </li>
-                    -->
+                <!--
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/FAQ.html">FAQ</a></li>
+                        <li><a href="/about.html">About This Site</a></li>
+                    </ul>
+                </li>
+                -->
                 <div id="custom-search-input">
                     <div class="input-group col-md-3">
                         <input type="text" class="form-control input-med" placeholder="Search" id="search-txt">
@@ -32,7 +32,7 @@
                             </button>
                         </span>
                     </div>
-                    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+                <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
                 <script type="text/javascript">
                 // Search the _site/search.json file, created by the search.json Liquid template
                 $("#search-btn").click(function(){
@@ -50,11 +50,10 @@
                         window.data = search_output;
                         $(document).trigger('PrintResults');
                     });
-
                     function PrintResults(evt) {
+                        // window.open("search_results.html","_self");
                         console.log(window.data);
                     }
-
                 });
                 </script>
                 </div>
