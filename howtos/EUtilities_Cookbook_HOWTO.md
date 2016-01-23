@@ -37,7 +37,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -db      => 'protein',
                                        -rettype => 'gb',
                                        -email   => 'mymail@foo.bar',
-                                       -id      => @ids);
+                                       -id      => \@ids);
 
 my $file = 'myseqs.gb';
 
@@ -65,11 +65,11 @@ my @ids = qw(1621261 89318838 68536103 20807972 730439);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -db      => 'protein',
-                                       -id      => @ids,
+                                       -id      => \@ids,
                                        -email   => 'mymail@foo.bar',
                                        -rettype => 'acc');
 
-my @accs = split(m{ },$factory->get_Response->content);
+my @accs = split(m{\n},$factory->get_Response->content);
 
 print join(',',@accs), "\n";
 
@@ -89,11 +89,11 @@ my @ids = qw(CAB02640 EAS10332 YP_250808 NP_623143 P41007);
 
 my $factory = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -db      => 'protein',
-                                       -id      => @ids,
+                                       -id      => \@ids,
                                        -email   => 'mymail@foo.bar',
                                        -rettype => 'gi');
 
-my @gis = split(m{ },$factory->get_Response->content);
+my @gis = split(m{\n},$factory->get_Response->content);
 
 print join(',',@gis), "\n";
 
@@ -191,14 +191,13 @@ use Bio::DB::EUtilities;
 my $factory = Bio::DB::EUtilities->new(-eutil => 'einfo',
                                        -email => 'mymail@foo.bar',);
 
-print "available databases:  t", join("\t",
-  $factory->get_available_databases),"\n";
+print "available databases: \n\t", join("\n\t", $factory->get_available_databases),"\n";
 ```
 
 or as a one-liner. The following:
 
 ```perl
-perl -MBio::DB::EUtilities -e 
+perl -MBio::DB::EUtilities -e
   "Bio::DB::EUtilities->new(-eutil => 'einfo')->print_all"
 ```
 
@@ -245,8 +244,8 @@ while (my $field = $factory->next_FieldInfo) {
     print "\t\tdesc: ",$field->get_field_description,"\n";
     print "\t\tcount: ",$field->get_term_count,"\n";
     print "\t\tAttributes: ";
-    print join(',', grep {$field->$_} 
-      qw(is_date is_singletoken is_hierarchy is_hidden is_numerical)),"\n"; 
+    print join(',', grep {$field->$_}
+      qw(is_date is_singletoken is_hierarchy is_hidden is_numerical)),"\n";
 }
 
 while (my $link = $factory->next_LinkInfo) {
@@ -281,7 +280,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'egquery',
 while (my $gq = $factory->next_GlobalQuery) {
     print "Database: ",$gq->get_database,"\n";
     print "   Count: ",$gq->get_count,"\n";
-    print "  Status: ",$gq->get_status,"\n ";
+    print "  Status: ",$gq->get_status,"\n\n";
 }
 
 # counts from specific databases
@@ -306,7 +305,7 @@ my @ids = qw(828392 790 470338);
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
                                        -email => 'mymail@foo.bar',
                                        -db    => 'gene',
-                                       -id    => @ids);
+                                       -id    => \@ids);
 
 # iterate through the individual DocSum objects (one per ID)
 while (my $ds = $factory->next_DocSum) {
@@ -315,7 +314,7 @@ while (my $ds = $factory->next_DocSum) {
     # flattened mode, iterates through all Item objects
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\n",$item->get_name,$item->get_content) 
+        printf("%-20s:%s\n",$item->get_name,$item->get_content)
           if $item->get_content;
     }
 
@@ -337,7 +336,7 @@ my @ids = qw(403164 45447012 27806117);
 my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
                                        -email => 'mymail@foo.bar',
                                        -db    => 'protein',
-                                       -id    => @ids);
+                                       -id    => \@ids);
 
 while (my $ds = $factory->next_DocSum) {
     print "ID: ",$ds->get_id,"\n";
@@ -345,7 +344,7 @@ while (my $ds = $factory->next_DocSum) {
     # flattened mode
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\n",$item->get_name,$item->get_content) 
+        printf("%-20s:%s\n",$item->get_name,$item->get_content)
           if $item->get_content;
     }
 
@@ -373,7 +372,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
                                        -email  => 'mymail@foo.bar',
                                        -db     => 'nucleotide',
                                        -dbfrom => 'protein',
-                                       -id     => @ids);
+                                       -id     => \@ids);
 
 # iterate through the LinkSet objects
 
@@ -399,7 +398,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
                                        -db             => 'nucleotide',
                                        -dbfrom         => 'protein',
                                        -correspondence => 1,
-                                       -id             => @ids);
+                                       -id             => \@ids);
 
 # iterate through the LinkSet objects
 
@@ -436,7 +435,7 @@ while (my $ls = $factory->next_LinkSet) {
     print "Neighbor IDs: \n";
 
     for my $id (@ids) {
-        printf("tID:%-15d Score: %d\n",$id, $ls->get_score_by_id($id));
+        printf("\tID:%-15d Score: %d\n",$id, $ls->get_score_by_id($id));
     }
 
 }
@@ -455,7 +454,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'elink',
                                        -email  => 'mymail@foo.bar',
                                        -dbfrom => 'nucleotide',
                                        -cmd    => 'llinks',
-                                       -id     => 
+                                       -id     =>
                   [qw(28864546 53828898 14523048 14336674 1817575)]);
 
 while (my $ls = $factory->next_LinkSet) {
@@ -486,7 +485,7 @@ my $factory = Bio::DB::EUtilities->new(-eutil => 'espell',
                                        -email => 'mymail@foo.bar',
                                        -term  => 'brest cnacer');
 
-print "Did you mean ",$factory->get_corrected_query, "?\n";
+print "Did you mean \",$factory->get_corrected_query, "\"?\n";
 
 ```
 
@@ -506,7 +505,7 @@ my @ids = qw(1621261 89318838 68536103 20807972 730439);
 my $factory = Bio::DB::EUtilities->new(-eutil => 'epost',
                                        -email          => 'mymail@foo.bar',
                                        -db             => 'protein',
-                                       -id             => @ids,
+                                       -id             => \@ids,
                                        -keep_histories => 1);
 
 if (my $history = $factory->next_History) {
@@ -566,7 +565,7 @@ while ($retstart < $count) {
                              -retstart => $retstart);
 
     eval{
-        $factory->get_Response(-cb => 
+        $factory->get_Response(-cb =>
             sub {my ($data) = @_; print $out $data} );
     };
     if ($@) {
@@ -594,9 +593,9 @@ my $eutil = Bio::DB::EUtilities->new(-eutil => 'esearch',
                                      -email      => 'mymail@foo.bar',
                                      -db         => 'nucest',
                                      -term       => 'Drosophila[ORGN]',
-                                     -reldate    => 10, 
+                                     -reldate    => 10,
                                      # records 10 days old or newer
-                                     -datetype   => 'pdat', 
+                                     -datetype   => 'pdat',
                                      #publication date
                                      -usehistory => 'y'
                                      );
@@ -630,7 +629,7 @@ my @ids = @ARGV;
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'esummary',
                                      -email => 'mymail@foo.bar',
                                      -db    => 'gene',
-                                     -id    => @ids);
+                                     -id    => \@ids);
 
 my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -email => 'mymail@foo.bar',
@@ -641,9 +640,9 @@ while (my $docsum = $eutil->next_DocSum) {
     # to ensure we grab the right ChrStart information, we grab the Item above
     # it in the Item hierarchy (visible via print_all from the eutil instance)
     my ($item) = $docsum->get_Items_by_name('GenomicInfoType');
-    
+
     my %item_data = map {$_ => 0} qw(ChrAccVer ChrStart ChrStop);
-    
+
     while (my $sub_item = $item->next_subItem) {
         if (exists $item_data{$sub_item->get_name}) {
             $item_data{$sub_item->get_name} = $sub_item->get_content;
@@ -653,14 +652,14 @@ while (my $docsum = $eutil->next_DocSum) {
     for my $check (qw(ChrAccVer ChrStart ChrStop)) {
         die "$check not set" unless $item_data{$check};
     }
-    
+
     my $strand = $item_data{ChrStart} > $item_data{ChrStop} ? 2 : 1;
     printf("Retrieving %s, from %d-%d, strand %d\n", $item_data{ChrAccVer},
                                                     $item_data{ChrStart},
                                                     $item_data{ChrStop},
                                                     $strand
                                                     );
-    
+
     $fetcher->set_parameters(-id => $item_data{ChrAccVer},
                              -seq_start => $item_data{ChrStart} + 1,
                              -seq_stop  => $item_data{ChrStop} + 1,
@@ -682,7 +681,7 @@ my @ids = @ARGV;
 my $eutil = Bio::DB::EUtilities->new(-eutil => 'esummary',
                                      -email => 'mymail@foo.bar',
                                      -db    => 'gene',
-                                     -id    => @ids);
+                                     -id    => \@ids);
 
 my $fetcher = Bio::DB::EUtilities->new(-eutil => 'efetch',
                                        -email   => 'mymail@foo.bar',
@@ -696,13 +695,13 @@ while (my $docsum = $eutil->next_DocSum) {
 
     my ($item) = $docsum->get_Items_by_name('GenomicInfoType');
     next unless $item;
-    
+
     my ($acc, $start, $end) = ($item->get_contents_by_name('ChrAccVer'),
                                $item->get_contents_by_name('ChrStart'),
                                $item->get_contents_by_name('ChrStop'));
 
     my $strand = $start > $end ? 2 : 1;
-    printf("Retrieving %s, from %d-%d, strand %d\n", 
+    printf("Retrieving %s, from %d-%d, strand %d\n",
       $acc, $start, $end,$strand );
     $fetcher->set_parameters(-id        => $acc,
                              -seq_start => $start + 1,
@@ -737,7 +736,7 @@ my @uids = $factory->get_ids;
 
 $factory->reset_parameters(-eutil => 'esummary',
                            -db    => 'protein',
-                           -id    => @uids);
+                           -id    => \@uids);
 
 while (my $ds = $factory->next_DocSum) {
     print "ID: ",$ds->get_id,"\n";
@@ -745,7 +744,7 @@ while (my $ds = $factory->next_DocSum) {
     # flattened mode
     while (my $item = $ds->next_Item('flattened'))  {
         # not all Items have content, so need to check...
-        printf("%-20s:%s\n",$item->get_name,$item->get_content) 
+        printf("%-20s:%s\n",$item->get_name,$item->get_content)
           if $item->get_content;
     }
     print "\n";
@@ -801,7 +800,7 @@ for my $ds ( $factory->get_DocSums) {
     print "ID: ",$ds->get_id,"\n";
 
     while (my $item = $ds->next_Item('flattened'))  {
-        printf("%-20s:%s\n", $item->get_name, $item->get_content) 
+        printf("%-20s:%s\n", $item->get_name, $item->get_content)
           if $item->get_content;
 
     }
@@ -837,14 +836,14 @@ $factory->reset_parameters(-eutil => 'elink',
                            -dbfrom      => 'pcassay',
                            -linkname    => 'pcassay_pccompound_active',
                            -cmd         => 'neighbor_history',
-                           -id          => @ids);
+                           -id          => \@ids);
 
 my $hist = $factory->next_History || die "Arghh!";
 
 # you may want to iterate through chunks of summary info using retstart/retmax
 $factory->reset_parameters(-eutil => 'esummary',
                            -db    => 'pccompound',
-                           -history => $hist); 
+                           -history => $hist);
 
 $factory->print_all;
 
@@ -893,4 +892,3 @@ References / See Also
 
 - [HOWTO:EUtilities Web Service](EUtilities_Web_Service_HOWTO.html) - more info about the SOAP interface
 - The official [NCBI EUtilities Help manual](http://www.ncbi.nlm.nih.gov/books/NBK25501/)
-
