@@ -113,7 +113,7 @@ One way to think about an object in software is that it is a container for data.
 
 All objects in Bioperl are created by specific Bioperl modules, so if you want to create an object you're also going to have to tell Perl which module to use. Let's add another line:
 
-~~~perl
+~~~ perl
 #!/bin/perl -w
 
 use Bio::Seq;
