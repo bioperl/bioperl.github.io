@@ -113,11 +113,11 @@ One way to think about an object in software is that it is a container for data.
 
 All objects in Bioperl are created by specific Bioperl modules, so if you want to create an object you're also going to have to tell Perl which module to use. Let's add another line:
 
-```perl
+~~~perl
 #!/bin/perl -w
 
 use Bio::Seq;
-```
+~~~
 
 This line tells Perl to use a module on your machine called *Bio/Seq.pm*. We will use this module to create a object. The module is one of the central modules in Bioperl. The analogous object, or *Sequence object*, or *Seq object*, is ubiquitous in Bioperl, it contains a single sequence and associated names, identifiers, and properties. Let's create a very simple sequence object at first, like so:
 
