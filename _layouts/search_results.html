@@ -24,7 +24,6 @@ $(window).load(function() {
 		contentType: "application/json",
 		dataType: "json",
 		success: function (data) {
-			var search_output = [];
 			var regex = new RegExp(search_term, "i");
 			$.each(data, function(key, val) {
 				if ( regex.test(val.content) || regex.test(val.title) ) {
