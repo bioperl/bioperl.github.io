@@ -34,26 +34,10 @@
                     </div>
                 <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
                 <script type="text/javascript">
-                // Search the _site/search.json file, created by the search.json Liquid template
-                $("#search-btn").click(function(){
-                    // getJSON() is asynchronous, do this to get its results 
-                    $(document).bind('PrintResults', PrintResults)
-                    var regex = new RegExp($("#search-txt").val(),"i");
-                    // The JSON must be valid, otherwise this fails without an error
-                    $.getJSON('search.json', function(data) {
-                        var search_output = [];
-                        $.each(data, function(key, val) {
-                            if ( regex.test(val.content) || regex.test(val.title) ) {
-                                search_output.push(val.title);
-                            };
-                        });
-                        window.data = search_output;
-                        $(document).trigger('PrintResults');
-                    });
-                    function PrintResults(evt) {
-                        // window.open("search_results.html","_self");
-                        console.log(window.data);
-                    }
+                $("#search-btn").click(function(evt) {
+                    var url = '/search_results.html?term=' + $("#search-txt").val();
+                    var child_win = window.open(url, 'Search Results');
+                    child_win.focus();
                 });
                 </script>
                 </div>

@@ -1,0 +1,40 @@
+---
+layout: default
+---
+<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+function getTerm() {
+    var Regex = /term=([^&#]+)$/;
+    var matches = Regex.exec(window.location.href);
+    return matches[1];
+}
+
+$(window).load(function() {
+	var search_term = getTerm();
+	if ( search_term == '' ) {
+		alert("No search string");
+		return false;
+	}
+
+	$.ajax({
+		// The _site/search.json file is created by search.json Liquid template,
+		// and if this JSON is invalid then this function fails without an error
+		url: "/search.json",
+		contentType: "application/json",
+		dataType: "json",
+		success: function (data) {
+			var search_output = [];
+			var regex = new RegExp(search_term, "i");
+			$.each(data, function(key, val) {
+				if ( regex.test(val.content) || regex.test(val.title) ) {
+					$("#searchresults").append('<p><a href="' + val.href + '">' + val.href + '</a></p>');
+				};
+			});
+		}
+	});
+});
+                
+</script>
+<div id="searchresults" class="searchresults">
+</div>
