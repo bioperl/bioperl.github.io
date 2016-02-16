@@ -2597,6 +2597,11 @@ tbody tr:nth-child(odd) {
     color: #2dcc;
     /* background around question mark */
     background: #2dcc70;
+    /* border around question mark */
+    border-left: solid 1px #2dcc70;
+    border-right: solid 1px #2dcc70;
+    border-top: solid 1px #2dcc70;
+    border-bottom: solid 1px #2dcc70;
     /*
     margin: 2px 0 0 0;
     box-shadow: none;
