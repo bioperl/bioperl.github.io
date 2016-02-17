@@ -7,7 +7,7 @@ layout: default
 function getTerm() {
     var Regex = /term=([^&#]*)$/;
     var matches = Regex.exec(window.location.href);
-    return matches[1];
+    return decodeURIComponent(matches[1]);
 }
 
 $(window).load(function() {
@@ -24,7 +24,7 @@ $(window).load(function() {
 		contentType: "application/json",
 		dataType: "json",
 		success: function (data) {
-			var regex = new RegExp(search_term, "i");
+			var regex = new RegExp( search_term, "i");
 			var have_match = false;
 			$.each(data, function(key, val) {
 				if ( regex.test(val.content) || regex.test(val.title) ) {
