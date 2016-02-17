@@ -25,13 +25,20 @@ $(window).load(function() {
 		dataType: "json",
 		success: function (data) {
 			var regex = new RegExp(search_term, "i");
+			var have_match = false;
 			$.each(data, function(key, val) {
 				if ( regex.test(val.content) || regex.test(val.title) ) {
 					// Remove leading /	
 					var page_name = val.href.replace(new RegExp( /^\// ), '');
-					$("#searchresults").append('<p><a href="' + val.href + '">' + page_name + '</a></p>');
+					$("#searchresults").append('<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="' + val.href + '">' + page_name + '</a></p>');
+					have_match = true;
 				};
 			});
+			if ( have_match == false ) {
+				$("#searchresults").append('<p class="navbar-text">No match to <b>' + search_term + '</b></p>');
+			} else {
+				$( '<p class="navbar-text">Match to <b>' + search_term + '</b>:</p>' ).insertBefore( "#searchresults" );
+			}
 		}
 	});
 });

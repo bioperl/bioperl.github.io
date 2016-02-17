@@ -39,6 +39,13 @@
                     var child_win = window.open(url, 'Search Results');
                     child_win.focus();
                 });
+                $(document).keypress(function(evt) {
+                    if( evt.which == 13 ) {
+                        var url = '/search_results.html?term=' + $("#search-txt").val();
+                        var child_win = window.open(url, 'Search Results');
+                        child_win.focus();
+                    }
+                });
                 </script>
                 </div>
             </div>
