@@ -1,7 +1,6 @@
 <header id="header">
     <div class="top-bar">
         <div class="container">
-            <!-- <a class="navbar-brand" href="/index.html"><img src="/images/BioPerl-txt.png" alt="BioPerl logo"></a> -->
             <a class="navbar-brand" style="font-size: 35px; text-decoration: none" href="/index.html">BioPerl</a>
             <div class="pull-right">
                 <ul class="social-share">
@@ -33,21 +32,21 @@
                             </button>
                         </span>
                     </div>
-                <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
-                <script type="text/javascript">
-                $("#search-btn").click(function(evt) {
-                    var url = '/search_results.html?term=' + $("#search-txt").val();
-                    var child_win = window.open(url, 'Search Results');
-                    child_win.focus();
-                });
-                $(document).keypress(function(evt) {
-                    if ( evt.which == 13 ) {
+                    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+                    <script type="text/javascript">
+                    $("#search-btn").click(function(evt) {
                         var url = '/search_results.html?term=' + $("#search-txt").val();
                         var child_win = window.open(url, 'Search Results');
                         child_win.focus();
-                    }
-                });
-                </script>
+                    });
+                    $(document).keypress(function(evt) {
+                        if ( evt.which == 13 ) {
+                            var url = '/search_results.html?term=' + $("#search-txt").val();
+                            var child_win = window.open(url, 'Search Results');
+                            child_win.focus();
+                        }
+                    });
+                    </script>
                 </div>
             </div>
         </div>
