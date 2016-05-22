@@ -117,7 +117,7 @@ eval "require $class";
 print join (" ", sort @{Class::Inspector->methods($class,'full','public')});
 ```
 
-There is also a project called [Deobfuscator](http://bioperl.org/cgi-bin/deob_interface.cgi) developed during the 2005 [Bioinformatics course](http://stein.cshl.org/genome_informatics/Advanced) at [Cold Spring Harbor Labs](http://www.cshl.edu). The Deobfuscator displays available methods for an object type and provide links to the return types of the methods. An older version can also be found [here](http://davemessina.net/cgi-bin/deob_interface.cgi).
+There is also a project called [Deobfuscator](https://metacpan.org/pod/distribution/BioPerl/doc/Deobfuscator/lib/Deobfuscator.pm) developed during the 2005 [Bioinformatics course](http://stein.cshl.org/genome_informatics/Advanced) at [Cold Spring Harbor Labs](http://www.cshl.edu). The Deobfuscator displays available methods for an object type and provide links to the return types of the methods. An older version can also be found [here](http://davemessina.net/cgi-bin/deob_interface.cgi).
 
 ### Can you explain the Object Model design and rationale?
 
