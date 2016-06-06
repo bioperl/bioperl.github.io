@@ -14,8 +14,9 @@ encoding: UTF-8
 
 markdown_ext: markdown,mkdown,mkdn,mkd,mkd,md
 markdown: kramdown
-redcarpet:
-   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", 
-                "fenced_code_blocks", "no_intra_emphasis", "quote"]
+kramdown:
+  syntax_highlighter: rouge
 
-
+#redcarpet:
+#   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", 
+#                "fenced_code_blocks", "no_intra_emphasis", "quote"]
