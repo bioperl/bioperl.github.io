@@ -58,13 +58,17 @@ large.
 
 Briefly, you can generate the patch using the following command:
 
-`diff -u old new`
+```
+diff -u old new
+```
 
 For best results, follow this example:
 
-`cd $YOUR_WORKING_DIST_DIRECTORY/Bio/Frobnicator`
-`git pull`
-`git diff GrokFrobnicator.pm > my-patch.dif`
+```
+cd $YOUR_WORKING_DIST_DIRECTORY/Bio/Frobnicator
+git pull
+git diff GrokFrobnicator.pm > my-patch.dif
+```
 
 We also accept patches as an issue on GitHub; submit the patch as a [GitHub
 Gist](https://gist.github.com). Even better, submit a pull request on GitHub.
