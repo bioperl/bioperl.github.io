@@ -12,12 +12,14 @@ encoding: UTF-8
 # rdiscount partially formats the '''perl blocks, no highlighting
 # kramdown does not format Perl correctly, the blocks are not recognized
 markdown_ext: markdown,mkdown,mkdn,mkd,mkd,md
-highlighter: rouge
-markdown: kramdown
-kramdown:
-  input: GFM
-  auto_ids: true
-  syntax_highlighter: rouge
+
+# highlighter: rouge
+# markdown: kramdown
+# kramdown:
+#   input: GFM
+#   auto_ids: true
+#   syntax_highlighter: rouge
 
 #redcarpet:
-#   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data","fenced_code_blocks", "no_intra_emphasis", "quote"]
+#   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data",
+# "fenced_code_blocks", "no_intra_emphasis", "quote"]
