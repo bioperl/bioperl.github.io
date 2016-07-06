@@ -361,9 +361,10 @@ To set or assign a value:
 $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 ```
 
+
 |--------+-----------+------------+--------|
 | Name   | Returns   | Example    | Note   |
-|----------|----------|---------|---------------------|
+|--------|-----------|------------|--------|
 | accession_number          | identifier                                  | $acc = $so->accession_number            | get or set an identifier                                    |
 | alphabet                   | alphabet                                    | $so->alphabet('dna')                 | get or set the alphabet ('dna','rna','protein') |
 | authority                  | authority, if available                     | $so->authority("DB")                | get or set the organization                                 |
@@ -396,8 +397,8 @@ The table above shows the methods you're likely to use with the Sequence object 
 There are also a number of methods that are concerned with the Features and Annotations associated with the Sequence object. This is something of a tangent but if you'd like to learn more see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html). The methods related to this topic are shown below.
 
 |--------+-----------+------------|
-| Name                  | Returns        | Note                  |
-|-----------------------|----------------|-----------------------|
+| Name                  | Returns        | Note               |
+|-----------------------|----------------|--------------------|
 | get_SeqFeatures      | array of SeqFeature objects            |                       |
 | get_all_SeqFeatures | array of SeqFeature objects array      | includes sub-features |
 | remove_SeqFeatures   | array of SeqFeatures removed           |                       |
