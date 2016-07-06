@@ -361,6 +361,7 @@ To set or assign a value:
 $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 ```
 
+The table below shows the methods you're likely to use with the Sequence object directly. Bear in mind that not all values, such as `molecule` or `division`, are found in all sequence formats, you have to know something about your input sequences in order to get some of these values.
 
 |--------+-----------+------------+--------|
 | Name   | Returns   | Example    | Note   |
@@ -392,18 +393,16 @@ $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 
 Table 1. Sequence objects method.
 
-The table above shows the methods you're likely to use with the Sequence object directly. Bear in mind that not all values, such as `molecule` or `division`, are found in all sequence formats, you have to know something about your input sequences in order to get some of these values.
-
 There are also a number of methods that are concerned with the Features and Annotations associated with the Sequence object. This is something of a tangent but if you'd like to learn more see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html). The methods related to this topic are shown below.
 
 |--------+-----------+------------|
-| Name                  | Returns        | Note               |
-|-----------------------|----------------|--------------------|
-| get_SeqFeatures      | array of SeqFeature objects            |                       |
+| Name   | Returns   | Note       |
+|--------|-----------|------------|
+| get_SeqFeatures      | array of SeqFeature objects |                       |
 | get_all_SeqFeatures | array of SeqFeature objects array      | includes sub-features |
-| remove_SeqFeatures   | array of SeqFeatures removed           |                       |
-| feature_count        | number of SeqFeature objects           |                       |
-| add_SeqFeature       | annotation array of Annotation objects | get or set            |
+| remove_SeqFeatures   | array of SeqFeatures removed |                       |
+| feature_count        | number of SeqFeature objects |                       |
+| add_SeqFeature       | annotation array of Annotation objects | get or set |
 |--------+-----------+------------|
 Table 2. Feature and Annotation methods.
 
