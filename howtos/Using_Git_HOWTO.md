@@ -30,6 +30,7 @@ Alternatively, you can checkout (or *clone*) a specific BioPerl package such as 
 Bioperl GitHub Repositories
 ---------------------------
 
+|--------+-----------|
 |       Link        |  Description |
 |--------------------------------------------------------------------|----|
 | [bioperl-live](http://github.com/bioperl/bioperl-live)             | Core package including parsers and main objects |
@@ -41,6 +42,8 @@ Bioperl GitHub Repositories
 | [bioperl-pedigree](http://github.com/bioperl/bioperl-pedigree)     | Pedigree package has objects for Pedigrees, Individuals, Markers, & Genotypes  |
 | [bioperl-gui](http://github.com/bioperl/bioperl-gui)               | GUI package which for Perl-[Tk](http://www.tcl.tk/) objects for a *G*raphical *U*ser *I*nterface. Serves as the basis for [Genquire](http://www.bioinformatics.org/Genquire/) |
 | [bioperl-microarray](http://github.com/bioperl/bioperl-microarray) | Microarray package  has preliminary objects for microarray data    |
+|--------+-----------|
+
 Table 1. BioPerl packages
 
 ### Release tags and branches

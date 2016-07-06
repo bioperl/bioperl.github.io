@@ -126,6 +126,7 @@ The Other Tags
 
 Any number of additional tag values are allowed. The number and nature of these tags depends on the access protocol selected. Some protocols require no additional tags, whereas others will require several.
 
+|--------+-----------+------------+------------|
 | Protocol | Tag      | Description  | Note       |
 |----------|----------|--------------------|--------------------|
 | flat     | location | Directory in which the database directory is stored |    |
@@ -134,9 +135,11 @@ Any number of additional tag values are allowed. The number and nature of these 
 | biofetch | dbname   | Name of the database  | `embl, swall` (SwissProt + TREMBL), `refseq, uniprot, swissprot`    |
 | biosql   | location | host:port   |     |
 | biosql   | dbname   | Database name   |                   |
-| biosql   | driver   | |`mysql,Pg,oracle,sybase,sqlserver,access,csv,informix,odbc,rdb`                           | `Pg` is the driver name for PostgreSQL                                      |
+| biosql   | driver   | |`mysql,Pg,oracle,sybase,sqlserver,access,csv,informix,odbc,rdb` | `Pg` is the driver name for PostgreSQL |
 | biosql   | user     | username      |      |
 | biosql   | passwd   | password   |  |
+|--------+-----------+------------+------------|
+
 Table 1. OBDA protocols
 
 Installing Local Databases

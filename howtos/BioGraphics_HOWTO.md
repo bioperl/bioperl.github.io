@@ -18,13 +18,15 @@ This document is copyright Lincoln Stein, 2002. It can be copied and distributed
 Revision History
 ----------------
 
-|                                                                                        |                                                |
+|--------+-----------|
+|               |                                                |
 |-----------------|------------------------------------------------|
 | 2002-09-01                                                                             | Revision History                               |
 | Revision 0.2 2003-05-15 lds                                                            | Current as of BioPerl 1.2.2                    |
 | Revision 0.3 [Torsten Seemann] 06:17, 22 December 2005 (EST) | BioPerl Wiki & fixed figure references.        |
 | Revision 0.4 [Jason Stajich] 13:11, 28 December 2005 (EST)      | Added many links to modules.                   |
 | Revision 0.5 [Mauricio Herrera] 14:56, 29 October 2006 (EST) | Added syntax highlighting and code formatting. |
+|--------+-----------|
 
 Abstract
 --------

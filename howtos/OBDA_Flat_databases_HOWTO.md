@@ -20,7 +20,8 @@ Copyright
 
 This document is copyright Lincoln Stein, 2002. For reproduction other than personal use please contact lstein at cshl.org
 
-|        Version                                  |                        Note        |
+|--------+-----------|
+|        Version          |                        Note        |
 |------------------------------------------|--------------------------------|
 | Revision 1.0 2003-02-26 LS               | First version                  |
 | Revision 1.1 2003-10-17 BIO              |                                |
@@ -28,6 +29,8 @@ This document is copyright Lincoln Stein, 2002. For reproduction other than pers
 | Revision 1.3 2004-05-20 BIO              | Add section on custom indexes  |
 | Revision 1.4 BIO 2005-12-20 BIO| Migrated to wiki               |
 | Revision 1.5 BIO 2015-12-09  BIO| Migrated to GitHub Pages               |
+|--------+-----------|
+
 Table 1. Revision History
 
 Creating OBDA-Compliant Indexed Sequence Files
@@ -60,6 +63,7 @@ The typical usage is as follows:
 
 The following command line options are required:
 
+|--------+-----------|
 | Option | Description                        |
 |--------|------------------------------------|
 | -c     | Create a new index                 |
@@ -67,6 +71,8 @@ The following command line options are required:
 | -d     | Symbolic name for the new database |
 | -i     | Indexing scheme                    |
 | -f     | Source file format                 |
+|--------+-----------|
+
 Table 2. Command Line Options
 
 ## Explanation
@@ -85,12 +91,15 @@ To update an existing index run `bioflat_index.pl` without the -c option and lis
 
 For your convenience, `bioflat_index.pl` will also take values from the following environment variables:
 
+|--------+-----------+------------|
 | Variable       | Description   | Corresponding option |
 |----------------|----------|------------------|
 | OBDA_FORMAT   | Format of sequence file        | -f               |
 | OBDA_LOCATION | Path to directory in which index files are stored | -l               |
 | OBDA_DBNAME   | name of database     | -d               |
 | OBDA_INDEX    | Type of index to create    | -i               |
+|--------+-----------+------------|
+
 Table 3. Environment Variables
 
 Moving Database Files
@@ -128,12 +137,15 @@ The modules will use the first "word" in the fasta header as the primary key (*P
 
 This value turns out to be same value returned by Sequence object's `display_id()` method for sequences in FASTA sequence format. The table below shows the default primary keys of the four formats.
 
+|--------+-----------+------------|
 | Format  | Seq method     | Regular expression |
 |---------|----------------|--------------------|
 | fasta   | `display_id()` | `>(S+)`          |
 | swiss   | `display_id()` | `^IDs+(S+)`    |
 | genbank | `primary_id()` | `^LOCUSs+(S+)` |
 | embl    | `display_id()` | `^IDs+(S+)`    |
+|--------+-----------+------------|
+
 Table 4. Default primary keys by sequence format
 
 What if you wanted to use some other part of the entry as a key, like the GI number in the example above? This could also be called specifying another namespace, or a secondary namespace. No problem, but now you've gone beyond the capabilities of the `bioflat_index` script, you'll need to write your own. It would look something like this:

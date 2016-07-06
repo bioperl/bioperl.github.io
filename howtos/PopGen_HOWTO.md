@@ -18,12 +18,14 @@ This document is copyright [Jason Stajich](http://www.bioperl.org/wiki/Jason_Sta
 Revision History
 ----------------
 
-|                                                                              |                                         |
-|------------------------------------------------------------------------------|-----------------------------------------|
-| Revision 0.1 2004-06-28 JES                                                  | First draft                             |
-| Revision 0.2 2004-02-22 JES                                                  | Updated method docs                     |
-| Revision 0.3 2005-03-05 JES                                                  | Expanded to cover coalescent and others |
-| Revision 0.4 [Torst](http://www.bioperl.org/wiki/User:Tseemann) 06:07, 22 December 2005 (EST) | Wiki version                            |
+|--------+-----------|
+|     Version   |   Note        |
+|-----------|-----------------------------------------|
+| Revision 0.1 2004-06-28 JES     | First draft               |
+| Revision 0.2 2004-02-22 JES    | Updated method docs    |
+| Revision 0.3 2005-03-05 JES    | Expanded to cover coalescent and others|
+| Revision 0.4 06:07, 22 December 2005 (EST) | Wiki version |
+|--------+-----------|
 
 Introduction
 ------------

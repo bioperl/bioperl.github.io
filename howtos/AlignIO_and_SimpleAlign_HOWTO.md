@@ -25,6 +25,7 @@ use Bio::AlignIO; my $io = Bio::AlignIO->new(
 
 If the `-format` argument isn't used then Bioperl will try and determine the format based on the file's suffix, in a case-insensitive manner. Here is the current set of input formats:
 
+|--------+-----------+------------|
 | [Format](/formats/alignment_formats/index.html)    | Suffixes                      | Comment     |
 |-----------|-------------------------------|-------------|
 | bl2seq    |                               |             |
@@ -47,6 +48,8 @@ If the `-format` argument isn't used then Bioperl will try and determine the for
 | [stockholm](/formats/alignment_formats/Stockholm_multiple_alignment_format.html) | `stk`                         | Rfam, Pfam  |
 | [XMFA](/formats/alignment_formats/XMFA_multiple_alignment_format.html)      | `xmfa`                        |             |
 | arp       | `arp`                         | Arlequin    |
+|--------+-----------+------------|
+
 Table 1. AlignIO input formats
 
 The emboss format refers to the output of the water, needle, matcher, stretcher, merger, and supermatcher applications. See <http://emboss.sourceforge.net>.

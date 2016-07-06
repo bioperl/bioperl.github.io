@@ -120,6 +120,7 @@ The focus of this HOWTO is mostly on Genbank format but bear in mind that all of
 
 Features in Bioperl are accessed using their tags, either a *primary tag* or a plain *tag*. Examples of primary tags and tags in this Genbank entry are shown below. You can see that in this case the primary tag is a means to access the tags and it's the tags that are directly associated with the data from the file.
 
+|--------+-----------+------------|
 | Tag name    | Tag type    | Tag value        |
 |-------------|-------------|------------------|
 | source      | primary tag |                  |
@@ -130,6 +131,8 @@ Features in Bioperl are accessed using their tags, either a *primary tag* or a p
 | protein_id | tag         | NP_000257.1     |
 | translation | tag         | MRKHVL...HCEECNS |
 | db_xref    | tag         | MIM:310600       |
+|--------+-----------+------------|
+
 Table 1. Tag examples
 
 When a Genbank file like the one above is parsed the feature data is converted
@@ -263,11 +266,14 @@ To get the sequence string from the start to the end of the tRNA feature use
 locations of each sub-sequence, use `spliced_seq()`. Here are the methods and
 the corresponding example coordinates:
 
+|--------+-----------|
 | Method         | Coordinates       |
 |----------------|-------------------|
 | entire_seq()  | 1..177            |
 | seq()          | 103..157          |
 | spliced_seq() | 103..111,121..157 |
+|--------+-----------|
+
 Table 2. Sequence retrieval methods
 
 It's not unusual for a Genbank file to have multiple CDS or gene features (and
@@ -350,6 +356,7 @@ Both these objects use methods like `overlaps()`, `contains()`, `union()` and
 `intersection()` that act on pairs of Ranges or Locations. The table below is
 meant to illustrate some of the modules' descriptive capabilities.
 
+|--------+-----------|
 | Type      | Example       |
 |-----------|---------------|
 | EXACT     | (5..100)      |
@@ -358,6 +365,8 @@ meant to illustrate some of the modules' descriptive capabilities.
 | WITHIN    | ((5.10)..100) |
 | BETWEEN   | (99^100)      |
 | UNCERTAIN | (99.?100)     |
+|--------+-----------|
+
 Table 3. Location examples
 
 One type that might not be self-explanatory is `WITHIN`. The example means
@@ -491,8 +500,9 @@ my @annotations = $anno_collection->get_Annotations();
 The following is a table of some of the common Annotations, their keys in
 Bioperl, and what they're derived from in Genbank files:
 
-| GenBank Text | Key                  | Object Type | Note                        |
-|--------------|----------------------|-------------|-----------------------------|
+|--------+-----------+------------+------------|
+| GenBank Text | Key    | Object Type | Note                        |
+|--------------|----------------------|-------------|---------------|
 | COMMENT      | comment              | Comment     |                             |
 | SEGMENT      | segment              | SimpleValue | e.g. "1 of 2"               |
 | ORIGIN       | origin               | SimpleValue | e.g. "X Chromosome."        |
@@ -501,6 +511,8 @@ Bioperl, and what they're derived from in Genbank files:
 | KEYWORDS     | keyword              | SimpleValue |                             |
 | ACCESSION    | secondary_accession | SimpleValue | 2nd of 2 accessions         |
 | DBSOURCE     | dblink               | DBLink      | Link to entry in a database |
+|--------+-----------+------------+------------|
+
 Table 4. GenBank Annotation
 
 Some Annotation objects, like Reference, make use of a `hash_tree()` method,
@@ -551,6 +563,7 @@ files can be accessed directly, without looking at SeqFeatures or Annotations.
 
 For example, if the Sequence object in hand is a [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) object then here are some useful methods:
 
+|--------+-----------|
 | Method                     | Returns |
 |----------------------------|---------|
 | `get_secondary_accessions` | array   |
@@ -559,6 +572,8 @@ For example, if the Sequence object in hand is a [Bio::Seq::RichSeq](https://met
 | `seq_version`               | string  |
 | `pid`                       | string  |
 | `division`                   | string  |
+|--------+-----------|
+
 Table 5. [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) methods
 
 These objects are created automatically when you use to read from EMBL, GenBank,GAME, Chado XML, TIGR XML, Locuslink, BSML, KEGG, Entrez Gene, and SwissProt
@@ -572,6 +587,7 @@ It is worth mentioning other sequence file formats. The table below shows what
 sorts of objects, Annotation or SeqFeature, you'll get when you parse other
 sequence formats using .
 
+|--------+-----------+------------+------------|
 | Format      | SeqIO Name | SeqFeature | Annotation |
 |-------------|------------|------------|------------|
 | Genbank     | genbank    | yes        | yes        |
@@ -584,6 +600,8 @@ sequence formats using .
 | KEGG        | kegg       | yes        | yes        |
 | SwissProt   | swiss      | yes        | yes        |
 | Entrez Gene | entrezgene | no         | yes        |
+|--------+-----------+------------+------------|
+
 Table 6. Formats, SeqFeature's, and Annotations
 
 How does one find out what data is in which object in these formats? In general
@@ -638,6 +656,7 @@ my %tagname_type = map {$_->as_text,($_->tagname . " " . ref($_)) }
 
 The contents of the `%tagname_type` hash can be represented in table form, below.
 
+|--------+-----------+------------|
 | `as_text`     | `tagname`            | `ref`                         |
 |-------------------|----------------------|--------------------|
 | Direct database link to AAA93114 in database GenBank                  | dblink               | Bio::Annotation::DBLink       |
@@ -660,6 +679,8 @@ The contents of the `%tagname_type` hash can be represented in table form, below
 | Direct database link to Hs.52931 in database UniGene                  | dblink               | Bio::Annotation::DBLink       |
 | Direct database link to M11313 in database GenBank                    | dblink               | Bio::Annotation::DBLink       |
 | Direct database link to P35348 in database GenBank                    | dblink               | Bio::Annotation::DBLink       |
+|--------+-----------+------------|
+
 Table 7. LocusLink Annotations
 
 The output from the script shows that Locuslink Annotations come in a variety of types, including `DBLink`, `OntologyTerm`, `Comment`, and `SimpleValue`. In order to extract the exact value you want, as opposed to the one returned by the `as_text` method, you'll need to find the desired method in the documentation for the Annotation in question.

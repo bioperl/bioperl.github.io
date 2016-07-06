@@ -20,13 +20,16 @@ This document is copyright [Jason Stajich](http://lab.stajich.org/home/people/ja
 Revision History
 ----------------
 
-| | |
+|--------+-----------|
+| Version | Note |
 |---|---|
 | Revision 0.1 2003-12-01 JES | First version |
 | Revision 0.2 2004-11-05 BIO | Add SVG section and links |
 | Revision 0.3 2005-07-11 JES | Explore Node objects more |
 | Revision 0.4 [Torst] 05:49, 22 December 2005 (EST) | Wiki version |
 | Revision 0.41 MAJ 2015-12-05 | Port to bioperl.github.io |
+|--------+-----------|
+
 Table 1. History
 
 Abstract
@@ -66,6 +69,7 @@ to [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) and it will automatically
 An additional function was written to do this work in [Bio::Tree::TreeFunctionsI](https://metacpan.org/pod/Bio::Tree::TreeFunctionsI) called `move_id_to_bootstrap` which will do this work for you as well. Call it on a [Bio::Tree::Tree](https://metacpan.org/pod/Bio::Tree::Tree)
 object.
 
+|--------+-----------+------------+------------|
 | Format   | Description | File extension | Module |
 |---|---|---|---|
 | cluster  | Algorithm::Cluster::treecluster() output |                |        |
@@ -78,6 +82,8 @@ object.
 | phyloxml | PhyloXML | xml            |        |
 | svggraph | converts a Tree object to an SVG output | svg            |        |
 | tabtree  | format which displays a tree as an ASCII drawing |                
+|--------+-----------+------------+------------|
+
 Table 2. [Bio::TreeIO](https://metacpan.org/pod/Bio::TreeIO) formats
 
 Also see [Tree Formats](/formats/tree_formats/index.html).

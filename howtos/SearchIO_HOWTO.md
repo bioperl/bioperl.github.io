@@ -30,6 +30,7 @@ The [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) object is then a fac
 
 The generality of the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) approach is demonstrated by the large number of report formats that have appeared since its introduction. These formats are listed below.
 
+|--------+-----------|
 | Name | Description |
 |------|----------------------------------------------------------------|
 |blast| BLAST (BLAST, PSIBLAST, PSITBLASTN, RPSBLAST, WUBLAST, bl2seq, WU-BLAST, BLASTZ, BLAT, Paracel BTK ) |
@@ -47,6 +48,7 @@ The generality of the [Bio::SearchIO](https://metacpan.org/pod/Bio::SearchIO) ap
 |exonerate| Exonerate CIGAR |
 |wise| Genewise -genesf |
 |rnamotif| raw rnamotif output for RNAMotif versions 3.0 and above
+|--------+-----------|
 
 Table 1. Bio::SearchIO input formats.
 
@@ -124,8 +126,9 @@ A plaintext NCBI-BLAST report like that used in the example above probably remai
 
 ### Table of Methods
 
-| Object | Method                | Example                             | Description                         |
-|--------|-----------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+|--------+-----------+------------+------------|
+| Object | Method | Example  | Description     |
+|--------|-----------------------|------------|---------------|
 | Result | algorithm             | BLASTX | algorithm string                    |
 | Result | algorithm_version    | 2.2.4 [Aug-26-2002]               | algorithm version                   |
 | Result | query_name           | gi|20521485|dbj|AP004641.2          | query name                          |
@@ -140,11 +143,13 @@ A plaintext NCBI-BLAST report like that used in the example above probably remai
 | Result | num_hits             | 1      | number of hits                      |
 | Result | hits               |        | List of all [Bio::Search::Hit::GenericHit](https://metacpan.org/pod/Bio::Search::Hit::GenericHit) objects for this Result       |
 | Result | rewind             |        | Reset the internal iterator that dictates where next_hit() is pointing, useful for re-iterating through the list of hits |
+|--------+-----------+------------+------------|
 
 Table 2.1: The data returned by the Result object methods when the report shown above is used as input. 
 
 Note that many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
+|--------+-----------+------------+------------|
 | Object | Method            | Example          | Description  |
 |--------|-------------------|------------------|--------------------------|
 | Hit    | name              | gb|443893|124775 | hit name |
@@ -160,15 +165,15 @@ Note that many of the methods shown can be used to either get or set values, but
 | Hit    | locus             | 124775           | locus name  |
 | Hit    | accession_number | 443893           | accession number |
 | Hit    | rewind            |                  | Resets the internal counter for next_hsp() so that the iterator will begin at the beginning of the list |
-
+|--------+-----------+------------+------------|
 
 Table 2.2. The data returned by Hit object methods when the report shown above is used as input.
 
 Many of the methods shown can be used to either get or set values, but we're just showing what they get.
 
-
+|--------+-----------+------------+------------|
 | Object | Method                  | Example     | Description  |
-|--------|----------------------------------------------|-------|-------|
+|--------|---------------------|-------|-------|
 | HSP    | algorithm               | BLASTX      | algorithm     |
 | HSP    | evalue                  | 2e-022      | e-value  |
 | HSP    | expect                  | 2e-022      | alias for evalue()           |
@@ -208,6 +213,7 @@ Many of the methods shown can be used to either get or set values, but we're jus
 | HSP    | get_aln | sequence alignment           | [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) object  |
 | HSPt | hsp_group   | *Not available in this report* | Group field from WU-BLAST reports run with -topcomboN or -topcomboE specified          |
 | HSP    | links   | *Not available in this report* | Links field from WU-BLAST reports run with -links showing consistent HSP linking       |
+|--------+-----------+------------+------------|
 
 Table 2.3. The data returned by HSP object methods when the report shown above is used as input. 
 
@@ -237,12 +243,14 @@ On one hand it appears to be a complication, but by entering the worlds of the a
 
 Some of these methods deserve a bit more explanation since they do more than simply extract data directly from the output. For example, the `ambiguous_aln()` method is designed to tell us whether two or more HSPs from a given hit overlap, and whether the overlap refers to the queries or the hits, or both. One situation is where overlaps would be found in one but not the other arises where there are repeats in the query or hit. The `ambiguous_aln()` method will return one of these 4 values:
 
+|--------+-----------|
 | Value | Description |
 |------|----------------------------------------------------------------|
 | q   | query sequence contains overlapping sub-sequences while hit sequence does not |
 | s   | hit sequence contains overlapping sub-sequences while query does not |
 | qw  | query and hit sequences contain overlapping sub-sequences relative to each other |
 | -   | query and hit sequence do not contain multiple domains relative to each other OR both contain the same distribution of similar domains |
+|--------+-----------|
 
 Table 2.4. Values used by the `ambiguous_aln` method.
 

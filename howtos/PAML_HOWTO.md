@@ -20,15 +20,16 @@ This document is copyright Aaron Mackey and Jason Stajich. For reproduction othe
 Revision History
 ----------------
 
-|                                                                              |                                                                        |
-|------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| Revision 0.1 2002-08-01 ajm                                                  | first draft                                                            |
+|--------+-----------|
+|      Version      |     Note    |
+|----------------|------------------------------------|
+| Revision 0.1 2002-08-01 ajm      | first draft    |
 | Revision 0.2 2003-03-01 jes                                                  | Added pairwise Ka,Ks example code and running code                     |
-| Revision 0.3 2005-03-15 jes                                                  | Added branch-specific paramater parsing (NSsites and per-branch rates) |
-| Revision 0.4 [Torst] 06:09, 22 December 2005 (EST) | Wiki version                                                           |
-| Revision 0.5 [jason stajich] 20:46, 8 May 2006 (EDT)  | Code tags and References                                               |
-| Revision [jason stajich] 20:51, 7 February 2008 (EST) | Added info about printing tree labels.                                 |
-||
+| Revision 0.3 2005-03-15 jes | Added branch-specific paramater parsing (NSsites and per-branch rates) |
+| Revision 0.4 06:09, 22 December 2005 (EST) | Wiki version             |
+| Revision 0.5 20:46, 8 May 2006 (EDT)  | Code tags and References   |
+| Revision 20:51, 7 February 2008 (EST) | Added info about printing tree labels.  |
+|--------+-----------|
 
 Abstract
 ========

@@ -57,12 +57,15 @@ There are two modes of action.
 
 The first is a simple pipeline through the `maq` commands, taking your read data in and squirting out an assembly object of type [Bio::Assembly::IO::maq](https://metacpan.org/pod/Bio::Assembly::IO::maq). The pipeline is based on the one performed by `maq.pl easyrun`:
 
+|--------+-----------|
 | Action                                | `maq` Commands         |
 |---------------------------------------|------------------------|
 | data conversion to maq binary formats | `fasta2bfa, fastq2bfq` |
 | map sequence reads to reference seq   | `map`                  |
 | assemble, creating consensus          | `assemble`             |
 | convert map & cns files to plaintext  | `mapview, cns2fq`      |
+|--------+-----------|
+
 Table 1. `maq` commands
 
 Command-line options can be directed to the `map`, `assemble`, and `cns2fq` steps. See Specifying Options.

@@ -57,10 +57,11 @@ Formats
 
 BioPerl's SeqIO system understands lot of formats and can interconvert all of them. Here is a current listing of formats, as of version 1.6.
 
+|--------+-----------+------------|
 | Name      | Description    | File extension |
 |-----|----------|------------------------|
-[abi](https://metacpan.org/pod/Bio::SeqIO::abi)                                                               | ABI tracefile                | ab[i1]    |
-[ace](https://metacpan.org/pod/Bio::SeqIO::ace)                                                               | Ace database               | ace    |
+[abi](https://metacpan.org/pod/Bio::SeqIO::abi)  | ABI tracefile                | ab[i1]    |
+[ace](https://metacpan.org/pod/Bio::SeqIO::ace)    | Ace database               | ace    |
 [agave](https://metacpan.org/pod/Bio::SeqIO::agave)                                                             | AGAVE XML                  |               |
 [alf](https://metacpan.org/pod/Bio::SeqIO::alf)                                                               | ALF tracefile                | alf          |
 [asciitree](https://metacpan.org/pod/Bio::SeqIO::asciitree)                 | write-only, to visualize features                              |      |
@@ -101,6 +102,7 @@ BioPerl's SeqIO system understands lot of formats and can interconvert all of th
 [tigrxml](https://metacpan.org/pod/Bio::SeqIO::tigrxml)                       | TIGR Coordset XML                                              |                                    |
 [tinyseq](https://metacpan.org/pod/Bio::SeqIO::tinyseq)                     | NCBI TinySeq XML                                               |                                    |
 [ztr](https://metacpan.org/pod/Bio::SeqIO::ztr)                                                               | ZTR tracefile                | ztr                               |
+|--------+-----------+------------|
 
 Table 1. SeqIO formats.
 
@@ -108,6 +110,7 @@ Table 1. SeqIO formats.
 
 For some one of the initial perplexities of BioPerl is the variety of different sequence objects, and this gives rise to questions like "How do I convert a PrimarySeq object into a RichSeq object?". The answer is that one should never have to do this, SeqIO takes care of all these conversions. The reason for these different objects in the first place has to with the information, or lack of information, inherent to the different file formats. Though we just said that the conversions are done automatically we offer this table that shows some common formats and their corresponding object types, just to satisfy the curious.
 
+|--------+-----------|
 | Format  | Object Type |
 |---------|-------------|
 | fasta   | [Bio::Seq](https://metacpan.org/pod/Bio::Seq) |
@@ -118,6 +121,8 @@ For some one of the initial perplexities of BioPerl is the variety of different 
 | ace     | [Bio::PrimarySeq](https://metacpan.org/pod/Bio::PrimarySeq) |
 | bsml    | [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) |
 | swiss   | [Bio::Seq::RichSeq](https://metacpan.org/pod/Bio::Seq::RichSeq) |
+|--------+-----------|
+
 Table 2. Some formats and the objects that SeqIO creates from them.
 
 Working Examples
