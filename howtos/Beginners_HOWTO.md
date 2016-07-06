@@ -496,7 +496,7 @@ ORIGIN  1 aaccctagca ctgcgccgaa atatggcatc cgtggtatcc cgactctgct gctgttcaaa
 Either way, the values returned by various methods are shown below.
 
 |--------+-----------|
-| Method    | Returns                                                        |
+| Method    | Returns                                              |
 |----------------------------|-----------------------------------------------|
 | display_id                |ECORHO                                                         |
 | desc                       | E.coli rho gene coding for transcription termination factor.   |
@@ -533,8 +533,8 @@ CTGGAATTTGCTGGCATGTTATGCAATTTGCATATCAAATGGTTAATTTTTGCACAGGAC
 And here are the values:
 
 |--------+-----------|
-| Method        | Returns                                                     |
-|---------------|-------------------------------------------------------------|
+| Method        | Returns                                        |
+|---------------|------------------------------------------------|
 | display_id   | gi|147605|gb|J01673.1|ECORHO                                |
 | desc          | E.coli rho gene coding for transcription termination factor |
 | display_name | gi|147605|gb|J01673.1|ECORHO                                |
