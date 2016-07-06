@@ -404,6 +404,7 @@ There are also a number of methods that are concerned with the Features and Anno
 | feature_count        | number of SeqFeature objects |                       |
 | add_SeqFeature       | annotation array of Annotation objects | get or set |
 |--------+-----------+------------|
+
 Table 2. Feature and Annotation methods.
 
 ## Example Sequence Objects
