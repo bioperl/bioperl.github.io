@@ -516,6 +516,7 @@ Either way, the values returned by various methods are shown below.
 | get_dates                 | 26-APR-1993                                                    |
 | get_secondary_accessions | J01674                                                         |
 |--------+-----------|
+
 Table 3. Values from Genbank.
 
 There's a few comments that need to be made. First, you noticed that there's an awful lot of information missing. All of this missing information is stored in what Bioperl calls Features and Annotations, see the [Feature and Annotation HOWTO](Features_and_Annotations_HOWTO.html) if you'd like to learn more about this. Second, a few of the methods don't return anything, like `namespace` and `authority`. The reason is that though these are good values in principle there are no commonly agreed upon standard names - perhaps someday the authors will be able to rewrite the code when all our public databases agree what these values should be. Finally, you may be wondering why the method names are what they are and why particular fields or identifiers end up associated with particular methods. Again, without having standard names for things that are agreed upon by the creators of our public databases all the authors could do is use common sense, and these choices seem to be reasonable ones.
@@ -547,6 +548,7 @@ And here are the values:
 | length        | 1880                                                        |
 | seq           | AACCCT...ACAGGAC                                            |
 |--------+-----------|
+
 Table 4. Values from Fasta.
 
 If you compare these values to the values taken from the Genbank entry you'll see that certain values are missing, like `seq_version`. That's because values like these aren't usually present in a Fasta file.
@@ -655,6 +657,7 @@ The corresponding set of values is shown below.
 | get_dates                 | 28-FEB-2003 (Rel. 41, Created)                  |
 | get_secondary_accessions | Q8R2H6 Q8R4G3                                   |
 |--------+-----------|
+
 Table 5. Values from SwissProt.
 
 As in the Genbank example there's information that the Sequence object doesn't supply, and it's all stored in Annotation objects. See the [Feature and Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more.
@@ -1072,8 +1075,8 @@ That's the sort of explanation you'll get in most programming books, but what is
 
 Bioperl uses the object-oriented paradigm, and here are some texts if you want to learn more:
 
--   [Object Oriented Perl](http://www.manning.com/conway/)
+- [Object Oriented Perl](http://www.manning.com/conway/)
 
--   The [ENSEMBL Perl API](http://www.ensembl.org/info/docs/api/core/core_tutorial.html), a way of accessing [ENSEMBL](http://www.ensembl.org)'s genomics data in a manner very much like Bioperl.
+- The [ENSEMBL Perl API](http://www.ensembl.org/info/docs/api/core/core_tutorial.html), a way of accessing [ENSEMBL](http://www.ensembl.org)'s genomics data in a manner very much like Bioperl.
 
 
