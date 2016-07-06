@@ -395,6 +395,7 @@ The table above shows the methods you're likely to use with the Sequence object 
 
 There are also a number of methods that are concerned with the Features and Annotations associated with the Sequence object. This is something of a tangent but if you'd like to learn more see the [Feature-Annotation HOWTO](Features_and_Annotations_HOWTO.html). The methods related to this topic are shown below.
 
+|--------+-----------+------------|
 | Name                  | Returns        | Note                  |
 |-----------------------|----------------|-----------------------|
 | get_SeqFeatures      | array of SeqFeature objects            |                       |
@@ -402,6 +403,7 @@ There are also a number of methods that are concerned with the Features and Anno
 | remove_SeqFeatures   | array of SeqFeatures removed           |                       |
 | feature_count        | number of SeqFeature objects           |                       |
 | add_SeqFeature       | annotation array of Annotation objects | get or set            |
+|--------+-----------+------------|
 Table 2. Feature and Annotation methods.
 
 ## Example Sequence Objects
@@ -493,6 +495,7 @@ ORIGIN  1 aaccctagca ctgcgccgaa atatggcatc cgtggtatcc cgactctgct gctgttcaaa
 
 Either way, the values returned by various methods are shown below.
 
+|--------+-----------|
 | Method    | Returns                                                        |
 |----------------------------|-----------------------------------------------|
 | display_id                |ECORHO                                                         |
@@ -511,6 +514,7 @@ Either way, the values returned by various methods are shown below.
 | molecule                   | DNA                                                            |
 | get_dates                 | 26-APR-1993                                                    |
 | get_secondary_accessions | J01674                                                         |
+|--------+-----------|
 Table 3. Values from Genbank.
 
 There's a few comments that need to be made. First, you noticed that there's an awful lot of information missing. All of this missing information is stored in what Bioperl calls Features and Annotations, see the [Feature and Annotation HOWTO](Features_and_Annotations_HOWTO.html) if you'd like to learn more about this. Second, a few of the methods don't return anything, like `namespace` and `authority`. The reason is that though these are good values in principle there are no commonly agreed upon standard names - perhaps someday the authors will be able to rewrite the code when all our public databases agree what these values should be. Finally, you may be wondering why the method names are what they are and why particular fields or identifiers end up associated with particular methods. Again, without having standard names for things that are agreed upon by the creators of our public databases all the authors could do is use common sense, and these choices seem to be reasonable ones.
@@ -528,6 +532,7 @@ CTGGAATTTGCTGGCATGTTATGCAATTTGCATATCAAATGGTTAATTTTTGCACAGGAC
 
 And here are the values:
 
+|--------+-----------|
 | Method        | Returns                                                     |
 |---------------|-------------------------------------------------------------|
 | display_id   | gi|147605|gb|J01673.1|ECORHO                                |
@@ -540,6 +545,7 @@ And here are the values:
 | authority     |                                                             |
 | length        | 1880                                                        |
 | seq           | AACCCT...ACAGGAC                                            |
+|--------+-----------|
 Table 4. Values from Fasta.
 
 If you compare these values to the values taken from the Genbank entry you'll see that certain values are missing, like `seq_version`. That's because values like these aren't usually present in a Fasta file.
@@ -630,8 +636,9 @@ SQ   SEQUENCE   913 AA;  101638 MW;  D0E135DBEC30C28C CRC64;
 
 The corresponding set of values is shown below.
 
-| Method                     | Returns                                         |
-|----------------------------|-------------------------------------------------|
+|--------+-----------|
+| Method                     | Returns                                       |
+|----------------------------|-----------------------------------------------|
 | display_id                | A2S3_RAT                                       |
 | desc                       | Amyotrophic lateral ... protein of 98 kDa).     |
 | display_name              | A2S3_RAT                                       |
@@ -646,6 +653,7 @@ The corresponding set of values is shown below.
 | division                   | RAT                                             |
 | get_dates                 | 28-FEB-2003 (Rel. 41, Created)                  |
 | get_secondary_accessions | Q8R2H6 Q8R4G3                                   |
+|--------+-----------|
 Table 5. Values from SwissProt.
 
 As in the Genbank example there's information that the Sequence object doesn't supply, and it's all stored in Annotation objects. See the [Feature and Annotation HOWTO](Features_and_Annotations_HOWTO.html) for more.
