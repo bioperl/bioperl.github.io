@@ -539,9 +539,9 @@ And here are the values:
 |---------------|------------------------------------------------|
 | display_id   | gi\|147605\|gb\|J01673.1\|ECORHO |
 | desc          | E.coli rho gene coding for transcription termination factor |
-| display_name | gi|147605|gb|J01673.1|ECORHO                                |
+| display_name | gi\|147605\|gb\|J01673.1\|ECORHO  |
 | accession     | unknown                                                     |
-| primary_id   | gi|147605|gb|J01673.1|ECORHO                                |
+| primary_id   | gi\|147605\|gb\|J01673.1\|ECORHO   |
 | is_circular  |                                                             |
 | namespace     |                                                             |
 | authority     |                                                             |
