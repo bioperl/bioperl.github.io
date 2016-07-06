@@ -361,6 +361,7 @@ To set or assign a value:
 $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 ```
 
+|---
 | Name   | Returns   | Example    | Note   |
 |----------|----------|---------|---------------------|
 | accession_number          | identifier                                  | $acc = $so->accession_number            | get or set an identifier                                    |
