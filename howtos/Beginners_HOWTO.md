@@ -361,7 +361,7 @@ To set or assign a value:
 $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 ```
 
-|---
+|--------+-----------+------------+--------|
 | Name   | Returns   | Example    | Note   |
 |----------|----------|---------|---------------------|
 | accession_number          | identifier                                  | $acc = $so->accession_number            | get or set an identifier                                    |
@@ -386,7 +386,9 @@ $seq_obj->seq("MMTYDFFFFVVNNNNPPPPAAAW");
 | species                    | Species object                              | $species_obj = $so->species             | See for more                                                |
 | subseq                     | sequence string                             | $string = $seq_obj->subseq(10,40)       | Arguments are start and end                                 |
 | translate                  | protein Sequence object                     | $prot_obj = $dna_obj->translate        |                                                             |
-| trunc                      | Sequence object                             | $so2 = $so1->trunc(10,40)                | Arguments are start and end                                 |
+| trunc                      | Sequence object                             | $so2 = $so1->trunc(10,40)                | Arguments are start and end                                |
+|--------+-----------+------------+--------|
+
 Table 1. Sequence objects method.
 
 The table above shows the methods you're likely to use with the Sequence object directly. Bear in mind that not all values, such as `molecule` or `division`, are found in all sequence formats, you have to know something about your input sequences in order to get some of these values.
