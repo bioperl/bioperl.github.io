@@ -18,14 +18,14 @@ This document is copyright Lincoln Stein, 2002. It can be copied and distributed
 Revision History
 ----------------
 
-|--------+-----------|
-|               |                                                |
-|-----------------|------------------------------------------------|
-| 2002-09-01                                                                             | Revision History                               |
-| Revision 0.2 2003-05-15 lds                                                            | Current as of BioPerl 1.2.2                    |
-| Revision 0.3 [Torsten Seemann] 06:17, 22 December 2005 (EST) | BioPerl Wiki & fixed figure references.        |
-| Revision 0.4 [Jason Stajich] 13:11, 28 December 2005 (EST)      | Added many links to modules.                   |
-| Revision 0.5 [Mauricio Herrera] 14:56, 29 October 2006 (EST) | Added syntax highlighting and code formatting. |
+|----------+-------|
+| Revision | About |
+|----------|-------|
+| 0.1 2002-09-01 | First release |
+| 0.2 2003-05-15 lds | Current as of BioPerl 1.2.2  |
+| 0.3 Torsten Seemann 06:17, 22 December 2005 (EST) | BioPerl Wiki & fixed figure references |
+| 0.4 Jason Stajich 13:11, 28 December 2005 (EST)   | Added many links to modules |
+| 0.5 Mauricio Herrera 14:56, 29 October 2006 (EST) | Added syntax highlighting and code formatting |
 |--------+-----------|
 
 Abstract
@@ -170,9 +170,9 @@ Example 2 fixes these problems.
 
 # This is code example 2 in the Graphics-HOWTO
 
-use strict; 
-use lib '/home/lstein/projects/bioperl-live'; 
-use Bio::Graphics; 
+use strict;
+use lib '/home/lstein/projects/bioperl-live';
+use Bio::Graphics;
 use Bio::SeqFeature::Generic;
 
 my $panel = Bio::Graphics::Panel->new(
@@ -249,8 +249,8 @@ Before we move into displaying gapped alignments, let's tweak the image slightly
 
 # This is code example 3 in the Graphics-HOWTO
 
-use strict; 
-use lib '/home/lstein/projects/bioperl-live'; 
+use strict;
+use lib '/home/lstein/projects/bioperl-live';
 use Bio::Graphics; use Bio::SeqFeature::Generic;
 
 my $panel = Bio::Graphics::Panel->new(
@@ -329,11 +329,11 @@ From here it's just a small step to writing a general purpose utility that will 
 
 # This is code example 4 in the Graphics-HOWTO
 
-use strict; 
-use lib "$ENV{HOME}/projects/bioperl-live"; 
-use Bio::Graphics; 
-use Bio::SearchIO; 
-use Bio::SeqFeature::Generic; 
+use strict;
+use lib "$ENV{HOME}/projects/bioperl-live";
+use Bio::Graphics;
+use Bio::SearchIO;
+use Bio::SeqFeature::Generic;
 my $file = shift or die "Usage: render_blast4.pl <blast file>\n";
 
 my $searchio = Bio::SearchIO->new(-file => $file,
@@ -435,15 +435,15 @@ With you can render the feature table of a GenBank or EMBL file quite easily. Th
 #  This is code example 5 in the Graphics-HOWTO
 #  Author: Lincoln Stein
 
-use strict; 
-use lib "$ENV{HOME}/projects/bioperl-live"; 
-use Bio::Graphics; 
-use Bio::SeqIO; 
+use strict;
+use lib "$ENV{HOME}/projects/bioperl-live";
+use Bio::Graphics;
+use Bio::SeqIO;
 use Bio::SeqFeature::Generic;
 
-my $file = shift or die "provide a sequence file as the argument"; 
-my $io = Bio::SeqIO->new(-file=>$file) or die "couldn't create Bio::SeqIO"; 
-my $seq = $io->next_seq or die "couldn't find a sequence in the file"; 
+my $file = shift or die "provide a sequence file as the argument";
+my $io = Bio::SeqIO->new(-file=>$file) or die "couldn't create Bio::SeqIO";
+my $seq = $io->next_seq or die "couldn't find a sequence in the file";
 my $wholeseq = Bio::SeqFeature::Generic->new(
                                             -start        => 1,
                                             -end          => $seq->length,
@@ -479,9 +479,9 @@ $panel->add_track($wholeseq,
                 );
 
 # general case
-my @colors = qw(cyan orange blue purple green 
-                chartreuse magenta yellow aqua); 
-my $idx = 0; 
+my @colors = qw(cyan orange blue purple green
+                chartreuse magenta yellow aqua);
+my $idx = 0;
 for my $tag (sort keys %sorted_features) {
     my $features = $sorted_features{$tag};
     $panel->add_track($features,
@@ -497,7 +497,7 @@ for my $tag (sort keys %sorted_features) {
                   );
 }
 
-print $panel->png; 
+print $panel->png;
 exit 0;
 
 ```
@@ -535,10 +535,10 @@ However, it's quite easy to customize the display, making the script into a gene
 #  This is code example 6 in the Graphics-HOWTO
 #  Author: Lincoln Stein
 
-use strict; 
-use lib "$ENV{HOME}/projects/bioperl-live"; 
-use Bio::Graphics; 
-use Bio::SeqIO; 
+use strict;
+use lib "$ENV{HOME}/projects/bioperl-live";
+use Bio::Graphics;
+use Bio::SeqIO;
 use Bio::SeqFeature::Generic;
 
 use constant USAGE =><<END;
@@ -556,9 +556,9 @@ Example to try:
 
 END
 
-my $file = shift or die USAGE; 
-my $io = Bio::SeqIO->new(-file=>$file) or die USAGE; 
-my $seq = $io->next_seq or die USAGE; 
+my $file = shift or die USAGE;
+my $io = Bio::SeqIO->new(-file=>$file) or die USAGE;
+my $seq = $io->next_seq or die USAGE;
 my $wholeseq = Bio::SeqFeature::Generic->new(
                                             -start        => 1,
                                             -end          => $seq->length,
@@ -568,7 +568,7 @@ my $wholeseq = Bio::SeqFeature::Generic->new(
 my @features = $seq->all_SeqFeatures;
 
 # sort features by their primary tags
-my %sorted_features; 
+my %sorted_features;
 for my $f (@features) {
     my $tag = $f->primary_tag;
     push @{$sorted_features{$tag}},$f;
@@ -630,9 +630,9 @@ if ($sorted_features{tRNA}) {
 }
 
 # general case
-my @colors = qw(cyan orange blue purple green 
-                chartreuse magenta yellow aqua); 
-my $idx = 0; 
+my @colors = qw(cyan orange blue purple green
+                chartreuse magenta yellow aqua);
+my $idx = 0;
 for my $tag (sort keys %sorted_features) {
     my $features = $sorted_features{$tag};
     $panel->add_track($features,
