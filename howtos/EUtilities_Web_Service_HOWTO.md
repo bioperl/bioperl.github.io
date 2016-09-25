@@ -9,6 +9,7 @@ Abstract
 Using BioPerl to make and manage [NCBI](http://www.ncbi.nlm.nih.gov/) Entrez web service queries via the [EUtilities](http://www.ncbi.nlm.nih.gov/books/NBK25501/) [SOAP](https://en.wikipedia.org/wiki/SOAP) service.
 
 Also see the [EUtilities Cookbook](EUtilities_Cookbook_HOWTO.html).
+
 Author
 ------
 
@@ -29,7 +30,7 @@ Because data access and management can be better systematized using a web servic
 Dependencies and Installation
 -----------------------------
 
-SoapEU is currently available in the [bioperl-run](https://github.com/bioperl/bioperl-run) repository, in the Bio::DB namespace. 
+SoapEU is currently available in the [bioperl-run](https://github.com/bioperl/bioperl-run) repository, in the Bio::DB namespace.
 
 SoapEU requires CPAN modules [XML::Twig](https://metacpan.org/pod/XML::Twig) and [SOAP::Lite](https://metacpan.org/pod/SOAP::Lite), both of which are standard BioPerl core externals.
 
@@ -55,10 +56,10 @@ This is accomplished like so:
 use Bio::DB::SoapEUtilities;
 my $fac = Bio::DB::SoapEUtilities->new(); # step 1
 my $seqio = $fac->esearch(
-      -db => 'nucleotide', 
+      -db => 'nucleotide',
       -term => 'HIV1 and CCR5 and Brazil'
    )->run(-auto_adapt => 1, -rettype => 'fasta'); # step 2, 3
- 
+
 while ( my $seq = $seqio->next_seq ) { # step 4
  # do something with $seq, a Bio::Seq object...
 }
@@ -96,17 +97,17 @@ To run any of the standard NCBI EUtilities (`einfo, esearch, esummary, elink, eg
 my $fetch = $fac->efetch();
 $fetch->set_parameters( -db => 'gene', -id => [828392, 790]);
 my $result = $fetch->run;
- 
+
 # compact
 my $result = $fac->efetch(-db =>'gene',-id => [828392,790])->run;
- 
+
 # change ids
 $fac->efetch->set_parameters( -id => 470338 );
 $result = $fac->run;
- 
+
 # another util
 $result = $fac->esearch(-db => 'protein', -term => 'BRCA and human')->run;
- 
+
 # the utilities are kept separate
 %search_params = $fac->esearch->get_parameters;
 %fetch_params = $fac->efetch->get_parameters;
@@ -146,7 +147,7 @@ To retrieve a `Result` object with message elements parsed into accessors, inclu
 ```perl
 my $result = $fac->esearch->run()
 my $count = $result->count;
-my @Count = $result->Count; # counts for each member of 
+my @Count = $result->Count; # counts for each member of
                             # the translation stack
 my @ids = $result->IdList_Id; # from automatic message parsing
 @ids = $result->ids; # a convenient alias
@@ -192,8 +193,8 @@ $seqio = $fac->efetch( -db =>'nucleotide',
                        -id => $ids,
                        -rettype => 'gb' )->run( -auto_adapt => 1 );
 while (my $seq = $seqio->next_seq) {
-   my $taxio = $fac->efetch( 
-	-db => 'taxonomy', 
+   my $taxio = $fac->efetch(
+	-db => 'taxonomy',
 	-id => $seq->species->ncbi_taxid )->run(-auto_adapt => 1);
    my $tax = $taxio->next_species;
    unless ( $tax->TaxId == $seq->species->ncbi_taxid ) {
@@ -210,10 +211,10 @@ To cut down (a little) on GenBank format parsing time, you may use the [Bio::Seq
 
 ```perl
 use Bio::DB::SoapEUtilities;
- 
+
 my @ids = qw(1621261 89318838 68536103 20807972 730439);
 my $fac = Bio::DB::SoapEUtilities->new();
-my $result = $fac->efetch( -db => 'protein', 
+my $result = $fac->efetch( -db => 'protein',
 			   -id => $ids )->run( -no_parse => 1 );
 die "no result returned : ".$fac->errstr unless $result;
 my $seqio = Bio::DB::SoapEUtilities::FetchAdaptor->new(-result => $result);
@@ -224,7 +225,7 @@ $seqio->builder->add_wanted_slot('annotation');
 # print the pubmed ids for all references...
 while ( my $seq = $seqio->next_seq ) {
     print join( "\n",
-		map { 
+		map {
 		    $_->pubmed
 		} $seq->annotation->get_Annotations('reference'));
 }
@@ -235,10 +236,10 @@ while ( my $seq = $seqio->next_seq ) {
 The `LinkAdaptor` manages LinkSets. In `SoapEU`, an `elink` call *always* preserves the correspondence between submitted and retrieved ids. The mapping between these can be accessed from the adaptor object directly as `id_map()`:
 
 ```perl
-my $links = $fac->elink( -db => 'protein', 
+my $links = $fac->elink( -db => 'protein',
                          -dbfrom => 'nucleotide',
                          -id => $nucids )->run( -auto_adapt => 1 );
- 
+
 # maybe more than one associated id...
 my @prot_0 = $links->id_map( $nucids[0] );
 ```
@@ -275,7 +276,7 @@ while (my $d = $docs->next_docsum) {
 The `GQueryAdaptor` manages global query items returned by calls to `egquery`, which identifies all NCBI databases containing hits for your query term. The databases actually containing hits can be retrieved directly from the adaptor with `found_in_dbs`:
 
 ```perl
-my $queries = $fac->egquery( 
+my $queries = $fac->egquery(
     -term => 'BRCA and human'
    )->run(-auto_adapt=>1);
 my @dbs = $queries->found_in_dbs;
@@ -315,23 +316,23 @@ for this purpose. These store the details of your queries serverside.
 `SoapEU` attempts to make using these relatively straightforward. Use `Result` objects to obtain the correct parameters, and don't forget `-usehistory`:
 
 ```perl
-my $result1 = $fac->esearch( 
-    -term => 'BRCA and human', 
+my $result1 = $fac->esearch(
+    -term => 'BRCA and human',
     -db => 'nucleotide',
     -usehistory => 1 )->run( -no_parse=>1 );
- 
-my $result = $fac->esearch( 
-    -term => 'AND early onset', 
+
+my $result = $fac->esearch(
+    -term => 'AND early onset',
     -QueryKey => $result1->query_key,
     -WebEnv => $result1->webenv )->run( -no_parse => 1 );
- 
+
 my $result = $fac->esearch(
    -db => 'protein',
-   -term => 'sonic', 
+   -term => 'sonic',
    -usehistory => 1 )->run( -no_parse => 1 );
- 
+
 # later (but not more than 8 hours later) that day...
- 
+
 $result = $fac->esearch(
    -WebEnv => $result->webenv,
    -QueryKey => $result->query_key,
@@ -370,16 +371,16 @@ The adaptor system is really the heart of the (conceived) user-friendliness. It 
 use Bio::DB::SoapEUtilities;
 use Bio::DB::SoapEUtilities::Result;
 use Bio::DB::SoapEUtilities::DocSumAdaptor;
- 
+
 my $fac = Bio::DB::SoapEUtilities->new( -wsdl_file => my_wsdl.xml );
 my $result = $fac->esummary(
                    -db => 'gene',
                    -id => 790 )->run( -no_parse => 1);
- 
+
 my $soap_lite_message = $result->som;
- 
+
 unless ( $soap_lite_message->fault ) {
-  my $docs = Bio::DB::SoapEUtilities::DocSumAdaptor->new( 
+  my $docs = Bio::DB::SoapEUtilities::DocSumAdaptor->new(
               -result => $result
              );
 }
@@ -390,30 +391,30 @@ Synopsis
 
 ```perl
 use Bio::DB::SoapEUtilities;
- 
+
 # factory construction
- 
+
 my $fac = Bio::DB::SoapEUtilities->new()
- 
+
 # executing a utility call
- 
+
 #get an iteratable adaptor
-my $links = $fac->elink( 
+my $links = $fac->elink(
               -dbfrom => 'protein',
               -db => 'taxonomy',
               -id => $protein_ids )->run(-auto_adapt => 1);
- 
+
 # get a Bio::DB::SoapEUtilities::Result object
 my $result = $fac->esearch(
               -db => 'gene',
               -term => 'sonic and human')->run;
- 
+
 # get the raw XML message
 my $xml = $fac->efetch(
             -db => 'gene',
             -id => $gids )->run( -raw_xml => 1 );
- 
-# change parameters 
+
+# change parameters
 my $new_result = $fac->efetch(
                   -db => 'gene',
                   -id => $more_gids)->run;
@@ -421,16 +422,16 @@ my $new_result = $fac->efetch(
 $fac->efetch->reset_parameters( -db => 'nucleotide',
                                 -id => $nucid );
 $result = $fac->efetch->run;
- 
+
 # parsing and iterating the results
- 
+
 $count = $result->count;
 @ids = $result->ids;
- 
+
 while ( my $linkset = $links->next_link ) {
    $submitted = $linkset->submitted_id;
 }
- 
+
 ($taxid) = $links->id_map($submitted_prot_id);
 $species_io = $fac->efetch( -db => 'taxonomy',
                             -id => $taxid )->run( -auto_adapt => 1);
