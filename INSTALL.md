@@ -10,7 +10,7 @@ The current version of BioPerl is 1.6.924 (https://metacpan.org/pod/BioPerl).
 BIOPERL INSTALLATION
 
 The following are instructions for installing BioPerl on
-Unix, Linux, and Mac OS X. Windows installation instructions can be 
+Unix, Linux, and Mac OS X. Windows installation instructions can be
 found in [INSTALL.WIN](INSTALL.WIN.html).
 
 
@@ -19,7 +19,7 @@ SYSTEM REQUIREMENTS
  * `Perl 5.6.1 or higher` Version 5.8 or higher is highly
    recommended. Modules are tested against version 5.8 and
    above.
- * `make` For Mac OS X, this requires installing the Xcode Developer 
+ * `make` For Mac OS X, this requires installing the Xcode Developer
    Tools.
 
 
@@ -49,7 +49,25 @@ cpan>o conf commit
 
 INSTALLING BIOPERL THE EASY WAY USING CPAN
 
-You can use the CPAN shell to install BioPerl. For example:
+We highly recommend using
+[cpanminus](https://metacpan.org/pod/distribution/App-cpanminus/bin/cpanm) for
+installing BioPerl and its dependencies. We also highly recommend (if possible)
+using a tool like [perlbrew](https://perlbrew.pl) to locally install a modern
+version of perl (a version that is higher than perl 5.16).  The linked
+pages describe how to install each tool; make sure if you install perlbrew that
+you follow up with installing `cpanm`:
+
+```
+perlbrew install-cpanm
+```
+
+Then, you can install BioPerl:
+
+```
+cpanm Bio::Perl
+```
+
+You can also use the CPAN shell to install BioPerl. For example:
 
 ```
 perl -MCPAN -e shell
@@ -68,29 +86,29 @@ cpan>d /bioperl/
 
  ....
 
- Distribution    CJFIELDS/BioPerl-1.6.901.tar.gz
- Distribution    CJFIELDS/BioPerl-1.6.922.tar.gz
- Distribution    CJFIELDS/BioPerl-1.6.924.tar.gz
+ Distribution    C/CJ/CJFIELDS/BioPerl-1.007001.tar.gz
+ Distribution    C/CJ/CJFIELDS/BioPerl-1.007001.tar.gz
+ Distribution    C/CJ/CJFIELDS/BioPerl-1.007001.tar.gz
 ```
 
 And install the most recent:
 
 ```
-cpan>install CJFIELDS/BioPerl-1.6.924.tar.gz
+cpan>install C/CJ/CJFIELDS/BioPerl-1.007001.tar.gz
 ```
 
 If you've installed everything perfectly and all the network
 connections are working then you will pass all the tests run in the
-`./Build test` phase. Sometimes you may see a failed test. Remember that 
-there are over 900 modules in BioPerl and the test suite is running more 
-than 12000 individual tests, a failed test may not affect your usage 
+`./Build test` phase. Sometimes you may see a failed test. Remember that
+there are over 900 modules in BioPerl and the test suite is running more
+than 12000 individual tests, a failed test may not affect your usage
 of BioPerl.
 
-If there's a failed test and you think that the failed test will not 
+If there's a failed test and you think that the failed test will not
 affect how you intend to use BioPerl then do:
 
 ```
-cpan>force install C/CJ/CJFIELDS/BioPerl-1.6.923.tar.gz
+cpan>force install C/CJ/CJFIELDS/BioPerl-1.007001.tar.gz
 ```
 
 If you're concerned about a failed test and need assistance or advice
@@ -100,7 +118,7 @@ results of the failed install.
 
 INSTALLING BIOPERL FROM GITHUB
 
-The very latest version of Bioperl is at github.com. If you want this 
+The very latest version of Bioperl is at github.com. If you want this
 version then download it from https://github.com/bioperl/bioperl-live
 as a *zip file, or retrieve it using the command line:
 
@@ -133,7 +151,7 @@ Install:
 ./Build install
 ```
 
-You may need root permissions in order to run `./Build install`, so you 
+You may need root permissions in order to run `./Build install`, so you
 will want to talk to your systems manager if you don't have the necessary
 privileges. Or you can install the package in your own home
 directory, see INSTALLING BIOPERL USING local::lib.
@@ -148,7 +166,7 @@ using `local::lib`. The instructions for first installing
 
 https://metacpan.org/pod/local::lib
 
-Once `local::lib` is installed you can install BioPerl using a 
+Once `local::lib` is installed you can install BioPerl using a
 command like this:
 
 ```
@@ -184,7 +202,7 @@ the Seq test you would type:
 ./Build test --test_files t/Seq/Seq.t --verbose
 ```
 
-The `--test_files` argument can be used multiple times to try a set of test 
+The `--test_files` argument can be used multiple times to try a set of test
 scripts in one go. The `--verbose` arguement outputs the detailed test results, instead of just the summary you see during `./Build test`.
 
 The `--test-files` argument can also work as a glob. For instance, to
