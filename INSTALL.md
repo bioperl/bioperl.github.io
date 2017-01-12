@@ -3,10 +3,6 @@ title: "INSTALL"
 layout: default
 ---
 
-LATEST VERSION
-
-The current version of BioPerl is 1.6.924 (https://metacpan.org/pod/BioPerl).
-
 BIOPERL INSTALLATION
 
 The following are instructions for installing BioPerl on
