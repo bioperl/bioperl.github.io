@@ -11,7 +11,7 @@ Peter Schattner
 
 ## Abstract
 
-This is a [HOWTO](/howtos/index.html) that talks about using [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) and [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign)) to create and analyze alignments. It also discusses how to run various applications that create alignment files. See the [list of alignment formats](/formats/alignment_formats/index.html) for details on each format.
+This is a [HOWTO](/howtos/index.html) that talks about using [Bio::AlignIO](https://metacpan.org/pod/Bio::AlignIO) and [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) to create and analyze alignments. It also discusses how to run various applications that create alignment files. See the [list of alignment formats](/formats/alignment_formats/index.html) for details on each format.
 
 ## AlignIO
 
@@ -19,7 +19,7 @@ Data files storing multiple sequence alignments appear in varied formats and is 
 
 ```perl
 use Bio::AlignIO; my $io = Bio::AlignIO->new(
-                         -file => "receptors.aln", 
+                         -file => "receptors.aln",
                          -format => "clustalw" );
 ```
 
@@ -99,7 +99,7 @@ Some of the manipulations possible with include:
 * `column_from_residue_number()` : Finding column in an alignment where a specified residue of a specified sequence is located.
 * `consensus_string()` : Making a consensus string. This method includes an optional threshold parameter, so that positions in the alignment with lower percent-identity than the threshold are marked by *?* in the consensus
 * `percentage_identity()` : A fast method for calculating the average percentage identity of the alignment
-* `consensus_iupac()` : Making a consensus using IUPAC ambiguity codes from DNA and RNA.  
+* `consensus_iupac()` : Making a consensus using IUPAC ambiguity codes from DNA and RNA.
 
 Skeleton code for using some of these features is shown below. More detailed, working code is in *examples/align_on_codons.pl*, also in the *examples/align* directory. Additional documentation on methods can be found in [Bio::SimpleAlign](https://metacpan.org/pod/Bio::LocatableSeq) and [Bio::LocatableSeq](https://metacpan.org/pod/Bio::LocatableSeq).
 
@@ -118,7 +118,7 @@ $iupac_consensus = $aln->consensus_iupac();
 
 $percent_ident = $aln->percentage_identity;
 
-$seqname = '1433_LYCES'; 
+$seqname = '1433_LYCES';
 
 $pos = $aln->column_from_residue_number($seqname, 14);
 
@@ -155,8 +155,8 @@ Once the factory has been created and the appropriate parameters set, one can ca
 
 use Bio::Tools::Run::Alignment::Clustalw;
 
-$factory = Bio::Tools::Run::Alignment::Clustalw->new(-matrix => 'BLOSUM'); 
-$ktuple = 3; 
+$factory = Bio::Tools::Run::Alignment::Clustalw->new(-matrix => 'BLOSUM');
+$ktuple = 3;
 $factory->ktuple($ktuple);
 
 # @seq_array is an array of Bio::Seq objects
