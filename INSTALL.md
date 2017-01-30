@@ -3,16 +3,20 @@ title: "INSTALL"
 layout: default
 ---
 
-LATEST VERSION
-
-The current version of BioPerl is 1.6.924 (https://metacpan.org/pod/BioPerl).
-
 BIOPERL INSTALLATION
 
 The following are instructions for installing BioPerl on
 Unix, Linux, and Mac OS X. Windows installation instructions can be
 found in [INSTALL.WIN](INSTALL.WIN.html).
 
+LINUX PACKAGE MANAGERS
+
+Many Linux distributions have already packaged bioperl.  Installing
+from their package managers is the preferred and easiest method to
+install bioperl, even if their version is a bit out of date.
+
+If your distribution does not package bioperl, or if for some reason
+you prefer to install it from source, then continue reading.
 
 SYSTEM REQUIREMENTS
 
