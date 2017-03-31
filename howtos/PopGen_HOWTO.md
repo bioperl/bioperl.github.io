@@ -13,7 +13,7 @@ Dept Molecular Genetics and Microbiology, Duke University.
 Copyright
 ---------
 
-This document is copyright [Jason Stajich](http://www.bioperl.org/wiki/Jason_Stajich). It can be copied and distributed under the terms of the [Perl Artistic License](http://www.bioperl.org/wiki/Perl_Artistic_License).
+This document is copyright Jason Stajich. It can be copied and distributed under the terms of the [Perl Artistic License](https://dev.perl.org/licenses/artistic.html).
 
 Revision History
 ----------------
