@@ -1,4 +1,3 @@
-# Site settings
 title: BioPerl
 email: bioperl-l@mailman.open-bio.org
 description: The Bioperl Project is an international association of developers of open source Perl tools for bioinformatics, genomics and life science. It is supported by the <a href='http://www.open-bio.org/wiki/Main_Page'>Open Bioinformatics Foundation</a>.
@@ -7,19 +6,6 @@ url: "http://bioperl.github.io"
 twitter_username: bioperl
 github_username: bioperl
 encoding: UTF-8
-# Build settings
-# converters: kramdown (default), maruku (deprecated), redcarpet, rdiscount
-# rdiscount partially formats the '''perl blocks, no highlighting
-# kramdown does not format Perl correctly, the blocks are not recognized
 markdown_ext: markdown,mkdown,mkdn,mkd,mkd,md
+google_analytics: UA-96600780-1
 
-# highlighter: rouge
-# markdown: kramdown
-# kramdown:
-#   input: GFM
-#   auto_ids: true
-#   syntax_highlighter: rouge
-
-#redcarpet:
-#   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data",
-# "fenced_code_blocks", "no_intra_emphasis", "quote"]
