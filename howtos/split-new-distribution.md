@@ -1,7 +1,7 @@
---
+---
 title: "Splitting a subset of modules into a new distribution"
 layout: howto
---
+---
 
 The objective is to create smaller module distribution out of a subset
 of bioperl-live modules, together with its related tests and scripts,
@@ -18,7 +18,7 @@ The plan goes like this:
 4. make a synced release of both bioperl-live and the new distribution
 
 
-# Selecting files to keep
+## Selecting files to keep
 
 **Aim**: `files-to-keep` file with one file path per line
 
@@ -59,7 +59,7 @@ List the path for the selected files, relative to the root of the
 repository, one per line.  Save the file as `files-to-keep`.
 
 
-# Filter out unwanted history
+## Filter out unwanted history
 
 **Aim**: git repository with the history of selected files
 
@@ -119,7 +119,7 @@ removing the root commit requires a rebase which changes the committer
 information (see author and committer of each commit with `git log
 --format=raw`).
 
-## Merging with another repository
+### Merging with another repository
 
 The files to be part of the new distribution may already be in a
 separate repositories.  For example, bioperl-live and bioperl-run each
