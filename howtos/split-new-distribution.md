@@ -166,11 +166,13 @@ Organise the repository like this:
 
 In addition, create a new `Changes` file:
 
+{% raw %}
     Summary of important user-visible changes for THIS-DISTRIBUTION
     ---------------------------------------------------------------
 
     {{$NEXT}}
       * First release after split from bioperl-live.
+{% endraw %}
 
 And an appropriate `dist.ini` file.  See
 [Bio-ASN1-EntrezGene](https://github.com/bioperl/Bio-ASN1-EntrezGene/blob/master/dist.ini)
