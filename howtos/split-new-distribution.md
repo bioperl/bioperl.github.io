@@ -135,20 +135,20 @@ has it in the `lib` directory.  It is easier to restructure each of
 them in preparation for the merge.  See the section about
 restructuring the files for instructions.
 
-  cd clean-live
-  git mv ..
-  git commmit -m "maint: restructure for merge with ..."
+    cd clean-live
+    git mv ..
+    git commmit -m "maint: restructure for merge with ..."
 
-  cd clean-run
-  git mv ..
-  git commmit -m "maint: restructure for merge with ..."
+    cd clean-run
+    git mv ..
+    git commmit -m "maint: restructure for merge with ..."
 
 The actual merge is done like so:
 
-  git remote add clean-run ../clean-run
-  git fetch clean-run
-  git merge --no-ff --no-commit clean-run/master
-  git commit -m "Merge Bio-... (bioperl-live) and Bio-... (bioperl-run)"
+    git remote add clean-run ../clean-run
+    git fetch clean-run
+    git merge --no-ff --no-commit clean-run/master
+    git commit -m "Merge Bio-... (bioperl-live) and Bio-... (bioperl-run)"
 
 ## Restructure new distribution
 
@@ -207,7 +207,7 @@ Use this checklist:
   Check existing module for any specific license.
 * remove the comment block at the top of each module that is now
   redundant, the one that starts with `BioPerl module for ...`
-* remove the '# Let the code begin...' line
+* remove the `# Let the code begin...` line
 * fix email addresses.  Remove the non-sense FOO-AT-THIS-DOT-COM.
 * remove the whole feedback POD block which is now generated
   automatically.
