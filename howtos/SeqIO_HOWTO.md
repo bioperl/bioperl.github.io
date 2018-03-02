@@ -287,11 +287,11 @@ my $informat = shift or die $usage;
 my $outformat = shift or die $usage;
 
 # create one SeqIO object to read in, and another to write out
-my $seqin = Bio::SeqIO->new( -fh     => *STDIN,
+my $seqin = Bio::SeqIO->new( -fh     => \*STDIN,
                              -format => $informat,
                            );
 
-my $outseq = Bio::SeqIO->new( -fh     => *STDOUT,
+my $outseq = Bio::SeqIO->new( -fh     => \*STDOUT,
                               -format => $outformat,
                             );
 
