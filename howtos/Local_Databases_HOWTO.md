@@ -11,7 +11,7 @@ Peter Schattner
 
 ## Abstract
 
-This is a [HOWTO](/howtos/index.html) that talks about using Bioperl to create local sequence databases for fast retrieval.
+This [HOWTO](/howtos/index.html) talks about using Bioperl to create local sequence databases for fast retrieval.
 
 ## Introduction
 
@@ -19,7 +19,7 @@ Bioperl offers many ways to retrieve sequences from online databases like NCBI a
 
 ## Bio::Index
 
-The following sequence data formats are supported by [Bio::Index*](http://search.cpan.org/search?query=Bio::Index): 
+The following sequence data formats are supported by [Bio::Index](http://search.cpan.org/search?query=Bio::Index):
 
 * [Bio::Index::Swissprot](https://metacpan.org/pod/Bio::Index::Swissprot)
 * [Bio::Index::SwissPfam](https://metacpan.org/pod/Bio::Index::SwissPfam)
@@ -33,16 +33,15 @@ The following sequence data formats are supported by [Bio::Index*](http://search
 * [Bio::Index::GenBank](https://metacpan.org/pod/Bio::Index::GenBank)
 * [Bio::Index::Fasta](https://metacpan.org/pod/Bio::Index::Fasta)
 
-Once the set of sequences have been indexed using [Bio::Index*](http://search.cpan.org/search?query=Bio::Index), individual sequences can be accessed using syntax very similar to that used for accessing remote databases.
+Once the set of sequences have been indexed using [Bio::Index](http://search.cpan.org/search?query=Bio::Index), individual sequences can be accessed using syntax very similar to that used for accessing remote databases.
 
 For example, if one wants to set up an indexed flat-file database of fasta files one could write a script like using [Bio::Index::Fasta](https://metacpan.org/pod/Bio::Index::Fasta):
 
 ```perl
-# script 1: create the index
-
-# some users have reported that this is necessary
+# First create the index.
+# Some users have reported that "use strict" is necessary.
 use strict;
-use Bio::Index::Fasta; 
+use Bio::Index::Fasta;
 
 my $index_file_name = shift;
 
@@ -55,10 +54,6 @@ $inx->make_index(@sequence_files);
 This script then retrieves sequences:
 
 ```perl
-
-# script 2: retrieve some files
-
-# some users have reported that this is necessary
 use strict;
 use Bio::Index::Fasta;
 
@@ -71,17 +66,15 @@ for my $id (@ARGV) {
     my $seq = $inx->fetch($id);
     # do something with the sequence
 }
-
 ```
 
 To facilitate the creation and use of more complex or flexible indexing systems, the Bioperl distribution includes two sample scripts in the *scripts/index* directory, *bp_index.PLS* and *bp_fetch.PLS*. These scripts can be used as templates to develop customized local data-file indexing systems.
 
 ## Bio::DB::Fasta
 
-Bioperl also supplies as a means to index and query Fasta format files. It's similar in spirit to [Bio::Index*](http://search.cpan.org/search?query=Bio::Index) but has additional methods and has the ability to retrieve subsequences, great for long sequences:
+Bioperl also supplies as a means to index and query Fasta format files. It's similar in spirit to [Bio::Index](http://search.cpan.org/search?query=Bio::Index) but has additional methods and has the ability to retrieve subsequences, great for long sequences:
 
 ```perl
-
 use strict;
 use Bio::DB::Fasta;
 
@@ -91,11 +84,11 @@ my $file = "arabidopsis.fa"
 my $db = Bio::DB::Fasta->new($file);
 my @ids = $db->get_all_primary_ids;
 
-# get a sequence as string 
+# get a sequence as string
 my $seqstring = $db->seq($id);
 
-# get a PrimarySeq obj 
-my $seqobj = $db->get_Seq_by_id($id); 
+# get a PrimarySeq obj
+my $seqobj = $db->get_Seq_by_id($id);
 
 # get the header, or description line
 my $desc = $db->header($id);
@@ -113,13 +106,13 @@ See [Bio::DB::Fasta](https://metacpan.org/pod/Bio::DB::Fasta) for more informati
 
 Both modules also offer the user the ability to designate a specific string within the fasta header as the desired id, such as the gi number within the string *gi|4556644|gb|X45555*. Consider the following fasta-formatted sequence, in *test.fa*:
 
-```
+```perl
 >gi|523232|emb|AAC12345|sp|D12567 titin fragment
 MHRHHRTGYSAAYGPLKJHGYVHFIMCVVVSWWASDVVTYIPLLLNNSSAGWKRWWWIIFGGE
 GHGHHRTYSALWWPPLKJHGSKHFILCVKVSWLAKKERTYIPKKILLMMGGWWAAWWWI
 ```
 
-By default and will use the first "word" they encounter in the fasta header as the retrieval key, in this case "gi|523232|emb|AAC12345|sp|D12567". What would be more useful as a key would be a single id. The code below will index the "test.fa" file and create an index file called "test.fa.idx" where the keys are the Swissprot, or "sp", identifiers.
+By default [Bio::Index](http://search.cpan.org/search?query=Bio::Index) and [Bio::DB::Fasta](https://metacpan.org/pod/Bio::DB::Fasta) will use the first "word" they encounter in the fasta header as the retrieval key, in this case *gi|523232|emb|AAC12345|sp|D12567*. What would be more useful as a key would be a single id. The code below will index the *test.fa* file and create an index file called *test.fa.idx* where the keys are the Swissprot, or "sp", identifiers.
 
 ```perl
 $ENV{BIOPERL_INDEX_TYPE} = "SDBM_File";
@@ -146,7 +139,7 @@ sub get_id {
 }
 ```
 
-Here is how you would retrieve the sequence, as a object:
+Here is how you would retrieve the sequence, as an object:
 
 ```perl
 my $seq = $inx->fetch("D12567");
@@ -155,7 +148,7 @@ print $seq->seq;
 
 What if you wanted to retrieve a sequence using either a Swissprot id or a gi number and the fasta header was actually a concatenation of headers with multiple gi's and Swissprots?
 
-```
+```perl
 >gi|523232|emb|AAC12345|sp|D12567|gi|7744242|sp|V11223 titin fragment
 ```
 
@@ -170,10 +163,9 @@ sub get_id {
 }
 ```
 
-The module uses the same principle, but the syntax is slightly different, for example:
+The [Bio::DB::Fasta](https://metacpan.org/pod/Bio::DB::Fasta) module uses the same principle, but the syntax is slightly different, for example:
 
 ```perl
-
 my $db = Bio::DB::Fasta->new('test.fa', -makeid => &make_my_id);
 my $seqobj = $db->get_Seq_by_id($id);
 
@@ -182,7 +174,6 @@ sub make_my_id {
     $description_line =~ /gi|(d+)|emb|(w+)/;
     ($1,$2);
 }
-
 ```
 
 ## Storing sequences in a relational database
