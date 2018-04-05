@@ -35,10 +35,9 @@ The following sequence data formats are supported by [Bio::Index](http://search.
 
 Once the set of sequences have been indexed using [Bio::Index](http://search.cpan.org/search?query=Bio::Index), individual sequences can be accessed using syntax very similar to that used for accessing remote databases.
 
-For example, if one wants to set up an indexed flat-file database of fasta files one could write a script like using [Bio::Index::Fasta](https://metacpan.org/pod/Bio::Index::Fasta):
+For example, if one wants to set up an indexed flat-file database of fasta files one could write a script like this using [Bio::Index::Fasta](https://metacpan.org/pod/Bio::Index::Fasta) to create the index:
 
 ```perl
-# First create the index.
 # Some users have reported that "use strict" is necessary.
 use strict;
 use Bio::Index::Fasta;
@@ -146,7 +145,7 @@ my $seq = $inx->fetch("D12567");
 print $seq->seq;
 ```
 
-What if you wanted to retrieve a sequence using either a Swissprot id or a gi number and the fasta header was actually a concatenation of headers with multiple gi's and Swissprots?
+What if you wanted to retrieve a sequence using either a Swissprot id or a gi number and the fasta header was actually a concatenation of headers with multiple gi's and Swissprot ids?
 
 ```perl
 >gi|523232|emb|AAC12345|sp|D12567|gi|7744242|sp|V11223 titin fragment
