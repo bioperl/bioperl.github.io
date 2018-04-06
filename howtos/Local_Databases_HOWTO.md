@@ -111,7 +111,7 @@ MHRHHRTGYSAAYGPLKJHGYVHFIMCVVVSWWASDVVTYIPLLLNNSSAGWKRWWWIIFGGE
 GHGHHRTYSALWWPPLKJHGSKHFILCVKVSWLAKKERTYIPKKILLMMGGWWAAWWWI
 ```
 
-By default [Bio::Index](http://search.cpan.org/search?query=Bio::Index) and [Bio::DB::Fasta](https://metacpan.org/pod/Bio::DB::Fasta) will use the first "word" they encounter in the fasta header as the retrieval key, in this case *gi|523232|emb|AAC12345|sp|D12567*. What would be more useful as a key would be a single id. The code below will index the input file (e.g. *test.fa*) file and create an index file called *test.fa.idx* where the keys are the Swissprot identifiers.
+By default [Bio::Index](http://search.cpan.org/search?query=Bio::Index) and [Bio::DB::Fasta](https://metacpan.org/pod/Bio::DB::Fasta) will use the first "word" they encounter in the fasta header as the retrieval key, in this case "gi|523232|emb|AAC12345|sp|D12567". What would be more useful as a key would be a single id. The code below will index the input file (e.g. *test.fa*) file and create an index file called *test.fa.idx* where the keys are the Swissprot identifiers.
 
 ```perl
 $ENV{BIOPERL_INDEX_TYPE} = "SDBM_File";
