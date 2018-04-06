@@ -133,7 +133,7 @@ $inx->make_index($file_name);
 # here is where the retrieval key is specified
 sub get_id {
     my $header = shift;
-    $header =~ /^>.*sp|([A-Z]d{5}b)/;
+    $header =~ /^>.+sp|([A-Z]\d{5})/;
     $1;
 }
 ```
@@ -147,7 +147,7 @@ print $seq->seq;
 
 What if you wanted to retrieve a sequence using either a Swissprot id or a gi number and the fasta header was actually a concatenation of headers with multiple gi's and Swissprot ids?
 
-```perl
+```
 >gi|523232|emb|AAC12345|sp|D12567|gi|7744242|sp|V11223 titin fragment
 ```
 
@@ -156,8 +156,8 @@ Modify the function that's passed to the id_parser() method:
 ```perl
 sub get_id {
     my $header = shift;
-    my (@sps) = $header =~ /^>.*sp|([A-Z]d{5})/g;
-    my (@gis) = $header =~ /gi|(d+)/g;
+    my (@sps) = $header =~ /^>.+sp|([A-Z]\d{5})/g;
+    my (@gis) = $header =~ /gi|(\d+)/g;
     return (@sps,@gis);
 }
 ```
@@ -170,7 +170,7 @@ my $seqobj = $db->get_Seq_by_id($id);
 
 sub make_my_id {
     $description_line = shift;
-    $description_line =~ /gi|(d+)|emb|(w+)/;
+    $description_line =~ /gi|(\d+)|emb|(\w+)/;
     ($1,$2);
 }
 ```
