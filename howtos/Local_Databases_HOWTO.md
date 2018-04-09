@@ -164,7 +164,7 @@ sub get_id {
     my $header = shift;
     my (@sps) = $header =~ /^>.+sp|([A-Z]\d{5})/g;
     my (@gis) = $header =~ /gi|(\d+)/g;
-    return (@sps,@gis);
+    (@sps,@gis);
 }
 ```
 
@@ -175,9 +175,10 @@ my $db = Bio::DB::Fasta->new('test.fa', -makeid => &make_my_id);
 my $seqobj = $db->get_Seq_by_id($id);
 
 sub make_my_id {
-    $description_line = shift;
-    $description_line =~ /gi|(\d+)|emb|(\w+)/;
-    ($1,$2);
+    my $header = shift;
+    my (@sps) = $header =~ /^>.+sp|([A-Z]\d{5})/g;
+    my (@gis) = $header =~ /gi|(\d+)/g;
+    (@sps,@gis);
 }
 ```
 
