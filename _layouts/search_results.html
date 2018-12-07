@@ -28,7 +28,7 @@ $(window).load(function() {
 			var have_match = false;
 			$.each(data, function(key, val) {
 				if ( regex.test(val.content) || regex.test(val.title) ) {
-					// Remove leading /	
+					// Remove leading /
 					var page_name = val.href.replace(new RegExp( /^\// ), '');
 					$("#searchresults").append('<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="' + val.href + '">' + page_name + '</a></p>');
 					have_match = true;
@@ -42,7 +42,7 @@ $(window).load(function() {
 		}
 	});
 });
-                
+
 </script>
 <div id="searchresults">
 </div>
