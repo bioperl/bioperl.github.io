@@ -150,9 +150,14 @@ The [Bio::PopGen::Utilities](https://metacpan.org/pod/Bio::PopGen::Utilities) ob
 use Bio::PopGen::Utilities;
 # get a population object from an alignment
 my $pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln);
+
 # to include monomorphic sites (so every site in the alignment basically)
-my $pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln,
+$pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln,
                                                    -include_monomorphic =>1);
+
+# to treat the alignment as protein coding (e.g. to prepare data for mcdonald_kreitman function)
+$pop = Bio::PopGen::Utilities->aln_to_population(-alignment=>$aln,
+                                                    -site_model => 'cod');
 ```
 
 In the future it will be possible to just ask for the sites which are [synonymous and non-synonymous](http://en.wikipedia.org/wiki/Synonymous_substitution) if one can assume the first sequence is the reference sequence and that the sequence only contains coding sequences.
