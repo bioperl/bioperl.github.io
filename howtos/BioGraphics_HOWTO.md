@@ -65,14 +65,14 @@ Getting Started
 
 All the code examples, BLAST input files, and sequence files we'll use are available here:
 
--   [BLASTN output](BLASTN_output)
--   [render_blast1.pl](render_blast1.pl)
--   [render_blast2.pl](render_blast2.pl)
--   [render_blast3.pl](render_blast3.pl)
--   [render_blast4.pl](render_blast4.pl)
--   [embl2picture.pl](embl2picture.pl)
--   [render_features.pl](render_features.pl)
--   [factor7.embl](factor7.embl)
+-   [BLASTN output](https://bioperl.org/howtos/BLASTN_output)
+-   [render_blast1.pl](https://bioperl.org/howtos/render_blast1.pl)
+-   [render_blast2.pl](https://bioperl.org/howtos/render_blast2.pl)
+-   [render_blast3.pl](https://bioperl.org/howtos/render_blast3.pl)
+-   [render_blast4.pl](https://bioperl.org/howtos/render_blast4.pl)
+-   [embl2picture.pl](https://bioperl.org/howtos/embl2picture.pl)
+-   [render_features.pl](https://bioperl.org/howtos/render_features.pl)
+-   [factor7.embl](https://bioperl.org/howtos/factor7.embl)
 
 Our first example will be rendering a table of BLAST hits on a sequence that is exactly 1000 residues long. For now, we're ignoring finicky little details like HSPs, and assume that each hit is a single span from start to end. Also, we'll be using the BLAST score rather than P or E value. Later on, we'll switch to using real BLAST output parsed by the module, but for now, our table looks like this:
 
