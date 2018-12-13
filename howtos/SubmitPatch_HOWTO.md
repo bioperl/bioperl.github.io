@@ -15,10 +15,6 @@ Copyright
 
 This document is copyright Torsten Seemann, 2005. It can be copied and distributed under the terms of the [Perl Artistic License](http://www.bioperl.org/wiki/Perl_Artistic_License).
 
-Revisions
----------
-
--   First draft - Tseemann
 
 Introduction
 ------------
@@ -71,29 +67,34 @@ The -w option ensures that all the warnings are reported just like they will be 
 
 You now need to produce a difference file for each modified (or new) file related to the patch. There are two ways you can accomplish this:
 
--   Use `svn diff` from the base bioperl-live directory. This is the preferred method for multiple file changes (i.e. test files and modules).
+-   Use `git diff` from the base bioperl-live directory. This is the preferred method for multiple file changes (i.e. test files and modules).
+
+By default `git diff` will show you any uncommitted changes since the last commit.
 
 For single files or directories:
 
 ```
-svn diff Bio/SeqIO/
-svn diff Bio/SeqIO/fasta.pm
+git diff Bio/SeqIO/ > patch.txt
+git diff Bio/SeqIO/fasta.pm > patch.txt
 ```
 
 For everything:
 
-`svn diff`
+```
+git diff > patch.txt
+```
+
 
 -   Use the [diff](http://en.wikipedia.org/wiki/diff) tool in Unix.
 
 ```
-diff -Bub Bio/SeqIO/fasta.pm.orig Bio/SeqIO/fasta.pm > /tmp/fasta.pm.diff
-diff -Bub t/fasta.t.orig          t/fasta.t          > /tmp/fasta.t.diff
+diff -Bub Bio/SeqIO/fasta.pm.orig Bio/SeqIO/fasta.pm > fasta-patch.txt
+diff -Bub t/fasta.t.orig          t/fasta.t          > test-patch.txt
 ```
 
 ### Submit the patch
 
-Log into the [Issues](https://github.com/bioperl/bioperl-live/issues) page of bioperl-live on Github. Submit a new feature request, and attach `/tmp/fasta.pm.diff` and `/tmp/fasta.t.diff` to your bug submission. Make sure you write a clear and concise description for the feature request.
+Log into the [Issues](https://github.com/bioperl/bioperl-live/issues) page of bioperl-live on Github. Submit a new feature request, and attach `fasta-patch.txt` and `test-patch.txt` to your bug submission. Make sure you write a clear and concise description for the feature request.
 
 ### The waiting game
 
