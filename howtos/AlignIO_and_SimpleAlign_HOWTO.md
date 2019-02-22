@@ -101,7 +101,7 @@ Some of the manipulations possible with include:
 * `percentage_identity()` : A fast method for calculating the average percentage identity of the alignment
 * `consensus_iupac()` : Making a consensus using IUPAC ambiguity codes from DNA and RNA.
 
-Skeleton code for using some of these features is shown below. More detailed, working code is in *examples/align_on_codons.pl*, also in the *examples/align* directory. Additional documentation on methods can be found in [Bio::SimpleAlign](https://metacpan.org/pod/Bio::LocatableSeq) and [Bio::LocatableSeq](https://metacpan.org/pod/Bio::LocatableSeq).
+Skeleton code for using some of these features is shown below. More detailed, working code is in *examples/align_on_codons.pl*, also in the *examples/align* directory. Additional documentation on methods can be found in [Bio::SimpleAlign](https://metacpan.org/pod/Bio::SimpleAlign) and [Bio::LocatableSeq](https://metacpan.org/pod/Bio::LocatableSeq).
 
 ```perl
 
